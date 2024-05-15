@@ -8,4 +8,7 @@ public class OfferDto {
     private String title;
     private String description;
     private String location;
+    private String salaryRange;
+    private String technologies;
+    private String contractType;
 }

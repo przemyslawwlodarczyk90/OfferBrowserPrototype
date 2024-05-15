@@ -1,6 +1,5 @@
 package com.offerbrowserprototype.domain.user;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,11 +14,10 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
-
 
 }

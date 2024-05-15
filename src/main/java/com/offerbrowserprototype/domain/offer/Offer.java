@@ -1,10 +1,14 @@
 package com.offerbrowserprototype.domain.offer;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "job_offers")
 public class Offer {
     @Id
@@ -20,5 +24,12 @@ public class Offer {
     @Column(nullable = false)
     private String location;
 
+    @Column(nullable = false)
+    private String salaryRange;
 
+    @Column(nullable = false)
+    private String technologies;
+
+    @Column(nullable = false)
+    private String contractType;
 }
