@@ -1,11 +1,11 @@
 package com.offerbrowserprototype.domain.loginaandregister;
 
-import com.offerbrowserprototype.domain.user.UserDto;
+import com.offerbrowserprototype.domain.user.UserDTO;
 
 class UserProfileUpdater {
 
-    UserDto updateUserProfile(UpdateUserDto updateUserDto) {
+    UserDTO updateUserProfile(UpdateUserDto updateUserDto) {
 
-        return new UserDto(updateUserDto.getId(), updateUserDto.getUsername(), "email@updated.com");
+        return new UserDTO(updateUserDto.getId(), updateUserDto.getUsername(), "email@updated.com");
     }
 }

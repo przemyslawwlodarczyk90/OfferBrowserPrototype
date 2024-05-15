@@ -1,6 +1,6 @@
 package com.offerbrowserprototype.domain.offer;
 
-import com.offerbrowserprototype.domain.offer.dto.OfferDto;
+import com.offerbrowserprototype.domain.offer.dto.OfferDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,11 +23,11 @@ public class OfferFacade {
         this.retrievalHandler = retrievalHandler;
     }
 
-    public OfferDto addOffer(OfferDto offerDto) {
+    public OfferDTO addOffer(OfferDTO offerDto) {
         return additionHandler.addOffer(offerDto);
     }
 
-    public OfferDto updateOffer(Long id, OfferDto offerDto) {
+    public OfferDTO updateOffer(Long id, OfferDTO offerDto) {
         return updateHandler.updateOffer(id, offerDto);
     }
 
@@ -35,11 +35,11 @@ public class OfferFacade {
         deletionHandler.deleteOffer(id);
     }
 
-    public OfferDto getOffer(Long id) {
+    public OfferDTO getOffer(Long id) {
         return retrievalHandler.getOffer(id);
     }
 
-    public List<OfferDto> getAllOffers() {
+    public List<OfferDTO> getAllOffers() {
         return retrievalHandler.getAllOffers();
     }
 }

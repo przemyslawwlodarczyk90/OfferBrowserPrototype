@@ -30,6 +30,5 @@ public class Offer {
     @Column(nullable = false)
     private String technologies;
 
-    @Column(nullable = false)
-    private String contractType;
+
 }

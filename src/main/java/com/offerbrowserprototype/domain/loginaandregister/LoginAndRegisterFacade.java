@@ -1,7 +1,7 @@
 package com.offerbrowserprototype.domain.loginaandregister;
 
 import com.offerbrowserprototype.domain.loginaandregister.dto.*;
-import com.offerbrowserprototype.domain.user.UserDto;
+import com.offerbrowserprototype.domain.user.UserDTO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,7 +22,7 @@ public class LoginAndRegisterFacade {
         this.passwordChanger = passwordChanger;
     }
 
-    public RegistrationResultDto register(RegisterUserDto userDto) {
+    public RegistrationResultDTO register(RegisterUserDTO userDto) {
         return registrationHandler.register(userDto);
     }
 
@@ -30,7 +30,7 @@ public class LoginAndRegisterFacade {
         return loginHandler.login(loginDto);
     }
 
-    public UserDto updateUserProfile(UpdateUserDto updateUserDto) {
+    public UserDTO updateUserProfile(UpdateUserDto updateUserDto) {
         return profileUpdater.updateUserProfile(updateUserDto);
     }
 

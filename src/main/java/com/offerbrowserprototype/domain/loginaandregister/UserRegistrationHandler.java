@@ -1,11 +1,11 @@
 package com.offerbrowserprototype.domain.loginaandregister;
 
-import com.offerbrowserprototype.domain.loginaandregister.dto.RegisterUserDto;
-import com.offerbrowserprototype.domain.loginaandregister.dto.RegistrationResultDto;
+import com.offerbrowserprototype.domain.loginaandregister.dto.RegisterUserDTO;
+import com.offerbrowserprototype.domain.loginaandregister.dto.RegistrationResultDTO;
 
 class UserRegistrationHandler {
 
-    RegistrationResultDto register(RegisterUserDto userDto) {
-        return new RegistrationResultDto(userDto.getUsername(), true, "Rejestracja udana");
+    RegistrationResultDTO register(RegisterUserDTO userDto) {
+        return new RegistrationResultDTO(userDto.getUsername(), true, "Rejestracja udana");
     }
 }
