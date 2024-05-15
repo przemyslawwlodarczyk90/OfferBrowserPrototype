@@ -27,7 +27,7 @@ public class LoginAndRegisterFacade {
         return service.updateUserProfile(updateUserDto);
     }
 
-    public boolean changeUserPassword(ChangePasswordDto changePasswordDto) {
+    public boolean changeUserPassword(ChangePasswordDTO changePasswordDto) {
         return service.changeUserPassword(changePasswordDto);
     }
 }
