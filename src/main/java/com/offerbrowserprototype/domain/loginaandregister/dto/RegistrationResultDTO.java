@@ -8,4 +8,11 @@ public class RegistrationResultDTO {
     private String username;
     private boolean isSuccess;
     private String message;
+
+    public RegistrationResultDTO(Long userId, String username, boolean isSuccess, String message) {
+        this.userId = userId;
+        this.username = username;
+        this.isSuccess = isSuccess;
+        this.message = message;
+    }
 }

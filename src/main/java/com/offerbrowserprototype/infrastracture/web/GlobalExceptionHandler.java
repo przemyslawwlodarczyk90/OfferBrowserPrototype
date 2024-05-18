@@ -1,4 +1,4 @@
-package com.offerbrowserprototype.infrastructure.web;
+package com.offerbrowserprototype.infrastracture.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
