@@ -1,7 +1,11 @@
 package com.offerbrowserprototype.domain.loginaandregister.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class RegistrationResultDTO {
     private Long userId;
@@ -9,10 +13,5 @@ public class RegistrationResultDTO {
     private boolean isSuccess;
     private String message;
 
-    public RegistrationResultDTO(Long userId, String username, boolean isSuccess, String message) {
-        this.userId = userId;
-        this.username = username;
-        this.isSuccess = isSuccess;
-        this.message = message;
-    }
+
 }
