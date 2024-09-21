@@ -1,34 +1,25 @@
 package com.offerbrowserprototype.domain.offer;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Entity
 @NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "job_offers")
+@Document(collection = "job_offers")
 public class Offer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(nullable = false)
+    @Id
+    private String id; // MongoDB automatycznie generuje unikalne ID
+
     private String title;
 
-    @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
     private String location;
 
-    @Column(nullable = false)
     private String salaryRange;
 
-    @Column(nullable = false)
     private String technologies;
-
-
 }

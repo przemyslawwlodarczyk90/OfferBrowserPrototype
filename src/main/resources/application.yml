@@ -1,0 +1,14 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: offer_browser_db
+
+# Ustawienia Spring Boot (opcjonalnie)
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.data.mongodb.core: DEBUG
