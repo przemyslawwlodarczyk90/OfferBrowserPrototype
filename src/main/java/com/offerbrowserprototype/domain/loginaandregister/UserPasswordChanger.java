@@ -1,11 +1,13 @@
 package com.offerbrowserprototype.domain.loginaandregister;
 
+import com.offerbrowserprototype.domain.loginaandregister.dto.ChangePasswordDto;
+import org.springframework.stereotype.Component;
 
-import com.offerbrowserprototype.domain.loginaandregister.dto.ChangePasswordDTO;
-
+@Component
 class UserPasswordChanger {
 
-    boolean changeUserPassword(ChangePasswordDTO changePasswordDto) {
+    public boolean changeUserPassword(ChangePasswordDto changePasswordDto) {
+        // Here you should implement actual password change logic
         return true;
     }
 }

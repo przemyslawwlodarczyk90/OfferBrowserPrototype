@@ -1,11 +1,15 @@
 package com.offerbrowserprototype.domain.loginaandregister;
 
+
 import com.offerbrowserprototype.domain.loginaandregister.dto.RegisterUserDTO;
 import com.offerbrowserprototype.domain.loginaandregister.dto.RegistrationResultDTO;
+import com.offerbrowserprototype.domain.loginaandregister.dto.UpdateUserDto;
+import org.springframework.stereotype.Component;
 
-class UserRegistrationHandler {
+@Component
+public class UserRegistrationHandler {
 
-    RegistrationResultDTO register(RegisterUserDTO userDto) {
+    public RegistrationResultDTO register(RegisterUserDTO userDto) {
         return new RegistrationResultDTO(userDto.getUsername(), true, "Rejestracja udana");
     }
 }

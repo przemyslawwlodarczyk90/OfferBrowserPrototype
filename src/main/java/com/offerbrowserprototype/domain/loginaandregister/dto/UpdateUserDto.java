@@ -1,12 +1,12 @@
 package com.offerbrowserprototype.domain.loginaandregister.dto;
 
-
 import lombok.Data;
 
-
 @Data
-public class ChangePasswordDTO {
+public class UpdateUserDto {
     private Long id;
-    private String oldPassword;
-    private String newPassword;
+    private String username;
+    private String email;
+
+
 }
