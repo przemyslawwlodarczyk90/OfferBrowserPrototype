@@ -1,4 +1,4 @@
-package com.example.offerbrowserprototype.security;
+package com.example.offerbrowserprototype.infrasructure.security;
 
 import com.example.offerbrowserprototype.domain.user.User;
 import com.example.offerbrowserprototype.domain.user.UserRepository;
