@@ -1,4 +1,4 @@
-package com.example.offerbrowserprototype.infrasructure.web;
+package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.exception.AuthorizationException;
 import com.example.offerbrowserprototype.domain.exception.InvalidRegisterException;

@@ -1,4 +1,4 @@
-package com.example.offerbrowserprototype.infrasructure.security;
+package com.example.offerbrowserprototype.infrastructure.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

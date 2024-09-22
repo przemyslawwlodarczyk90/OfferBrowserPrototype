@@ -1,4 +1,4 @@
-package com.example.offerbrowserprototype.infrasructure.security;
+package com.example.offerbrowserprototype.infrastructure.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

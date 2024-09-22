@@ -1,25 +1,53 @@
 package com.example.offerbrowserprototype.domain.offer;
 
 import com.example.offerbrowserprototype.domain.offer.dto.OfferDTO;
+import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Arrays;
 
 @Component
 class OfferRetrievalHandler {
 
-    OfferDTO getOffer(Long id) {
-        // Zwraca konkretną ofertę na podstawie id; na potrzeby przykładu zwracane są statyczne dane
-        return new OfferDTO(id, "Software Developer", "Full-time job for software development", "New York", "100,000 - 120,000 USD", "Java, Spring Boot");
+    private final OfferRepository offerRepository;
+    private final ExternalJobOfferService externalJobOfferService;
+    private final OfferCacheService offerCacheService;
+
+    public OfferRetrievalHandler(OfferRepository offerRepository, ExternalJobOfferService externalJobOfferService, OfferCacheService offerCacheService) {
+        this.offerRepository = offerRepository;
+        this.externalJobOfferService = externalJobOfferService;
+        this.offerCacheService = offerCacheService;
     }
 
-    List<OfferDTO> getAllOffers() {
-        // Przykładowe dane dla demonstracji
-        return Arrays.asList(
-                new OfferDTO(1L, "Software Developer", "Full-time job for software development", "New York", "100,000 - 120,000 USD", "Java, Spring Boot"),
-                new OfferDTO(2L, "Data Scientist", "Data Science in FinTech", "San Francisco", "120,000 - 150,000 USD", "Python, Machine Learning"),
-                new OfferDTO(3L, "Product Manager", "Managing product lifecycle at a startup", "Remote", "80,000 - 100,000 USD", "Agile, Scrum")
-        );
+    public OfferDTO getOffer(Long id) {
+        return offerRepository.findById(id.toString()).orElse(null);
+    }
+
+    public List<OfferDTO> getAllOffers() {
+        // Sprawdź w cache
+        List<OfferDTO> cachedOffers = offerCacheService.getCachedOffers();
+        if (cachedOffers != null && !cachedOffers.isEmpty()) {
+            return cachedOffers;
+        }
+
+        // Pobierz zewnętrzne oferty pracy
+        List<OfferDTO> externalOffers = externalJobOfferService.fetchExternalOffers();
+
+        // Zapisz do cache
+        offerCacheService.cacheOffers(externalOffers);
+
+        // Zapisz do MongoDB
+        externalOffers.forEach(offer -> {
+            Offer offerEntity = new Offer();
+            offerEntity.setId(offer.getId().toString());
+            offerEntity.setTitle(offer.getTitle());
+            offerEntity.setDescription(offer.getDescription());
+            offerEntity.setLocation(offer.getLocation());
+            offerEntity.setSalaryRange(offer.getSalaryRange());
+            offerEntity.setTechnologies(offer.getTechnologies());
+            offerRepository.save(offerEntity);
+        });
+
+        return externalOffers;
     }
 }
