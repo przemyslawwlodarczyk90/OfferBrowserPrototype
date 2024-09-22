@@ -3,7 +3,10 @@ spring:
     mongodb:
       uri: mongodb://admin:admin123@localhost:27017/offer_browser_db
 
-# Ustawienia Spring Boot (opcjonalnie)
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
 server:
   port: 8080
 
