@@ -10,18 +10,22 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class OfferCacheService {
 
-    private final RedisTemplate<String, List<OfferDTO>> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
     private static final String CACHE_KEY = "job_offers";
 
-    public OfferCacheService(RedisTemplate<String, List<OfferDTO>> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
+    public OfferCacheService(RedisTemplate<String, Object> redisTemplate) {
+            this.redisTemplate = redisTemplate;
+        }
 
-    public void cacheOffers(List<OfferDTO> offers) {
+        public void cacheOffers(List<OfferDTO> offers) {
         redisTemplate.opsForValue().set(CACHE_KEY, offers, 10, TimeUnit.MINUTES);
     }
 
     public List<OfferDTO> getCachedOffers() {
-        return redisTemplate.opsForValue().get(CACHE_KEY);
+        return (List<OfferDTO>) redisTemplate.opsForValue().get(CACHE_KEY);
+    }
+
+    public void clearCache() {
+        redisTemplate.delete(CACHE_KEY);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.offerbrowserprototype.domain.offer;
 
 import com.example.offerbrowserprototype.domain.offer.dto.OfferDTO;
+import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,15 +13,18 @@ public class OfferFacade {
     private final OfferUpdateHandler updateHandler;
     private final OfferDeletionHandler deletionHandler;
     private final OfferRetrievalHandler retrievalHandler;
+    private final OfferCacheService offerCacheService;
 
     public OfferFacade(OfferAdditionHandler additionHandler,
                        OfferUpdateHandler updateHandler,
                        OfferDeletionHandler deletionHandler,
-                       OfferRetrievalHandler retrievalHandler) {
+                       OfferRetrievalHandler retrievalHandler,
+                       OfferCacheService offerCacheService) {
         this.additionHandler = additionHandler;
         this.updateHandler = updateHandler;
         this.deletionHandler = deletionHandler;
         this.retrievalHandler = retrievalHandler;
+        this.offerCacheService = offerCacheService;
     }
 
     public OfferDTO addOffer(OfferDTO offerDto) {
@@ -40,6 +44,18 @@ public class OfferFacade {
     }
 
     public List<OfferDTO> getAllOffers() {
-        return retrievalHandler.getAllOffers();
+        // Sprawdź czy oferty są w cache
+        List<OfferDTO> cachedOffers = offerCacheService.getCachedOffers();
+        if (cachedOffers != null && !cachedOffers.isEmpty()) {
+            return cachedOffers;
+        }
+
+        // Jeśli nie ma ofert w cache, pobierz z retrievalHandler
+        List<OfferDTO> offers = retrievalHandler.getAllOffers();
+
+        // Zapisz oferty w cache
+        offerCacheService.cacheOffers(offers);
+
+        return offers;
     }
 }

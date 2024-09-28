@@ -2,6 +2,12 @@ spring:
   data:
     mongodb:
       uri: mongodb://admin:admin123@localhost:27017/offer_browser_db
+    redis:
+      host: localhost
+      port: 6379
+
+  cache:
+    type: redis
 
   autoconfigure:
     exclude:
@@ -14,12 +20,10 @@ logging:
   level:
     org.springframework.data.mongodb.core: DEBUG
 
-
 jwt:
   secret: your_secret_key_here
   expiration: 86400000  # Czas ważności tokenu JWT w milisekundach (np. 1 dzień)
   issuer: your_app_name_here  # Opcjonalnie, możesz podać swoją aplikację jako "issuer"
-
 
 springdoc:
   api-docs:
