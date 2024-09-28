@@ -12,15 +12,22 @@ class OfferRetrievalHandler {
     private final OfferRepository offerRepository;
     private final ExternalJobOfferService externalJobOfferService;
     private final OfferCacheService offerCacheService;
+    private final OfferMapper offerMapper;
 
-    public OfferRetrievalHandler(OfferRepository offerRepository, ExternalJobOfferService externalJobOfferService, OfferCacheService offerCacheService) {
+    public OfferRetrievalHandler(OfferRepository offerRepository,
+                                 ExternalJobOfferService externalJobOfferService,
+                                 OfferCacheService offerCacheService,
+                                 OfferMapper offerMapper) {
         this.offerRepository = offerRepository;
         this.externalJobOfferService = externalJobOfferService;
         this.offerCacheService = offerCacheService;
+        this.offerMapper = offerMapper;
     }
 
     public OfferDTO getOffer(Long id) {
-        return offerRepository.findById(id.toString()).orElse(null);
+        return offerRepository.findById(id.toString())
+                .map(offerMapper::toDTO) // Użycie mappera do konwersji
+                .orElse(null);
     }
 
     public List<OfferDTO> getAllOffers() {
@@ -38,13 +45,7 @@ class OfferRetrievalHandler {
 
         // Zapisz do MongoDB
         externalOffers.forEach(offer -> {
-            Offer offerEntity = new Offer();
-            offerEntity.setId(offer.getId().toString());
-            offerEntity.setTitle(offer.getTitle());
-            offerEntity.setDescription(offer.getDescription());
-            offerEntity.setLocation(offer.getLocation());
-            offerEntity.setSalaryRange(offer.getSalaryRange());
-            offerEntity.setTechnologies(offer.getTechnologies());
+            Offer offerEntity = offerMapper.toEntity(offer); // Konwersja DTO na encję
             offerRepository.save(offerEntity);
         });
 

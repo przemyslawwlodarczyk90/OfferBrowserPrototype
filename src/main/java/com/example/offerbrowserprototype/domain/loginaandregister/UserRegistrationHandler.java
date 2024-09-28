@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserRegistrationHandler {
+ class UserRegistrationHandler {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
