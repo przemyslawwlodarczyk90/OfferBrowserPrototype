@@ -12,10 +12,10 @@ import static com.example.offerbrowserprototype.infrastructure.cache.CacheKeys.J
 @Service
 public class OfferCacheStorageService {
 
-    private final RedisTemplate<String, List<OfferDTO>> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
     private static final String CACHE_KEY = JOB_OFFERS;
 
-    public OfferCacheStorageService(RedisTemplate<String, List<OfferDTO>> redisTemplate) {
+    public OfferCacheStorageService(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

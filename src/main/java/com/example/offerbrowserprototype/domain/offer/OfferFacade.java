@@ -31,17 +31,19 @@ public class OfferFacade {
         return additionHandler.addOffer(offerDto);
     }
 
-    public OfferDTO updateOffer(Long id, OfferDTO offerDto) {
+    public OfferDTO updateOffer(String id, OfferDTO offerDto) {
         return updateHandler.updateOffer(id, offerDto);
     }
 
-    public void deleteOffer(Long id) {
+    public OfferDTO getOffer(String id) {
+        return retrievalHandler.getOffer(id);
+    }
+
+    public void deleteOffer(String id) {
         deletionHandler.deleteOffer(id);
     }
 
-    public OfferDTO getOffer(Long id) {
-        return retrievalHandler.getOffer(id);
-    }
+
 
     public List<OfferDTO> getAllOffers() {
         // Sprawdź czy oferty są w cache

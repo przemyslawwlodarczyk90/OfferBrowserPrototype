@@ -1,7 +1,7 @@
 package com.example.offerbrowserprototype.domain.offer;
 
 import com.example.offerbrowserprototype.domain.offer.dto.OfferDTO;
-import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheService;
+import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheFacade;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,28 +11,28 @@ class OfferRetrievalHandler {
 
     private final OfferRepository offerRepository;
     private final ExternalJobOfferService externalJobOfferService;
-    private final OfferCacheService offerCacheService;
+    private final OfferCacheFacade offerCacheFacade; // Zmiana z OfferCacheService na OfferCacheFacade
     private final OfferMapper offerMapper;
 
     public OfferRetrievalHandler(OfferRepository offerRepository,
                                  ExternalJobOfferService externalJobOfferService,
-                                 OfferCacheService offerCacheService,
+                                 OfferCacheFacade offerCacheFacade, // Zmiana z OfferCacheService na OfferCacheFacade
                                  OfferMapper offerMapper) {
         this.offerRepository = offerRepository;
         this.externalJobOfferService = externalJobOfferService;
-        this.offerCacheService = offerCacheService;
+        this.offerCacheFacade = offerCacheFacade; // Zmiana z OfferCacheService na OfferCacheFacade
         this.offerMapper = offerMapper;
     }
 
-    public OfferDTO getOffer(Long id) {
-        return offerRepository.findById(id.toString())
+    public OfferDTO getOffer(String id) {
+        return offerRepository.findById(id)
                 .map(offerMapper::toDTO) // Użycie mappera do konwersji
                 .orElse(null);
     }
 
     public List<OfferDTO> getAllOffers() {
         // Sprawdź w cache
-        List<OfferDTO> cachedOffers = offerCacheService.getCachedOffers();
+        List<OfferDTO> cachedOffers = offerCacheFacade.getCachedOffers(); // Użyj offerCacheFacade
         if (cachedOffers != null && !cachedOffers.isEmpty()) {
             return cachedOffers;
         }
@@ -41,7 +41,7 @@ class OfferRetrievalHandler {
         List<OfferDTO> externalOffers = externalJobOfferService.fetchExternalOffers();
 
         // Zapisz do cache
-        offerCacheService.cacheOffers(externalOffers);
+        offerCacheFacade.cacheOffers(externalOffers); // Użyj offerCacheFacade
 
         // Zapisz do MongoDB
         externalOffers.forEach(offer -> {

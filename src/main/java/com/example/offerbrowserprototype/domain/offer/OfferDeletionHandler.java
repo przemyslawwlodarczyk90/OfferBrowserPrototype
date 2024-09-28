@@ -11,7 +11,7 @@ class OfferDeletionHandler {
         this.offerRepository = offerRepository;
     }
 
-    void deleteOffer(Long id) {
-        offerRepository.deleteById(id.toString());
+    void deleteOffer(String id) {
+        offerRepository.deleteById(id);
     }
 }

@@ -14,9 +14,9 @@ class OfferUpdateHandler {
         this.offerMapper = offerMapper;
     }
 
-    OfferDTO updateOffer(Long id, OfferDTO offerDto) {
-        Offer existingOffer = offerRepository.findById(id.toString())
-                .orElseThrow(() -> new RuntimeException("Offer not found")); // Zgłoś wyjątek, jeśli oferta nie istnieje
+    OfferDTO updateOffer(String id, OfferDTO offerDto) {
+        Offer existingOffer = offerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Offer not found"));
 
         // Aktualizuj pola oferty
         existingOffer.setTitle(offerDto.getTitle());
