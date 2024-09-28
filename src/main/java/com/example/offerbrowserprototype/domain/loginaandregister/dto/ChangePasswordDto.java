@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ChangePasswordDto {
-    private Long id;
+    private String id; // Zmieniono z `Long` na `String`
     private String oldPassword;
     private String newPassword;
 }

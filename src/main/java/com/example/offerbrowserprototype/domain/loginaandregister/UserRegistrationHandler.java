@@ -3,19 +3,22 @@ package com.example.offerbrowserprototype.domain.loginaandregister;
 import com.example.offerbrowserprototype.domain.loginaandregister.dto.RegisterUserDTO;
 import com.example.offerbrowserprototype.domain.loginaandregister.dto.RegistrationResultDTO;
 import com.example.offerbrowserprototype.domain.user.User;
+import com.example.offerbrowserprototype.domain.user.UserMapper;
 import com.example.offerbrowserprototype.domain.user.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
- class UserRegistrationHandler {
+public class UserRegistrationHandler {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
-    public UserRegistrationHandler(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserRegistrationHandler(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
 
     public RegistrationResultDTO register(RegisterUserDTO userDto) {
@@ -27,11 +30,8 @@ import org.springframework.stereotype.Component;
         // Hashowanie hasła
         String hashedPassword = passwordEncoder.encode(userDto.getPassword());
 
-        // Tworzenie użytkownika
-        User newUser = new User();
-        newUser.setUsername(userDto.getUsername());
-        newUser.setEmail(userDto.getEmail());
-        newUser.setPassword(hashedPassword);
+        // Tworzenie użytkownika za pomocą `UserMapper`
+        User newUser = userMapper.toEntity(userDto, hashedPassword);
 
         // Zapis do bazy danych
         userRepository.save(newUser);

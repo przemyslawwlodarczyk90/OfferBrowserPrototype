@@ -12,7 +12,7 @@ public class OfferMapper {
     // Metoda do konwersji z `Offer` na `OfferDTO`
     public OfferDTO toDTO(Offer offer) {
         return new OfferDTO(
-                Long.parseLong(offer.getId()), // Zakładamy, że ID można przekonwertować na Long
+                offer.getId(), // Użyj `String` zamiast `Long`
                 offer.getTitle(),
                 offer.getDescription(),
                 offer.getLocation(),
@@ -31,7 +31,7 @@ public class OfferMapper {
     // Metoda do konwersji z `OfferDTO` na `Offer`
     public Offer toEntity(OfferDTO offerDTO) {
         Offer offer = new Offer();
-        offer.setId(offerDTO.getId().toString()); // Zakładamy, że ID można przekonwertować na String
+        offer.setId(offerDTO.getId()); // Użyj `String` bez konwersji
         offer.setTitle(offerDTO.getTitle());
         offer.setDescription(offerDTO.getDescription());
         offer.setLocation(offerDTO.getLocation());

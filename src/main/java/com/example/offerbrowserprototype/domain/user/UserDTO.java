@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-    private Long id;
+    private String id; // Zmieniono z `Long` na `String` dla spójności z `User`
     private String username;
     private String email;
-
 }
