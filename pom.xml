@@ -1,8 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>OfferBrowserPrototype</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>OfferBrowserPrototype</name>
+    <description>OfferBrowserPrototype</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -11,18 +16,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.example</groupId>
-    <artifactId>OfferBrowserPrototype</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>OfferBrowserPrototype</name>
-    <description>OfferBrowserPrototype</description>
-
     <properties>
         <java.version>19</java.version>
         <spring.boot.version>3.2.5</spring.boot.version>
         <wiremock.version>3.0.1</wiremock.version>
         <lombok.version>1.18.24</lombok.version>
         <postgresql.version>42.6.0</postgresql.version>
+        <spring-data-redis.version>3.0.8</spring-data-redis.version> <!-- Zaktualizuj na odpowiednią wersję -->
+        <jedis.version>4.3.1</jedis.version> <!-- Dodaj odpowiednią wersję -->
     </properties>
 
     <dependencies>
@@ -136,23 +137,18 @@
 
         <!-- Spring Data Redis -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>${spring-data-redis.version}</version>
         </dependency>
 
-        <!-- Lettuce Redis Client -->
+        <!-- Jedis Redis Client -->
         <dependency>
-            <groupId>io.lettuce.core</groupId>
-            <artifactId>lettuce-core</artifactId>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
         </dependency>
 
-        <!-- Testcontainers for Redis (Optional) -->
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>redis</artifactId>
-            <version>1.19.0</version>
-            <scope>test</scope>
-        </dependency>
 
         <!-- Springdoc for Swagger -->
         <dependency>
