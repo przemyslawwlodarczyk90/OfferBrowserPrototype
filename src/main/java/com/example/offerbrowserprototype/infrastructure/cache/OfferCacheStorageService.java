@@ -7,13 +7,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static com.example.offerbrowserprototype.infrastructure.cache.CacheKeys.JOB_OFFERS;
+
 @Service
 public class OfferCacheStorageService {
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private static final String CACHE_KEY = "job_offers";
+    private final RedisTemplate<String, List<OfferDTO>> redisTemplate;
+    private static final String CACHE_KEY = JOB_OFFERS;
 
-    public OfferCacheStorageService(RedisTemplate<String, Object> redisTemplate) {
+    public OfferCacheStorageService(RedisTemplate<String, List<OfferDTO>> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

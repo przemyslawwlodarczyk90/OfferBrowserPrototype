@@ -1,7 +1,7 @@
 package com.example.offerbrowserprototype.domain.offer;
 
 import com.example.offerbrowserprototype.domain.offer.dto.OfferDTO;
-import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheService;
+import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheFacade;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,18 +13,18 @@ public class OfferFacade {
     private final OfferUpdateHandler updateHandler;
     private final OfferDeletionHandler deletionHandler;
     private final OfferRetrievalHandler retrievalHandler;
-    private final OfferCacheService offerCacheService;
+    private final OfferCacheFacade offerCacheFacade; // Zmiana z OfferCacheService na OfferCacheFacade
 
     public OfferFacade(OfferAdditionHandler additionHandler,
                        OfferUpdateHandler updateHandler,
                        OfferDeletionHandler deletionHandler,
                        OfferRetrievalHandler retrievalHandler,
-                       OfferCacheService offerCacheService) {
+                       OfferCacheFacade offerCacheFacade) { // Zmiana z OfferCacheService na OfferCacheFacade
         this.additionHandler = additionHandler;
         this.updateHandler = updateHandler;
         this.deletionHandler = deletionHandler;
         this.retrievalHandler = retrievalHandler;
-        this.offerCacheService = offerCacheService;
+        this.offerCacheFacade = offerCacheFacade; // Zmiana z OfferCacheService na OfferCacheFacade
     }
 
     public OfferDTO addOffer(OfferDTO offerDto) {
@@ -45,7 +45,7 @@ public class OfferFacade {
 
     public List<OfferDTO> getAllOffers() {
         // Sprawdź czy oferty są w cache
-        List<OfferDTO> cachedOffers = offerCacheService.getCachedOffers();
+        List<OfferDTO> cachedOffers = offerCacheFacade.getCachedOffers(); // Użyj offerCacheFacade
         if (cachedOffers != null && !cachedOffers.isEmpty()) {
             return cachedOffers;
         }
@@ -54,7 +54,7 @@ public class OfferFacade {
         List<OfferDTO> offers = retrievalHandler.getAllOffers();
 
         // Zapisz oferty w cache
-        offerCacheService.cacheOffers(offers);
+        offerCacheFacade.cacheOffers(offers); // Użyj offerCacheFacade
 
         return offers;
     }
