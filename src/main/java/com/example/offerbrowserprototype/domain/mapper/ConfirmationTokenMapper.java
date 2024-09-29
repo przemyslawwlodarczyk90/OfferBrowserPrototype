@@ -1,5 +1,7 @@
-package com.example.offerbrowserprototype.domain.user;
+package com.example.offerbrowserprototype.domain.mapper;
 
+import com.example.offerbrowserprototype.domain.user.ConfirmationToken;
+import com.example.offerbrowserprototype.domain.dto.confirmationtoken.ConfirmationTokenDTO;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,10 +1,11 @@
 package com.example.offerbrowserprototype.domain.loginaandregister;
 
-import com.example.offerbrowserprototype.domain.loginaandregister.dto.*;
+import com.example.offerbrowserprototype.domain.dto.loginandregister.*;
+
 
 import com.example.offerbrowserprototype.domain.user.ConfirmationToken;
 import com.example.offerbrowserprototype.domain.user.User;
-import com.example.offerbrowserprototype.domain.user.UserDTO;
+import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
 import com.example.offerbrowserprototype.domain.user.UserRepository;
 import com.example.offerbrowserprototype.infrastructure.service.ConfirmationTokenService;
 import org.springframework.stereotype.Component;

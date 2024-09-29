@@ -1,6 +1,5 @@
 package com.example.offerbrowserprototype.infrastructure.cache;
 
-import com.example.offerbrowserprototype.domain.offer.dto.OfferDTO;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 

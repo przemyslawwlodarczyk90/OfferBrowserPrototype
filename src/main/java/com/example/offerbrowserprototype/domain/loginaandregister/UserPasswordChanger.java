@@ -1,6 +1,6 @@
 package com.example.offerbrowserprototype.domain.loginaandregister;
 
-import com.example.offerbrowserprototype.domain.loginaandregister.dto.ChangePasswordDto;
+import com.example.offerbrowserprototype.domain.dto.loginandregister.ChangePasswordDto;
 import org.springframework.stereotype.Component;
 
 @Component

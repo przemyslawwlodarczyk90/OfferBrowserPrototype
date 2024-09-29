@@ -1,5 +1,6 @@
-package com.example.offerbrowserprototype.domain.user;
+package com.example.offerbrowserprototype.infrastructure.repository;
 
+import com.example.offerbrowserprototype.domain.user.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 

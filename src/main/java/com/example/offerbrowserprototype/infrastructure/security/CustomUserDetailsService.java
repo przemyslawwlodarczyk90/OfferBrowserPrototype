@@ -1,7 +1,8 @@
 package com.example.offerbrowserprototype.infrastructure.security;
 
 import com.example.offerbrowserprototype.domain.user.User;
-import com.example.offerbrowserprototype.domain.user.UserRepository;
+
+import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

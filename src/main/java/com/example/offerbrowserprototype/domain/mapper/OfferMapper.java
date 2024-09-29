@@ -1,6 +1,7 @@
-package com.example.offerbrowserprototype.domain.offer;
+package com.example.offerbrowserprototype.domain.mapper;
 
-import com.example.offerbrowserprototype.domain.offer.dto.OfferDTO;
+import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.domain.offer.Offer;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

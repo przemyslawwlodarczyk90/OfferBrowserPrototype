@@ -1,7 +1,9 @@
-package com.example.offerbrowserprototype.domain.user;
+package com.example.offerbrowserprototype.domain.mapper;
 
-import com.example.offerbrowserprototype.domain.loginaandregister.dto.RegisterUserDTO;
-import com.example.offerbrowserprototype.domain.loginaandregister.dto.UpdateUserDto;
+import com.example.offerbrowserprototype.domain.dto.loginandregister.RegisterUserDTO;
+import com.example.offerbrowserprototype.domain.dto.loginandregister.UpdateUserDto;
+import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
+import com.example.offerbrowserprototype.domain.user.User;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 

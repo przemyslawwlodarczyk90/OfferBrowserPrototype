@@ -1,4 +1,4 @@
-package com.example.offerbrowserprototype.domain.loginaandregister.dto;
+package com.example.offerbrowserprototype.domain.dto.loginandregister;
 
 import lombok.Data;
 

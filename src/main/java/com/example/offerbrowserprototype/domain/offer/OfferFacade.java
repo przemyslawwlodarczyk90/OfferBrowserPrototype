@@ -1,6 +1,6 @@
 package com.example.offerbrowserprototype.domain.offer;
 
-import com.example.offerbrowserprototype.domain.offer.dto.OfferDTO;
+import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheFacade;
 import org.springframework.stereotype.Component;
 

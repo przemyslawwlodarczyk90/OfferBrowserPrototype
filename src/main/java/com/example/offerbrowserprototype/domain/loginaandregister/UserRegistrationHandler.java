@@ -1,10 +1,10 @@
 package com.example.offerbrowserprototype.domain.loginaandregister;
 
-import com.example.offerbrowserprototype.domain.loginaandregister.dto.RegisterUserDTO;
-import com.example.offerbrowserprototype.domain.loginaandregister.dto.RegistrationResultDTO;
+import com.example.offerbrowserprototype.domain.dto.loginandregister.RegisterUserDTO;
+import com.example.offerbrowserprototype.domain.dto.loginandregister.RegistrationResultDTO;
 import com.example.offerbrowserprototype.domain.user.ConfirmationToken;
 import com.example.offerbrowserprototype.domain.user.User;
-import com.example.offerbrowserprototype.domain.user.UserMapper;
+import com.example.offerbrowserprototype.domain.mapper.UserMapper;
 import com.example.offerbrowserprototype.domain.user.UserRepository;
 import com.example.offerbrowserprototype.infrastructure.service.ConfirmationTokenService;
 import com.example.offerbrowserprototype.infrastructure.service.MailService;

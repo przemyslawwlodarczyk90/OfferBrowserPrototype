@@ -1,4 +1,4 @@
-package com.example.offerbrowserprototype.domain.offer.dto;
+package com.example.offerbrowserprototype.domain.dto.offer;
 
 import lombok.Data;
 

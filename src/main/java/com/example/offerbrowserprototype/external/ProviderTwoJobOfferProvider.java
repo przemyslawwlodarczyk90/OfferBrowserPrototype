@@ -1,6 +1,6 @@
 package com.example.offerbrowserprototype.external;
 
-import com.example.offerbrowserprototype.domain.offer.dto.OfferDTO;
+import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;

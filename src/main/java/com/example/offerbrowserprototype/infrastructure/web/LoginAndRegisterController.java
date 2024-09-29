@@ -1,8 +1,9 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
+import com.example.offerbrowserprototype.domain.dto.loginandregister.*;
 import com.example.offerbrowserprototype.domain.loginaandregister.LoginAndRegisterFacade;
-import com.example.offerbrowserprototype.domain.loginaandregister.dto.*;
-import com.example.offerbrowserprototype.domain.user.UserDTO;
+
+import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

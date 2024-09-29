@@ -1,4 +1,4 @@
-package com.example.offerbrowserprototype.domain.user;
+package com.example.offerbrowserprototype.domain.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

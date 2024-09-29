@@ -1,4 +1,4 @@
-package com.example.offerbrowserprototype.domain.user;
+package com.example.offerbrowserprototype.domain.dto.confirmationtoken;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
