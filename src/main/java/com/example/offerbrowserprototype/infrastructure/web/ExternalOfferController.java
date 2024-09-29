@@ -28,9 +28,7 @@ public class ExternalOfferController {
 
     @Operation(summary = "Fetch all external job offers", description = "Retrieves job offers from all available external providers")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved list of offers",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = OfferDTO.class))}),
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved list of offers", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OfferDTO.class))),
             @ApiResponse(responseCode = "204", description = "No content found", content = @Content)
     })
     @GetMapping
@@ -41,9 +39,7 @@ public class ExternalOfferController {
 
     @Operation(summary = "Get available external providers", description = "Retrieves a list of all currently available external job offer providers")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved list of providers",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = String.class))})
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved list of providers", content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class)))
     })
     @GetMapping("/providers")
     public ResponseEntity<List<String>> getAvailableProviders() {
