@@ -2,6 +2,7 @@ package com.example.offerbrowserprototype.domain.offer;
 
 import com.example.offerbrowserprototype.domain.offer.dto.OfferDTO;
 import com.example.offerbrowserprototype.external.JobOfferProviderFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class ExternalJobOfferService {
         this.jobOfferProviderFactory = jobOfferProviderFactory;
     }
 
+    @Async
     public List<OfferDTO> fetchExternalOffers() {
         return jobOfferProviderFactory.fetchAllOffers();
     }
