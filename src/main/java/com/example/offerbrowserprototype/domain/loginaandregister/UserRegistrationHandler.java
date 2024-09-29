@@ -5,7 +5,8 @@ import com.example.offerbrowserprototype.domain.dto.loginandregister.Registratio
 import com.example.offerbrowserprototype.domain.user.ConfirmationToken;
 import com.example.offerbrowserprototype.domain.user.User;
 import com.example.offerbrowserprototype.domain.mapper.UserMapper;
-import com.example.offerbrowserprototype.domain.user.UserRepository;
+
+import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import com.example.offerbrowserprototype.infrastructure.service.ConfirmationTokenService;
 import com.example.offerbrowserprototype.infrastructure.service.MailService;
 import org.springframework.security.crypto.password.PasswordEncoder;

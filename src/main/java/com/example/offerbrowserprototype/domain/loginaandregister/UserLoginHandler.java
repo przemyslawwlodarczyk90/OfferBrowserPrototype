@@ -1,7 +1,8 @@
 package com.example.offerbrowserprototype.domain.loginaandregister;
 
 import com.example.offerbrowserprototype.domain.dto.loginandregister.LoginDto;
-import com.example.offerbrowserprototype.domain.user.UserRepository;
+
+import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 @Component

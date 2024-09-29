@@ -2,6 +2,7 @@ package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.offer.OfferFacade;
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.domain.offer.OfferService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,9 +21,11 @@ import java.util.List;
 public class OfferController {
 
     private final OfferFacade offerFacade;
+    private final OfferService offerService;
 
-    public OfferController(OfferFacade offerFacade) {
+    public OfferController(OfferFacade offerFacade, OfferService offerService) {
         this.offerFacade = offerFacade;
+        this.offerService = offerService;
     }
 
     @Operation(summary = "Add a new offer", description = "Creates a new job offer in the system")
@@ -57,29 +60,46 @@ public class OfferController {
         offerFacade.deleteOffer(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    @Operation(summary = "Get a specific offer", description = "Retrieves a specific job offer by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Offer retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OfferDTO.class))),
-            @ApiResponse(responseCode = "404", description = "Offer not found", content = @Content)
-    })
-    @GetMapping("/{id}")
-    public ResponseEntity<OfferDTO> getOffer(@PathVariable String id) {
-        OfferDTO offer = offerFacade.getOffer(id);
-        if (offer != null) {
-            return new ResponseEntity<>(offer, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @Operation(summary = "Get all offers", description = "Retrieves all job offers")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Offers retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OfferDTO.class)))
-    })
     @GetMapping
     public ResponseEntity<List<OfferDTO>> getAllOffers() {
-        List<OfferDTO> offers = offerFacade.getAllOffers();
-        return new ResponseEntity<>(offers, HttpStatus.OK);
+        return ResponseEntity.ok(offerService.getAllOffers());
+    }
+
+    @Operation(summary = "Get not applied offers", description = "Retrieve all offers that haven't been applied to.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved not applied offers")
+    })
+    @GetMapping("/not-applied")
+    public ResponseEntity<List<OfferDTO>> getNotAppliedOffers() {
+        return ResponseEntity.ok(offerService.getNotAppliedOffers());
+    }
+
+    @Operation(summary = "Get applied offers", description = "Retrieve all offers that have been applied to.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved applied offers")
+    })
+    @GetMapping("/applied")
+    public ResponseEntity<List<OfferDTO>> getAppliedOffers() {
+        return ResponseEntity.ok(offerService.getAppliedOffers());
+    }
+
+    @Operation(summary = "Apply to an offer", description = "Mark an offer as applied.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully applied to the offer")
+    })
+    @PostMapping("/{offerId}/apply")
+    public ResponseEntity<Void> applyToOffer(@PathVariable String offerId) {
+        offerService.applyToOffer(offerId);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Get offer details", description = "Retrieve the details of an offer by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved offer details"),
+            @ApiResponse(responseCode = "404", description = "Offer not found")
+    })
+    @GetMapping("/{offerId}")
+    public ResponseEntity<OfferDTO> getOfferById(@PathVariable String offerId) {
+        return ResponseEntity.ok(offerService.getOfferById(offerId));
     }
 }

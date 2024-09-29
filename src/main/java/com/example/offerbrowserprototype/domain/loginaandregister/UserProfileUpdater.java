@@ -4,7 +4,8 @@ import com.example.offerbrowserprototype.domain.dto.loginandregister.UpdateUserD
 import com.example.offerbrowserprototype.domain.user.User;
 import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
 import com.example.offerbrowserprototype.domain.mapper.UserMapper;
-import com.example.offerbrowserprototype.domain.user.UserRepository;
+
+import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 @Component

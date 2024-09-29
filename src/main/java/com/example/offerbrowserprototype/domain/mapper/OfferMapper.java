@@ -4,47 +4,32 @@ import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.offer.Offer;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class OfferMapper {
 
-    // Metoda do konwersji z `Offer` na `OfferDTO`
     public OfferDTO toDTO(Offer offer) {
-        return new OfferDTO(
-                offer.getId(), // Użyj `String` zamiast `Long`
-                offer.getTitle(),
-                offer.getDescription(),
-                offer.getLocation(),
-                offer.getSalaryRange(),
-                offer.getTechnologies()
-        );
+        OfferDTO dto = new OfferDTO();
+        dto.setId(offer.getId());
+        dto.setTitle(offer.getTitle());
+        dto.setDescription(offer.getDescription());
+        dto.setLocation(offer.getLocation());
+        dto.setSalaryRange(offer.getSalaryRange());
+        dto.setTechnologies(offer.getTechnologies());
+        dto.setApplied(offer.isApplied());
+        dto.setFetchedAt(offer.getFetchedAt());
+        return dto;
     }
 
-    // Metoda do konwersji listy `Offer` na listę `OfferDTO`
-    public List<OfferDTO> toDTOList(List<Offer> offers) {
-        return offers.stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    // Metoda do konwersji z `OfferDTO` na `Offer`
-    public Offer toEntity(OfferDTO offerDTO) {
+    public Offer toEntity(OfferDTO dto) {
         Offer offer = new Offer();
-        offer.setId(offerDTO.getId()); // Użyj `String` bez konwersji
-        offer.setTitle(offerDTO.getTitle());
-        offer.setDescription(offerDTO.getDescription());
-        offer.setLocation(offerDTO.getLocation());
-        offer.setSalaryRange(offerDTO.getSalaryRange());
-        offer.setTechnologies(offerDTO.getTechnologies());
+        offer.setTitle(dto.getTitle());
+        offer.setDescription(dto.getDescription());
+        offer.setLocation(dto.getLocation());
+        offer.setSalaryRange(dto.getSalaryRange());
+        offer.setTechnologies(dto.getTechnologies());
+        offer.setApplied(dto.isApplied());
+        offer.setFetchedAt(dto.getFetchedAt());
         return offer;
-    }
-
-    // Metoda do konwersji listy `OfferDTO` na listę `Offer`
-    public List<Offer> toEntityList(List<OfferDTO> offerDTOs) {
-        return offerDTOs.stream()
-                .map(this::toEntity)
-                .collect(Collectors.toList());
     }
 }
