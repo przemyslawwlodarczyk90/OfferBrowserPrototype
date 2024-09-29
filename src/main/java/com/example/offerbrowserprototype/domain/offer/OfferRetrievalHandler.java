@@ -2,6 +2,8 @@ package com.example.offerbrowserprototype.domain.offer;
 
 import com.example.offerbrowserprototype.domain.offer.dto.OfferDTO;
 import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheFacade;
+import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
+import com.example.offerbrowserprototype.infrastructure.service.ExternalJobOfferService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

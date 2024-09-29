@@ -1,4 +1,4 @@
-package com.example.offerbrowserprototype.domain.offer;
+package com.example.offerbrowserprototype.infrastructure.service;
 
 import com.example.offerbrowserprototype.domain.offer.dto.OfferDTO;
 import com.example.offerbrowserprototype.external.JobOfferProviderFactory;

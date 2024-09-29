@@ -1,6 +1,6 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
-import com.example.offerbrowserprototype.domain.offer.ExternalJobOfferService;
+import com.example.offerbrowserprototype.infrastructure.service.ExternalJobOfferService;
 import com.example.offerbrowserprototype.domain.offer.dto.OfferDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

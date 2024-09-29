@@ -1,7 +1,7 @@
 package com.example.offerbrowserprototype.infrastructure.scheduler;
 
 
-import com.example.offerbrowserprototype.domain.offer.ExternalJobOfferService;
+import com.example.offerbrowserprototype.infrastructure.service.ExternalJobOfferService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

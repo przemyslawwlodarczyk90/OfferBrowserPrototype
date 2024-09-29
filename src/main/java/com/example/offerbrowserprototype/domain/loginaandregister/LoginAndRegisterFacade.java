@@ -2,7 +2,11 @@ package com.example.offerbrowserprototype.domain.loginaandregister;
 
 import com.example.offerbrowserprototype.domain.loginaandregister.dto.*;
 
+import com.example.offerbrowserprototype.domain.user.ConfirmationToken;
+import com.example.offerbrowserprototype.domain.user.User;
 import com.example.offerbrowserprototype.domain.user.UserDTO;
+import com.example.offerbrowserprototype.domain.user.UserRepository;
+import com.example.offerbrowserprototype.infrastructure.service.ConfirmationTokenService;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,16 +15,20 @@ public class LoginAndRegisterFacade {
     private final UserRegistrationHandler registrationHandler;
     private final UserLoginHandler loginHandler;
     private final UserProfileUpdater profileUpdater;
+    private final ConfirmationTokenService confirmationTokenService;
     private final UserPasswordChanger passwordChanger;
+    private final UserRepository userRepository;
 
     public LoginAndRegisterFacade(UserRegistrationHandler registrationHandler,
                                   UserLoginHandler loginHandler,
                                   UserProfileUpdater profileUpdater,
-                                  UserPasswordChanger passwordChanger) {
+                                  ConfirmationTokenService confirmationTokenService, UserPasswordChanger passwordChanger, UserRepository userRepository) {
         this.registrationHandler = registrationHandler;
         this.loginHandler = loginHandler;
         this.profileUpdater = profileUpdater;
+        this.confirmationTokenService = confirmationTokenService;
         this.passwordChanger = passwordChanger;
+        this.userRepository = userRepository;
     }
 
     public RegistrationResultDTO register(RegisterUserDTO userDto) {
@@ -38,4 +46,25 @@ public class LoginAndRegisterFacade {
     public boolean changeUserPassword(ChangePasswordDto changePasswordDto) {
         return passwordChanger.changeUserPassword(changePasswordDto);
     }
+    public String confirmRegistration(String token) {
+        ConfirmationToken confirmationToken = confirmationTokenService.getToken(token)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid token"));
+
+        // Potwierdzenie tokena i aktywacja użytkownika
+        confirmationTokenService.confirmToken(confirmationToken);
+        activateUser(confirmationToken.getUserId());
+
+        return "Registration confirmed!";
+    }
+
+    private void activateUser(String userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        user.setActive(true); // Ustawienie pola 'active' na true, aby aktywować użytkownika
+        userRepository.save(user);
+    }
+
+
+
 }

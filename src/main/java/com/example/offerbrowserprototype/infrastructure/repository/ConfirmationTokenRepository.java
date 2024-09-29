@@ -1,5 +1,6 @@
-package com.example.offerbrowserprototype.domain.user;
+package com.example.offerbrowserprototype.infrastructure.repository;
 
+import com.example.offerbrowserprototype.domain.user.ConfirmationToken;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

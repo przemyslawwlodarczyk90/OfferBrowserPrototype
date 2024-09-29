@@ -26,6 +26,7 @@
         <postgresql.version>42.6.0</postgresql.version>
         <spring-data-redis.version>3.0.8</spring-data-redis.version> <!-- Zaktualizuj na odpowiednią wersję -->
         <jedis.version>4.3.1</jedis.version> <!-- Dodaj odpowiednią wersję -->
+        <greenmail.version>1.6.3</greenmail.version>
     </properties>
 
     <dependencies>
@@ -156,6 +157,25 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.6.0</version>
+        </dependency>
+
+
+        <!-- GreenMail -->
+        <dependency>
+            <groupId>com.icegreen</groupId>
+            <artifactId>greenmail</artifactId>
+            <version>${greenmail.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.mail</groupId>
+            <artifactId>jakarta.mail-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>2.0.1</version>
         </dependency>
 
     </dependencies>

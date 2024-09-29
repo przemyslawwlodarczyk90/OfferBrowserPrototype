@@ -17,8 +17,8 @@ public class ConfirmationToken {
     private String token;
     private LocalDateTime createdAt;
     private LocalDateTime expiresAt;
-    private LocalDateTime confirmedAt;
-    private String userId;  // Referencja do użytkownika
+    private LocalDateTime confirmedAt; // Pole wskazujące datę potwierdzenia tokenu
+    private String userId; // Referencja do użytkownika
 
     public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt, String userId) {
         this.token = token;

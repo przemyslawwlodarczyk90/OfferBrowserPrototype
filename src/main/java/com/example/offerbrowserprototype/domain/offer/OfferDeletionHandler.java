@@ -1,5 +1,6 @@
 package com.example.offerbrowserprototype.domain.offer;
 
+import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import org.springframework.stereotype.Component;
 
 @Component
