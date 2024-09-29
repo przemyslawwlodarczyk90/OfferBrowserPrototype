@@ -43,4 +43,14 @@ public class JwtService {
                 .build();
         return verifier.verify(token);
     }
+
+    public String generateToken(UserDetails userDetails) {
+        Algorithm algorithm = Algorithm.HMAC256(secretKey);
+        return JWT.create()
+                .withSubject(userDetails.getUsername())
+                .withIssuedAt(new Date())
+                .withIssuer(issuer)
+                .sign(algorithm);
+    }
+
 }
