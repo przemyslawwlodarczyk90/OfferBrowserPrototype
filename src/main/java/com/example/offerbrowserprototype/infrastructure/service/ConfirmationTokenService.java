@@ -4,6 +4,7 @@ import com.example.offerbrowserprototype.domain.user.ConfirmationToken;
 import com.example.offerbrowserprototype.infrastructure.repository.ConfirmationTokenRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -11,11 +12,12 @@ import java.util.Optional;
 public class ConfirmationTokenService {
 
     private final ConfirmationTokenRepository tokenRepository;
+    private final Clock clock;
 
-    public ConfirmationTokenService(ConfirmationTokenRepository tokenRepository) {
+    public ConfirmationTokenService(ConfirmationTokenRepository tokenRepository, Clock clock) {
         this.tokenRepository = tokenRepository;
+        this.clock = clock;
     }
-
     public void saveConfirmationToken(ConfirmationToken token) {
         tokenRepository.save(token);
     }
@@ -25,13 +27,12 @@ public class ConfirmationTokenService {
     }
 
     public void confirmToken(ConfirmationToken token) {
-        // Sprawdź, czy token nie został już potwierdzony lub wygasł
-        if (token.getExpiresAt().isBefore(LocalDateTime.now())) {
+        // Użycie Clock do porównania czasu
+        if (token.getExpiresAt().isBefore(LocalDateTime.now(clock))) {
             throw new IllegalArgumentException("Token has expired");
         }
 
-        // Ustawienie tokenu jako potwierdzonego
-        token.setConfirmedAt(LocalDateTime.now());
+        token.setConfirmedAt(LocalDateTime.now(clock));
         tokenRepository.save(token);
     }
 }

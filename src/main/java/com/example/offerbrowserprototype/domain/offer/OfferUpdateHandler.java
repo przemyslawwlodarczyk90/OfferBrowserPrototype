@@ -5,15 +5,20 @@ import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import org.springframework.stereotype.Component;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
+
 @Component
 class OfferUpdateHandler {
 
     private final OfferRepository offerRepository;
     private final OfferMapper offerMapper;
+    private final Clock clock;
 
-    public OfferUpdateHandler(OfferRepository offerRepository, OfferMapper offerMapper) {
+    public OfferUpdateHandler(OfferRepository offerRepository, OfferMapper offerMapper, Clock clock) {
         this.offerRepository = offerRepository;
         this.offerMapper = offerMapper;
+        this.clock = clock;
     }
 
     OfferDTO updateOffer(String id, OfferDTO offerDto) {
@@ -26,6 +31,8 @@ class OfferUpdateHandler {
         existingOffer.setLocation(offerDto.getLocation());
         existingOffer.setSalaryRange(offerDto.getSalaryRange());
         existingOffer.setTechnologies(offerDto.getTechnologies());
+        // Aktualizacja danych
+        existingOffer.setFetchedAt(LocalDateTime.now(clock));
 
         // Zapisz zaktualizowaną ofertę
         Offer updatedOffer = offerRepository.save(existingOffer);

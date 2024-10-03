@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 
 @Data
@@ -23,13 +24,12 @@ public class Offer {
     private boolean applied; // Dodanie pola 'applied' do śledzenia, czy aplikowałeś na ofertę
     private LocalDateTime fetchedAt; // Data pobrania oferty
 
-    public Offer(String title, String description, String location, String salaryRange, String technologies) {
+    public Offer(String title, String description, String location, String salaryRange, String technologies, Clock clock) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.salaryRange = salaryRange;
         this.technologies = technologies;
-        this.applied = false; // Domyślnie oferta nie jest aplikowana
-        this.fetchedAt = LocalDateTime.now(); // Ustawienie czasu pobrania
-    }
-}
+        this.applied = false;
+        this.fetchedAt = LocalDateTime.now(clock); // Użycie Clock do uzyskania bieżącego czasu
+    }}

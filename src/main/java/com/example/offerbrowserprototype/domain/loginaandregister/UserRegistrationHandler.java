@@ -12,6 +12,7 @@ import com.example.offerbrowserprototype.infrastructure.service.MailService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 
 @Component
@@ -22,15 +23,17 @@ class UserRegistrationHandler {
     private final UserMapper userMapper;
     private final MailService mailService;
     private final ConfirmationTokenService confirmationTokenService;
+    private final Clock clock;
 
     public UserRegistrationHandler(UserRepository userRepository, PasswordEncoder passwordEncoder,
                                    UserMapper userMapper, MailService mailService,
-                                   ConfirmationTokenService confirmationTokenService) {
+                                   ConfirmationTokenService confirmationTokenService, Clock clock) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
         this.mailService = mailService;
         this.confirmationTokenService = confirmationTokenService;
+        this.clock = clock;
     }
 
     public RegistrationResultDTO register(RegisterUserDTO userDto) {
@@ -55,8 +58,8 @@ class UserRegistrationHandler {
         // Tworzenie tokenu rejestracyjnego i zapis do bazy danych
         ConfirmationToken token = new ConfirmationToken(
                 confirmationToken,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusDays(1), // Token ważny przez 24 godziny
+                LocalDateTime.now(clock), // Użycie Clock do uzyskania aktualnego czasu
+                LocalDateTime.now(clock).plusDays(1), // Token ważny przez 24 godziny
                 newUser.getId()
         );
         confirmationTokenService.saveConfirmationToken(token);
