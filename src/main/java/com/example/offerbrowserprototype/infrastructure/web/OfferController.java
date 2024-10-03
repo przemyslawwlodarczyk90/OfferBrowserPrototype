@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class OfferController {
             @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
     })
     @PostMapping
-    public ResponseEntity<OfferDTO> addOffer(@RequestBody OfferDTO offerDto) {
+    public ResponseEntity<OfferDTO> addOffer(@Valid @RequestBody OfferDTO offerDto) {
         OfferDTO createdOffer = offerFacade.addOffer(offerDto);
         return new ResponseEntity<>(createdOffer, HttpStatus.CREATED);
     }
@@ -45,7 +46,7 @@ public class OfferController {
             @ApiResponse(responseCode = "404", description = "Offer not found", content = @Content)
     })
     @PutMapping("/{id}")
-    public ResponseEntity<OfferDTO> updateOffer(@PathVariable String id, @RequestBody OfferDTO offerDto) {
+    public ResponseEntity<OfferDTO> updateOffer(@PathVariable String id, @Valid @RequestBody OfferDTO offerDto) {
         OfferDTO updatedOffer = offerFacade.updateOffer(id, offerDto);
         return new ResponseEntity<>(updatedOffer, HttpStatus.OK);
     }
@@ -60,6 +61,7 @@ public class OfferController {
         offerFacade.deleteOffer(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @GetMapping
     public ResponseEntity<List<OfferDTO>> getAllOffers() {
         return ResponseEntity.ok(offerService.getAllOffers());

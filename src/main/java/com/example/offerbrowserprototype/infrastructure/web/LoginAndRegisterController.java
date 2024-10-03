@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;  // Upewnij się, że korzystasz z właściwej adnotacji
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class LoginAndRegisterController {
             @ApiResponse(responseCode = "400", description = "Invalid input data or username already exists", content = @Content)
     })
     @PostMapping("/register")
-    public ResponseEntity<RegistrationResultDTO> register(@RequestBody RegisterUserDTO registerUserDTO) {
+    public ResponseEntity<RegistrationResultDTO> register(@Valid @RequestBody RegisterUserDTO registerUserDTO) {
         RegistrationResultDTO result = loginAndRegisterFacade.register(registerUserDTO);
         if (result.isSuccess()) {
             return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -47,7 +48,7 @@ public class LoginAndRegisterController {
             @ApiResponse(responseCode = "401", description = "Invalid username or password", content = @Content)
     })
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<String> login(@Valid @RequestBody LoginDto loginDto) {
         try {
             String token = loginAndRegisterFacade.login(loginDto);
             return new ResponseEntity<>(token, HttpStatus.OK);
@@ -62,7 +63,7 @@ public class LoginAndRegisterController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/update")
-    public ResponseEntity<UserDTO> updateProfile(@RequestBody UpdateUserDto updateUserDto) {
+    public ResponseEntity<UserDTO> updateProfile(@Valid @RequestBody UpdateUserDto updateUserDto) {
         try {
             UserDTO updatedUser = loginAndRegisterFacade.updateUserProfile(updateUserDto);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
@@ -77,7 +78,7 @@ public class LoginAndRegisterController {
             @ApiResponse(responseCode = "400", description = "Failed to change password", content = @Content)
     })
     @PostMapping("/change-password")
-    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+    public ResponseEntity<String> changePassword(@Valid @RequestBody ChangePasswordDto changePasswordDto) {
         boolean isChanged = loginAndRegisterFacade.changeUserPassword(changePasswordDto);
         if (isChanged) {
             return new ResponseEntity<>("Password changed successfully", HttpStatus.OK);

@@ -11,8 +11,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
 @RestController
@@ -45,5 +49,21 @@ public class ExternalOfferController {
     public ResponseEntity<List<String>> getAvailableProviders() {
         List<String> providers = externalJobOfferService.getProviderNames();
         return ResponseEntity.ok(providers);
+    }
+
+    // Example endpoint with validation
+    @Operation(summary = "Get offers with pagination", description = "Fetch job offers with pagination")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved paginated list of offers", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OfferDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request parameters", content = @Content)
+    })
+    @GetMapping("/paged")
+    public ResponseEntity<List<OfferDTO>> getPagedExternalOffers(
+            @RequestParam @Valid @Min(1) int page,
+            @RequestParam @Valid @Min(1) int size,
+            @RequestParam(required = false) @NotBlank String provider) {
+        // Your logic to fetch paginated offers with optional provider filtering
+        List<OfferDTO> offers = externalJobOfferService.fetchExternalOffers(); // Replace with actual logic
+        return ResponseEntity.ok(offers);
     }
 }
