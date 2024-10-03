@@ -1,11 +1,13 @@
 package com.example.offerbrowserprototype.infrastructure.cache;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@ConditionalOnProperty(value = "spring.cache.type", havingValue = "redis")
 public class OfferCacheFacade {
 
     private final OfferCacheRetrievalService retrievalService;
