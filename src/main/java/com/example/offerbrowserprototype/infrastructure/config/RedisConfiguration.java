@@ -1,5 +1,6 @@
 package com.example.offerbrowserprototype.infrastructure.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.annotation.EnableCaching;
@@ -10,7 +11,9 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 @Configuration
 @EnableCaching
@@ -33,5 +36,11 @@ public class RedisConfiguration {
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
         return redisTemplate;
+    }
+
+    @Bean
+    public RedisSerializer<Object> redisSerializer(Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder) {
+        // Użyj buildera, który zawiera moduł JavaTimeModule
+        return new GenericJackson2JsonRedisSerializer(jackson2ObjectMapperBuilder.build());
     }
 }
