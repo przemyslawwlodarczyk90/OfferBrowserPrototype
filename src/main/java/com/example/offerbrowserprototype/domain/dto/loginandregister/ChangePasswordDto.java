@@ -1,20 +1,40 @@
 package com.example.offerbrowserprototype.domain.dto.loginandregister;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.Data;
 
-@Data
 public class ChangePasswordDto {
 
-    @NotBlank
-    private String id; // Zmieniono z `Long` na `String`
+    @NotBlank(message = "Current password cannot be blank")
+    private String currentPassword;
 
-    @NotBlank
-    @Size(min = 6, message = "Old password should have at least 6 characters")
-    private String oldPassword;
-
-    @NotBlank
-    @Size(min = 6, message = "New password should have at least 6 characters")
+    @NotBlank(message = "New password cannot be blank")
     private String newPassword;
+
+    @NotBlank(message = "Username cannot be blank")
+    private String username;
+
+    // Getters and setters
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

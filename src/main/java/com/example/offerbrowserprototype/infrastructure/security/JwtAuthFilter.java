@@ -1,7 +1,5 @@
 package com.example.offerbrowserprototype.infrastructure.security;
 
-
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,34 +28,29 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
-        // Pobieranie nagłówka Authorization
         String authHeader = request.getHeader("Authorization");
-        String token = null;
-        String username = null;
 
-        // Sprawdzamy, czy nagłówek jest poprawny i zaczyna się od 'Bearer '
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            token = authHeader.substring(7);  // Pobieramy token po słowie 'Bearer '
-            username = jwtService.extractUsername(token); // Extract email or username
-        }
+            String token = authHeader.substring(7);
+            try {
+                String username = jwtService.extractUsername(token);
 
-        // Sprawdzamy, czy użytkownik jest niezalogowany i token jest poprawny
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if (jwtService.validateToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
-                );
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    if (jwtService.validateToken(token, userDetails)) {
+                        UsernamePasswordAuthenticationToken authenticationToken =
+                                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                // Ustawienie autoryzacji w SecurityContext
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Invalid JWT Token: " + e.getMessage());
             }
         }
 
-        // Kontynuujemy filtrację żądania
         filterChain.doFilter(request, response);
     }
 }
