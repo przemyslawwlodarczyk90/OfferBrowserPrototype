@@ -30,27 +30,46 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
 
+        // Sprawdzenie, czy nagłówek Authorization istnieje i czy rozpoczyna się od "Bearer "
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
+
+            // Logowanie tokena dla celów debugowania
+            System.out.println("Received token: " + token);
+
+            // Weryfikacja struktury tokena
+            String[] tokenParts = token.split("\\.");
+            if (tokenParts.length != 3) {
+                System.err.println("Invalid token format: " + token);
+                // Możesz zwrócić błąd odpowiedzi lub przerwać przetwarzanie w inny sposób
+                return;
+            }
+
             try {
+                // Próba wydobycia nazwy użytkownika z tokena
                 String username = jwtService.extractUsername(token);
 
+                // Sprawdzenie, czy użytkownik nie jest już uwierzytelniony
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
+                    // Sprawdzenie poprawności tokena
                     if (jwtService.validateToken(token, userDetails)) {
                         UsernamePasswordAuthenticationToken authenticationToken =
                                 new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
+                        // Ustawienie użytkownika jako uwierzytelnionego
                         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     }
                 }
             } catch (Exception e) {
+                // Obsługa błędów związanych z tokenem JWT
                 System.err.println("Invalid JWT Token: " + e.getMessage());
             }
         }
 
+        // Przekazanie żądania do następnego filtra
         filterChain.doFilter(request, response);
     }
 }
