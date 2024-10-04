@@ -1,4 +1,4 @@
-package com.example.offerbrowserprototype.infrastructure.cache;
+package com.example.offerbrowserprototype.infrastructure.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

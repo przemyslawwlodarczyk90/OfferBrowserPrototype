@@ -1,4 +1,4 @@
-package com.example.offerbrowserprototype.config;
+package com.example.offerbrowserprototype.infrastructure.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
