@@ -5,7 +5,6 @@ import com.example.offerbrowserprototype.domain.dto.loginandregister.Registratio
 import com.example.offerbrowserprototype.domain.user.ConfirmationToken;
 import com.example.offerbrowserprototype.domain.user.User;
 import com.example.offerbrowserprototype.domain.mapper.UserMapper;
-
 import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import com.example.offerbrowserprototype.infrastructure.service.ConfirmationTokenService;
 import com.example.offerbrowserprototype.infrastructure.service.MailService;
@@ -53,7 +52,7 @@ class UserRegistrationHandler {
 
         // Generowanie linku potwierdzającego rejestrację
         String confirmationToken = generateConfirmationToken();
-        String confirmationLink = "http://yourapp.com/api/v1/registration/confirm?token=" + confirmationToken;
+        String confirmationLink = "http://localhost:8080/api/v1/registration/confirm?token=" + confirmationToken; // Zaktualizuj na właściwy adres
 
         // Tworzenie tokenu rejestracyjnego i zapis do bazy danych
         ConfirmationToken token = new ConfirmationToken(
@@ -65,7 +64,7 @@ class UserRegistrationHandler {
         confirmationTokenService.saveConfirmationToken(token);
 
         // Wysłanie e-maila potwierdzającego
-        mailService.sendConfirmationEmail(userDto.getEmail(), "Confirm your registration", userDto.getUsername(), "", confirmationLink);
+        mailService.sendConfirmationEmail(userDto.getEmail(), "Confirm your registration", userDto.getUsername(), confirmationLink);
 
         return new RegistrationResultDTO(newUser.getId(), userDto.getUsername(), true, "Rejestracja udana");
     }

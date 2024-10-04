@@ -19,7 +19,7 @@ public class MailService {
         this.templateEngine = templateEngine;
     }
 
-    public void sendConfirmationEmail(String to, String subject, String firstName, String lastName, String confirmationLink) {
+    public void sendConfirmationEmail(String to, String subject, String username, String confirmationLink) {
         MimeMessage message = mailSender.createMimeMessage();
 
         try {
@@ -27,12 +27,11 @@ public class MailService {
 
             // Tworzenie kontekstu dla Thymeleaf
             Context context = new Context();
-            context.setVariable("firstName", firstName);
-            context.setVariable("lastName", lastName);
+            context.setVariable("username", username); // Używaj jednej zmiennej 'username'
             context.setVariable("confirmationLink", confirmationLink);
 
-            // Generowanie treści e-maila
-            String htmlContent = templateEngine.process("registration-email", context);
+            // Generowanie treści e-maila na podstawie szablonu Thymeleaf
+            String htmlContent = templateEngine.process("registration-email", context); // Upewnij się, że masz ten szablon
 
             // Ustawienie parametrów e-maila
             helper.setTo(to);

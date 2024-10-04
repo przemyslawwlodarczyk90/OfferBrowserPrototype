@@ -53,7 +53,7 @@
         <h1>Welcome to Our Service</h1>
     </div>
     <div class="email-body">
-        <p>Dear <span th:text="${firstName} + ' ' + ${lastName}"></span>,</p>
+        <p>Dear <span th:text="${username}"></span>,</p>
         <p>Thank you for registering with us. Please click the link below to confirm your registration:</p>
         <a th:href="${confirmationLink}" class="btn-confirm">Confirm Registration</a>
     </div>

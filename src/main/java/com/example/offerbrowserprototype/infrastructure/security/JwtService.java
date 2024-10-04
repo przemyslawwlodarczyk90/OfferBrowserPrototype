@@ -16,6 +16,8 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secretKey;
 
+    @Value("${jwt.expiration-time-ms}")
+    private long expirationTimeMs;
     @Value("${jwt.issuer}")
     private String issuer;
 
@@ -49,8 +51,10 @@ public class JwtService {
         return JWT.create()
                 .withSubject(userDetails.getUsername())
                 .withIssuedAt(new Date())
+                .withExpiresAt(new Date(System.currentTimeMillis() + expirationTimeMs))  // Ustaw wygaśnięcie tokena
                 .withIssuer(issuer)
                 .sign(algorithm);
     }
+
 
 }

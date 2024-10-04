@@ -1,32 +1,32 @@
 package com.example.offerbrowserprototype.domain.loginaandregister;
 
 import com.example.offerbrowserprototype.domain.dto.loginandregister.*;
-
-
 import com.example.offerbrowserprototype.domain.user.ConfirmationToken;
 import com.example.offerbrowserprototype.domain.user.User;
 import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
-
 import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import com.example.offerbrowserprototype.infrastructure.service.ConfirmationTokenService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LoginAndRegisterFacade {
 
     private final UserRegistrationHandler registrationHandler;
-    private final UserLoginHandler loginHandler;
+    private final UserLoginHandler userLoginHandler;  // Dodano pole UserLoginHandler
     private final UserProfileUpdater profileUpdater;
     private final ConfirmationTokenService confirmationTokenService;
     private final UserPasswordChanger passwordChanger;
     private final UserRepository userRepository;
 
     public LoginAndRegisterFacade(UserRegistrationHandler registrationHandler,
-                                  UserLoginHandler loginHandler,
+                                  UserLoginHandler userLoginHandler,  // Dodano UserLoginHandler
                                   UserProfileUpdater profileUpdater,
-                                  ConfirmationTokenService confirmationTokenService, UserPasswordChanger passwordChanger, UserRepository userRepository) {
+                                  ConfirmationTokenService confirmationTokenService,
+                                  UserPasswordChanger passwordChanger,
+                                  UserRepository userRepository) {
         this.registrationHandler = registrationHandler;
-        this.loginHandler = loginHandler;
+        this.userLoginHandler = userLoginHandler;
         this.profileUpdater = profileUpdater;
         this.confirmationTokenService = confirmationTokenService;
         this.passwordChanger = passwordChanger;
@@ -38,7 +38,8 @@ public class LoginAndRegisterFacade {
     }
 
     public String login(LoginDto loginDto) {
-        return loginHandler.login(loginDto);
+        // Wywołanie UserLoginHandler do uwierzytelniania i generowania tokena
+        return userLoginHandler.login(loginDto);
     }
 
     public UserDTO updateUserProfile(UpdateUserDto updateUserDto) {
@@ -48,6 +49,7 @@ public class LoginAndRegisterFacade {
     public boolean changeUserPassword(ChangePasswordDto changePasswordDto) {
         return passwordChanger.changeUserPassword(changePasswordDto);
     }
+
     public String confirmRegistration(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService.getToken(token)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid token"));
@@ -66,7 +68,4 @@ public class LoginAndRegisterFacade {
         user.setActive(true); // Ustawienie pola 'active' na true, aby aktywować użytkownika
         userRepository.save(user);
     }
-
-
-
 }

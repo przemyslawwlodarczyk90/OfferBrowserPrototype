@@ -2,7 +2,6 @@ package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.dto.loginandregister.*;
 import com.example.offerbrowserprototype.domain.loginaandregister.LoginAndRegisterFacade;
-
 import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,7 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;  // Upewnij się, że korzystasz z właściwej adnotacji
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +49,7 @@ public class LoginAndRegisterController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody LoginDto loginDto) {
         try {
+            // Generowanie tokena JWT
             String token = loginAndRegisterFacade.login(loginDto);
             return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
