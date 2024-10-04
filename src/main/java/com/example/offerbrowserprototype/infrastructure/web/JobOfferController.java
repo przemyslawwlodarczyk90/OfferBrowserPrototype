@@ -34,7 +34,7 @@ public class JobOfferController {
             @ApiResponse(responseCode = "500", description = "Error occurred while fetching job offers")
     })
     // Metoda harmonogramowana – pobiera oferty zgodnie z harmonogramem ustawionym w application.properties
-    @Scheduled(cron = "${job.offer.fetch.cron}")
+    @Scheduled(cron = "#{@jobOfferController.cronExpression}")
     public void fetchOffersAutomatically() {
         LOGGER.info("Scheduled fetching of job offers started.");
 

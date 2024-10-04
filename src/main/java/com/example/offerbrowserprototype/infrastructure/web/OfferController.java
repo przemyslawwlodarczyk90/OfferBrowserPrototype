@@ -102,4 +102,11 @@ public class OfferController {
     public ResponseEntity<OfferDTO> getOfferById(@PathVariable String offerId) {
         return ResponseEntity.ok(offerFacade.getOffer(offerId));
     }
+
+    // Nowy endpoint do wypychania oferty na zewnętrznego providera
+    @PostMapping("/{offerId}/push/{providerName}")
+    public ResponseEntity<Void> pushOfferToProvider(@PathVariable String offerId, @PathVariable String providerName) {
+        offerFacade.pushOfferToProvider(offerId, providerName);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

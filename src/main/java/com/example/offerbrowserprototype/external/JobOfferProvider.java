@@ -6,4 +6,5 @@ import java.util.List;
 public interface JobOfferProvider {
     List<OfferDTO> fetchOffers();
     String getProviderName();
+    void pushOffer(OfferDTO offer);
 }

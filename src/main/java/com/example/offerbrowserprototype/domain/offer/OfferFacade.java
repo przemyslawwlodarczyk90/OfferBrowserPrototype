@@ -15,23 +15,25 @@ public class OfferFacade {
     private final OfferUpdateHandler updateHandler;
     private final OfferDeletionHandler deletionHandler;
     private final OfferRetrievalHandler retrievalHandler;
-    private final OfferNotAppliedHandler notAppliedHandler; // Nowy komponent
-    private final OfferAppliedHandler appliedHandler; // Nowy komponent
-    private final OfferApplicationHandler applicationHandler; // Nowy komponent
+    private final OfferNotAppliedHandler notAppliedHandler;
+    private final OfferAppliedHandler appliedHandler;
+    private final OfferApplicationHandler applicationHandler;
     private final OfferDetailsHandler detailsHandler;
     private final OfferCacheFacade offerCacheFacade;
     private final ExternalJobOfferService externalJobOfferService;
+    private final OfferPushHandler pushHandler; // Nowy komponent do wypychania ofert
 
     public OfferFacade(OfferAdditionHandler additionHandler,
                        OfferUpdateHandler updateHandler,
                        OfferDeletionHandler deletionHandler,
                        OfferRetrievalHandler retrievalHandler,
-                       OfferNotAppliedHandler notAppliedHandler, // Dodany komponent do konstruktora
-                       OfferAppliedHandler appliedHandler, // Dodany komponent do konstruktora
-                       OfferApplicationHandler applicationHandler, // Dodany komponent do konstruktora
+                       OfferNotAppliedHandler notAppliedHandler,
+                       OfferAppliedHandler appliedHandler,
+                       OfferApplicationHandler applicationHandler,
                        OfferDetailsHandler detailsHandler,
                        OfferCacheFacade offerCacheFacade,
-                       ExternalJobOfferService externalJobOfferService) {
+                       ExternalJobOfferService externalJobOfferService,
+                       OfferPushHandler pushHandler) { // Dodany komponent
         this.additionHandler = additionHandler;
         this.updateHandler = updateHandler;
         this.deletionHandler = deletionHandler;
@@ -42,8 +44,12 @@ public class OfferFacade {
         this.detailsHandler = detailsHandler;
         this.offerCacheFacade = offerCacheFacade;
         this.externalJobOfferService = externalJobOfferService;
+        this.pushHandler = pushHandler; // Inicjalizacja komponentu
     }
 
+    public void pushOfferToProvider(String offerId, String providerName) {
+        pushHandler.pushOfferToProvider(offerId, providerName);
+    }
     public OfferDTO addOffer(OfferDTO offerDto) {
         return additionHandler.addOffer(offerDto);
     }

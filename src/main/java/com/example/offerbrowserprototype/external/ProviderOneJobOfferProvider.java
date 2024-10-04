@@ -57,4 +57,16 @@ public class ProviderOneJobOfferProvider implements JobOfferProvider {
     public String getProviderName() {
         return "ProviderOne";
     }
+
+    @Override
+    public void pushOffer(OfferDTO offer) {
+        try {
+            // Wypchnięcie ogłoszenia do zewnętrznego API providera
+            restTemplate.postForEntity(apiUrl + "/push", offer, Void.class);
+            LOGGER.info("Offer pushed successfully to ProviderOne");
+        } catch (Exception e) {
+            LOGGER.severe("Error pushing offer to ProviderOne: " + e.getMessage());
+            throw new RuntimeException("Failed to push offer to provider", e);
+        }
+    }
 }
