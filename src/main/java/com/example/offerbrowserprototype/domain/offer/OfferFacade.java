@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Component
 public class OfferFacade {
 
@@ -14,6 +15,10 @@ public class OfferFacade {
     private final OfferUpdateHandler updateHandler;
     private final OfferDeletionHandler deletionHandler;
     private final OfferRetrievalHandler retrievalHandler;
+    private final OfferNotAppliedHandler notAppliedHandler; // Nowy komponent
+    private final OfferAppliedHandler appliedHandler; // Nowy komponent
+    private final OfferApplicationHandler applicationHandler; // Nowy komponent
+    private final OfferDetailsHandler detailsHandler;
     private final OfferCacheFacade offerCacheFacade;
     private final ExternalJobOfferService externalJobOfferService;
 
@@ -21,12 +26,20 @@ public class OfferFacade {
                        OfferUpdateHandler updateHandler,
                        OfferDeletionHandler deletionHandler,
                        OfferRetrievalHandler retrievalHandler,
+                       OfferNotAppliedHandler notAppliedHandler, // Dodany komponent do konstruktora
+                       OfferAppliedHandler appliedHandler, // Dodany komponent do konstruktora
+                       OfferApplicationHandler applicationHandler, // Dodany komponent do konstruktora
+                       OfferDetailsHandler detailsHandler,
                        OfferCacheFacade offerCacheFacade,
                        ExternalJobOfferService externalJobOfferService) {
         this.additionHandler = additionHandler;
         this.updateHandler = updateHandler;
         this.deletionHandler = deletionHandler;
         this.retrievalHandler = retrievalHandler;
+        this.notAppliedHandler = notAppliedHandler;
+        this.appliedHandler = appliedHandler;
+        this.applicationHandler = applicationHandler;
+        this.detailsHandler = detailsHandler;
         this.offerCacheFacade = offerCacheFacade;
         this.externalJobOfferService = externalJobOfferService;
     }
@@ -40,32 +53,38 @@ public class OfferFacade {
     }
 
     public OfferDTO getOffer(String id) {
-        return retrievalHandler.getOffer(id);
+        return detailsHandler.getOfferById(id);
     }
 
     public void deleteOffer(String id) {
         deletionHandler.deleteOffer(id);
     }
 
+    public List<OfferDTO> getNotAppliedOffers() {
+        return notAppliedHandler.getNotAppliedOffers();
+    }
+
+    public List<OfferDTO> getAppliedOffers() {
+        return appliedHandler.getAppliedOffers();
+    }
+
+    public void applyToOffer(String offerId) {
+        applicationHandler.applyToOffer(offerId);
+    }
+
     // Główna metoda do pobierania wszystkich ofert (łączy oferty lokalne i zewnętrzne)
     public List<OfferDTO> getAllOffers() {
-        // Najpierw spróbuj pobrać dane z cache'a
         List<OfferDTO> cachedOffers = offerCacheFacade.getCachedOffers();
         if (cachedOffers != null && !cachedOffers.isEmpty()) {
             return cachedOffers;
         }
 
-        // Jeśli cache jest pusty, pobierz dane z bazy danych
         List<OfferDTO> localOffers = retrievalHandler.getAllOffers();
-
-        // Pobierz oferty z zewnętrznych źródeł
         List<OfferDTO> externalOffers = externalJobOfferService.fetchExternalOffers();
 
-        // Złącz listy ofert lokalnych i zewnętrznych
         List<OfferDTO> combinedOffers = new ArrayList<>(localOffers);
         combinedOffers.addAll(externalOffers);
 
-        // Zapisz złączone oferty w cache'u na przyszłe zapytania
         offerCacheFacade.cacheOffers(combinedOffers);
 
         return combinedOffers;

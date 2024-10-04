@@ -2,7 +2,7 @@ package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.offer.OfferFacade;
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
-import com.example.offerbrowserprototype.domain.offer.OfferService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,11 +22,9 @@ import java.util.List;
 public class OfferController {
 
     private final OfferFacade offerFacade;
-    private final OfferService offerService;
 
-    public OfferController(OfferFacade offerFacade, OfferService offerService) {
+    public OfferController(OfferFacade offerFacade) {
         this.offerFacade = offerFacade;
-        this.offerService = offerService;
     }
 
     @Operation(summary = "Add a new offer", description = "Creates a new job offer in the system")
@@ -64,7 +62,7 @@ public class OfferController {
 
     @GetMapping
     public ResponseEntity<List<OfferDTO>> getAllOffers() {
-        return ResponseEntity.ok(offerService.getAllOffers());
+        return ResponseEntity.ok(offerFacade.getAllOffers());
     }
 
     @Operation(summary = "Get not applied offers", description = "Retrieve all offers that haven't been applied to.")
@@ -73,7 +71,7 @@ public class OfferController {
     })
     @GetMapping("/not-applied")
     public ResponseEntity<List<OfferDTO>> getNotAppliedOffers() {
-        return ResponseEntity.ok(offerService.getNotAppliedOffers());
+        return ResponseEntity.ok(offerFacade.getNotAppliedOffers());
     }
 
     @Operation(summary = "Get applied offers", description = "Retrieve all offers that have been applied to.")
@@ -82,7 +80,7 @@ public class OfferController {
     })
     @GetMapping("/applied")
     public ResponseEntity<List<OfferDTO>> getAppliedOffers() {
-        return ResponseEntity.ok(offerService.getAppliedOffers());
+        return ResponseEntity.ok(offerFacade.getAppliedOffers());
     }
 
     @Operation(summary = "Apply to an offer", description = "Mark an offer as applied.")
@@ -91,7 +89,7 @@ public class OfferController {
     })
     @PostMapping("/{offerId}/apply")
     public ResponseEntity<Void> applyToOffer(@PathVariable String offerId) {
-        offerService.applyToOffer(offerId);
+        offerFacade.applyToOffer(offerId);
         return ResponseEntity.ok().build();
     }
 
@@ -102,6 +100,6 @@ public class OfferController {
     })
     @GetMapping("/{offerId}")
     public ResponseEntity<OfferDTO> getOfferById(@PathVariable String offerId) {
-        return ResponseEntity.ok(offerService.getOfferById(offerId));
+        return ResponseEntity.ok(offerFacade.getOffer(offerId));
     }
 }
