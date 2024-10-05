@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Base64;
 import java.util.Date;
 
 @Service
@@ -27,11 +28,50 @@ public class JwtService {
     private String issuer;
 
     private Algorithm getAlgorithm() {
-        logger.info("Using secret key: {}", secretKey); // Ensure to remove or hide this log in production!
         try {
-            return Algorithm.HMAC256(secretKey);
+            return Algorithm.HMAC512(secretKey);
         } catch (IllegalArgumentException e) {
             logger.error("Error in secret key format: {}", e.getMessage());
+            throw e;
+        }
+    }
+
+    // Utility function to normalize the token
+    private String normalizeToken(String token) {
+        String[] parts = token.split("\\.");
+        return padBase64(parts[0]) + "." + padBase64(parts[1]) + "." + parts[2]; // Signature is not base64-padded
+    }
+
+    // Function to pad Base64Url segments with '=' characters if necessary
+    private String padBase64(String base64UrlSegment) {
+        int paddingLength = (4 - (base64UrlSegment.length() % 4)) % 4;
+        return base64UrlSegment + "=".repeat(paddingLength);
+    }
+
+    public String extractUsername(String token) {
+        logger.debug("Extracting username from token: {}", token);
+        try {
+            String normalizedToken = normalizeToken(token);
+            DecodedJWT jwt = getDecodedJWT(normalizedToken);
+            String username = jwt.getSubject();
+            logger.debug("Extracted username: {}", username);
+            return username;
+        } catch (Exception e) {
+            logger.error("Failed to extract username from token: {}", e.getMessage());
+            throw e;
+        }
+    }
+
+    private boolean isTokenExpired(String token) {
+        try {
+            String normalizedToken = normalizeToken(token);
+            DecodedJWT jwt = getDecodedJWT(normalizedToken);
+            Date expiration = jwt.getExpiresAt();
+            boolean isExpired = expiration.before(new Date());
+            logger.debug("Token expiration date: {}, Is expired: {}", expiration, isExpired);
+            return isExpired;
+        } catch (Exception e) {
+            logger.error("Failed to check if token is expired: {}", e.getMessage());
             throw e;
         }
     }
@@ -48,19 +88,6 @@ public class JwtService {
             return jwt;
         } catch (Exception e) {
             logger.error("Error while decoding token: {}", e.getMessage());
-            throw e;
-        }
-    }
-
-    public String extractUsername(String token) {
-        logger.debug("Extracting username from token: {}", token);
-        try {
-            DecodedJWT jwt = getDecodedJWT(token);
-            String username = jwt.getSubject();
-            logger.debug("Extracted username: {}", username);
-            return username;
-        } catch (Exception e) {
-            logger.error("Failed to extract username from token: {}", e.getMessage());
             throw e;
         }
     }
@@ -86,27 +113,15 @@ public class JwtService {
     public boolean validateToken(String token, UserDetails userDetails) {
         logger.info("Validating token for user: {}", userDetails.getUsername());
         try {
-            DecodedJWT jwt = getDecodedJWT(token);
+            String normalizedToken = normalizeToken(token);
+            DecodedJWT jwt = getDecodedJWT(normalizedToken);
             String username = jwt.getSubject();
-            boolean isValid = username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+            boolean isValid = username.equals(userDetails.getUsername()) && !isTokenExpired(normalizedToken);
             logger.info("Token validation result: {}", isValid);
             return isValid;
         } catch (Exception e) {
             logger.error("Invalid JWT Token: {}", e.getMessage());
             return false;
-        }
-    }
-
-    private boolean isTokenExpired(String token) {
-        try {
-            DecodedJWT jwt = getDecodedJWT(token);
-            Date expiration = jwt.getExpiresAt();
-            boolean isExpired = expiration.before(new Date());
-            logger.debug("Token expiration date: {}, Is expired: {}", expiration, isExpired);
-            return isExpired;
-        } catch (Exception e) {
-            logger.error("Failed to check if token is expired: {}", e.getMessage());
-            throw e;
         }
     }
 }
