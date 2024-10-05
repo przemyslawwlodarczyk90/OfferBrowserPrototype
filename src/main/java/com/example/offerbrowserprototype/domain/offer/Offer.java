@@ -1,5 +1,6 @@
 package com.example.offerbrowserprototype.domain.offer;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -22,6 +23,8 @@ public class Offer {
     private String salaryRange;
     private String technologies;
     private boolean applied; // Dodanie pola 'applied' do śledzenia, czy aplikowałeś na ofertę
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private LocalDateTime fetchedAt; // Data pobrania oferty
 
     public Offer(String title, String description, String location, String salaryRange, String technologies, Clock clock) {

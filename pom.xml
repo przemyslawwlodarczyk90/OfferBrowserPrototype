@@ -106,6 +106,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <version>3.2.5</version> <!-- Zaktualizuj wersję, jeśli to konieczne -->
         </dependency>
 
         <!-- Testcontainers -->
@@ -132,7 +133,7 @@
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
-            <version>4.2.1</version>
+            <version>4.3.0</version> <!-- Upewnij się, że korzystasz z najnowszej wersji -->
         </dependency>
 
         <!-- Jakarta Servlet API -->

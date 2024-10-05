@@ -1,5 +1,6 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
+import com.example.offerbrowserprototype.domain.dto.confirmationtoken.TokenResponse;
 import com.example.offerbrowserprototype.domain.dto.loginandregister.*;
 import com.example.offerbrowserprototype.domain.loginaandregister.LoginAndRegisterFacade;
 import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
@@ -47,13 +48,13 @@ public class LoginAndRegisterController {
             @ApiResponse(responseCode = "401", description = "Invalid username or password", content = @Content)
     })
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginDto loginDto) {
         try {
             // Generowanie tokena JWT
             String token = loginAndRegisterFacade.login(loginDto);
-            return new ResponseEntity<>(token, HttpStatus.OK);
+            return new ResponseEntity<>(new TokenResponse(token), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new TokenResponse("Invalid username or password"), HttpStatus.UNAUTHORIZED);
         }
     }
 
