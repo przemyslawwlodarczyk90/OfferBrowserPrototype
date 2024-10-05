@@ -40,6 +40,8 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+
+
         <!-- Spring Boot DevTools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -106,7 +108,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>3.2.5</version> <!-- Zaktualizuj wersję, jeśli to konieczne -->
+
         </dependency>
 
         <!-- Testcontainers -->
@@ -116,16 +118,19 @@
             <version>1.19.0</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>1.19.0</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>mongodb</artifactId>
             <version>1.19.0</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.3</version> <!-- lub najnowsza stabilna wersja -->
             <scope>test</scope>
         </dependency>
 
@@ -207,6 +212,8 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
         <plugins>
             <!-- Spring Boot Maven Plugin -->
             <plugin>

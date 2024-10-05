@@ -23,7 +23,7 @@ public class ConfirmationTokenDTO {
     @NotNull
     private LocalDateTime expiresAt;
 
-    private LocalDateTime confirmedAt; // Może być opcjonalne, więc bez walidacji
+    private LocalDateTime confirmedAt;
 
     @NotNull
     private String userId; // Referencja do użytkownika
