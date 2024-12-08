@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class UserDTO {
 
     @NotBlank(message = "ID cannot be empty")
-    private String id; // Zmieniono z `Long` na `String` dla spójności z `User`
+    private String id;
 
     @NotBlank(message = "Username cannot be empty")
     private String username;

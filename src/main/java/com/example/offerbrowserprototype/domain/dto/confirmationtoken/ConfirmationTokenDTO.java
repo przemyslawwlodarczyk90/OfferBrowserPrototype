@@ -26,7 +26,7 @@ public class ConfirmationTokenDTO {
     private LocalDateTime confirmedAt;
 
     @NotNull
-    private String userId; // Referencja do użytkownika
+    private String userId;
 
     public ConfirmationTokenDTO(String id, String token, LocalDateTime createdAt, LocalDateTime expiresAt, LocalDateTime confirmedAt, String userId) {
         this.id = id;

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegistrationResultDTO {
-    private String userId;  // Zmieniamy typ na String, aby pasował do ID generowanego przez MongoDB
+    private String userId;
     private String username;
     private boolean isSuccess;
     private String message;
