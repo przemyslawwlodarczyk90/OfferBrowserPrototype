@@ -85,27 +85,23 @@ public class RegisterUserDTOTest {
     }
 
     /**
-     * Test nieprawidłowego adresu e-mail.
+     * Test niepoprawnego pola `email`.
      */
     @Test
     public void shouldFailValidationWhenEmailIsInvalid() {
-        // Given: Dane z nieprawidłowym adresem e-mail
+        // Given: Dane z niepoprawnym email
         RegisterUserDTO registerUserDTO = new RegisterUserDTO();
         registerUserDTO.setUsername("ferdynand.kiepski");
-        registerUserDTO.setEmail("ferdynand.kiepski@"); // Brak domeny
-        registerUserDTO.setPassword("haslo123");
+        registerUserDTO.setEmail("ferdynand.kiepski@invalid");
+        registerUserDTO.setPassword("password123");
 
         // When: Walidacja danych
         Set<ConstraintViolation<RegisterUserDTO>> violations = validator.validate(registerUserDTO);
 
-        // Then: Powinny zostać zwrócone błędy walidacji dla pola email
+        // Then: Powinien zostać zwrócony błąd walidacji dla niepoprawnego email
         assertFalse(violations.isEmpty(), "Walidacja powinna wykryć niepoprawny email.");
-        assertTrue(
-                violations.stream().anyMatch(v -> v.getMessage().equals("Email should be valid")),
-                "Powinien zostać zwrócony komunikat: 'Email should be valid'"
-        );
+        assertEquals("Email should be valid", violations.iterator().next().getMessage());
     }
-
 
     /**
      * Test pustego pola `password`.
