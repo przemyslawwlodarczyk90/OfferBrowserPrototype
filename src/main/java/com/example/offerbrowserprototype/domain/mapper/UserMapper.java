@@ -10,10 +10,10 @@ import org.springframework.util.StringUtils;
 @Component
 public class UserMapper {
 
-    // Konwersja z `User` na `UserDTO`
+
     public UserDTO toDTO(User user) {
         return new UserDTO(
-                user.getId(), // Zachowuje `String` jako typ dla spójności z `User`
+                user.getId(),
                 user.getUsername(),
                 user.getEmail()
         );
