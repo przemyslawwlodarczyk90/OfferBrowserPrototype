@@ -1,113 +1,129 @@
 package com.example.offerbrowserprototype.domain.mapper;
 
-import com.example.offerbrowserprototype.domain.dto.loginandregister.RegisterUserDTO;
-import com.example.offerbrowserprototype.domain.dto.loginandregister.UpdateUserDto;
-import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
-import com.example.offerbrowserprototype.domain.user.User;
+import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.domain.offer.Offer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Testy jednostkowe dla klasy {@link UserMapper}.
- * Klasa ta odpowiada za mapowanie obiektów {@link User} na różne DTO i odwrotnie.
+ * Testy jednostkowe dla klasy OfferMapper.
+ * Klasa ta zajmuje się mapowaniem obiektów `Offer` na `OfferDTO` i odwrotnie.
  */
-class UserMapperTest {
+class OfferMapperTest {
 
-    private UserMapper userMapper;
+    private OfferMapper offerMapper;
 
     /**
-     * Inicjalizacja obiektu {@link UserMapper} przed każdym testem.
+     * Przygotowanie środowiska testowego przed każdym testem.
      */
     @BeforeEach
     void setUp() {
-        userMapper = new UserMapper();
+        offerMapper = new OfferMapper();
     }
 
     /**
-     * Test sprawdzający mapowanie obiektu {@link User} na {@link UserDTO}.
+     * Test mapowania obiektu `Offer` na `OfferDTO`.
      */
     @Test
-    void shouldMapUserToUserDTO() {
+    void shouldMapOfferToOfferDTO() {
         // Given - Dane testowe
-        User user = new User();
-        user.setId("1");
-        user.setUsername("jan_kowalski");
-        user.setEmail("jan.kowalski@example.com");
+        Offer offer = new Offer();
+        offer.setId("1");
+        offer.setTitle("Java Developer");
+        offer.setDescription("Exciting job opportunity for a Java Developer.");
+        offer.setLocation("Warsaw");
+        offer.setSalaryRange("10,000 - 15,000 PLN");
+        offer.setTechnologies("Java, Spring Boot");
+        offer.setApplied(true);
+        offer.setFetchedAt(LocalDateTime.now());
 
-        // When - Wywołanie metody
-        UserDTO userDTO = userMapper.toDTO(user);
+        // When - Wywołanie metody mapującej
+        OfferDTO dto = offerMapper.toDTO(offer);
 
-        // Then - Sprawdzenie wyników
-        assertEquals(user.getId(), userDTO.getId(), "ID użytkownika powinno być takie samo");
-        assertEquals(user.getUsername(), userDTO.getUsername(), "Nazwa użytkownika powinna być taka sama");
-        assertEquals(user.getEmail(), userDTO.getEmail(), "Email użytkownika powinien być taki sam");
+        // Then - Weryfikacja wyników
+        assertEquals(offer.getId(), dto.getId());
+        assertEquals(offer.getTitle(), dto.getTitle());
+        assertEquals(offer.getDescription(), dto.getDescription());
+        assertEquals(offer.getLocation(), dto.getLocation());
+        assertEquals(offer.getSalaryRange(), dto.getSalaryRange());
+        assertEquals(offer.getTechnologies(), dto.getTechnologies());
+        assertEquals(offer.isApplied(), dto.isApplied());
+        assertEquals(offer.getFetchedAt(), dto.getFetchedAt());
     }
 
     /**
-     * Test sprawdzający mapowanie obiektu {@link RegisterUserDTO} na {@link User}.
+     * Test mapowania obiektu `OfferDTO` na `Offer`.
      */
     @Test
-    void shouldMapRegisterUserDTOToUser() {
+    void shouldMapOfferDTOToOffer() {
         // Given - Dane testowe
-        RegisterUserDTO registerUserDTO = new RegisterUserDTO();
-        registerUserDTO.setUsername("jan_kowalski");
-        registerUserDTO.setEmail("jan.kowalski@example.com");
-        registerUserDTO.setPassword("password123");
+        OfferDTO dto = new OfferDTO();
+        dto.setTitle("Java Developer");
+        dto.setDescription("Exciting job opportunity for a Java Developer.");
+        dto.setLocation("Warsaw");
+        dto.setSalaryRange("10,000 - 15,000 PLN");
+        dto.setTechnologies("Java, Spring Boot");
+        dto.setApplied(true);
+        dto.setFetchedAt(LocalDateTime.now());
 
-        String hashedPassword = "hashedPassword123";
+        // When - Wywołanie metody mapującej
+        Offer offer = offerMapper.toEntity(dto);
 
-        // When - Wywołanie metody
-        User user = userMapper.toEntity(registerUserDTO, hashedPassword);
-
-        // Then - Sprawdzenie wyników
-        assertEquals(registerUserDTO.getUsername(), user.getUsername(), "Nazwa użytkownika powinna być taka sama");
-        assertEquals(registerUserDTO.getEmail(), user.getEmail(), "Email użytkownika powinien być taki sam");
-        assertEquals(hashedPassword, user.getPassword(), "Hasło powinno być zahashowane");
+        // Then - Weryfikacja wyników
+        assertEquals(dto.getTitle(), offer.getTitle());
+        assertEquals(dto.getDescription(), offer.getDescription());
+        assertEquals(dto.getLocation(), offer.getLocation());
+        assertEquals(dto.getSalaryRange(), offer.getSalaryRange());
+        assertEquals(dto.getTechnologies(), offer.getTechnologies());
+        assertEquals(dto.isApplied(), offer.isApplied());
+        assertEquals(dto.getFetchedAt(), offer.getFetchedAt());
     }
 
     /**
-     * Test sprawdzający aktualizację obiektu {@link User} za pomocą {@link UpdateUserDto}.
+     * Test mapowania `Offer` na `OfferDTO` z pustymi polami.
      */
     @Test
-    void shouldUpdateUserFromDto() {
-        // Given - Dane testowe
-        User user = new User();
-        user.setUsername("old_username");
-        user.setEmail("old_email@example.com");
+    void shouldHandleNullFieldsWhenMappingOfferToDTO() {
+        // Given - Obiekt `Offer` z pustymi polami
+        Offer offer = new Offer();
 
-        UpdateUserDto updateUserDto = new UpdateUserDto();
-        updateUserDto.setUsername("new_username");
-        updateUserDto.setEmail("new_email@example.com");
+        // When - Wywołanie metody mapującej
+        OfferDTO dto = offerMapper.toDTO(offer);
 
-        // When - Wywołanie metody
-        userMapper.updateUserFromDto(updateUserDto, user);
-
-        // Then - Sprawdzenie wyników
-        assertEquals(updateUserDto.getUsername(), user.getUsername(), "Nazwa użytkownika powinna zostać zaktualizowana");
-        assertEquals(updateUserDto.getEmail(), user.getEmail(), "Email użytkownika powinien zostać zaktualizowany");
+        // Then - Weryfikacja wyników
+        assertNull(dto.getId());
+        assertNull(dto.getTitle());
+        assertNull(dto.getDescription());
+        assertNull(dto.getLocation());
+        assertNull(dto.getSalaryRange());
+        assertNull(dto.getTechnologies());
+        assertFalse(dto.isApplied());
+        assertNull(dto.getFetchedAt());
     }
 
     /**
-     * Test sprawdzający, że puste pola w {@link UpdateUserDto} nie nadpisują wartości w obiekcie {@link User}.
+     * Test mapowania `OfferDTO` na `Offer` z pustymi polami.
      */
     @Test
-    void shouldNotUpdateUserWithEmptyFields() {
-        // Given - Dane testowe
-        User user = new User();
-        user.setUsername("old_username");
-        user.setEmail("old_email@example.com");
+    void shouldHandleNullFieldsWhenMappingDTOToOffer() {
+        // Given - Obiekt `OfferDTO` z pustymi polami
+        OfferDTO dto = new OfferDTO();
 
-        UpdateUserDto updateUserDto = new UpdateUserDto();
-        updateUserDto.setUsername(""); // Puste pole
-        updateUserDto.setEmail(null); // Null
+        // When - Wywołanie metody mapującej
+        Offer offer = offerMapper.toEntity(dto);
 
-        // When - Wywołanie metody
-        userMapper.updateUserFromDto(updateUserDto, user);
-
-        // Then - Sprawdzenie wyników
-        assertEquals("old_username", user.getUsername(), "Nazwa użytkownika nie powinna zostać zmieniona");
-        assertEquals("old_email@example.com", user.getEmail(), "Email użytkownika nie powinien zostać zmieniony");
+        // Then - Weryfikacja wyników
+        assertNull(offer.getId());
+        assertNull(offer.getTitle());
+        assertNull(offer.getDescription());
+        assertNull(offer.getLocation());
+        assertNull(offer.getSalaryRange());
+        assertNull(offer.getTechnologies());
+        assertFalse(offer.isApplied());
+        assertNull(offer.getFetchedAt());
     }
 }
