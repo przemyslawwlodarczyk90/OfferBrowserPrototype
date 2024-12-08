@@ -22,10 +22,10 @@ public class Offer {
     private String location;
     private String salaryRange;
     private String technologies;
-    private boolean applied; // Dodanie pola 'applied' do śledzenia, czy aplikowałeś na ofertę
+    private boolean applied;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
-    private LocalDateTime fetchedAt; // Data pobrania oferty
+    private LocalDateTime fetchedAt;
 
     public Offer(String title, String description, String location, String salaryRange, String technologies, Clock clock) {
         this.title = title;
