@@ -52,7 +52,7 @@ class OfferUpdateHandlerTest {
         updateData.setDescription("Exciting opportunity for experienced Java Developer.");
         updateData.setLocation("Remote");
         updateData.setSalaryRange("15,000 - 20,000 PLN");
-        updateData.setTechnologies("Java, Spring Boot, AWS");
+        updateData.setLevel("Level");
 
         Offer updatedOffer = new Offer();
         updatedOffer.setId(offerId);
@@ -60,7 +60,7 @@ class OfferUpdateHandlerTest {
         updatedOffer.setDescription(updateData.getDescription());
         updatedOffer.setLocation(updateData.getLocation());
         updatedOffer.setSalaryRange(updateData.getSalaryRange());
-        updatedOffer.setTechnologies(updateData.getTechnologies());
+        updatedOffer.setLevel(updateData.getLevel());
         updatedOffer.setFetchedAt(LocalDateTime.now());
 
         OfferDTO updatedOfferDTO = new OfferDTO();
@@ -69,7 +69,7 @@ class OfferUpdateHandlerTest {
         updatedOfferDTO.setDescription(updatedOffer.getDescription());
         updatedOfferDTO.setLocation(updatedOffer.getLocation());
         updatedOfferDTO.setSalaryRange(updatedOffer.getSalaryRange());
-        updatedOfferDTO.setTechnologies(updatedOffer.getTechnologies());
+        updatedOfferDTO.setLevel(updatedOffer.getLevel());
 
         when(offerRepository.findById(offerId)).thenReturn(Optional.of(existingOffer));
         when(clock.instant()).thenReturn(LocalDateTime.now().toInstant(java.time.ZoneOffset.UTC));

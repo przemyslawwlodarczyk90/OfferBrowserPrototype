@@ -52,14 +52,14 @@ class OfferAdditionHandlerTest {
         offerDto.setDescription("Exciting job opportunity.");
         offerDto.setLocation("Warsaw");
         offerDto.setSalaryRange("10,000 - 15,000 PLN");
-        offerDto.setTechnologies("Java, Spring Boot");
+        offerDto.setLevel("Java, Spring Boot");
 
         Offer offer = new Offer();
         offer.setTitle("Java Developer");
         offer.setDescription("Exciting job opportunity.");
         offer.setLocation("Warsaw");
         offer.setSalaryRange("10,000 - 15,000 PLN");
-        offer.setTechnologies("Java, Spring Boot");
+        offer.setLevel("Java, Spring Boot");
         offer.setFetchedAt(LocalDateTime.now(fixedClock));
 
         Offer savedOffer = new Offer();
@@ -68,7 +68,7 @@ class OfferAdditionHandlerTest {
         savedOffer.setDescription("Exciting job opportunity.");
         savedOffer.setLocation("Warsaw");
         savedOffer.setSalaryRange("10,000 - 15,000 PLN");
-        savedOffer.setTechnologies("Java, Spring Boot");
+        savedOffer.setLevel("Java, Spring Boot");
         savedOffer.setFetchedAt(LocalDateTime.now(fixedClock));
 
         OfferDTO savedOfferDto = new OfferDTO();
@@ -77,7 +77,7 @@ class OfferAdditionHandlerTest {
         savedOfferDto.setDescription("Exciting job opportunity.");
         savedOfferDto.setLocation("Warsaw");
         savedOfferDto.setSalaryRange("10,000 - 15,000 PLN");
-        savedOfferDto.setTechnologies("Java, Spring Boot");
+        savedOfferDto.setLevel("Java, Spring Boot");
         savedOfferDto.setFetchedAt(LocalDateTime.now(fixedClock));
 
         // Mockowanie metod mappera i repozytorium
@@ -94,7 +94,7 @@ class OfferAdditionHandlerTest {
         assertEquals("Exciting job opportunity.", result.getDescription(), "Opis powinien być zgodny z zapisanym obiektem.");
         assertEquals("Warsaw", result.getLocation(), "Lokalizacja powinna być zgodna z zapisanym obiektem.");
         assertEquals("10,000 - 15,000 PLN", result.getSalaryRange(), "Zakres wynagrodzenia powinien być zgodny z zapisanym obiektem.");
-        assertEquals("Java, Spring Boot", result.getTechnologies(), "Technologie powinny być zgodne z zapisanym obiektem.");
+        assertEquals("Java, Spring Boot", result.getLevel(), "Technologie powinny być zgodne z zapisanym obiektem.");
         assertEquals(LocalDateTime.now(fixedClock), result.getFetchedAt(), "Czas fetchedAt powinien być zgodny z czasem ustawionym przez Clock.");
     }
 }

@@ -12,6 +12,7 @@ import os
 # Konfiguracja logowania
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+
 def scrape_offers():
     """
     Funkcja do pobierania ofert pracy za pomocą Selenium.
@@ -92,7 +93,7 @@ def scrape_offers():
                     "salaryRange": salary,
                     "level": level,
                     "applied": False,
-                    "fetchedAt": datetime.now(timezone.utc).isoformat(),
+                    "fetchedAt": datetime.utcnow().isoformat(timespec='microseconds') + "Z",  # Poprawione
                     "offerUrl": offer_url,
                 })
 
@@ -116,6 +117,7 @@ def scrape_offers():
         driver.quit()
         logging.info("Zakończono działanie funkcji scrape_offers.")
 
+
 def save_offers_to_file(offers, filename="detailed_offers.json"):
     """
     Funkcja zapisuje listę ofert do pliku JSON.
@@ -131,6 +133,7 @@ def save_offers_to_file(offers, filename="detailed_offers.json"):
         logging.info(f"Zapisano {len(offers)} ofert do pliku '{filepath}'.")
     except Exception as e:
         logging.error(f"Wystąpił błąd podczas zapisywania do pliku: {e}")
+
 
 if __name__ == "__main__":
     offers = scrape_offers()

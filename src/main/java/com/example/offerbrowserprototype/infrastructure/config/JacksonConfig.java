@@ -15,9 +15,13 @@ public class JacksonConfig {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
         builder.modulesToInstall(new JavaTimeModule());
         builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        builder.simpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        builder.simpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'"); // Obsługa mikrosekund
         builder.timeZone("UTC");
         return builder;
     }
 
+    @Bean
+    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
+        return builder.build();
+    }
 }

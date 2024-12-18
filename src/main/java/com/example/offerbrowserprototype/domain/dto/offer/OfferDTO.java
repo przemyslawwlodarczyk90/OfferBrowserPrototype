@@ -7,14 +7,14 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-
-
+@NoArgsConstructor
 @Data
 public class OfferDTO {
 
-    private String id; // ID może być generowane przez bazę, więc może nie być konieczne walidowanie
+    private String id; // ID z bazy danych
 
     @NotBlank(message = "Title cannot be empty")
     private String title;
@@ -25,44 +25,40 @@ public class OfferDTO {
     @NotBlank(message = "Location cannot be empty")
     private String location;
 
-    private String salaryRange; // Optional field, no validation
+    @NotBlank(message = "Offer URL cannot be empty")
+    private String offerUrl; // Kluczowy identyfikator URL
 
-    private String level; // Optional field, no validation
-
+    private String salaryRange; // Opcjonalne
+    private String level;       // Opcjonalne
     private boolean applied;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
-    private LocalDateTime fetchedAt; // Może być ustawiane przez system, więc bez walidacji
+    private LocalDateTime fetchedAt;
 
-
-
-    // Konstruktor bez ID (dla tworzenia nowych ofert)
-    public OfferDTO(String title, String description, String location, String salaryRange, String level, boolean applied, LocalDateTime fetchedAt) {
+    // Konstruktor bez ID
+    public OfferDTO(String title, String description, String location, String offerUrl, String salaryRange, String level, boolean applied, LocalDateTime fetchedAt) {
         this.title = title;
         this.description = description;
         this.location = location;
+        this.offerUrl = offerUrl;
         this.salaryRange = salaryRange;
         this.level = level;
-        this.applied = applied; // Ustawienie pola 'applied'
-        this.fetchedAt = fetchedAt; // Ustawienie pola 'fetchedAt'
+        this.applied = applied;
+        this.fetchedAt = fetchedAt;
     }
 
-    // Konstruktor z ID (dla istniejących ofert)
-    public OfferDTO(String id, String title, String description, String location, String salaryRange, String level, boolean applied, LocalDateTime fetchedAt) {
+    // Konstruktor z ID
+    public OfferDTO(String id, String title, String description, String location, String offerUrl, String salaryRange, String level, boolean applied, LocalDateTime fetchedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.location = location;
+        this.offerUrl = offerUrl;
         this.salaryRange = salaryRange;
         this.level = level;
-        this.applied = applied; // Ustawienie pola 'applied'
-        this.fetchedAt = fetchedAt; // Ustawienie pola 'fetchedAt'
+        this.applied = applied;
+        this.fetchedAt = fetchedAt;
     }
-
-    public OfferDTO() {
-    }
-
-
 }

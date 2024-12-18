@@ -37,7 +37,7 @@ class OfferMapperTest {
         offer.setDescription("Exciting job opportunity for a Java Developer.");
         offer.setLocation("Warsaw");
         offer.setSalaryRange("10,000 - 15,000 PLN");
-        offer.setTechnologies("Java, Spring Boot");
+        offer.setLevel("Java, Spring Boot");
         offer.setApplied(true);
         offer.setFetchedAt(LocalDateTime.now());
 
@@ -50,7 +50,7 @@ class OfferMapperTest {
         assertEquals(offer.getDescription(), dto.getDescription());
         assertEquals(offer.getLocation(), dto.getLocation());
         assertEquals(offer.getSalaryRange(), dto.getSalaryRange());
-        assertEquals(offer.getTechnologies(), dto.getTechnologies());
+        assertEquals(offer.getLevel(), dto.getLevel());
         assertEquals(offer.isApplied(), dto.isApplied());
         assertEquals(offer.getFetchedAt(), dto.getFetchedAt());
     }
@@ -66,7 +66,7 @@ class OfferMapperTest {
         dto.setDescription("Exciting job opportunity for a Java Developer.");
         dto.setLocation("Warsaw");
         dto.setSalaryRange("10,000 - 15,000 PLN");
-        dto.setTechnologies("Java, Spring Boot");
+        dto.setLevel("Java, Spring Boot");
         dto.setApplied(true);
         dto.setFetchedAt(LocalDateTime.now());
 
@@ -78,7 +78,7 @@ class OfferMapperTest {
         assertEquals(dto.getDescription(), offer.getDescription());
         assertEquals(dto.getLocation(), offer.getLocation());
         assertEquals(dto.getSalaryRange(), offer.getSalaryRange());
-        assertEquals(dto.getTechnologies(), offer.getTechnologies());
+        assertEquals(dto.getLevel(), offer.getLevel());
         assertEquals(dto.isApplied(), offer.isApplied());
         assertEquals(dto.getFetchedAt(), offer.getFetchedAt());
     }
@@ -100,7 +100,7 @@ class OfferMapperTest {
         assertNull(dto.getDescription());
         assertNull(dto.getLocation());
         assertNull(dto.getSalaryRange());
-        assertNull(dto.getTechnologies());
+        assertNull(dto.getLevel());
         assertFalse(dto.isApplied());
         assertNull(dto.getFetchedAt());
     }
@@ -122,7 +122,7 @@ class OfferMapperTest {
         assertNull(offer.getDescription());
         assertNull(offer.getLocation());
         assertNull(offer.getSalaryRange());
-        assertNull(offer.getTechnologies());
+        assertNull(offer.getLevel());
         assertFalse(offer.isApplied());
         assertNull(offer.getFetchedAt());
     }

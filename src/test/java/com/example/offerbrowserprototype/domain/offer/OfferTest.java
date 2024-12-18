@@ -46,7 +46,7 @@ class OfferTest {
         assertEquals(description, offer.getDescription(), "Opis powinien być zgodny z podanym.");
         assertEquals(location, offer.getLocation(), "Lokalizacja powinna być zgodna z podaną.");
         assertEquals(salaryRange, offer.getSalaryRange(), "Zakres wynagrodzenia powinien być zgodny z podanym.");
-        assertEquals(technologies, offer.getTechnologies(), "Technologie powinny być zgodne z podanymi.");
+        assertEquals(technologies, offer.getLevel(), "Technologie powinny być zgodne z podanymi.");
         assertFalse(offer.isApplied(), "Początkowa wartość applied powinna być false.");
         assertEquals(LocalDateTime.now(fixedClock), offer.getFetchedAt(), "Czas fetchedAt powinien być zgodny z czasem utworzonym przez Clock.");
     }
@@ -65,7 +65,7 @@ class OfferTest {
         offer.setDescription("Analyze and model complex datasets.");
         offer.setLocation("Krakow");
         offer.setSalaryRange("12,000 - 18,000 PLN");
-        offer.setTechnologies("Python, Machine Learning");
+        offer.setLevel("Python, Machine Learning");
         offer.setApplied(true);
         offer.setFetchedAt(LocalDateTime.of(2024, 1, 2, 10, 0));
 
@@ -75,7 +75,7 @@ class OfferTest {
         assertEquals("Analyze and model complex datasets.", offer.getDescription(), "Opis powinien być zgodny z ustawionym.");
         assertEquals("Krakow", offer.getLocation(), "Lokalizacja powinna być zgodna z ustawioną.");
         assertEquals("12,000 - 18,000 PLN", offer.getSalaryRange(), "Zakres wynagrodzenia powinien być zgodny z ustawionym.");
-        assertEquals("Python, Machine Learning", offer.getTechnologies(), "Technologie powinny być zgodne z ustawionymi.");
+        assertEquals("Python, Machine Learning", offer.getLevel(), "Technologie powinny być zgodne z ustawionymi.");
         assertTrue(offer.isApplied(), "Wartość applied powinna być true.");
         assertEquals(LocalDateTime.of(2024, 1, 2, 10, 0), offer.getFetchedAt(), "Czas fetchedAt powinien być zgodny z ustawionym.");
     }
@@ -94,7 +94,7 @@ class OfferTest {
         assertNull(offer.getDescription(), "Domyślny opis powinien być null.");
         assertNull(offer.getLocation(), "Domyślna lokalizacja powinna być null.");
         assertNull(offer.getSalaryRange(), "Domyślny zakres wynagrodzenia powinien być null.");
-        assertNull(offer.getTechnologies(), "Domyślne technologie powinny być null.");
+        assertNull(offer.getLevel(), "Domyślne technologie powinny być null.");
         assertFalse(offer.isApplied(), "Domyślna wartość applied powinna być false.");
         assertNull(offer.getFetchedAt(), "Domyślny czas fetchedAt powinien być null.");
     }

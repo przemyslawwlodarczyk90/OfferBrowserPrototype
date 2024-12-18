@@ -4,7 +4,6 @@ import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.offer.Offer;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class OfferMapper {
 
@@ -16,6 +15,7 @@ public class OfferMapper {
         dto.setLocation(offer.getLocation());
         dto.setSalaryRange(offer.getSalaryRange());
         dto.setLevel(offer.getLevel());
+        dto.setOfferUrl(offer.getOfferUrl()); // Dodano pole URL
         dto.setApplied(offer.isApplied());
         dto.setFetchedAt(offer.getFetchedAt());
         return dto;
@@ -28,6 +28,7 @@ public class OfferMapper {
         offer.setLocation(dto.getLocation());
         offer.setSalaryRange(dto.getSalaryRange());
         offer.setLevel(dto.getLevel());
+        offer.setOfferUrl(dto.getOfferUrl()); // Dodano pole URL
         offer.setApplied(dto.isApplied());
         offer.setFetchedAt(dto.getFetchedAt());
         return offer;

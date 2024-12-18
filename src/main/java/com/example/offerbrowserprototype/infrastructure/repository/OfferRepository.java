@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OfferRepository extends MongoRepository<Offer, String> {
@@ -14,4 +15,6 @@ public interface OfferRepository extends MongoRepository<Offer, String> {
     List<Offer> findByAppliedFalseOrderByFetchedAtDesc(); // Oferty, na które nie aplikowano, posortowane chronologicznie
 
     List<Offer> findByAppliedTrueOrderByFetchedAtDesc(); // Oferty, na które aplikowano, posortowane chronologicznie
+
+    Optional<Offer> findByOfferUrl(String offerUrl); // Wyszukaj ofertę po URL
 }
