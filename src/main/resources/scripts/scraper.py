@@ -7,6 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 import json
 import logging
 from datetime import datetime, timezone
+import os
 
 # Konfiguracja logowania
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -119,10 +120,15 @@ def save_offers_to_file(offers, filename="detailed_offers.json"):
     """
     Funkcja zapisuje listę ofert do pliku JSON.
     """
+    # Ścieżka do zapisu
+    folder_path = os.path.join("data", "offers")
+    os.makedirs(folder_path, exist_ok=True)  # Tworzy folder, jeśli nie istnieje
+    filepath = os.path.join(folder_path, filename)
+
     try:
-        with open(filename, "w", encoding="utf-8") as file:
+        with open(filepath, "w", encoding="utf-8") as file:
             json.dump(offers, file, ensure_ascii=False, indent=4)
-        logging.info(f"Zapisano {len(offers)} ofert do pliku '{filename}'.")
+        logging.info(f"Zapisano {len(offers)} ofert do pliku '{filepath}'.")
     except Exception as e:
         logging.error(f"Wystąpił błąd podczas zapisywania do pliku: {e}")
 
