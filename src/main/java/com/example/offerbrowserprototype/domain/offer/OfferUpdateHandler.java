@@ -30,7 +30,7 @@ class OfferUpdateHandler {
         existingOffer.setDescription(offerDto.getDescription());
         existingOffer.setLocation(offerDto.getLocation());
         existingOffer.setSalaryRange(offerDto.getSalaryRange());
-        existingOffer.setTechnologies(offerDto.getTechnologies());
+        existingOffer.setLevel(offerDto.getLevel());
         // Aktualizacja danych
         existingOffer.setFetchedAt(LocalDateTime.now(clock));
 

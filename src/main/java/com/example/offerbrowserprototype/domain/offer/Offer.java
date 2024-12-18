@@ -21,18 +21,18 @@ public class Offer {
     private String description;
     private String location;
     private String salaryRange;
-    private String technologies;
+    private String level;
     private boolean applied;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private LocalDateTime fetchedAt;
 
-    public Offer(String title, String description, String location, String salaryRange, String technologies, Clock clock) {
+    public Offer(String title, String description, String location, String salaryRange, String level, Clock clock) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.salaryRange = salaryRange;
-        this.technologies = technologies;
+        this.level = level;
         this.applied = false;
         this.fetchedAt = LocalDateTime.now(clock); // Użycie Clock do uzyskania bieżącego czasu
     }}

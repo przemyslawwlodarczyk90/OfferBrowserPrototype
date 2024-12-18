@@ -27,7 +27,7 @@ public class OfferDTO {
 
     private String salaryRange; // Optional field, no validation
 
-    private String technologies; // Optional field, no validation
+    private String level; // Optional field, no validation
 
     private boolean applied;
 
@@ -39,24 +39,24 @@ public class OfferDTO {
 
 
     // Konstruktor bez ID (dla tworzenia nowych ofert)
-    public OfferDTO(String title, String description, String location, String salaryRange, String technologies, boolean applied, LocalDateTime fetchedAt) {
+    public OfferDTO(String title, String description, String location, String salaryRange, String level, boolean applied, LocalDateTime fetchedAt) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.salaryRange = salaryRange;
-        this.technologies = technologies;
+        this.level = level;
         this.applied = applied; // Ustawienie pola 'applied'
         this.fetchedAt = fetchedAt; // Ustawienie pola 'fetchedAt'
     }
 
     // Konstruktor z ID (dla istniejących ofert)
-    public OfferDTO(String id, String title, String description, String location, String salaryRange, String technologies, boolean applied, LocalDateTime fetchedAt) {
+    public OfferDTO(String id, String title, String description, String location, String salaryRange, String level, boolean applied, LocalDateTime fetchedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.location = location;
         this.salaryRange = salaryRange;
-        this.technologies = technologies;
+        this.level = level;
         this.applied = applied; // Ustawienie pola 'applied'
         this.fetchedAt = fetchedAt; // Ustawienie pola 'fetchedAt'
     }
