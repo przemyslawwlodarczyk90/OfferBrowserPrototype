@@ -1,8 +1,7 @@
 package com.example.offerbrowserprototype.infrastructure.service;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
-import com.example.offerbrowserprototype.external.JobOfferProviderFactory;
-import org.springframework.scheduling.annotation.Async;
+import com.example.offerbrowserprototype.infrastructure.external.JobOfferProviderFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

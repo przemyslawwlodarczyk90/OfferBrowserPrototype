@@ -1,7 +1,7 @@
 package com.example.offerbrowserprototype.domain.offer;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
-import com.example.offerbrowserprototype.external.JobOfferProvider;
+import com.example.offerbrowserprototype.infrastructure.external.JobOfferProvider;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.offerbrowserprototype.external;
+package com.example.offerbrowserprototype.infrastructure.external;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import org.springframework.beans.factory.annotation.Value;
