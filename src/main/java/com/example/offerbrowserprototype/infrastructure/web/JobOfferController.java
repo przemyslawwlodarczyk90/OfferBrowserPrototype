@@ -20,9 +20,7 @@ public class JobOfferController {
     private static final Logger LOGGER = Logger.getLogger(JobOfferController.class.getName());
     private final ExternalJobOfferService externalJobOfferService;
 
-    // Odczyt cron expression z application.properties
-    @Value("${job.offer.fetch.cron}")
-    private String cronExpression;
+
 
     public JobOfferController(ExternalJobOfferService externalJobOfferService) {
         this.externalJobOfferService = externalJobOfferService;
@@ -33,7 +31,7 @@ public class JobOfferController {
             @ApiResponse(responseCode = "200", description = "Scheduled fetching executed successfully"),
             @ApiResponse(responseCode = "500", description = "Error occurred while fetching job offers")
     })
-    // Metoda harmonogramowana – pobiera oferty zgodnie z harmonogramem ustawionym w application.properties
+
     @Scheduled(cron = "#{@jobOfferController.cronExpression}")
     public void fetchOffersAutomatically() {
         LOGGER.info("Scheduled fetching of job offers started.");

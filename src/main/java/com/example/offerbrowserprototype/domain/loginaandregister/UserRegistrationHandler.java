@@ -36,41 +36,41 @@ class UserRegistrationHandler {
     }
 
     public RegistrationResultDTO register(RegisterUserDTO userDto) {
-        // Sprawdzamy, czy użytkownik o podanym username już istnieje
+
         if (userRepository.findByUsername(userDto.getUsername()).isPresent()) {
             return new RegistrationResultDTO(null, userDto.getUsername(), false, "Username already taken");
         }
 
-        // Hashowanie hasła
+
         String hashedPassword = passwordEncoder.encode(userDto.getPassword());
 
-        // Tworzenie użytkownika za pomocą `UserMapper`
+
         User newUser = userMapper.toEntity(userDto, hashedPassword);
 
-        // Zapis do bazy danych
+
         userRepository.save(newUser);
 
-        // Generowanie linku potwierdzającego rejestrację
-        String confirmationToken = generateConfirmationToken();
-        String confirmationLink = "http://localhost:8080/api/v1/registration/confirm?token=" + confirmationToken; // Zaktualizuj na właściwy adres
 
-        // Tworzenie tokenu rejestracyjnego i zapis do bazy danych
+        String confirmationToken = generateConfirmationToken();
+        String confirmationLink = "http://localhost:8080/api/v1/registration/confirm?token=" + confirmationToken;
+
+
         ConfirmationToken token = new ConfirmationToken(
                 confirmationToken,
-                LocalDateTime.now(clock), // Użycie Clock do uzyskania aktualnego czasu
-                LocalDateTime.now(clock).plusDays(1), // Token ważny przez 24 godziny
+                LocalDateTime.now(clock),
+                LocalDateTime.now(clock).plusDays(1),
                 newUser.getId()
         );
         confirmationTokenService.saveConfirmationToken(token);
 
-        // Wysłanie e-maila potwierdzającego
+
         mailService.sendConfirmationEmail(userDto.getEmail(), "Confirm your registration", userDto.getUsername(), confirmationLink);
 
         return new RegistrationResultDTO(newUser.getId(), userDto.getUsername(), true, "Rejestracja udana");
     }
 
     private String generateConfirmationToken() {
-        // Wygeneruj token potwierdzający (np. UUID lub token JWT)
+
         return java.util.UUID.randomUUID().toString();
     }
 }

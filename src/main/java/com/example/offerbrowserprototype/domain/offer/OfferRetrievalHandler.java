@@ -29,7 +29,7 @@ class OfferRetrievalHandler {
     }
 
     public List<OfferDTO> getAllOffers() {
-        // Pobieranie wszystkich ofert z bazy danych
+
         return offerRepository.findAllByOrderByFetchedAtDesc()
                 .stream()
                 .map(offerMapper::toDTO)

@@ -29,27 +29,21 @@ public class ProviderOneJobOfferProvider implements JobOfferProvider {
     @Override
     public List<OfferDTO> fetchOffers() {
         try {
-            // Próba pobrania danych z zewnętrznego API
+
             OfferDTO[] offers = restTemplate.getForObject(apiUrl, OfferDTO[].class);
             return Arrays.asList(offers);
         } catch (HttpClientErrorException e) {
-            // Obsługa błędów klienta HTTP (np. 4xx)
             LOGGER.severe("Client error while fetching offers from " + getProviderName() + ": " + e.getMessage());
         } catch (HttpServerErrorException e) {
-            // Obsługa błędów serwera HTTP (np. 5xx)
             LOGGER.severe("Server error while fetching offers from " + getProviderName() + ": " + e.getMessage());
         } catch (ResourceAccessException e) {
-            // Obsługa błędów dostępu do zasobów (np. problemy z siecią)
             LOGGER.severe("Resource access error while fetching offers from " + getProviderName() + ": " + e.getMessage());
         } catch (RestClientException e) {
-            // Obsługa ogólnych błędów RestTemplate
             LOGGER.severe("Rest client error while fetching offers from " + getProviderName() + ": " + e.getMessage());
         } catch (Exception e) {
-            // Obsługa innych nieoczekiwanych wyjątków
             LOGGER.severe("Unexpected error while fetching offers from " + getProviderName() + ": " + e.getMessage());
         }
 
-        // W razie błędu zwracamy pustą listę, aby obsłużyć to na poziomie wyższym
         return List.of();
     }
 
@@ -61,7 +55,6 @@ public class ProviderOneJobOfferProvider implements JobOfferProvider {
     @Override
     public void pushOffer(OfferDTO offer) {
         try {
-            // Wypchnięcie ogłoszenia do zewnętrznego API providera
             restTemplate.postForEntity(apiUrl + "/push", offer, Void.class);
             LOGGER.info("Offer pushed successfully to ProviderOne");
         } catch (Exception e) {

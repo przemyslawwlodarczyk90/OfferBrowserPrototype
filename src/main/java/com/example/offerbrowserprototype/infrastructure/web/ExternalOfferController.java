@@ -62,8 +62,8 @@ public class ExternalOfferController {
             @RequestParam @Valid @Min(1) int page,
             @RequestParam @Valid @Min(1) int size,
             @RequestParam(required = false) @NotBlank String provider) {
-        // Your logic to fetch paginated offers with optional provider filtering
-        List<OfferDTO> offers = externalJobOfferService.fetchExternalOffers(); // Replace with actual logic
+
+        List<OfferDTO> offers = externalJobOfferService.fetchExternalOffers();
         return ResponseEntity.ok(offers);
     }
 }

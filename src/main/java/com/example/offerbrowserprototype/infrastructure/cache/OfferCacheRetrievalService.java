@@ -20,6 +20,6 @@ public class OfferCacheRetrievalService {
 
     public List<OfferDTO> getCachedOffers() {
         Object cachedOffers = redisTemplate.opsForValue().get(CACHE_KEY);
-        return cachedOffers != null ? (List<OfferDTO>) cachedOffers : List.of(); // Obsługa null
+        return cachedOffers != null ? (List<OfferDTO>) cachedOffers : List.of();
     }
 }

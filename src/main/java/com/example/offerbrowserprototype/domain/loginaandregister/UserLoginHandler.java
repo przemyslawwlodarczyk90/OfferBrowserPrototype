@@ -25,7 +25,7 @@ class UserLoginHandler {
         return userRepository.findByUsername(loginDto.getUsername())
                 .filter(user -> passwordEncoder.matches(loginDto.getPassword(), user.getPassword()))
                 .map(user -> {
-                    // Generowanie rzeczywistego tokena JWT
+
                     return jwtService.generateToken(new org.springframework.security.core.userdetails.User(
                             user.getUsername(), user.getPassword(), new ArrayList<>()));
                 })

@@ -10,11 +10,11 @@ import java.util.Optional;
 @Repository
 public interface OfferRepository extends MongoRepository<Offer, String> {
 
-    List<Offer> findAllByOrderByFetchedAtDesc(); // Wszystkie oferty posortowane chronologicznie
+    List<Offer> findAllByOrderByFetchedAtDesc();
 
-    List<Offer> findByAppliedFalseOrderByFetchedAtDesc(); // Oferty, na które nie aplikowano, posortowane chronologicznie
+    List<Offer> findByAppliedFalseOrderByFetchedAtDesc();
 
-    List<Offer> findByAppliedTrueOrderByFetchedAtDesc(); // Oferty, na które aplikowano, posortowane chronologicznie
+    List<Offer> findByAppliedTrueOrderByFetchedAtDesc();
 
-    Optional<Offer> findByOfferUrl(String offerUrl); // Wyszukaj ofertę po URL
+    Optional<Offer> findByOfferUrl(String offerUrl);
 }

@@ -23,8 +23,8 @@ class OfferAdditionHandler {
 
     OfferDTO addOffer(OfferDTO offerDto) {
         Offer offer = offerMapper.toEntity(offerDto);
-        // Użycie clock do ustawienia daty
         offer.setFetchedAt(LocalDateTime.now(clock));
         Offer savedOffer = offerRepository.save(offer);
         return offerMapper.toDTO(savedOffer);
-    }}
+    }
+}

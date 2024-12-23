@@ -19,13 +19,12 @@ public class OfferPushHandler {
     }
 
     public void pushOfferToProvider(String offerId, String providerName) {
-        // Znajdź ofertę na podstawie ID
+
         OfferDTO offer = retrievalHandler.getOffer(offerId);
         if (offer == null) {
             throw new IllegalArgumentException("Offer not found");
         }
 
-        // Znajdź providera na podstawie nazwy
         Optional<JobOfferProvider> providerOpt = jobOfferProviders.stream()
                 .filter(provider -> provider.getProviderName().equalsIgnoreCase(providerName))
                 .findFirst();
@@ -36,7 +35,6 @@ public class OfferPushHandler {
 
         JobOfferProvider provider = providerOpt.get();
 
-        // Wypchnij ofertę do providera
         provider.pushOffer(offer);
     }
 }

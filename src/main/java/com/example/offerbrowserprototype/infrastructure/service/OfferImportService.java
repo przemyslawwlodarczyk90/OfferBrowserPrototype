@@ -23,11 +23,11 @@ public class OfferImportService {
     private OfferRepository offerRepository;
 
     @Autowired
-    private ObjectMapper objectMapper; // Jeśli skonfigurowany globalnie w Spring
+    private ObjectMapper objectMapper;
 
     public void importOffersFromJson(String filePath) {
         try {
-            // Rejestracja modułu obsługi dat, jeśli ObjectMapper nie jest wstrzyknięty
+
             if (objectMapper == null) {
                 objectMapper = new ObjectMapper();
                 objectMapper.registerModule(new JavaTimeModule());
@@ -46,7 +46,6 @@ public class OfferImportService {
 
             for (Offer offer : offers) {
                 try {
-                    // Sprawdzenie, czy oferta o danym URL już istnieje
                     if (offerRepository.findByOfferUrl(offer.getOfferUrl()).isEmpty()) {
                         offerRepository.save(offer);
                         logger.info("Zapisano nową ofertę: {}", offer.getTitle());

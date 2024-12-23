@@ -13,14 +13,14 @@ import org.springframework.stereotype.Component;
 public class LoginAndRegisterFacade {
 
     private final UserRegistrationHandler registrationHandler;
-    private final UserLoginHandler userLoginHandler;  // Dodano pole UserLoginHandler
+    private final UserLoginHandler userLoginHandler;
     private final UserProfileUpdater profileUpdater;
     private final ConfirmationTokenService confirmationTokenService;
     private final UserPasswordChanger passwordChanger;
     private final UserRepository userRepository;
 
     public LoginAndRegisterFacade(UserRegistrationHandler registrationHandler,
-                                  UserLoginHandler userLoginHandler,  // Dodano UserLoginHandler
+                                  UserLoginHandler userLoginHandler,
                                   UserProfileUpdater profileUpdater,
                                   ConfirmationTokenService confirmationTokenService,
                                   UserPasswordChanger passwordChanger,
@@ -38,7 +38,7 @@ public class LoginAndRegisterFacade {
     }
 
     public String login(LoginDto loginDto) {
-        // Wywołanie UserLoginHandler do uwierzytelniania i generowania tokena
+
         return userLoginHandler.login(loginDto);
     }
 
@@ -54,7 +54,7 @@ public class LoginAndRegisterFacade {
         ConfirmationToken confirmationToken = confirmationTokenService.getToken(token)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid token"));
 
-        // Potwierdzenie tokena i aktywacja użytkownika
+
         confirmationTokenService.confirmToken(confirmationToken);
         activateUser(confirmationToken.getUserId());
 
@@ -65,7 +65,7 @@ public class LoginAndRegisterFacade {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        user.setActive(true); // Ustawienie pola 'active' na true, aby aktywować użytkownika
+        user.setActive(true);
         userRepository.save(user);
     }
 }

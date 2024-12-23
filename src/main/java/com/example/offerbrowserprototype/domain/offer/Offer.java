@@ -16,32 +16,30 @@ import java.time.LocalDateTime;
 public class Offer {
 
     @Id
-    private String id; // MongoDB automatycznie generuje unikalne ID
+    private String id;
 
-    private String title; // Tytuł oferty
-    private String description; // Opis oferty
-    private String location; // Lokalizacja oferty
-    private String salaryRange; // Zakres wynagrodzenia
-    private String level; // Poziom doświadczenia
+    private String title;
+    private String description;
+    private String location;
+    private String salaryRange;
+    private String level;
 
     @Indexed(unique = true)
-    private String offerUrl; // URL oferty (unikalny)
+    private String offerUrl;
 
-    private boolean applied; // Czy użytkownik aplikował na ofertę
+    private boolean applied;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
-    private LocalDateTime fetchedAt; // Data pobrania oferty
+    private LocalDateTime fetchedAt;
 
-    /**
-     * Konstruktor pozwalający na inicjalizację pola fetchedAt przy użyciu Clock.
-     */
+
     public Offer(String title, String description, String location, String salaryRange, String level, Clock clock) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.salaryRange = salaryRange;
         this.level = level;
-        this.applied = false; // Domyślnie oferta nie została zaaplikowana
-        this.fetchedAt = LocalDateTime.now(clock); // Ustawienie bieżącego czasu przy użyciu Clock
+        this.applied = false;
+        this.fetchedAt = LocalDateTime.now(clock);
     }
 }

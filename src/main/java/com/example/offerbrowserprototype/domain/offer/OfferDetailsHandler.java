@@ -16,7 +16,6 @@ class OfferDetailsHandler {
         this.offerMapper = offerMapper;
     }
 
-    // Pobieranie szczegółów oferty na podstawie ID
     public OfferDTO getOfferById(String offerId) {
         Offer offer = offerRepository.findById(offerId)
                 .orElseThrow(() -> new IllegalArgumentException("Offer not found"));

@@ -25,20 +25,16 @@ public class MailService {
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-            // Tworzenie kontekstu dla Thymeleaf
             Context context = new Context();
-            context.setVariable("username", username); // Używaj jednej zmiennej 'username'
+            context.setVariable("username", username);
             context.setVariable("confirmationLink", confirmationLink);
 
-            // Generowanie treści e-maila na podstawie szablonu Thymeleaf
-            String htmlContent = templateEngine.process("registration-email", context); // Upewnij się, że masz ten szablon
+            String htmlContent = templateEngine.process("registration-email", context);
 
-            // Ustawienie parametrów e-maila
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(htmlContent, true); // 'true' oznacza HTML content
 
-            // Wysłanie e-maila
             mailSender.send(message);
         } catch (MessagingException e) {
             throw new IllegalStateException("Failed to send email", e);

@@ -20,14 +20,14 @@ class UserProfileUpdater {
     }
 
     public UserDTO updateUserProfile(UpdateUserDto updateUserDto) {
-        // Znajdź użytkownika w bazie danych
+
         User existingUser = userRepository.findById(updateUserDto.getId().toString())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        // Zaktualizuj dane użytkownika za pomocą `UserMapper`
+
         userMapper.updateUserFromDto(updateUserDto, existingUser);
 
-        // Zapisz zmiany w bazie danych
+
         User updatedUser = userRepository.save(existingUser);
 
         return userMapper.toDTO(updatedUser);

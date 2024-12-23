@@ -18,20 +18,20 @@ class UserPasswordChanger {
     }
 
     public boolean changeUserPassword(ChangePasswordDto changePasswordDto) {
-        // Wyszukaj użytkownika po nazwie użytkownika lub e-mailu (dostosuj do Twojej logiki)
+
         return userRepository.findByUsername(changePasswordDto.getUsername())
                 .map(user -> {
-                    // Sprawdź, czy obecne hasło jest poprawne
+
                     if (passwordEncoder.matches(changePasswordDto.getCurrentPassword(), user.getPassword())) {
-                        // Ustaw nowe hasło i zapisz użytkownika
+
                         user.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
                         userRepository.save(user);
                         return true;
                     } else {
-                        // Jeśli hasło jest niepoprawne, zwróć `false`
+
                         return false;
                     }
                 })
-                .orElse(false); // Użytkownik nie znaleziony
+                .orElse(false);
     }
 }

@@ -15,12 +15,10 @@ public class ExternalJobOfferService {
         this.jobOfferProviderFactory = jobOfferProviderFactory;
     }
 
-    // Uproszczona metoda do pobierania ofert od dostawców zewnętrznych
     public List<OfferDTO> fetchExternalOffers() {
         return jobOfferProviderFactory.fetchAllOffers();
     }
 
-    // Zwraca nazwy wszystkich dostawców
     public List<String> getProviderNames() {
         return jobOfferProviderFactory.getAvailableProviders();
     }

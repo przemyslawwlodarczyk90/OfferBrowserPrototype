@@ -13,7 +13,7 @@ public class ChangePasswordDto {
     @NotBlank(message = "Username cannot be blank")
     private String username;
 
-    // Getters and setters
+
     public String getCurrentPassword() {
         return currentPassword;
     }

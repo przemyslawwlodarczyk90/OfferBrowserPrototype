@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import java.util.logging.Logger;
 
 @Component
-@ConditionalOnProperty(name = "job.offer.scheduler.enabled", havingValue = "true", matchIfMissing = true) // Adnotacja warunkowa
+@ConditionalOnProperty(name = "job.offer.scheduler.enabled", havingValue = "true", matchIfMissing = true)
 public class ScheduledJobOfferFetcher {
 
     private static final Logger LOGGER = Logger.getLogger(ScheduledJobOfferFetcher.class.getName());
@@ -18,7 +18,7 @@ public class ScheduledJobOfferFetcher {
         this.externalJobOfferService = externalJobOfferService;
     }
 
-    // Zadanie wykonywane zgodnie z harmonogramem zdefiniowanym w application.properties
+
     @Scheduled(cron = "${job.offer.fetch.cron}")
     public void fetchOffersFromProviders() {
         LOGGER.info("Scheduled fetching of job offers started.");

@@ -25,16 +25,13 @@ class OfferUpdateHandler {
         Offer existingOffer = offerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Offer not found"));
 
-        // Aktualizuj pola oferty
         existingOffer.setTitle(offerDto.getTitle());
         existingOffer.setDescription(offerDto.getDescription());
         existingOffer.setLocation(offerDto.getLocation());
         existingOffer.setSalaryRange(offerDto.getSalaryRange());
         existingOffer.setLevel(offerDto.getLevel());
-        // Aktualizacja danych
         existingOffer.setFetchedAt(LocalDateTime.now(clock));
 
-        // Zapisz zaktualizowaną ofertę
         Offer updatedOffer = offerRepository.save(existingOffer);
         return offerMapper.toDTO(updatedOffer);
     }

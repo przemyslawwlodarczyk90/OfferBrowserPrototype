@@ -27,7 +27,6 @@ public class ConfirmationTokenService {
     }
 
     public void confirmToken(ConfirmationToken token) {
-        // Użycie Clock do porównania czasu
         if (token.getExpiresAt().isBefore(LocalDateTime.now(clock))) {
             throw new IllegalArgumentException("Token has expired");
         }

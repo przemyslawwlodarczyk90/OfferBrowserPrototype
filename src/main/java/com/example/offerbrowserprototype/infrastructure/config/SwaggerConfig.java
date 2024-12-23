@@ -15,22 +15,20 @@ public class SwaggerConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
-        // Definicja schematu autoryzacji
+
         SecurityScheme securityScheme = new SecurityScheme()
                 .name("Bearer Authentication")
                 .type(SecurityScheme.Type.HTTP)
                 .scheme("bearer")
                 .bearerFormat("JWT");
 
-        // Dodanie schematu autoryzacji do komponentów OpenAPI
         Components components = new Components()
                 .addSecuritySchemes("bearerAuth", securityScheme);
 
-        // Zdefiniowanie wymagania autoryzacji dla endpointów wymagających JWT
+
         SecurityRequirement securityRequirement = new SecurityRequirement()
                 .addList("bearerAuth");
 
-        // Utworzenie sekcji "Info" z tytułem, opisem, wersją i dodatkowymi informacjami
         Info apiInfo = new Info()
                 .title("Offer Browser API")
                 .description("This API allows users to register, authenticate, and manage job offers.\n\n"
@@ -43,7 +41,6 @@ public class SwaggerConfig {
                 .version("1.0.0")
                 .license(new License().name("MIT License").url("https://opensource.org/licenses/MIT"));
 
-        // Kompletne ustawienia OpenAPI
         return new OpenAPI()
                 .components(components)
                 .addSecurityItem(securityRequirement)

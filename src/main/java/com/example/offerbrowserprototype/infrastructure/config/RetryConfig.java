@@ -13,11 +13,10 @@ public class RetryConfig {
     public RetryTemplate retryTemplate() {
         RetryTemplate retryTemplate = new RetryTemplate();
 
-        // Konfiguracja polityki retry
+
         SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
         retryPolicy.setMaxAttempts(3);
 
-        // Konfiguracja polityki backoff
         ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
         backOffPolicy.setInitialInterval(2000);
         backOffPolicy.setMultiplier(2);

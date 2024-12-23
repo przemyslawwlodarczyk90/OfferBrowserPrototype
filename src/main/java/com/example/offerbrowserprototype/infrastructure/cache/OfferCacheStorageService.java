@@ -16,7 +16,6 @@ public class OfferCacheStorageService {
     private final RedisTemplate<String, Object> redisTemplate;
     private static final String CACHE_KEY = JOB_OFFERS;
 
-    // Pobieranie czasu wygaśnięcia cache'a z konfiguracji
     @Value("${offer.cache.expiration}")
     private long cacheExpirationMinutes;
 
@@ -25,7 +24,6 @@ public class OfferCacheStorageService {
     }
 
     public void cacheOffers(List<OfferDTO> offers) {
-        // Ustawienie czasu wygaśnięcia cache'a na podstawie konfiguracji
         redisTemplate.opsForValue().set(CACHE_KEY, offers, cacheExpirationMinutes, TimeUnit.MINUTES);
     }
 }

@@ -19,7 +19,7 @@ public class UserMapper {
         );
     }
 
-    // Konwersja z `RegisterUserDTO` na `User`
+
     public User toEntity(RegisterUserDTO registerUserDTO, String hashedPassword) {
         User user = new User();
         user.setUsername(registerUserDTO.getUsername());
@@ -28,14 +28,13 @@ public class UserMapper {
         return user;
     }
 
-    // Aktualizacja istniejącego `User` z `UpdateUserDto`
+
     public void updateUserFromDto(UpdateUserDto updateUserDto, User user) {
-        // Sprawdź, czy `username` jest nie `null` i nie jest pusty, zanim zaktualizujesz
+
         if (StringUtils.hasText(updateUserDto.getUsername())) {
             user.setUsername(updateUserDto.getUsername());
         }
 
-        // Sprawdź, czy `email` jest nie `null` i nie jest pusty, zanim zaktualizujesz
         if (StringUtils.hasText(updateUserDto.getEmail())) {
             user.setEmail(updateUserDto.getEmail());
         }

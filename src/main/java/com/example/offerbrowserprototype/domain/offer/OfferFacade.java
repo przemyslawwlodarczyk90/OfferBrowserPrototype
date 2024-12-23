@@ -21,7 +21,7 @@ public class OfferFacade {
     private final OfferDetailsHandler detailsHandler;
     private final OfferCacheFacade offerCacheFacade;
     private final ExternalJobOfferService externalJobOfferService;
-    private final OfferPushHandler pushHandler; // Nowy komponent do wypychania ofert
+    private final OfferPushHandler pushHandler;
 
     public OfferFacade(OfferAdditionHandler additionHandler,
                        OfferUpdateHandler updateHandler,
@@ -33,7 +33,7 @@ public class OfferFacade {
                        OfferDetailsHandler detailsHandler,
                        OfferCacheFacade offerCacheFacade,
                        ExternalJobOfferService externalJobOfferService,
-                       OfferPushHandler pushHandler) { // Dodany komponent
+                       OfferPushHandler pushHandler) {
         this.additionHandler = additionHandler;
         this.updateHandler = updateHandler;
         this.deletionHandler = deletionHandler;
@@ -44,7 +44,7 @@ public class OfferFacade {
         this.detailsHandler = detailsHandler;
         this.offerCacheFacade = offerCacheFacade;
         this.externalJobOfferService = externalJobOfferService;
-        this.pushHandler = pushHandler; // Inicjalizacja komponentu
+        this.pushHandler = pushHandler;
     }
 
     public void pushOfferToProvider(String offerId, String providerName) {
@@ -78,7 +78,7 @@ public class OfferFacade {
         applicationHandler.applyToOffer(offerId);
     }
 
-    // Główna metoda do pobierania wszystkich ofert (łączy oferty lokalne i zewnętrzne)
+
     public List<OfferDTO> getAllOffers() {
         List<OfferDTO> cachedOffers = offerCacheFacade.getCachedOffers();
         if (cachedOffers != null && !cachedOffers.isEmpty()) {

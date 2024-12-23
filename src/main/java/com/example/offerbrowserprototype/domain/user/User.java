@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User {
 
     @Id
-    private String id; // MongoDB automatycznie generuje unikalne ID
+    private String id;
 
     private String username;
 

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Data
 public class OfferDTO {
 
-    private String id; // ID z bazy danych
+    private String id;
 
     @NotBlank(message = "Title cannot be empty")
     private String title;
@@ -26,10 +26,10 @@ public class OfferDTO {
     private String location;
 
     @NotBlank(message = "Offer URL cannot be empty")
-    private String offerUrl; // Kluczowy identyfikator URL
+    private String offerUrl;
 
-    private String salaryRange; // Opcjonalne
-    private String level;       // Opcjonalne
+    private String salaryRange;
+    private String level;
     private boolean applied;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -37,7 +37,7 @@ public class OfferDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private LocalDateTime fetchedAt;
 
-    // Konstruktor bez ID
+
     public OfferDTO(String title, String description, String location, String offerUrl, String salaryRange, String level, boolean applied, LocalDateTime fetchedAt) {
         this.title = title;
         this.description = description;
@@ -49,7 +49,7 @@ public class OfferDTO {
         this.fetchedAt = fetchedAt;
     }
 
-    // Konstruktor z ID
+
     public OfferDTO(String id, String title, String description, String location, String offerUrl, String salaryRange, String level, boolean applied, LocalDateTime fetchedAt) {
         this.id = id;
         this.title = title;

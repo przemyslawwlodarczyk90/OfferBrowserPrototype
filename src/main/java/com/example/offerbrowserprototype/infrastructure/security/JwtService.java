@@ -39,10 +39,10 @@ public class JwtService {
     // Utility function to normalize the token
     private String normalizeToken(String token) {
         String[] parts = token.split("\\.");
-        return padBase64(parts[0]) + "." + padBase64(parts[1]) + "." + parts[2]; // Signature is not base64-padded
+        return padBase64(parts[0]) + "." + padBase64(parts[1]) + "." + parts[2];
     }
 
-    // Function to pad Base64Url segments with '=' characters if necessary
+
     private String padBase64(String base64UrlSegment) {
         int paddingLength = (4 - (base64UrlSegment.length() % 4)) % 4;
         return base64UrlSegment + "=".repeat(paddingLength);

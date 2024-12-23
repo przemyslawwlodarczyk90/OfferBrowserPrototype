@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/registration")
 @Tag(name = "Registration", description = "Endpoints for user registration and confirmation")
-@Validated // Dodanie adnotacji @Validated dla aktywacji walidacji w kontrolerze
+@Validated
 public class RegistrationController {
 
     private final LoginAndRegisterFacade loginAndRegisterFacade;

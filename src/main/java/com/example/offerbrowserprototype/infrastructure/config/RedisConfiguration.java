@@ -40,7 +40,6 @@ public class RedisConfiguration {
 
     @Bean
     public RedisSerializer<Object> redisSerializer(Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder) {
-        // Użyj buildera, który zawiera moduł JavaTimeModule
         return new GenericJackson2JsonRedisSerializer(jackson2ObjectMapperBuilder.build());
     }
 }
