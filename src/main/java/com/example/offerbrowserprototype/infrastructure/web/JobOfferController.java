@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,12 +16,14 @@ import java.util.logging.Logger;
 
 @Component
 @Tag(name = "Job Offers", description = "Scheduled operations related to job offers fetching")
+@PreAuthorize("isAuthenticated()")
 public class JobOfferController {
 
     private static final Logger LOGGER = Logger.getLogger(JobOfferController.class.getName());
     private final ExternalJobOfferService externalJobOfferService;
 
-
+    @Value("${job.offer.scheduler.cron}") // Wstrzykiwanie wartości z application.properties
+    private String cronExpression;
 
     public JobOfferController(ExternalJobOfferService externalJobOfferService) {
         this.externalJobOfferService = externalJobOfferService;
@@ -32,13 +35,13 @@ public class JobOfferController {
             @ApiResponse(responseCode = "500", description = "Error occurred while fetching job offers")
     })
 
-    @Scheduled(cron = "#{@jobOfferController.cronExpression}")
+    @Scheduled(cron = "${job.offer.scheduler.cron}") //
     public void fetchOffersAutomatically() {
         LOGGER.info("Scheduled fetching of job offers started.");
 
         try {
             List<OfferDTO> offers = externalJobOfferService.fetchExternalOffers();
-            // Dodatkowa logika przetwarzania ofert
+
             LOGGER.info("Successfully fetched " + offers.size() + " offers automatically.");
         } catch (Exception e) {
             LOGGER.severe("Error occurred during scheduled fetching of offers: " + e.getMessage());

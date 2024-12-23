@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/external-offers")
 @Tag(name = "External Job Offers", description = "Operations related to fetching job offers from external providers")
+@PreAuthorize("isAuthenticated()")
 public class ExternalOfferController {
 
     private final ExternalJobOfferService externalJobOfferService;
@@ -35,6 +37,7 @@ public class ExternalOfferController {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved list of offers", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OfferDTO.class))),
             @ApiResponse(responseCode = "204", description = "No content found", content = @Content)
     })
+
     @GetMapping
     public ResponseEntity<List<OfferDTO>> getAllExternalOffers() {
         List<OfferDTO> offers = externalJobOfferService.fetchExternalOffers();
@@ -51,7 +54,6 @@ public class ExternalOfferController {
         return ResponseEntity.ok(providers);
     }
 
-    // Example endpoint with validation
     @Operation(summary = "Get offers with pagination", description = "Fetch job offers with pagination")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved paginated list of offers", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OfferDTO.class))),

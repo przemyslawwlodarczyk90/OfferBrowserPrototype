@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import java.util.concurrent.CompletableFuture;
 @RestController
 @RequestMapping("/api/python-script")
 @Tag(name = "No Fluff Controller", description = "Operations for downloading and writing to the database of offers from the No Fluff Jobs portal.")
+@PreAuthorize("isAuthenticated()")
 public class NoFluffController {
 
     private static final Logger logger = LoggerFactory.getLogger(NoFluffController.class);
