@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/python-script")
-@Tag(name = "Python Script", description = "Operations related to Python script execution and offer imports")
+@Tag(name = "No Fluff Controller", description = "Operations for downloading and writing to the database of offers from the No Fluff Jobs portal.")
 public class NoFluffController {
 
     private static final Logger logger = LoggerFactory.getLogger(NoFluffController.class);
