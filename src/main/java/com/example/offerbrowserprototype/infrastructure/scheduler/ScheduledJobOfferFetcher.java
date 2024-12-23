@@ -19,7 +19,7 @@ public class ScheduledJobOfferFetcher {
     }
 
 
-    @Scheduled(cron = "${job.offer.fetch.cron}")
+    @Scheduled(cron = "${job.offer.scheduler.cron}")
     public void fetchOffersFromProviders() {
         LOGGER.info("Scheduled fetching of job offers started.");
 
