@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -18,52 +17,48 @@ import java.util.List;
 public class OfferImportService {
 
     private static final Logger logger = LoggerFactory.getLogger(OfferImportService.class);
+    private final OfferRepository offerRepository;
+    private final ObjectMapper objectMapper;
 
-    @Autowired
-    private OfferRepository offerRepository;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    public OfferImportService(OfferRepository offerRepository, ObjectMapper objectMapper) {
+        this.offerRepository = offerRepository;
+        this.objectMapper = objectMapper;
+        this.objectMapper.registerModule(new JavaTimeModule());
+    }
 
     public void importOffersFromJson(String filePath) {
         try {
-
-            if (objectMapper == null) {
-                objectMapper = new ObjectMapper();
-                objectMapper.registerModule(new JavaTimeModule());
-            }
-
             File file = new File(filePath);
 
             if (!file.exists()) {
-                logger.error("Plik nie istnieje: {}", filePath);
-                throw new IOException("Plik nie został znaleziony: " + filePath);
+                logger.error("File does not exist: {}", filePath);
+                throw new IOException("File not found: " + filePath);
             }
 
-            // Wczytanie ofert z pliku JSON
+            // Read offers from JSON file
             List<Offer> offers = List.of(objectMapper.readValue(file, Offer[].class));
-            logger.info("Liczba wczytanych ofert z pliku: {}", offers.size());
+            logger.info("Number of offers read from file: {}", offers.size());
 
             for (Offer offer : offers) {
                 try {
                     if (offerRepository.findByOfferUrl(offer.getOfferUrl()).isEmpty()) {
                         offerRepository.save(offer);
-                        logger.info("Zapisano nową ofertę: {}", offer.getTitle());
+                        logger.info("Saved new offer: {}", offer.getTitle());
                     } else {
-                        logger.info("Oferta już istnieje w bazie: {}", offer.getOfferUrl());
+                        logger.info("Offer already exists in database: {}", offer.getOfferUrl());
                     }
                 } catch (DateTimeParseException e) {
-                    logger.error("Niepoprawny format daty w polu fetchedAt dla oferty {}: {}", offer.getOfferUrl(), e.getMessage());
+                    logger.error("Invalid date format in field fetchedAt for offer {}: {}", offer.getOfferUrl(), e.getMessage());
                 } catch (Exception e) {
-                    logger.error("Błąd przy przetwarzaniu oferty {}: {}", offer.getOfferUrl(), e.getMessage());
+                    logger.error("Error processing offer {}: {}", offer.getOfferUrl(), e.getMessage());
                 }
             }
 
-            logger.info("Import ofert zakończony sukcesem.");
+            logger.info("Offer import completed successfully.");
         } catch (IOException e) {
-            logger.error("Błąd podczas odczytu pliku JSON: {}", e.getMessage());
+            logger.error("Error reading JSON file: {}", e.getMessage());
         } catch (Exception e) {
-            logger.error("Nieoczekiwany błąd podczas importu ofert: {}", e.getMessage());
+            logger.error("Unexpected error during offer import: {}", e.getMessage());
         }
     }
 }
