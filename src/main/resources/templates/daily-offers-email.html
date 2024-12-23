@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Daily Job Offers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            background-color: #ffffff;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+        }
+        .email-header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .email-body {
+            padding: 20px 0;
+        }
+        .offer-link {
+            display: block;
+            margin: 10px 0;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .offer-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="email-header">
+        <h1>Your Daily Unapplied Job Offers</h1>
+    </div>
+    <div class="email-body">
+        <h1>Here are your daily unapplied job offers</h1>
+        <ul>
+            <li th:each="url : ${offerUrls}">
+                <a th:href="${url}" th:text="${url}"></a>
+            </li>
+        </ul>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
