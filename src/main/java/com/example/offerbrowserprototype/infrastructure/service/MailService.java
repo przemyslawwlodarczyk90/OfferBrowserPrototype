@@ -12,6 +12,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.util.List;
+
 @Service
 public class MailService {
 
@@ -41,10 +42,10 @@ public class MailService {
             helper.setSubject(subject);
             helper.setText(htmlContent, true);
 
-            log.info("Sending confirmation email to {}", to);
+            log.info("Confirmation email sent to {}", to);
             mailSender.send(message);
         } catch (MessagingException e) {
-            log.error("Failed to send confirmation email to {}: {}", to, e.getMessage());
+            log.error("Error sending confirmation email to {}: {}", to, e.getMessage());
             throw new IllegalStateException("Failed to send email", e);
         }
     }
@@ -56,7 +57,7 @@ public class MailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
             Context context = new Context();
-            context.setVariable("offers", offers); // Przekazanie pełnej listy obiektów OfferDTO
+            context.setVariable("offers", offers);
 
             String htmlContent = templateEngine.process("daily-offers-email", context);
 
@@ -64,12 +65,10 @@ public class MailService {
             helper.setSubject("Your Daily Unapplied Job Offers");
             helper.setText(htmlContent, true);
 
-            log.info("Sending daily offers email to {}", recipientEmail);
-            log.info("Offers: {}", offers);
-
+            log.info("Daily offers email sent to {} with {} offers", recipientEmail, offers.size());
             mailSender.send(message);
         } catch (MessagingException e) {
-            log.error("Failed to send daily offers email to {}: {}", recipientEmail, e.getMessage());
+            log.error("Error sending daily offers email to {}: {}", recipientEmail, e.getMessage());
             throw new IllegalStateException("Failed to send daily offers email", e);
         }
     }
