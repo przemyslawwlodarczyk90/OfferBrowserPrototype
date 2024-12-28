@@ -12,7 +12,6 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.util.List;
-
 @Service
 public class MailService {
 
@@ -50,14 +49,14 @@ public class MailService {
         }
     }
 
-    public void sendDailyOffersEmail(String recipientEmail, List<String> offerUrls) {
+    public void sendDailyOffersEmail(String recipientEmail, List<OfferDTO> offers) {
         MimeMessage message = mailSender.createMimeMessage();
 
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
             Context context = new Context();
-            context.setVariable("offerUrls", offerUrls);
+            context.setVariable("offers", offers); // Przekazanie pełnej listy obiektów OfferDTO
 
             String htmlContent = templateEngine.process("daily-offers-email", context);
 
@@ -66,7 +65,7 @@ public class MailService {
             helper.setText(htmlContent, true);
 
             log.info("Sending daily offers email to {}", recipientEmail);
-            log.info("Offer URLs: {}", offerUrls);
+            log.info("Offers: {}", offers);
 
             mailSender.send(message);
         } catch (MessagingException e) {

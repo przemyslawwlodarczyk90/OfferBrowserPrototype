@@ -1,7 +1,7 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
-import com.example.offerbrowserprototype.domain.offer.OfferFacade;
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.domain.offer.OfferFacade;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,10 @@ public class OfferController {
     public OfferController(OfferFacade offerFacade) {
         this.offerFacade = offerFacade;
     }
+
+    // ============================
+    // Sekcja: Zarządzanie ofertami
+    // ============================
 
     @Operation(summary = "Add a new offer", description = "Creates a new job offer in the system")
     @ApiResponses(value = {
@@ -62,39 +67,6 @@ public class OfferController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping
-    public ResponseEntity<List<OfferDTO>> getAllOffers() {
-        return ResponseEntity.ok(offerFacade.getAllOffers());
-    }
-
-    @Operation(summary = "Get not applied offers", description = "Retrieve all offers that haven't been applied to.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved not applied offers")
-    })
-    @GetMapping("/not-applied")
-    public ResponseEntity<List<OfferDTO>> getNotAppliedOffers() {
-        return ResponseEntity.ok(offerFacade.getNotAppliedOffers());
-    }
-
-    @Operation(summary = "Get applied offers", description = "Retrieve all offers that have been applied to.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved applied offers")
-    })
-    @GetMapping("/applied")
-    public ResponseEntity<List<OfferDTO>> getAppliedOffers() {
-        return ResponseEntity.ok(offerFacade.getAppliedOffers());
-    }
-
-    @Operation(summary = "Apply to an offer", description = "Mark an offer as applied.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully applied to the offer")
-    })
-    @PostMapping("/{offerId}/apply")
-    public ResponseEntity<Void> applyToOffer(@PathVariable String offerId) {
-        offerFacade.applyToOffer(offerId);
-        return ResponseEntity.ok().build();
-    }
-
     @Operation(summary = "Get offer details", description = "Retrieve the details of an offer by its ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved offer details"),
@@ -105,10 +77,52 @@ public class OfferController {
         return ResponseEntity.ok(offerFacade.getOffer(offerId));
     }
 
-    // Nowy endpoint do wypychania oferty na zewnętrznego providera
-    @PostMapping("/{offerId}/push/{providerName}")
-    public ResponseEntity<Void> pushOfferToProvider(@PathVariable String offerId, @PathVariable String providerName) {
-        offerFacade.pushOfferToProvider(offerId, providerName);
-        return new ResponseEntity<>(HttpStatus.OK);
+    // ============================
+    // Sekcja: Zarządzanie aplikacjami
+    // ============================
+
+    @Operation(summary = "Get applied offers", description = "Retrieve all offers that have been applied to.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved applied offers")
+    })
+    @GetMapping("/applied")
+    public ResponseEntity<List<OfferDTO>> getAppliedOffers() {
+        return ResponseEntity.ok(offerFacade.getAppliedOffers());
     }
+
+    @Operation(summary = "Apply to an offer", description = "Mark an offer as applied using POST.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully applied to the offer")
+    })
+    @PostMapping("/{offerId}/apply")
+    public ResponseEntity<Void> applyToOffer(@PathVariable String offerId) {
+        offerFacade.applyToOffer(offerId);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Apply to an offer (GET for email links)", description = "Mark an offer as applied using GET (for email links).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully applied to the offer"),
+            @ApiResponse(responseCode = "404", description = "Offer not found")
+    })
+    @GetMapping("/{offerId}/apply")
+    public ResponseEntity<String> applyToOfferByGet(@PathVariable String offerId) {
+        offerFacade.applyToOffer(offerId);
+        return ResponseEntity.ok("Offer applied successfully!");
+    }
+
+    // ============================
+    // Sekcja: Zarządzanie e-mailami
+    // ============================
+
+    @Operation(summary = "Get not applied offers", description = "Retrieve all offers that haven't been applied to.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved not applied offers")
+    })
+    @GetMapping("/not-applied")
+    public ResponseEntity<List<OfferDTO>> getNotAppliedOffers() {
+        return ResponseEntity.ok(offerFacade.getNotAppliedOffers());
+    }
+
+
 }

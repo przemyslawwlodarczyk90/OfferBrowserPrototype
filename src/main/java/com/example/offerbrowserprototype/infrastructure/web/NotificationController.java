@@ -51,7 +51,7 @@ public class NotificationController {
     public void sendDailyUnappliedOffers() {
         log.info("Scheduler started for sending daily unapplied offers.");
 
-        // Pobierz listę wszystkich użytkowników zarejestrowanych
+        // Pobierz listę wszystkich użytkowników
         List<User> users = userService.getAllUsers();
 
         for (User user : users) {
@@ -62,13 +62,9 @@ public class NotificationController {
                 continue;
             }
 
-            List<String> offerUrls = unappliedOffers.stream()
-                    .map(OfferDTO::getOfferUrl)
-                    .collect(Collectors.toList());
-
-            // Wyślij e-mail do użytkownika
             try {
-                mailService.sendDailyOffersEmail(user.getEmail(), offerUrls);
+                // Przekazanie listy `OfferDTO` do MailService
+                mailService.sendDailyOffersEmail(user.getEmail(), unappliedOffers);
                 log.info("Daily unapplied offers email sent to: {}", user.getEmail());
             } catch (Exception e) {
                 log.error("Failed to send email to {}: {}", user.getEmail(), e.getMessage());
