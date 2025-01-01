@@ -22,6 +22,7 @@ public class OfferFacade {
     private final OfferCacheFacade offerCacheFacade;
     private final ExternalJobOfferService externalJobOfferService;
     private final OfferPushHandler pushHandler;
+    private final OfferFromUrlHandler offerFromUrlHandler;
 
     public OfferFacade(OfferAdditionHandler additionHandler,
                        OfferUpdateHandler updateHandler,
@@ -33,7 +34,8 @@ public class OfferFacade {
                        OfferDetailsHandler detailsHandler,
                        OfferCacheFacade offerCacheFacade,
                        ExternalJobOfferService externalJobOfferService,
-                       OfferPushHandler pushHandler) {
+                       OfferPushHandler pushHandler,
+                       OfferFromUrlHandler offerFromUrlHandler) {
         this.additionHandler = additionHandler;
         this.updateHandler = updateHandler;
         this.deletionHandler = deletionHandler;
@@ -45,11 +47,13 @@ public class OfferFacade {
         this.offerCacheFacade = offerCacheFacade;
         this.externalJobOfferService = externalJobOfferService;
         this.pushHandler = pushHandler;
+        this.offerFromUrlHandler = offerFromUrlHandler;
     }
 
     public void pushOfferToProvider(String offerId, String providerName) {
         pushHandler.pushOfferToProvider(offerId, providerName);
     }
+
     public OfferDTO addOffer(OfferDTO offerDto) {
         return additionHandler.addOffer(offerDto);
     }
@@ -78,6 +82,9 @@ public class OfferFacade {
         applicationHandler.applyToOffer(offerId);
     }
 
+    public void addOfferFromUrl(String offerUrl) {
+        offerFromUrlHandler.handleOfferFromUrl(offerUrl);
+    }
 
     public List<OfferDTO> getAllOffers() {
         List<OfferDTO> cachedOffers = offerCacheFacade.getCachedOffers();
