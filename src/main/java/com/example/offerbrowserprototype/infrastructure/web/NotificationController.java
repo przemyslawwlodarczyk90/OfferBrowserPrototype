@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/notifications")
-@Tag(name = "Daily Notifications", description = "Endpoints for managing daily notifications")
+@Tag(name = "Notifications", description = "Endpoints for managing  notifications")
 public class NotificationController {
 
     private static final Logger log = LoggerFactory.getLogger(NotificationController.class);

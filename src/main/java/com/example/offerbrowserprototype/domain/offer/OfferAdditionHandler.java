@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import java.time.Clock;
 import java.time.LocalDateTime;
 
+
 @Component
 class OfferAdditionHandler {
 
@@ -24,6 +25,7 @@ class OfferAdditionHandler {
     OfferDTO addOffer(OfferDTO offerDto) {
         Offer offer = offerMapper.toEntity(offerDto);
         offer.setFetchedAt(LocalDateTime.now(clock));
+        offer.setDuplicate(false);
         Offer savedOffer = offerRepository.save(offer);
         return offerMapper.toDTO(savedOffer);
     }

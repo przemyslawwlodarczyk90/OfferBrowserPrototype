@@ -36,9 +36,10 @@ class OfferTest {
         String location = "Warsaw";
         String salaryRange = "10,000 - 15,000 PLN";
         String technologies = "Java, Spring Boot";
+        String company = "TechCorp";
 
         // When - Wywołanie konstruktora
-        Offer offer = new Offer(title, description, location, salaryRange, technologies, fixedClock);
+        Offer offer = new Offer(title, description, location, salaryRange, technologies, company, fixedClock);
 
         // Then - Sprawdzenie wyników
         assertNull(offer.getId(), "ID powinno być null przy tworzeniu nowej oferty.");
@@ -47,7 +48,9 @@ class OfferTest {
         assertEquals(location, offer.getLocation(), "Lokalizacja powinna być zgodna z podaną.");
         assertEquals(salaryRange, offer.getSalaryRange(), "Zakres wynagrodzenia powinien być zgodny z podanym.");
         assertEquals(technologies, offer.getLevel(), "Technologie powinny być zgodne z podanymi.");
+        assertEquals(company, offer.getCompany(), "Firma powinna być zgodna z podaną.");
         assertFalse(offer.isApplied(), "Początkowa wartość applied powinna być false.");
+        assertFalse(offer.isDuplicate(), "Początkowa wartość isDuplicate powinna być false.");
         assertEquals(LocalDateTime.now(fixedClock), offer.getFetchedAt(), "Czas fetchedAt powinien być zgodny z czasem utworzonym przez Clock.");
     }
 
@@ -66,7 +69,9 @@ class OfferTest {
         offer.setLocation("Krakow");
         offer.setSalaryRange("12,000 - 18,000 PLN");
         offer.setLevel("Python, Machine Learning");
+        offer.setCompany("DataCorp");
         offer.setApplied(true);
+        offer.setDuplicate(true);
         offer.setFetchedAt(LocalDateTime.of(2024, 1, 2, 10, 0));
 
         // Then - Sprawdzanie wyników
@@ -76,7 +81,9 @@ class OfferTest {
         assertEquals("Krakow", offer.getLocation(), "Lokalizacja powinna być zgodna z ustawioną.");
         assertEquals("12,000 - 18,000 PLN", offer.getSalaryRange(), "Zakres wynagrodzenia powinien być zgodny z ustawionym.");
         assertEquals("Python, Machine Learning", offer.getLevel(), "Technologie powinny być zgodne z ustawionymi.");
+        assertEquals("DataCorp", offer.getCompany(), "Firma powinna być zgodna z ustawioną.");
         assertTrue(offer.isApplied(), "Wartość applied powinna być true.");
+        assertTrue(offer.isDuplicate(), "Wartość isDuplicate powinna być true.");
         assertEquals(LocalDateTime.of(2024, 1, 2, 10, 0), offer.getFetchedAt(), "Czas fetchedAt powinien być zgodny z ustawionym.");
     }
 
@@ -95,7 +102,9 @@ class OfferTest {
         assertNull(offer.getLocation(), "Domyślna lokalizacja powinna być null.");
         assertNull(offer.getSalaryRange(), "Domyślny zakres wynagrodzenia powinien być null.");
         assertNull(offer.getLevel(), "Domyślne technologie powinny być null.");
+        assertNull(offer.getCompany(), "Domyślna firma powinna być null.");
         assertFalse(offer.isApplied(), "Domyślna wartość applied powinna być false.");
+        assertFalse(offer.isDuplicate(), "Domyślna wartość isDuplicate powinna być false.");
         assertNull(offer.getFetchedAt(), "Domyślny czas fetchedAt powinien być null.");
     }
 }

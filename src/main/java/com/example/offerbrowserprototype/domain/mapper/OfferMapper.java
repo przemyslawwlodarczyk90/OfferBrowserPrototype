@@ -17,6 +17,8 @@ public class OfferMapper {
         dto.setLevel(offer.getLevel());
         dto.setOfferUrl(offer.getOfferUrl());
         dto.setApplied(offer.isApplied());
+        dto.setCompany(offer.getCompany());
+        dto.setDuplicate(offer.isDuplicate());
         dto.setFetchedAt(offer.getFetchedAt());
         return dto;
     }
@@ -28,8 +30,10 @@ public class OfferMapper {
         offer.setLocation(dto.getLocation());
         offer.setSalaryRange(dto.getSalaryRange());
         offer.setLevel(dto.getLevel());
-        offer.setOfferUrl(dto.getOfferUrl()); 
+        offer.setOfferUrl(dto.getOfferUrl());
         offer.setApplied(dto.isApplied());
+        offer.setCompany(dto.getCompany());
+        offer.setDuplicate(dto.isDuplicate());
         offer.setFetchedAt(dto.getFetchedAt());
         return offer;
     }

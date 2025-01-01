@@ -42,7 +42,7 @@ class OfferPushHandlerTest {
     @Test
     void shouldPushOfferToProviderSuccessfully() {
         // Given - Dane testowe
-        OfferDTO offer = new OfferDTO("1", "Java Developer", "Great job", "Warsaw", "10,000-15,000 PLN", "Java", false, null);
+        OfferDTO offer = new OfferDTO("1", "Java Developer", "Great job", "Warsaw", "10,000-15,000 PLN", "Amazon", "Java", false, "Company A", false, null);
         when(retrievalHandler.getOffer("1")).thenReturn(offer);
 
         // When - Wywołanie metody
@@ -77,7 +77,7 @@ class OfferPushHandlerTest {
     @Test
     void shouldThrowExceptionWhenProviderNotFound() {
         // Given - Istniejąca oferta
-        OfferDTO offer = new OfferDTO("3", "Frontend Developer", "Exciting opportunity", "Krakow", "8,000-12,000 PLN", "React", false, null);
+        OfferDTO offer = new OfferDTO("3", "Frontend Developer", "Exciting opportunity", "Krakow", "8,000-12,000 PLN", "React", false, "Company B", false, null);
         when(retrievalHandler.getOffer("3")).thenReturn(offer);
 
         // When/Then - Wywołanie i weryfikacja wyjątku
@@ -95,14 +95,13 @@ class OfferPushHandlerTest {
         verifyNoMoreInteractions(mockProvider1, mockProvider2);
     }
 
-
     /**
      * Test sprawdza, czy metoda działa poprawnie w przypadku ignorowania wielkości liter w nazwie providera.
      */
     @Test
     void shouldHandleCaseInsensitiveProviderName() {
         // Given - Dane testowe
-        OfferDTO offer = new OfferDTO("4", "Backend Developer", "Amazing role", "Gdansk", "12,000-18,000 PLN", "Spring Boot", false, null);
+        OfferDTO offer = new OfferDTO("4", "Backend Developer", "Amazing role", "Gdansk", "12,000-18,000 PLN", "Spring Boot", false, "Company C", false, null);
         when(retrievalHandler.getOffer("4")).thenReturn(offer);
 
         // When - Wywołanie metody z nazwą providera w innej wielkości liter

@@ -6,12 +6,11 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import json
 import logging
-from datetime import datetime, timezone
+from datetime import datetime
 import os
 
 # Konfiguracja logowania
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 
 def scrape_offers():
     """
@@ -85,6 +84,19 @@ def scrape_offers():
                 except Exception:
                     level = "Nieokreślony poziom"
 
+                try:
+                    # Próba z pierwszym XPath
+                    company = driver.find_element(By.XPATH, '//*[@id="postingCompanyUrl"]').text
+                except Exception:
+                    try:
+                        # Próba z drugim XPath
+                        company = driver.find_element(By.XPATH,
+                            '/html/body/nfj-root/nfj-layout/nfj-main-content/div/nfj-posting-details/div/'
+                            'common-main-loader/div/main/article/div[1]/common-posting-content-wrapper/div[1]/'
+                            'section[1]/div/common-posting-header/div/div/a').text
+                    except Exception:
+                        company = "Brak informacji o firmie"
+
                 # Dodanie oferty do listy
                 offers.append({
                     "title": title,
@@ -93,8 +105,9 @@ def scrape_offers():
                     "salaryRange": salary,
                     "level": level,
                     "applied": False,
-                    "fetchedAt": datetime.utcnow().isoformat(timespec='microseconds') + "Z",  # Poprawione
+                    "fetchedAt": datetime.utcnow().isoformat(timespec='microseconds') + "Z",
                     "offerUrl": offer_url,
+                    "company": company  # Nowe pole
                 })
 
                 logging.info(f"Przetworzono ofertę: {title}")
@@ -117,7 +130,6 @@ def scrape_offers():
         driver.quit()
         logging.info("Zakończono działanie funkcji scrape_offers.")
 
-
 def save_offers_to_file(offers, filename="detailed_offers.json"):
     """
     Funkcja zapisuje listę ofert do pliku JSON.
@@ -133,7 +145,6 @@ def save_offers_to_file(offers, filename="detailed_offers.json"):
         logging.info(f"Zapisano {len(offers)} ofert do pliku '{filepath}'.")
     except Exception as e:
         logging.error(f"Wystąpił błąd podczas zapisywania do pliku: {e}")
-
 
 if __name__ == "__main__":
     offers = scrape_offers()

@@ -43,8 +43,8 @@ public class OfferRepositoryIntegrationTest {
     @Test
     public void shouldFindAllOffersOrderedByFetchedAtDesc() {
         // Dane testowe
-        Offer offer1 = new Offer("Programista Java", "Praca w zespole", "Wrocław", "5000-7000 PLN", "Java, Spring", fixedClock1);
-        Offer offer2 = new Offer("Sprzątacz", "Sprzątanie klatek", "Warszawa", "2500 PLN", "Brak", fixedClock2);
+        Offer offer1 = new Offer("Programista Java", "Praca w zespole", "Wrocław", "5000-7000 PLN", "Java, Spring", "Firma A", fixedClock1);
+        Offer offer2 = new Offer("Sprzątacz", "Sprzątanie klatek", "Warszawa", "2500 PLN", "Brak", "Firma B", fixedClock2);
 
         // Zapis ofert do bazy
         offerRepository.save(offer1);
@@ -56,7 +56,9 @@ public class OfferRepositoryIntegrationTest {
         // Weryfikacja kolejności
         assertThat(offers).hasSize(2);
         assertThat(offers.get(0).getTitle()).isEqualTo("Sprzątacz");
+        assertThat(offers.get(0).getCompany()).isEqualTo("Firma B");
         assertThat(offers.get(1).getTitle()).isEqualTo("Programista Java");
+        assertThat(offers.get(1).getCompany()).isEqualTo("Firma A");
     }
 
     /**
@@ -65,8 +67,8 @@ public class OfferRepositoryIntegrationTest {
     @Test
     public void shouldFindNotAppliedOffersOrderedByFetchedAtDesc() {
         // Dane testowe
-        Offer offer1 = new Offer("Ochroniarz", "Praca na nocną zmianę", "Poznań", "3000-4000 PLN", "Siła fizyczna", fixedClock1);
-        Offer offer2 = new Offer("Programista C++", "Praca nad grami", "Gdańsk", "6000-8000 PLN", "C++, Unreal", fixedClock2);
+        Offer offer1 = new Offer("Ochroniarz", "Praca na nocną zmianę", "Poznań", "3000-4000 PLN", "Siła fizyczna", "Firma C", fixedClock1);
+        Offer offer2 = new Offer("Programista C++", "Praca nad grami", "Gdańsk", "6000-8000 PLN", "C++, Unreal", "Firma D", fixedClock2);
         offer2.setApplied(true); // Oznaczenie oferty jako aplikowanej
 
         // Zapis ofert do bazy
@@ -79,6 +81,7 @@ public class OfferRepositoryIntegrationTest {
         // Weryfikacja
         assertThat(notAppliedOffers).hasSize(1);
         assertThat(notAppliedOffers.get(0).getTitle()).isEqualTo("Ochroniarz");
+        assertThat(notAppliedOffers.get(0).getCompany()).isEqualTo("Firma C");
     }
 
     /**
@@ -87,9 +90,9 @@ public class OfferRepositoryIntegrationTest {
     @Test
     public void shouldFindAppliedOffersOrderedByFetchedAtDesc() {
         // Dane testowe
-        Offer offer1 = new Offer("Kucharka", "Gotowanie obiadów", "Lublin", "4000 PLN", "Kuchnia polska", fixedClock1);
+        Offer offer1 = new Offer("Kucharka", "Gotowanie obiadów", "Lublin", "4000 PLN", "Kuchnia polska", "Firma E", fixedClock1);
         offer1.setApplied(true); // Oznaczenie oferty jako aplikowanej
-        Offer offer2 = new Offer("Sekretarka", "Praca biurowa", "Kraków", "3500 PLN", "MS Office", fixedClock2);
+        Offer offer2 = new Offer("Sekretarka", "Praca biurowa", "Kraków", "3500 PLN", "MS Office", "Firma F", fixedClock2);
 
         // Zapis ofert do bazy
         offerRepository.save(offer1);
@@ -101,5 +104,6 @@ public class OfferRepositoryIntegrationTest {
         // Weryfikacja
         assertThat(appliedOffers).hasSize(1);
         assertThat(appliedOffers.get(0).getTitle()).isEqualTo("Kucharka");
+        assertThat(appliedOffers.get(0).getCompany()).isEqualTo("Firma E");
     }
 }

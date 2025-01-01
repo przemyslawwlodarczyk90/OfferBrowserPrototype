@@ -27,19 +27,23 @@ public class Offer {
     @Indexed(unique = true)
     private String offerUrl;
 
+    private String company;
     private boolean applied;
+    private boolean isDuplicate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
     private LocalDateTime fetchedAt;
 
 
-    public Offer(String title, String description, String location, String salaryRange, String level, Clock clock) {
+    public Offer(String title, String description, String location, String salaryRange, String level, String company, Clock clock) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.salaryRange = salaryRange;
         this.level = level;
+        this.company = company;
         this.applied = false;
+        this.isDuplicate = false;
         this.fetchedAt = LocalDateTime.now(clock);
     }
 }
