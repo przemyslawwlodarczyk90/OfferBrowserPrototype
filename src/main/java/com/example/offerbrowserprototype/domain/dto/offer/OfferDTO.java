@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @Data
 public class OfferDTO {
@@ -29,6 +30,8 @@ public class OfferDTO {
     private String offerUrl;
 
     private String salaryRange;
+
+    private String company;
     private String level;
     private boolean applied;
 
@@ -37,26 +40,26 @@ public class OfferDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private LocalDateTime fetchedAt;
 
-
-    public OfferDTO(String title, String description, String location, String offerUrl, String salaryRange, String level, boolean applied, LocalDateTime fetchedAt) {
+    public OfferDTO(String title, String description, String location, String offerUrl, String salaryRange, String company, String level, boolean applied, LocalDateTime fetchedAt) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.offerUrl = offerUrl;
         this.salaryRange = salaryRange;
+        this.company = company;
         this.level = level;
         this.applied = applied;
         this.fetchedAt = fetchedAt;
     }
 
-
-    public OfferDTO(String id, String title, String description, String location, String offerUrl, String salaryRange, String level, boolean applied, LocalDateTime fetchedAt) {
+    public OfferDTO(String id, String title, String description, String location, String offerUrl, String salaryRange, String company, String level, boolean applied, LocalDateTime fetchedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.location = location;
         this.offerUrl = offerUrl;
         this.salaryRange = salaryRange;
+        this.company = company;
         this.level = level;
         this.applied = applied;
         this.fetchedAt = fetchedAt;

@@ -115,7 +115,7 @@ def scrape_offers():
                         "applied": False,
                         "fetchedAt": datetime.utcnow().isoformat(timespec='microseconds') + "Z",
                         "offerUrl": offer_url,
-                        "company": company  # Nowe pole
+                        "company": company
                     })
 
                     logging.info(f"Przetworzono ofertę: {title}")

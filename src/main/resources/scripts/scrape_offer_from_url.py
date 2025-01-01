@@ -7,9 +7,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 import json
 import logging
 import sys
+from datetime import datetime, timezone
 
 # Konfiguracja logowania
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    stream=sys.stderr  # Logi na stderr
+)
 
 def scrape_single_offer(offer_url):
     """
@@ -27,60 +32,42 @@ def scrape_single_offer(offer_url):
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
     try:
-        logging.info(f"Ładowanie strony oferty: {offer_url}")
+        logging.info(f"Ładowanie oferty: {offer_url}")
         driver.get(offer_url)
 
         wait = WebDriverWait(driver, 30)
         wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
 
-        # Pobranie szczegółowych danych
+        # Pobieranie szczegółowych danych
         try:
-            title = driver.find_element(By.XPATH, './/h3[contains(@class, "posting-title")]').text or "Brak tytułu"
+            title = driver.find_element(By.XPATH, '//h3[contains(@class, "posting-title")]').text or "Brak tytułu"
         except Exception:
             title = "Brak tytułu"
 
         try:
-            description = driver.find_element(By.XPATH,
-                '/html/body/nfj-root/nfj-layout/nfj-main-content/div/nfj-posting-details/div/'
-                'common-main-loader/div/main/article/div[1]/common-posting-content-wrapper/div[1]/'
-                'section[2]/nfj-read-more').text
+            description = driver.find_element(By.XPATH, '//nfj-read-more').text
         except Exception:
             description = "Brak opisu"
 
         try:
-            salary = driver.find_element(By.XPATH,
-                '/html/body/nfj-root/nfj-layout/nfj-main-content/div/nfj-posting-details/div/'
-                'common-main-loader/div/main/article/div[2]/common-apply-box/div[1]/div/'
-                'common-posting-salaries-list/div/h4').text
+            salary = driver.find_element(By.XPATH, '//common-posting-salaries-list/h4').text
         except Exception:
             salary = "Brak wynagrodzenia"
 
         try:
-            location = driver.find_element(By.XPATH,
-                '/html/body/nfj-root/nfj-layout/nfj-main-content/div/nfj-posting-details/div/'
-                'common-main-loader/div/main/article/div[1]/common-posting-content-wrapper/div[1]/'
-                'section[1]/div/ul/li[4]/common-posting-locations/div/span/span[1]').text
+            location = driver.find_element(By.XPATH, '//common-posting-locations/span/span[1]').text
         except Exception:
             location = "Nieokreślona"
 
         try:
-            level = driver.find_element(By.XPATH,
-                '/html/body/nfj-root/nfj-layout/nfj-main-content/div/nfj-posting-details/div/'
-                'common-main-loader/div/main/article/div[1]/common-posting-content-wrapper/div[1]/'
-                'section[1]/div/ul/li[2]/div/span').text or "Nieokreślony poziom"
+            level = driver.find_element(By.XPATH, '//li[2]/div/span').text or "Nieokreślony poziom"
         except Exception:
             level = "Nieokreślony poziom"
 
         try:
             company = driver.find_element(By.XPATH, '//*[@id="postingCompanyUrl"]').text
         except Exception:
-            try:
-                company = driver.find_element(By.XPATH,
-                    '/html/body/nfj-root/nfj-layout/nfj-main-content/div/nfj-posting-details/div/'
-                    'common-main-loader/div/main/article/div[1]/common-posting-content-wrapper/div[1]/'
-                    'section[1]/div/common-posting-header/div/div/a').text
-            except Exception:
-                company = "Brak informacji o firmie"
+            company = "Brak informacji o firmie"
 
         offer_details = {
             "title": title,
@@ -88,30 +75,27 @@ def scrape_single_offer(offer_url):
             "location": location,
             "salaryRange": salary,
             "level": level,
-            "company": company,
+            "applied": True,
+            "fetchedAt": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z",
             "offerUrl": offer_url,
+            "company": company
         }
 
-        logging.info(f"Pobrano dane oferty: {title}")
-        return offer_details
+        logging.info(f"Pobrano szczegóły oferty: {offer_details}")
+        # Wypisanie JSON-u na stdout
+        print(json.dumps(offer_details, ensure_ascii=False))
 
     except Exception as e:
-        logging.error(f"Wystąpił błąd podczas pobierania danych oferty: {e}")
-        return None
-
+        logging.error(f"Wystąpił błąd: {e}")
+        sys.exit(1)
     finally:
         driver.quit()
-        logging.info("Zakończono działanie Selenium.")
+        logging.info("Zamknięto przeglądarkę.")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Użycie: python scrape_offer_from_url.py <URL oferty>")
+        print("Użycie: python scrape_offer_from_url.py <URL oferty>", file=sys.stderr)
         sys.exit(1)
 
     offer_url = sys.argv[1]
-    offer_data = scrape_single_offer(offer_url)
-
-    if offer_data:
-        print(json.dumps(offer_data, ensure_ascii=False, indent=4))
-    else:
-        print("Nie udało się pobrać danych oferty.")
+    scrape_single_offer(offer_url)

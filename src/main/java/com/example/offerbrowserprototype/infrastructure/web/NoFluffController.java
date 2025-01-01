@@ -1,5 +1,6 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
+import com.example.offerbrowserprototype.domain.offer.OfferFacade;
 import com.example.offerbrowserprototype.infrastructure.service.OfferImportService;
 import com.example.offerbrowserprototype.infrastructure.service.PythonScriptService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,11 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -29,10 +26,12 @@ public class NoFluffController {
     private static final Logger logger = LoggerFactory.getLogger(NoFluffController.class);
     private final PythonScriptService scriptService;
     private final OfferImportService offerImportService;
+    private final OfferFacade offerFacade;
 
-    public NoFluffController(PythonScriptService scriptService, OfferImportService offerImportService) {
+    public NoFluffController(PythonScriptService scriptService, OfferImportService offerImportService, OfferFacade offerFacade) {
         this.scriptService = scriptService;
         this.offerImportService = offerImportService;
+        this.offerFacade = offerFacade;
     }
 
     @Operation(summary = "Run Python script", description = "Executes the Python script for scraping job offers.")
@@ -70,6 +69,22 @@ public class NoFluffController {
             return ResponseEntity.ok("Offers imported successfully from " + filePath);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during offer import: " + e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Import offer from URL", description = "Scrapes a job offer from the given URL and saves it to the database.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Offer imported successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid URL or scraping error")
+    })
+    @PostMapping("/import-from-url")
+    public ResponseEntity<String> importOfferFromUrl(@RequestParam String offerUrl) {
+        try {
+            offerFacade.addOfferFromUrl(offerUrl);
+            return ResponseEntity.ok("Offer successfully imported from URL.");
+        } catch (Exception e) {
+            logger.error("Error importing offer from URL: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error importing offer: " + e.getMessage());
         }
     }
 }

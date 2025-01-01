@@ -1,53 +1,75 @@
 package com.example.offerbrowserprototype.domain.offer;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
-import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
-import com.example.offerbrowserprototype.domain.offer.Offer;
-import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 @Component
 public class OfferFromUrlHandler {
 
-    private final OfferRepository offerRepository;
-    private final OfferMapper offerMapper;
+    private static final Logger logger = LoggerFactory.getLogger(OfferFromUrlHandler.class);
 
-    public OfferFromUrlHandler(OfferRepository offerRepository, OfferMapper offerMapper) {
-        this.offerRepository = offerRepository;
-        this.offerMapper = offerMapper;
-    }
+    @Value("${python.path}")
+    private String pythonPath;
 
-    public void handleOfferFromUrl(String offerUrl) {
-        OfferDTO offerDTO = scrapeOfferDetails(offerUrl);
-        Offer offer = offerMapper.toEntity(offerDTO);
-        offerRepository.save(offer);
-    }
+    @Value("${python.script.offer-url-scraper}")
+    private String scriptPath;
 
-    private OfferDTO scrapeOfferDetails(String offerUrl) {
-        // Wywołanie skryptu Selenium w Pythonie
+    public OfferDTO handleOfferFromUrl(String offerUrl) {
+        logger.info("Handling offer URL: {}", offerUrl);
+
+        if (offerUrl == null || offerUrl.isBlank()) {
+            throw new IllegalArgumentException("Offer URL cannot be null or empty");
+        }
+
+        ProcessBuilder processBuilder = new ProcessBuilder(pythonPath, scriptPath, offerUrl);
+        processBuilder.redirectErrorStream(true);
+
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder("python", "path/to/your_scraper.py", offerUrl);
-            processBuilder.redirectErrorStream(true);
+            logger.info("Starting Python script: {} {} {}", pythonPath, scriptPath, offerUrl);
             Process process = processBuilder.start();
 
+            String output;
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                String line;
-                StringBuilder output = new StringBuilder();
-                while ((line = reader.readLine()) != null) {
-                    output.append(line);
-                }
-
-                process.waitFor();
-                String jsonOutput = output.toString();
-                ObjectMapper mapper = new ObjectMapper();
-                return mapper.readValue(jsonOutput, OfferDTO.class);
+                output = reader.lines().collect(Collectors.joining("\n"));
             }
+
+            int exitCode = process.waitFor();
+            logger.info("Python script completed with exit code: {}", exitCode);
+
+            if (exitCode != 0) {
+                logger.error("Python script failed with exit code: {}. Output: {}", exitCode, output);
+                throw new RuntimeException("Python script failed with exit code " + exitCode);
+            }
+
+            logger.info("Python script output: {}", output);
+
+            String[] lines = output.split("\n");
+            String jsonResponse = lines[lines.length - 1];
+
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                OfferDTO offerDTO = mapper.readValue(jsonResponse, OfferDTO.class);
+                logger.info("Successfully parsed offer DTO: {}", offerDTO);
+                return offerDTO;
+            } catch (JsonParseException e) {
+                logger.error("Failed to parse JSON: {}. JSON Response: {}", e.getMessage(), jsonResponse);
+                throw new RuntimeException("Error parsing JSON from script: " + e.getMessage(), e);
+            }
+
         } catch (Exception e) {
+            logger.error("Error executing Python script: {}", e.getMessage(), e);
             throw new RuntimeException("Error scraping offer details: " + e.getMessage(), e);
         }
-    }
-}
+    }}
