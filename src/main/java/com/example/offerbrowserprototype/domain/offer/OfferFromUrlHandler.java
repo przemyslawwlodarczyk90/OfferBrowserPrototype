@@ -1,11 +1,9 @@
 package com.example.offerbrowserprototype.domain.offer;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -26,11 +25,24 @@ public class OfferFromUrlHandler {
     @Value("${python.script.offer-url-scraper}")
     private String scriptPath;
 
+    private final OfferRepository offerRepository;
+
+    public OfferFromUrlHandler(OfferRepository offerRepository) {
+        this.offerRepository = offerRepository;
+    }
+
     public OfferDTO handleOfferFromUrl(String offerUrl) {
         logger.info("Handling offer URL: {}", offerUrl);
 
         if (offerUrl == null || offerUrl.isBlank()) {
             throw new IllegalArgumentException("Offer URL cannot be null or empty");
+        }
+
+        // Check for duplicates
+        Optional<Offer> existingOffer = offerRepository.findByOfferUrl(offerUrl);
+        if (existingOffer.isPresent()) {
+            logger.warn("Offer with URL {} already exists in the database.", offerUrl);
+            throw new IllegalStateException("Offer already exists in the database");
         }
 
         ProcessBuilder processBuilder = new ProcessBuilder(pythonPath, scriptPath, offerUrl);
@@ -72,4 +84,5 @@ public class OfferFromUrlHandler {
             logger.error("Error executing Python script: {}", e.getMessage(), e);
             throw new RuntimeException("Error scraping offer details: " + e.getMessage(), e);
         }
-    }}
+    }
+}

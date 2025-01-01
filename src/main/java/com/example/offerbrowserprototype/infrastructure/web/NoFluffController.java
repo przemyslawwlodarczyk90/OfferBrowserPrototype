@@ -1,6 +1,7 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.offer.OfferFacade;
+import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import com.example.offerbrowserprototype.infrastructure.service.OfferImportService;
 import com.example.offerbrowserprototype.infrastructure.service.PythonScriptService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,11 +28,13 @@ public class NoFluffController {
     private final PythonScriptService scriptService;
     private final OfferImportService offerImportService;
     private final OfferFacade offerFacade;
+    private final OfferRepository offerRepository;
 
-    public NoFluffController(PythonScriptService scriptService, OfferImportService offerImportService, OfferFacade offerFacade) {
+    public NoFluffController(PythonScriptService scriptService, OfferImportService offerImportService, OfferFacade offerFacade, OfferRepository offerRepository) {
         this.scriptService = scriptService;
         this.offerImportService = offerImportService;
         this.offerFacade = offerFacade;
+        this.offerRepository = offerRepository;
     }
 
     @Operation(summary = "Run Python script", description = "Executes the Python script for scraping job offers.")
@@ -43,7 +46,7 @@ public class NoFluffController {
     public ResponseEntity<String> runPythonScript() {
         String result = scriptService.runScript();
 
-        // Trigger import automatically after script execution
+
         CompletableFuture.runAsync(() -> {
             try {
                 logger.info("Starting automatic offer import...");
@@ -82,6 +85,9 @@ public class NoFluffController {
         try {
             offerFacade.addOfferFromUrl(offerUrl);
             return ResponseEntity.ok("Offer successfully imported from URL.");
+        } catch (IllegalStateException e) {
+            logger.warn("Duplicate offer detected: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (Exception e) {
             logger.error("Error importing offer from URL: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error importing offer: " + e.getMessage());
