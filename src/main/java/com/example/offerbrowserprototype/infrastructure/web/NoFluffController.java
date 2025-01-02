@@ -1,5 +1,6 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
+import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.offer.OfferFacade;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import com.example.offerbrowserprototype.infrastructure.service.OfferImportService;
@@ -83,7 +84,9 @@ public class NoFluffController {
     @PostMapping("/import-from-url")
     public ResponseEntity<String> importOfferFromUrl(@RequestParam String offerUrl) {
         try {
-            offerFacade.addOfferFromUrl(offerUrl);
+            OfferDTO importedOffer = offerFacade.addOfferFromUrl(offerUrl);
+
+            offerFacade.saveApplicationNote(importedOffer.getId(), importedOffer.getOfferUrl(), importedOffer.getCompany());
             return ResponseEntity.ok("Offer successfully imported from URL.");
         } catch (IllegalStateException e) {
             logger.warn("Duplicate offer detected: {}", e.getMessage());
@@ -91,6 +94,5 @@ public class NoFluffController {
         } catch (Exception e) {
             logger.error("Error importing offer from URL: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error importing offer: " + e.getMessage());
-        }
-    }
+        }}
 }

@@ -23,6 +23,7 @@ public class OfferFacade {
     private final ExternalJobOfferService externalJobOfferService;
     private final OfferPushHandler pushHandler;
     private final OfferFromUrlHandler offerFromUrlHandler;
+    private final ApplicationNoteHandler applicationNoteHandler;
 
     public OfferFacade(OfferAdditionHandler additionHandler,
                        OfferUpdateHandler updateHandler,
@@ -35,7 +36,8 @@ public class OfferFacade {
                        OfferCacheFacade offerCacheFacade,
                        ExternalJobOfferService externalJobOfferService,
                        OfferPushHandler pushHandler,
-                       OfferFromUrlHandler offerFromUrlHandler) {
+                       OfferFromUrlHandler offerFromUrlHandler,
+                       ApplicationNoteHandler applicationNoteHandler) {
         this.additionHandler = additionHandler;
         this.updateHandler = updateHandler;
         this.deletionHandler = deletionHandler;
@@ -48,10 +50,7 @@ public class OfferFacade {
         this.externalJobOfferService = externalJobOfferService;
         this.pushHandler = pushHandler;
         this.offerFromUrlHandler = offerFromUrlHandler;
-    }
-
-    public void pushOfferToProvider(String offerId, String providerName) {
-        pushHandler.pushOfferToProvider(offerId, providerName);
+        this.applicationNoteHandler = applicationNoteHandler;
     }
 
     public OfferDTO addOffer(OfferDTO offerDto) {
@@ -78,14 +77,6 @@ public class OfferFacade {
         return appliedHandler.getAppliedOffers();
     }
 
-    public void applyToOffer(String offerId) {
-        applicationHandler.applyToOffer(offerId);
-    }
-
-    public void addOfferFromUrl(String offerUrl) {
-        offerFromUrlHandler.handleOfferFromUrl(offerUrl);
-    }
-
     public List<OfferDTO> getAllOffers() {
         List<OfferDTO> cachedOffers = offerCacheFacade.getCachedOffers();
         if (cachedOffers != null && !cachedOffers.isEmpty()) {
@@ -101,5 +92,31 @@ public class OfferFacade {
         offerCacheFacade.cacheOffers(combinedOffers);
 
         return combinedOffers;
+    }
+
+    public void pushOfferToProvider(String offerId, String providerName) {
+        pushHandler.pushOfferToProvider(offerId, providerName);
+    }
+
+    public OfferDTO addOfferFromUrl(String offerUrl) {
+        OfferDTO offerDto = offerFromUrlHandler.handleOfferFromUrl(offerUrl);
+        return offerDto;
+    }
+
+    public void applyToOffer(String offerId) {
+
+        OfferDTO offer = detailsHandler.getOfferById(offerId);
+
+        if (offer == null) {
+            throw new IllegalArgumentException("Offer not found for ID: " + offerId);
+        }
+
+        applicationHandler.applyToOffer(offerId);
+
+        saveApplicationNote(offerId, offer.getOfferUrl(), offer.getCompany());
+    }
+
+    public void saveApplicationNote(String offerId, String offerUrl, String companyName) {
+        applicationNoteHandler.saveApplicationNote(offerId, offerUrl, companyName);
     }
 }
