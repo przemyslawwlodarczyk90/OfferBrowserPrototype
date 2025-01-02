@@ -6,11 +6,8 @@ import com.example.offerbrowserprototype.infrastructure.repository.OfferReposito
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,12 +21,12 @@ class OfferAppliedHandlerTest {
     @Mock
     private OfferMapper offerMapper;
 
-    private OfferAppliedHandler offerAppliedHandler;
+    private OfferAppliedListHandler offerAppliedListHandler;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        offerAppliedHandler = new OfferAppliedHandler(offerRepository, offerMapper);
+        offerAppliedListHandler = new OfferAppliedListHandler(offerRepository, offerMapper);
     }
 
     @Test
@@ -38,7 +35,7 @@ class OfferAppliedHandlerTest {
         when(offerRepository.findByAppliedTrueOrderByFetchedAtDesc()).thenReturn(List.of());
 
         // When
-        List<OfferDTO> result = offerAppliedHandler.getAppliedOffers();
+        List<OfferDTO> result = offerAppliedListHandler.getAppliedOffers();
 
         // Then
         assertNotNull(result, "The result list should not be null.");

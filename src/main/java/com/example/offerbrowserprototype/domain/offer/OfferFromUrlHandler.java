@@ -1,8 +1,8 @@
 package com.example.offerbrowserprototype.domain.offer;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 @Component
 public class OfferFromUrlHandler {
 
@@ -26,19 +25,44 @@ public class OfferFromUrlHandler {
     private String scriptPath;
 
     private final OfferRepository offerRepository;
+    private final OfferMapper offerMapper;
+    private final ApplicationNoteHandler applicationNoteHandler;
 
-    public OfferFromUrlHandler(OfferRepository offerRepository) {
+    public OfferFromUrlHandler(OfferRepository offerRepository, OfferMapper offerMapper, ApplicationNoteHandler applicationNoteHandler) {
         this.offerRepository = offerRepository;
+        this.offerMapper = offerMapper;
+        this.applicationNoteHandler = applicationNoteHandler;
     }
 
-    public OfferDTO handleOfferFromUrl(String offerUrl) {
+    public OfferDTO addOfferFromUrl(String offerUrl) {
+        OfferDTO offerDto = handleOfferFromUrl(offerUrl);
+
+        if (offerDto == null) {
+            throw new IllegalArgumentException("Failed to scrape offer details from URL: " + offerUrl);
+        }
+
+        Offer offer = offerMapper.toEntity(offerDto);
+        offer = offerRepository.save(offer);
+
+        logger.info("Saved offer with ID: {}", offer.getId());
+
+        // Save application note
+        if (offer.getOfferUrl() != null && offer.getCompany() != null) {
+            applicationNoteHandler.saveApplicationNote(offer.getId(), offer.getOfferUrl(), offer.getCompany());
+        } else {
+            logger.warn("Incomplete offer details. Application note not saved.");
+        }
+
+        return offerMapper.toDTO(offer);
+    }
+
+    private OfferDTO handleOfferFromUrl(String offerUrl) {
         logger.info("Handling offer URL: {}", offerUrl);
 
         if (offerUrl == null || offerUrl.isBlank()) {
             throw new IllegalArgumentException("Offer URL cannot be null or empty");
         }
 
-        // Check for duplicates
         Optional<Offer> existingOffer = offerRepository.findByOfferUrl(offerUrl);
         if (existingOffer.isPresent()) {
             logger.warn("Offer with URL {} already exists in the database.", offerUrl);
@@ -52,13 +76,11 @@ public class OfferFromUrlHandler {
             logger.info("Starting Python script: {} {} {}", pythonPath, scriptPath, offerUrl);
             Process process = processBuilder.start();
 
-            // Odczyt outputu
             String output;
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 output = reader.lines().collect(Collectors.joining("\n"));
             }
 
-            // Sprawdź kod wyjścia procesu
             int exitCode = process.waitFor();
             logger.info("Python script completed with exit code: {}", exitCode);
 
@@ -69,25 +91,11 @@ public class OfferFromUrlHandler {
 
             logger.info("Python script output: {}", output);
 
-            // Odczyt ostatniej linii JSON
             String[] lines = output.split("\n");
             String jsonResponse = lines[lines.length - 1];
 
-            // Parsowanie JSON
-            ObjectMapper mapper = new ObjectMapper();
-            try {
-                OfferDTO offerDTO = mapper.readValue(jsonResponse, OfferDTO.class);
-                logger.info("Successfully parsed offer DTO: {}", offerDTO);
-                return offerDTO;
-            } catch (JsonParseException e) {
-                logger.error("Failed to parse JSON: {}. JSON Response: {}", e.getMessage(), jsonResponse);
-                throw new RuntimeException("Error parsing JSON from script: " + e.getMessage(), e);
-            }
+            return new ObjectMapper().readValue(jsonResponse, OfferDTO.class);
 
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt(); // Przywrócenie statusu wątku
-            logger.error("Python script execution was interrupted: {}", e.getMessage(), e);
-            throw new RuntimeException("Python script execution was interrupted: " + e.getMessage(), e);
         } catch (Exception e) {
             logger.error("Error executing Python script: {}", e.getMessage(), e);
             throw new RuntimeException("Error scraping offer details: " + e.getMessage(), e);

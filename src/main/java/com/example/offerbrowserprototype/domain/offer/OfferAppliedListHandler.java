@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-class OfferAppliedHandler {
+class OfferAppliedListHandler {
 
     private final OfferRepository offerRepository;
     private final OfferMapper offerMapper;
 
-    public OfferAppliedHandler(OfferRepository offerRepository, OfferMapper offerMapper) {
+    public OfferAppliedListHandler(OfferRepository offerRepository, OfferMapper offerMapper) {
         this.offerRepository = offerRepository;
         this.offerMapper = offerMapper;
     }

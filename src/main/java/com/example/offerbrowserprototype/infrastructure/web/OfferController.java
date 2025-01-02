@@ -77,6 +77,26 @@ public class OfferController {
         return ResponseEntity.ok(offerFacade.getOffer(offerId));
     }
 
+    @Operation(summary = "Get all offers", description = "Retrieve all job offers from the system.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved all offers")
+    })
+    @GetMapping
+    public ResponseEntity<List<OfferDTO>> getAllOffers() {
+        return ResponseEntity.ok(offerFacade.getAllOffers());
+    }
+
+    @Operation(summary = "Push offer to a provider", description = "Push a job offer to an external provider.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Offer pushed to provider successfully"),
+            @ApiResponse(responseCode = "404", description = "Offer not found")
+    })
+    @PostMapping("/{offerId}/push/{providerName}")
+    public ResponseEntity<Void> pushOfferToProvider(@PathVariable String offerId, @PathVariable String providerName) {
+        offerFacade.pushOfferToProvider(offerId, providerName);
+        return ResponseEntity.ok().build();
+    }
+
     // ============================
     // Sekcja: Zarządzanie aplikacjami
     // ============================

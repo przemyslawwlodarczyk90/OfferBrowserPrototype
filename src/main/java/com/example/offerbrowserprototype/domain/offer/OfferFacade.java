@@ -1,12 +1,9 @@
 package com.example.offerbrowserprototype.domain.offer;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
-import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheFacade;
-import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import com.example.offerbrowserprototype.infrastructure.service.ExternalJobOfferService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,57 +12,51 @@ import java.util.List;
 @Component
 public class OfferFacade {
 
-    private static final Logger logger = LoggerFactory.getLogger(OfferFacade.class);
 
-    private final OfferMapper offerMapper;
-    private final OfferRepository offerRepository;
+    private final OfferFromUrlHandler offerFromUrlHandler;
+    private final OfferApplicationHandler offerApplicationHandler;
 
     private final OfferAdditionHandler additionHandler;
     private final OfferUpdateHandler updateHandler;
     private final OfferDeletionHandler deletionHandler;
     private final OfferRetrievalHandler retrievalHandler;
     private final OfferNotAppliedHandler notAppliedHandler;
-    private final OfferAppliedHandler appliedHandler;
-    private final OfferApplicationHandler applicationHandler;
+    private final OfferAppliedListHandler appliedHandler;
+
     private final OfferDetailsHandler detailsHandler;
     private final OfferCacheFacade offerCacheFacade;
     private final ExternalJobOfferService externalJobOfferService;
     private final OfferPushHandler pushHandler;
-    private final OfferFromUrlHandler offerFromUrlHandler;
+
     private final ApplicationNoteHandler applicationNoteHandler;
 
-    public OfferFacade(OfferMapper offerMapper,
-                       OfferRepository offerRepository,
+    public OfferFacade(OfferFromUrlHandler offerFromUrlHandler,
+                       OfferApplicationHandler offerApplicationHandler,
                        OfferAdditionHandler additionHandler,
                        OfferUpdateHandler updateHandler,
                        OfferDeletionHandler deletionHandler,
                        OfferRetrievalHandler retrievalHandler,
                        OfferNotAppliedHandler notAppliedHandler,
-                       OfferAppliedHandler appliedHandler,
-                       OfferApplicationHandler applicationHandler,
+                       OfferAppliedListHandler appliedHandler,
                        OfferDetailsHandler detailsHandler,
                        OfferCacheFacade offerCacheFacade,
                        ExternalJobOfferService externalJobOfferService,
                        OfferPushHandler pushHandler,
-                       OfferFromUrlHandler offerFromUrlHandler,
                        ApplicationNoteHandler applicationNoteHandler) {
-        this.offerMapper = offerMapper;
-        this.offerRepository = offerRepository;
+        this.offerFromUrlHandler = offerFromUrlHandler;
+        this.offerApplicationHandler = offerApplicationHandler;
         this.additionHandler = additionHandler;
         this.updateHandler = updateHandler;
         this.deletionHandler = deletionHandler;
         this.retrievalHandler = retrievalHandler;
         this.notAppliedHandler = notAppliedHandler;
         this.appliedHandler = appliedHandler;
-        this.applicationHandler = applicationHandler;
         this.detailsHandler = detailsHandler;
         this.offerCacheFacade = offerCacheFacade;
         this.externalJobOfferService = externalJobOfferService;
         this.pushHandler = pushHandler;
-        this.offerFromUrlHandler = offerFromUrlHandler;
         this.applicationNoteHandler = applicationNoteHandler;
     }
-
     public OfferDTO addOffer(OfferDTO offerDto) {
         return additionHandler.addOffer(offerDto);
     }
@@ -112,47 +103,12 @@ public class OfferFacade {
     }
 
     public OfferDTO addOfferFromUrl(String offerUrl) {
-        OfferDTO offerDto = offerFromUrlHandler.handleOfferFromUrl(offerUrl);
 
-        if (offerDto == null) {
-            throw new IllegalArgumentException("Failed to scrape offer details from URL: " + offerUrl);
-        }
-
-        // Zapis oferty do bazy
-        Offer offer = offerMapper.toEntity(offerDto);
-        offer = offerRepository.save(offer);
-
-        // Logowanie zapisanej oferty
-        logger.info("Saved offer with ID: {}", offer.getId());
-
-        // Mapowanie na DTO z zapisanym ID
-        return offerMapper.toDTO(offer);
+        return offerFromUrlHandler.addOfferFromUrl(offerUrl);
     }
 
-
     public void applyToOffer(String offerId) {
-        // Pobierz szczegóły oferty
-        OfferDTO offer = detailsHandler.getOfferById(offerId);
-
-        if (offer == null) {
-            throw new IllegalArgumentException("Offer not found for ID: " + offerId);
-        }
-
-        // Loguj szczegóły oferty
-        System.out.println("Offer Details:");
-        System.out.println("ID: " + offer.getId());
-        System.out.println("URL: " + offer.getOfferUrl());
-        System.out.println("Company: " + offer.getCompany());
-
-        // Oznacz ofertę jako aplikowaną
-        applicationHandler.applyToOffer(offerId);
-
-        // Zapis notatki aplikacji
-        if (offer.getOfferUrl() == null || offer.getCompany() == null) {
-            throw new IllegalArgumentException("Offer details are incomplete. Cannot save application note.");
-        }
-
-        saveApplicationNote(offerId, offer.getOfferUrl(), offer.getCompany());
+        offerApplicationHandler.applyToOfferWithNote(offerId);
     }
 
     public void saveApplicationNote(String offerId, String offerUrl, String companyName) {
