@@ -32,13 +32,18 @@ public class Offer {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
     private LocalDateTime fetchedAt;
 
+    private String company;
 
-    public Offer(String title, String description, String location, String salaryRange, String level, Clock clock) {
+    public Offer(String title, String description, String location, String salaryRange, String level, String company, Clock clock) {
+        if (company == null || company.trim().isEmpty()) {
+            throw new IllegalArgumentException("Company cannot be null or empty.");
+        }
         this.title = title;
         this.description = description;
         this.location = location;
         this.salaryRange = salaryRange;
         this.level = level;
+        this.company = company;
         this.applied = false;
         this.fetchedAt = LocalDateTime.now(clock);
     }

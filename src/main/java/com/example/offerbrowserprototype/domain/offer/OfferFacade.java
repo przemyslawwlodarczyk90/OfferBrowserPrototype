@@ -1,8 +1,12 @@
 package com.example.offerbrowserprototype.domain.offer;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheFacade;
+import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import com.example.offerbrowserprototype.infrastructure.service.ExternalJobOfferService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,6 +14,11 @@ import java.util.List;
 
 @Component
 public class OfferFacade {
+
+    private static final Logger logger = LoggerFactory.getLogger(OfferFacade.class);
+
+    private final OfferMapper offerMapper;
+    private final OfferRepository offerRepository;
 
     private final OfferAdditionHandler additionHandler;
     private final OfferUpdateHandler updateHandler;
@@ -25,7 +34,9 @@ public class OfferFacade {
     private final OfferFromUrlHandler offerFromUrlHandler;
     private final ApplicationNoteHandler applicationNoteHandler;
 
-    public OfferFacade(OfferAdditionHandler additionHandler,
+    public OfferFacade(OfferMapper offerMapper,
+                       OfferRepository offerRepository,
+                       OfferAdditionHandler additionHandler,
                        OfferUpdateHandler updateHandler,
                        OfferDeletionHandler deletionHandler,
                        OfferRetrievalHandler retrievalHandler,
@@ -38,6 +49,8 @@ public class OfferFacade {
                        OfferPushHandler pushHandler,
                        OfferFromUrlHandler offerFromUrlHandler,
                        ApplicationNoteHandler applicationNoteHandler) {
+        this.offerMapper = offerMapper;
+        this.offerRepository = offerRepository;
         this.additionHandler = additionHandler;
         this.updateHandler = updateHandler;
         this.deletionHandler = deletionHandler;
@@ -100,18 +113,44 @@ public class OfferFacade {
 
     public OfferDTO addOfferFromUrl(String offerUrl) {
         OfferDTO offerDto = offerFromUrlHandler.handleOfferFromUrl(offerUrl);
-        return offerDto;
+
+        if (offerDto == null) {
+            throw new IllegalArgumentException("Failed to scrape offer details from URL: " + offerUrl);
+        }
+
+        // Zapis oferty do bazy
+        Offer offer = offerMapper.toEntity(offerDto);
+        offer = offerRepository.save(offer);
+
+        // Logowanie zapisanej oferty
+        logger.info("Saved offer with ID: {}", offer.getId());
+
+        // Mapowanie na DTO z zapisanym ID
+        return offerMapper.toDTO(offer);
     }
 
-    public void applyToOffer(String offerId) {
 
+    public void applyToOffer(String offerId) {
+        // Pobierz szczegóły oferty
         OfferDTO offer = detailsHandler.getOfferById(offerId);
 
         if (offer == null) {
             throw new IllegalArgumentException("Offer not found for ID: " + offerId);
         }
 
+        // Loguj szczegóły oferty
+        System.out.println("Offer Details:");
+        System.out.println("ID: " + offer.getId());
+        System.out.println("URL: " + offer.getOfferUrl());
+        System.out.println("Company: " + offer.getCompany());
+
+        // Oznacz ofertę jako aplikowaną
         applicationHandler.applyToOffer(offerId);
+
+        // Zapis notatki aplikacji
+        if (offer.getOfferUrl() == null || offer.getCompany() == null) {
+            throw new IllegalArgumentException("Offer details are incomplete. Cannot save application note.");
+        }
 
         saveApplicationNote(offerId, offer.getOfferUrl(), offer.getCompany());
     }

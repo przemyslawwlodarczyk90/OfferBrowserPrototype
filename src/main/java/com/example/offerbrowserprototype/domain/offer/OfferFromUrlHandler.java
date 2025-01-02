@@ -52,11 +52,13 @@ public class OfferFromUrlHandler {
             logger.info("Starting Python script: {} {} {}", pythonPath, scriptPath, offerUrl);
             Process process = processBuilder.start();
 
+            // Odczyt outputu
             String output;
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 output = reader.lines().collect(Collectors.joining("\n"));
             }
 
+            // Sprawdź kod wyjścia procesu
             int exitCode = process.waitFor();
             logger.info("Python script completed with exit code: {}", exitCode);
 
@@ -67,9 +69,11 @@ public class OfferFromUrlHandler {
 
             logger.info("Python script output: {}", output);
 
+            // Odczyt ostatniej linii JSON
             String[] lines = output.split("\n");
             String jsonResponse = lines[lines.length - 1];
 
+            // Parsowanie JSON
             ObjectMapper mapper = new ObjectMapper();
             try {
                 OfferDTO offerDTO = mapper.readValue(jsonResponse, OfferDTO.class);
@@ -80,6 +84,10 @@ public class OfferFromUrlHandler {
                 throw new RuntimeException("Error parsing JSON from script: " + e.getMessage(), e);
             }
 
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // Przywrócenie statusu wątku
+            logger.error("Python script execution was interrupted: {}", e.getMessage(), e);
+            throw new RuntimeException("Python script execution was interrupted: " + e.getMessage(), e);
         } catch (Exception e) {
             logger.error("Error executing Python script: {}", e.getMessage(), e);
             throw new RuntimeException("Error scraping offer details: " + e.getMessage(), e);
