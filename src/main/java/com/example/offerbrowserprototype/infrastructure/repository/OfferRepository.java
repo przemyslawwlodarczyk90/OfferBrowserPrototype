@@ -27,6 +27,7 @@ public interface OfferRepository extends MongoRepository<Offer, String> {
 
     Optional<Offer> findByOfferUrl(String offerUrl);
 
+    long countByAppliedTrue();
 
     long countByIsDuplicateFalse();
 

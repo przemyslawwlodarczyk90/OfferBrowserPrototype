@@ -33,6 +33,17 @@ public class StatisticController {
         long totalOffers = statisticsFacade.getTotalOffers();
         return ResponseEntity.ok(totalOffers);
     }
+
+    @Operation(summary = "Get total applied offers", description = "Returns the total number of job offers you have applied to.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Applied offers count retrieved successfully"),
+            @ApiResponse(responseCode = "500", description = "Error while retrieving applied offers count")
+    })
+    @GetMapping("/applied-offers")
+    public ResponseEntity<Long> getAppliedOffers() {
+        long appliedOffers = statisticsFacade.getAppliedOffers();
+        return ResponseEntity.ok(appliedOffers);
+    }
     @Operation(summary = "Get level distribution", description = "Returns the distribution of job offers across different levels.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Level distribution retrieved successfully"),

@@ -16,6 +16,9 @@ public class StatisticsFacade {
     public long getTotalOffers() {
         return offerCountHandler.getTotalOffers();
     }
+    public long getAppliedOffers() {
+        return offerCountHandler.getAppliedOffers();
+    }
 
     public Map<String, Long> getLevelDistribution() {
         return levelDistributionHandler.getLevelDistribution();
