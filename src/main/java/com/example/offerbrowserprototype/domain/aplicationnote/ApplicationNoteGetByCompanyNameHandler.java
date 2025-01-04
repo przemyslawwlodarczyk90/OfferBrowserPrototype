@@ -16,6 +16,7 @@ public class ApplicationNoteGetByCompanyNameHandler {
     }
 
     public List<ApplicationNote> getNotesByCompanyName(String companyName) {
-        return applicationNoteRepository.findByCompanyName(companyName);
+        // Wywołanie metody repozytorium z ignorowaniem wielkości liter
+        return applicationNoteRepository.findByCompanyNameIgnoreCase(companyName.trim());
     }
 }

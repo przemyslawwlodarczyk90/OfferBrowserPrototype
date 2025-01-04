@@ -73,4 +73,19 @@ public class ApplicationNoteController {
         logger.info("Retrieved {} companies with application dates.", companiesWithDates.size());
         return ResponseEntity.ok(companiesWithDates);
     }
+
+    @Operation(summary = "Create a new application note for an external source", description = "Add a new note with company name and URL for applications done outside the system.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Note created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input provided"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @PostMapping("/external")
+    public ResponseEntity<ApplicationNote> createNoteForExternalSource(
+            @RequestParam String companyName,
+            @RequestParam String url) {
+        // Wywołanie handlera do stworzenia notatki
+        ApplicationNote note = applicationNoteFacade.createNoteForExternalSource(companyName, url);
+        return ResponseEntity.status(201).body(note);
+    }
 }
