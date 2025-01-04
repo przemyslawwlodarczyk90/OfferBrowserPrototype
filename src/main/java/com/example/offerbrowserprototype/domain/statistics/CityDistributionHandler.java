@@ -2,22 +2,41 @@ package com.example.offerbrowserprototype.domain.statistics;
 
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-class CityDistributionHandler {
+public class CityDistributionHandler {
 
+    private static final Logger logger = LoggerFactory.getLogger(CityDistributionHandler.class);
     private final OfferRepository offerRepository;
 
     public Map<String, Long> getCityDistribution() {
-        // Pobranie danych z repozytorium
-        Map<String, Long> rawCityDistribution = offerRepository.getCityDistribution();
-        System.out.println("Raw city distribution from MongoDB: " + rawCityDistribution);
+        logger.info("Fetching city distribution...");
 
-        // Zwracamy dane bez zmian
-        return rawCityDistribution;
+        try {
+            // Pobierz dane z repozytorium
+            List<CityDistribution> rawDistribution = offerRepository.getCityDistributionSimple();
+            logger.debug("Raw city distribution result: {}", rawDistribution);
+
+            // Przetwarzanie danych - tylko pierwsze miasto
+            Map<String, Long> processedDistribution = new HashMap<>();
+            rawDistribution.forEach(cityDist -> {
+                String city = cityDist.getId().split(",")[0].trim(); // Pobierz pierwsze miasto przed przecinkiem
+                processedDistribution.merge(city, cityDist.getCount(), Long::sum);
+            });
+
+            logger.debug("Processed city distribution: {}", processedDistribution);
+            return processedDistribution;
+        } catch (Exception e) {
+            logger.error("Error fetching city distribution", e);
+            throw e;
+        }
     }
 }

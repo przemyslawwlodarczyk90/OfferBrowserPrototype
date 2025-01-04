@@ -1,6 +1,7 @@
 package com.example.offerbrowserprototype.infrastructure.repository;
 
 import com.example.offerbrowserprototype.domain.offer.Offer;
+import com.example.offerbrowserprototype.domain.statistics.CityDistribution;
 import com.example.offerbrowserprototype.domain.statistics.LevelDistribution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ public interface OfferRepository extends MongoRepository<Offer, String> {
 
     @Aggregation(pipeline = {
             "{ $match: { isDuplicate: false } }",
-            "{ $group: { _id: '$location', count: { $sum: 1 } } }"
+            "{ $group: { _id: { $ifNull: ['$location', 'unknown'] }, count: { $sum: 1 } } }"
     })
-    Map<String, Long> getCityDistribution();
-}
+    List<CityDistribution> getCityDistributionSimple();}
+
