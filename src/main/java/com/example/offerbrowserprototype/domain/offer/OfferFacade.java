@@ -111,7 +111,5 @@ public class OfferFacade {
         offerApplicationHandler.applyToOfferWithNote(offerId);
     }
 
-    public void saveApplicationNote(String offerId, String offerUrl, String companyName) {
-        applicationNoteHandler.saveApplicationNote(offerId, offerUrl, companyName);
-    }
+
 }

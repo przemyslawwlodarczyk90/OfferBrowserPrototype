@@ -17,19 +17,11 @@ public class StatisticsFacade {
         return offerCountHandler.getTotalOffers();
     }
 
-    public Map<String, Double> getLevelDistribution() {
+    public Map<String, Long> getLevelDistribution() {
         return levelDistributionHandler.getLevelDistribution();
     }
 
     public Map<String, Long> getCityDistribution() {
         return cityDistributionHandler.getCityDistribution();
-    }
-
-    public StatisticsResponse getMainStatistics() {
-        long totalOffers = getTotalOffers();
-        Map<String, Double> levelDistribution = getLevelDistribution();
-        Map<String, Long> cityDistribution = getCityDistribution();
-
-        return new StatisticsResponse(totalOffers, levelDistribution, cityDistribution);
     }
 }

@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface ApplicationNoteRepository extends MongoRepository<ApplicationNote, String> {
 
-    List<ApplicationNote> findByOfferUrl(String offerUrl);
+
     List<ApplicationNote> findByCompanyName(String companyName);
 }

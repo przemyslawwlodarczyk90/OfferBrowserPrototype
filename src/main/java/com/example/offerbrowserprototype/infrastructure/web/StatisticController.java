@@ -1,7 +1,6 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.statistics.StatisticsFacade;
-import com.example.offerbrowserprototype.domain.statistics.StatisticsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -22,16 +21,7 @@ public class StatisticController {
 
     private final StatisticsFacade statisticsFacade;
 
-    @Operation(summary = "Get main statistics", description = "Retrieves main statistics including total offers, level distribution, and city distribution.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Statistics retrieved successfully"),
-            @ApiResponse(responseCode = "500", description = "Error while retrieving statistics")
-    })
-    @GetMapping("/main")
-    public ResponseEntity<StatisticsResponse> getMainStatistics() {
-        StatisticsResponse statistics = statisticsFacade.getMainStatistics();
-        return ResponseEntity.ok(statistics);
-    }
+
 
     @Operation(summary = "Get total offers", description = "Returns the total number of job offers where isDuplicate is false.")
     @ApiResponses(value = {
@@ -43,16 +33,14 @@ public class StatisticController {
         long totalOffers = statisticsFacade.getTotalOffers();
         return ResponseEntity.ok(totalOffers);
     }
-
-    @Operation(summary = "Get level distribution", description = "Returns the distribution of job offers across different levels (trainee, junior, mid, senior, etc.).")
+    @Operation(summary = "Get level distribution", description = "Returns the distribution of job offers across different levels.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Level distribution retrieved successfully"),
             @ApiResponse(responseCode = "500", description = "Error while retrieving level distribution")
     })
     @GetMapping("/level-distribution")
-    public ResponseEntity<Map<String, Double>> getLevelDistribution() {
-        Map<String, Double> levelDistribution = statisticsFacade.getLevelDistribution();
-        return ResponseEntity.ok(levelDistribution);
+    public ResponseEntity<Map<String, Long>> getLevelDistribution() {
+        return ResponseEntity.ok(statisticsFacade.getLevelDistribution());
     }
 
     @Operation(summary = "Get city distribution", description = "Returns the number of job offers grouped by city.")

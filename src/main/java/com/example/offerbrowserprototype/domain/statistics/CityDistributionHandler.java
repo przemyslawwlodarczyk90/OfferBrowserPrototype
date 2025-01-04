@@ -13,6 +13,11 @@ class CityDistributionHandler {
     private final OfferRepository offerRepository;
 
     public Map<String, Long> getCityDistribution() {
-        return offerRepository.countByCityAndIsDuplicateFalse();
+        // Pobranie danych z repozytorium
+        Map<String, Long> rawCityDistribution = offerRepository.getCityDistribution();
+        System.out.println("Raw city distribution from MongoDB: " + rawCityDistribution);
+
+        // Zwracamy dane bez zmian
+        return rawCityDistribution;
     }
 }

@@ -32,6 +32,8 @@ public class OfferDTO {
     private String salaryRange;
 
     private String company;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private String level;
     private boolean applied;
 

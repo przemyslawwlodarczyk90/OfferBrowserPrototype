@@ -1,9 +1,11 @@
 package com.example.offerbrowserprototype.infrastructure.repository;
 
 import com.example.offerbrowserprototype.domain.offer.Offer;
+import com.example.offerbrowserprototype.domain.statistics.LevelDistribution;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.Optional;
 
 @Repository
 public interface OfferRepository extends MongoRepository<Offer, String> {
+
+    Logger logger = LoggerFactory.getLogger(OfferRepository.class);
 
 
     List<Offer> findAllByOrderByFetchedAtDesc();
@@ -22,17 +26,19 @@ public interface OfferRepository extends MongoRepository<Offer, String> {
 
     Optional<Offer> findByOfferUrl(String offerUrl);
 
+
     long countByIsDuplicateFalse();
 
-    @Query("{ 'isDuplicate': false }")
     @Aggregation(pipeline = {
-            "{ $group: { _id: '$level', count: { $sum: 1 } } }"
+            "{ $match: { isDuplicate: false } }",
+            "{ $group: { _id: { $ifNull: ['$level', 'unknown'] }, count: { $sum: 1 } } }"
     })
-    Map<String, Long> countByLevelAndIsDuplicateFalse();
+    List<LevelDistribution> getLevelDistributionSimple();
 
-    @Query("{ 'isDuplicate': false }")
+
     @Aggregation(pipeline = {
+            "{ $match: { isDuplicate: false } }",
             "{ $group: { _id: '$location', count: { $sum: 1 } } }"
     })
-    Map<String, Long> countByCityAndIsDuplicateFalse();
+    Map<String, Long> getCityDistribution();
 }

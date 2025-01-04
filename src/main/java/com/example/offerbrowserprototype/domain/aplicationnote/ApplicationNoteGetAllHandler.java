@@ -1,6 +1,6 @@
 package com.example.offerbrowserprototype.domain.aplicationnote;
 
-import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNote;
+
 import com.example.offerbrowserprototype.infrastructure.repository.ApplicationNoteRepository;
 import org.springframework.stereotype.Component;
 

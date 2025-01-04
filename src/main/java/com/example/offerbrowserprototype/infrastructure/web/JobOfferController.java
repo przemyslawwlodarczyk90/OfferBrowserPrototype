@@ -22,7 +22,7 @@ public class JobOfferController {
     private static final Logger LOGGER = Logger.getLogger(JobOfferController.class.getName());
     private final ExternalJobOfferService externalJobOfferService;
 
-    @Value("${job.offer.scheduler.cron}") // Wstrzykiwanie wartości z application.properties
+    @Value("${job.offer.scheduler.cron}")
     private String cronExpression;
 
     public JobOfferController(ExternalJobOfferService externalJobOfferService) {

@@ -29,6 +29,8 @@ public class Offer {
 
     private boolean applied;
 
+    private boolean isDuplicate;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
     private LocalDateTime fetchedAt;
 
@@ -45,6 +47,7 @@ public class Offer {
         this.level = level;
         this.company = company;
         this.applied = false;
+        this.isDuplicate = false;
         this.fetchedAt = LocalDateTime.now(clock);
     }
 }
