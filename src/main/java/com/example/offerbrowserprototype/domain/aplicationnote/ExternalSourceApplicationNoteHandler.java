@@ -22,13 +22,13 @@ public class ExternalSourceApplicationNoteHandler {
             throw new IllegalArgumentException("URL cannot be null or empty.");
         }
 
-        // Tworzenie nowej notatki
+
         ApplicationNote note = new ApplicationNote();
         note.setCompanyName(companyName);
         note.setOfferUrl(url);
-        note.setAppliedAt(LocalDateTime.now()); // Ustawienie daty aplikacji
+        note.setAppliedAt(LocalDateTime.now());
 
-        // Zapis notatki do bazy danych
+
         return applicationNoteRepository.save(note);
     }
 }

@@ -21,14 +21,12 @@ public class CityDistributionHandler {
         logger.info("Fetching city distribution...");
 
         try {
-            // Pobierz dane z repozytorium
             List<CityDistribution> rawDistribution = offerRepository.getCityDistributionSimple();
             logger.debug("Raw city distribution result: {}", rawDistribution);
 
-            // Przetwarzanie danych - tylko pierwsze miasto
             Map<String, Long> processedDistribution = new HashMap<>();
             rawDistribution.forEach(cityDist -> {
-                String city = cityDist.getId().split(",")[0].trim(); // Pobierz pierwsze miasto przed przecinkiem
+                String city = cityDist.getId().split(",")[0].trim();
                 processedDistribution.merge(city, cityDist.getCount(), Long::sum);
             });
 

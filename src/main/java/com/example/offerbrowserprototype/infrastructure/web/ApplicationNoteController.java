@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
 @RestController
 @RequestMapping("/api/application-notes")
 @Tag(name = "Application Notes", description = "Operations related to application notes")
@@ -33,29 +32,57 @@ public class ApplicationNoteController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all application notes", description = "Retrieve all application notes.")
     public ResponseEntity<List<ApplicationNoteDTO>> getAllApplicationNotes() {
         logger.info("Fetching all application notes...");
-        List<ApplicationNote> notes = applicationNoteFacade.getAllApplicationNotes();
-        return ResponseEntity.ok(applicationNoteMapper.toDtoList(notes));
+        List<ApplicationNoteDTO> notes = applicationNoteMapper.toDtoList(applicationNoteFacade.getAllApplicationNotes());
+        logger.info("Retrieved {} application notes.", notes.size());
+        return ResponseEntity.ok(notes);
     }
 
     @GetMapping("/by-company-name")
+    @Operation(summary = "Get application notes by company name", description = "Retrieve application notes for a specific company.")
     public ResponseEntity<List<ApplicationNoteDTO>> getApplicationNotesByCompanyName(@RequestParam String companyName) {
         logger.info("Fetching application notes for companyName: {}", companyName);
-        List<ApplicationNote> notes = applicationNoteFacade.getApplicationNotesByCompanyName(companyName);
+        if (companyName == null || companyName.isBlank()) {
+            logger.warn("Company name cannot be null or blank.");
+            return ResponseEntity.badRequest().build();
+        }
+        List<ApplicationNoteDTO> notes = applicationNoteMapper.toDtoList(
+                applicationNoteFacade.getApplicationNotesByCompanyName(companyName.trim())
+        );
         if (notes.isEmpty()) {
             logger.warn("No application notes found for companyName: {}", companyName);
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(applicationNoteMapper.toDtoList(notes));
+        logger.info("Retrieved {} application notes for companyName: {}", notes.size(), companyName);
+        return ResponseEntity.ok(notes);
     }
 
+    @PostMapping("/external")
+    @Operation(summary = "Create a new application note for an external source", description = "Add a new note with company name and URL.")
+    public ResponseEntity<ApplicationNoteDTO> createNoteForExternalSource(@RequestParam String companyName, @RequestParam String url) {
+        logger.info("Creating a new application note for company: {}, URL: {}", companyName, url);
+        ApplicationNoteDTO createdNote = applicationNoteMapper.toDto(
+                applicationNoteFacade.createNoteForExternalSource(companyName, url)
+        );
+        return ResponseEntity.status(201).body(createdNote);
+    }
+
+    @GetMapping("/count")
+    @Operation(summary = "Count all application notes", description = "Retrieve the total count of application notes.")
+    public ResponseEntity<Long> countAllApplicationNotes() {
+        long count = applicationNoteFacade.countAllApplicationNotes();
+        logger.info("Total application notes count: {}", count);
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/companies-with-dates")
     @Operation(summary = "Get companies with application dates", description = "Retrieve a list of companies with their application dates.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved companies with application dates"),
             @ApiResponse(responseCode = "404", description = "No application notes found")
     })
-    @GetMapping("/companies-with-dates")
     public ResponseEntity<Map<String, List<String>>> getCompaniesWithApplicationDates() {
         logger.info("Fetching companies with application dates...");
         Map<String, List<String>> companiesWithDates = applicationNoteFacade.getCompaniesWithApplicationDates();
@@ -65,20 +92,5 @@ public class ApplicationNoteController {
         }
         logger.info("Retrieved {} companies with application dates.", companiesWithDates.size());
         return ResponseEntity.ok(companiesWithDates);
-    }
-    @PostMapping("/external")
-    public ResponseEntity<ApplicationNoteDTO> createNoteForExternalSource(@RequestParam String companyName, @RequestParam String url) {
-        ApplicationNote note = applicationNoteFacade.createNoteForExternalSource(companyName, url);
-        return ResponseEntity.status(201).body(applicationNoteMapper.toDto(note));
-    }
-
-    @GetMapping("/count")
-    @Operation(summary = "Count all application notes", description = "Retrieve the total count of application notes in the database.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved the count")
-    })
-    public ResponseEntity<Long> countAllApplicationNotes() {
-        long count = applicationNoteFacade.countAllApplicationNotes();
-        return ResponseEntity.ok(count);
     }
 }

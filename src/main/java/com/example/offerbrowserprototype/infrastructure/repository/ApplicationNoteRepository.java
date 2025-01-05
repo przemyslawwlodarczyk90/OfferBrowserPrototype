@@ -10,6 +10,5 @@ import java.util.List;
 public interface ApplicationNoteRepository extends MongoRepository<ApplicationNote, String> {
 
 
-    List<ApplicationNote> findByCompanyName(String companyName);
     List<ApplicationNote> findByCompanyNameIgnoreCase(String companyName);
 }

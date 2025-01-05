@@ -14,14 +14,13 @@ public class MongoConfig {
 
     @Bean
     public MongoTemplate mongoTemplate() {
-        // Tworzenie połączenia z MongoDB
+
         ConnectionString connectionString = new ConnectionString("mongodb://admin:admin123@localhost:27017/offer_browser_db?authSource=admin");
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
-                .readPreference(ReadPreference.primary()) // Wymuszenie preferencji odczytu
+                .readPreference(ReadPreference.primary())
                 .build();
 
-        // Utworzenie MongoTemplate z poprawioną konfiguracją
         return new MongoTemplate(
                 new SimpleMongoClientDatabaseFactory(MongoClients.create(mongoClientSettings), connectionString.getDatabase())
         );

@@ -36,7 +36,6 @@ public class JwtService {
         }
     }
 
-    // Utility function to normalize the token
     private String normalizeToken(String token) {
         String[] parts = token.split("\\.");
         return padBase64(parts[0]) + "." + padBase64(parts[1]) + "." + parts[2];

@@ -35,7 +35,6 @@ public class OfferImportService {
                 throw new IOException("File not found: " + filePath);
             }
 
-            // Read offers from JSON file
             List<Offer> offers = List.of(objectMapper.readValue(file, Offer[].class));
             logger.info("Number of offers read from file: {}", offers.size());
 

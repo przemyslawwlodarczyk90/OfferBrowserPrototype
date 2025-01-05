@@ -1,6 +1,5 @@
 package com.example.offerbrowserprototype.domain.aplicationnote;
 
-import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNote;
 import com.example.offerbrowserprototype.infrastructure.repository.ApplicationNoteRepository;
 import org.springframework.stereotype.Component;
 
@@ -22,14 +21,14 @@ public class ApplicationNoteGetCompaniesWithDatesHandler {
         List<ApplicationNote> notes = applicationNoteRepository.findAll();
 
         return notes.stream()
-                .filter(note -> note.getAppliedAt() != null) // Filtruj tylko notatki z datą
+                .filter(note -> note.getAppliedAt() != null)
                 .collect(Collectors.groupingBy(
                         ApplicationNote::getCompanyName,
                         Collectors.mapping(
                                 note -> note.getAppliedAt().toLocalDate().format(DATE_FORMATTER),
                                 Collectors.collectingAndThen(Collectors.toList(),
                                         dates -> dates.stream()
-                                                .sorted((d1, d2) -> d2.compareTo(d1)) // Sortuj daty malejąco
+                                                .sorted((d1, d2) -> d2.compareTo(d1))
                                                 .toList())
                         )
                 ));

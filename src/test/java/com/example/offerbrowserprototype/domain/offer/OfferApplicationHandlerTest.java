@@ -17,7 +17,7 @@
 // * Testy jednostkowe dla klasy {@link OfferApplicationHandler}.
 // */
 //class OfferApplicationHandlerTest {
-//
+
 //    @Mock
 //    private OfferRepository offerRepository;
 //

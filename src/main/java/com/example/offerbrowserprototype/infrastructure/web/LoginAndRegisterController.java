@@ -50,7 +50,7 @@ public class LoginAndRegisterController {
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginDto loginDto) {
         try {
-            // Generowanie tokena JWT
+
             String token = loginAndRegisterFacade.login(loginDto);
             return new ResponseEntity<>(new TokenResponse(token), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
