@@ -1,12 +1,17 @@
-package com.example.offerbrowserprototype.domain.loginaandregister;
+package com.example.offerbrowserprototype.infrastructure.facade;
 
 import com.example.offerbrowserprototype.domain.dto.loginandregister.*;
+import com.example.offerbrowserprototype.domain.loginaandregister.UserLoginHandler;
+import com.example.offerbrowserprototype.domain.loginaandregister.UserPasswordChanger;
+import com.example.offerbrowserprototype.domain.loginaandregister.UserProfileUpdater;
+import com.example.offerbrowserprototype.domain.loginaandregister.UserRegistrationHandler;
 import com.example.offerbrowserprototype.domain.user.ConfirmationToken;
 import com.example.offerbrowserprototype.domain.user.User;
 import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
 import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import com.example.offerbrowserprototype.infrastructure.service.ConfirmationTokenService;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -38,10 +43,10 @@ public class LoginAndRegisterFacade {
     }
 
     public String login(LoginDto loginDto) {
-
         return userLoginHandler.login(loginDto);
     }
 
+    @CacheEvict(value = "userProfiles", key = "#updateUserDto.userId")
     public UserDTO updateUserProfile(UpdateUserDto updateUserDto) {
         return profileUpdater.updateUserProfile(updateUserDto);
     }
@@ -50,10 +55,10 @@ public class LoginAndRegisterFacade {
         return passwordChanger.changeUserPassword(changePasswordDto);
     }
 
+    @Cacheable(value = "confirmationTokens", key = "#token", unless = "#result == null")
     public String confirmRegistration(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService.getToken(token)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid token"));
-
 
         confirmationTokenService.confirmToken(confirmationToken);
         activateUser(confirmationToken.getUserId());

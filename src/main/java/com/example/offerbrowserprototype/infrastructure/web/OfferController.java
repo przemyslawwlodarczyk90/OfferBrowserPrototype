@@ -1,7 +1,7 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
-import com.example.offerbrowserprototype.domain.offer.OfferFacade;
+import com.example.offerbrowserprototype.infrastructure.facade.OfferFacade;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

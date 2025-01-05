@@ -2,7 +2,7 @@ package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.dto.confirmationtoken.TokenResponse;
 import com.example.offerbrowserprototype.domain.dto.loginandregister.*;
-import com.example.offerbrowserprototype.domain.loginaandregister.LoginAndRegisterFacade;
+import com.example.offerbrowserprototype.infrastructure.facade.LoginAndRegisterFacade;
 import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

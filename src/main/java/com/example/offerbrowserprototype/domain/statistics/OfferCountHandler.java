@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-class OfferCountHandler {
+public class OfferCountHandler {
 
     private final OfferRepository offerRepository;
 

@@ -30,13 +30,13 @@ public class OfferApplicationHandler {
             throw new IllegalArgumentException("Offer details are incomplete. Cannot save application note.");
         }
 
-        // Oznacz ofertę jako aplikowaną
+
         Offer entity = offerRepository.findById(offerId)
                 .orElseThrow(() -> new IllegalArgumentException("Offer not found"));
         entity.setApplied(true);
         offerRepository.save(entity);
 
-        // Dodaj notatkę aplikacji
+
         applicationNoteHandler.saveApplicationNote(offerId, offer.getOfferUrl(), offer.getCompany());
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-class OfferRetrievalHandler {
+public class OfferRetrievalHandler {
 
     private final OfferRepository offerRepository;
     private final OfferMapper offerMapper;

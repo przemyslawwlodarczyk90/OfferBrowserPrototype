@@ -9,7 +9,7 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 
 @Component
-class OfferUpdateHandler {
+public class OfferUpdateHandler {
 
     private final OfferRepository offerRepository;
     private final OfferMapper offerMapper;
@@ -21,7 +21,7 @@ class OfferUpdateHandler {
         this.clock = clock;
     }
 
-    OfferDTO updateOffer(String id, OfferDTO offerDto) {
+    public OfferDTO updateOffer(String id, OfferDTO offerDto) {
         Offer existingOffer = offerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Offer not found"));
 

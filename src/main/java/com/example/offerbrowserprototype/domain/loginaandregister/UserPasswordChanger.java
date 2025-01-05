@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-class UserPasswordChanger {
+public class UserPasswordChanger {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

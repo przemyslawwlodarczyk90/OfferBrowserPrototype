@@ -4,7 +4,7 @@ import com.example.offerbrowserprototype.infrastructure.repository.OfferReposito
 import org.springframework.stereotype.Component;
 
 @Component
-class OfferDeletionHandler {
+public class OfferDeletionHandler {
 
     private final OfferRepository offerRepository;
 
@@ -12,7 +12,7 @@ class OfferDeletionHandler {
         this.offerRepository = offerRepository;
     }
 
-    void deleteOffer(String id) {
+    public void deleteOffer(String id) {
         offerRepository.deleteById(id);
     }
 }

@@ -15,7 +15,7 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 
 @Component
-class UserRegistrationHandler {
+public class UserRegistrationHandler {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

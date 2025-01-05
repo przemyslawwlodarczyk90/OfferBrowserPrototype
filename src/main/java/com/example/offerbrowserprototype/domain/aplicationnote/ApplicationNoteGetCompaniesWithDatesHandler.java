@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 @Component
 public class ApplicationNoteGetCompaniesWithDatesHandler {
 
@@ -23,6 +22,7 @@ public class ApplicationNoteGetCompaniesWithDatesHandler {
         List<ApplicationNote> notes = applicationNoteRepository.findAll();
 
         return notes.stream()
+                .filter(note -> note.getAppliedAt() != null) // Filtruj tylko notatki z datą
                 .collect(Collectors.groupingBy(
                         ApplicationNote::getCompanyName,
                         Collectors.mapping(
@@ -30,7 +30,7 @@ public class ApplicationNoteGetCompaniesWithDatesHandler {
                                 Collectors.collectingAndThen(Collectors.toList(),
                                         dates -> dates.stream()
                                                 .sorted((d1, d2) -> d2.compareTo(d1)) // Sortuj daty malejąco
-                                                .collect(Collectors.toList()))
+                                                .toList())
                         )
                 ));
     }

@@ -9,7 +9,7 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 
 @Component
-class OfferAdditionHandler {
+public class OfferAdditionHandler {
 
     private final OfferRepository offerRepository;
     private final OfferMapper offerMapper;
@@ -21,7 +21,7 @@ class OfferAdditionHandler {
         this.clock = clock;
     }
 
-    OfferDTO addOffer(OfferDTO offerDto) {
+    public OfferDTO addOffer(OfferDTO offerDto) {
         Offer offer = offerMapper.toEntity(offerDto);
         offer.setFetchedAt(LocalDateTime.now(clock));
         Offer savedOffer = offerRepository.save(offer);

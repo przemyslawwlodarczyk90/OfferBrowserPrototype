@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 @Component
-class UserLoginHandler {
+public class UserLoginHandler {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

@@ -1,6 +1,6 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
-import com.example.offerbrowserprototype.domain.loginaandregister.LoginAndRegisterFacade;
+import com.example.offerbrowserprototype.infrastructure.facade.LoginAndRegisterFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

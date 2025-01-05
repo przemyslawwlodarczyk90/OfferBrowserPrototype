@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-class OfferNotAppliedHandler {
+public class OfferNotAppliedHandler {
 
     private final OfferRepository offerRepository;
     private final OfferMapper offerMapper;

@@ -1,7 +1,7 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNote;
-import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNoteFacade;
+import com.example.offerbrowserprototype.infrastructure.facade.ApplicationNoteFacade;
 import com.example.offerbrowserprototype.domain.dto.aplicationnote.ApplicationNoteDTO;
 import com.example.offerbrowserprototype.domain.mapper.ApplicationNoteMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+
 @RestController
 @RequestMapping("/api/application-notes")
 @Tag(name = "Application Notes", description = "Operations related to application notes")
@@ -49,6 +50,22 @@ public class ApplicationNoteController {
         return ResponseEntity.ok(applicationNoteMapper.toDtoList(notes));
     }
 
+    @Operation(summary = "Get companies with application dates", description = "Retrieve a list of companies with their application dates.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved companies with application dates"),
+            @ApiResponse(responseCode = "404", description = "No application notes found")
+    })
+    @GetMapping("/companies-with-dates")
+    public ResponseEntity<Map<String, List<String>>> getCompaniesWithApplicationDates() {
+        logger.info("Fetching companies with application dates...");
+        Map<String, List<String>> companiesWithDates = applicationNoteFacade.getCompaniesWithApplicationDates();
+        if (companiesWithDates.isEmpty()) {
+            logger.warn("No application notes found.");
+            return ResponseEntity.notFound().build();
+        }
+        logger.info("Retrieved {} companies with application dates.", companiesWithDates.size());
+        return ResponseEntity.ok(companiesWithDates);
+    }
     @PostMapping("/external")
     public ResponseEntity<ApplicationNoteDTO> createNoteForExternalSource(@RequestParam String companyName, @RequestParam String url) {
         ApplicationNote note = applicationNoteFacade.createNoteForExternalSource(companyName, url);

@@ -9,11 +9,12 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Data
-public class OfferDTO {
+public class OfferDTO implements Serializable {
 
     private String id;
 

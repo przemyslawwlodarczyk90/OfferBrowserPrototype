@@ -21,7 +21,12 @@ public class JacksonConfig {
     }
 
     @Bean
-    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
-        return builder.build();
+    public ObjectMapper objectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        return mapper;
     }
+
+
 }

@@ -1,7 +1,7 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
-import com.example.offerbrowserprototype.domain.offer.OfferFacade;
+import com.example.offerbrowserprototype.infrastructure.facade.OfferFacade;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import com.example.offerbrowserprototype.infrastructure.service.OfferImportService;
 import com.example.offerbrowserprototype.infrastructure.service.PythonScriptService;
@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 

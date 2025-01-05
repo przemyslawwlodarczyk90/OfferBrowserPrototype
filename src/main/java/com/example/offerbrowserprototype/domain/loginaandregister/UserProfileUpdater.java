@@ -9,7 +9,7 @@ import com.example.offerbrowserprototype.infrastructure.repository.UserRepositor
 import org.springframework.stereotype.Component;
 
 @Component
-class UserProfileUpdater {
+public class UserProfileUpdater {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;

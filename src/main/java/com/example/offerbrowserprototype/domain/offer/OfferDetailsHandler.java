@@ -6,7 +6,7 @@ import com.example.offerbrowserprototype.infrastructure.repository.OfferReposito
 import org.springframework.stereotype.Component;
 
 @Component
-class OfferDetailsHandler {
+public class OfferDetailsHandler {
 
     private final OfferRepository offerRepository;
     private final OfferMapper offerMapper;

@@ -1,7 +1,7 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
-import com.example.offerbrowserprototype.domain.offer.OfferFacade;
+import com.example.offerbrowserprototype.infrastructure.facade.OfferFacade;
 import com.example.offerbrowserprototype.domain.user.User;
 import com.example.offerbrowserprototype.infrastructure.service.MailService;
 import com.example.offerbrowserprototype.infrastructure.service.UserService;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/notifications")
