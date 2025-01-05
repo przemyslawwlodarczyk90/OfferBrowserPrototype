@@ -146,4 +146,34 @@ public class OfferController {
     }
 
 
+    // ============================
+    // Sekcja: Zarządzanie duplikatami
+    // ============================
+
+
+
+    // Oznaczanie jako duplicate przez ID
+    @Operation(summary = "Mark offer as duplicate by ID", description = "Marks the specified job offer as duplicated using its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Offer marked as duplicate successfully"),
+            @ApiResponse(responseCode = "404", description = "Offer not found")
+    })
+    @PostMapping("/{offerId}/mark-duplicate")
+    public ResponseEntity<Void> markOfferAsDuplicateById(@PathVariable String offerId) {
+        offerFacade.markAsDuplicateById(offerId);
+        return ResponseEntity.ok().build();
+    }
+
+    // Oznaczanie jako duplicate przez URL
+    @Operation(summary = "Mark offer as duplicate by URL", description = "Marks the specified job offer as duplicated using its URL.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Offer marked as duplicate successfully"),
+            @ApiResponse(responseCode = "404", description = "Offer not found")
+    })
+    @PostMapping("/mark-duplicate-by-url")
+    public ResponseEntity<Void> markOfferAsDuplicateByUrl(@RequestParam String offerUrl) {
+        offerFacade.markAsDuplicateByUrl(offerUrl);
+        return ResponseEntity.ok().build();
+    }
+
 }

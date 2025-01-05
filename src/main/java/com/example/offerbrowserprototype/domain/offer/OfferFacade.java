@@ -30,6 +30,8 @@ public class OfferFacade {
 
     private final ApplicationNoteHandler applicationNoteHandler;
 
+    private final MarkAsDuplicateHandler markAsDuplicateHandler;
+
     public OfferFacade(OfferFromUrlHandler offerFromUrlHandler,
                        OfferApplicationHandler offerApplicationHandler,
                        OfferAdditionHandler additionHandler,
@@ -42,7 +44,7 @@ public class OfferFacade {
                        OfferCacheFacade offerCacheFacade,
                        ExternalJobOfferService externalJobOfferService,
                        OfferPushHandler pushHandler,
-                       ApplicationNoteHandler applicationNoteHandler) {
+                       ApplicationNoteHandler applicationNoteHandler, MarkAsDuplicateHandler markAsDuplicateHandler) {
         this.offerFromUrlHandler = offerFromUrlHandler;
         this.offerApplicationHandler = offerApplicationHandler;
         this.additionHandler = additionHandler;
@@ -56,6 +58,7 @@ public class OfferFacade {
         this.externalJobOfferService = externalJobOfferService;
         this.pushHandler = pushHandler;
         this.applicationNoteHandler = applicationNoteHandler;
+        this.markAsDuplicateHandler = markAsDuplicateHandler;
     }
     public OfferDTO addOffer(OfferDTO offerDto) {
         return additionHandler.addOffer(offerDto);
@@ -111,5 +114,12 @@ public class OfferFacade {
         offerApplicationHandler.applyToOfferWithNote(offerId);
     }
 
+    public void markAsDuplicateById(String offerId) {
+        markAsDuplicateHandler.handleById(offerId);
+    }
+
+    public void markAsDuplicateByUrl(String offerUrl) {
+        markAsDuplicateHandler.handleByUrl(offerUrl);
+    }
 
 }
