@@ -12,17 +12,21 @@ public class ApplicationNoteFacade {
     private final ApplicationNoteGetByCompanyNameHandler getByCompanyNameHandler;
     private final ApplicationNoteGetCompaniesWithDatesHandler getCompaniesWithDatesHandler;
     private final ExternalSourceApplicationNoteHandler externalSourceApplicationNoteHandler;
+    private final ApplicationNoteCountHandler countHandler;
 
     public ApplicationNoteFacade(
             ApplicationNoteGetAllHandler getAllHandler,
             ApplicationNoteGetByCompanyNameHandler getByCompanyNameHandler,
             ApplicationNoteGetCompaniesWithDatesHandler getCompaniesWithDatesHandler,
-            ExternalSourceApplicationNoteHandler externalSourceApplicationNoteHandler) {
+            ExternalSourceApplicationNoteHandler externalSourceApplicationNoteHandler,
+            ApplicationNoteCountHandler countHandler) {
         this.getAllHandler = getAllHandler;
         this.getByCompanyNameHandler = getByCompanyNameHandler;
         this.getCompaniesWithDatesHandler = getCompaniesWithDatesHandler;
         this.externalSourceApplicationNoteHandler = externalSourceApplicationNoteHandler;
+        this.countHandler = countHandler;
     }
+
 
     public List<ApplicationNote> getAllApplicationNotes() {
         return getAllHandler.getAllNotes();
@@ -38,5 +42,9 @@ public class ApplicationNoteFacade {
 
     public ApplicationNote createNoteForExternalSource(String companyName, String url) {
         return externalSourceApplicationNoteHandler.createNoteForExternalSource(companyName, url);
+    }
+
+    public long countAllApplicationNotes() {
+        return countHandler.countAllNotes();
     }
 }
