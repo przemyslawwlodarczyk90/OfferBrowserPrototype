@@ -79,7 +79,7 @@ class UserMapperTest {
 
     @Test
     void shouldNotUpdateUserWhenFieldsAreEmptyInUpdateUserDto() {
-        // Given - Dane testowe
+        // Given
         UpdateUserDto updateUserDto = new UpdateUserDto();
         updateUserDto.setUsername("");
         updateUserDto.setEmail(null);

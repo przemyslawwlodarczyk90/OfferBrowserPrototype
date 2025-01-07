@@ -31,15 +31,16 @@ public class SwaggerConfig {
 
         Info apiInfo = new Info()
                 .title("Offer Browser API")
-                .description("This API allows users to register, authenticate, and manage job offers.\n\n"
-                        + "### Features include:\n"
-                        + "- User registration and confirmation\n"
-                        + "- JWT-based authentication and authorization\n"
-                        + "- Creating, updating, and managing job offers\n"
-                        + "- Fetching job offers from external sources\n\n"
-                        + "For any questions, please contact our support team.")
+                .description("Explore and manage job offers effortlessly with the Offer Browser API.\n\n"
+                        + "### Key Features:\n"
+                        + "- **User Management**: Register, confirm, and authenticate users securely with JWT.\n"
+                        + "- **Offer Management**: Create, update, and organize job offers efficiently.\n"
+                        + "- **Data Integration**: Fetch job offers dynamically from multiple external sources.\n"
+                        + "- **Enhanced Analytics**: Access detailed statistics for better insights.\n\n"
+                        + "Have questions? Contact our support team for assistance.")
                 .version("1.0.0")
                 .license(new License().name("MIT License").url("https://opensource.org/licenses/MIT"));
+
 
         return new OpenAPI()
                 .components(components)

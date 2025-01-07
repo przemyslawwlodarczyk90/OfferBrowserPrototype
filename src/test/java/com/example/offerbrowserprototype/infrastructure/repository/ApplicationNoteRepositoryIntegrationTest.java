@@ -28,38 +28,32 @@ public class ApplicationNoteRepositoryIntegrationTest {
         applicationNoteRepository.deleteAll();
     }
 
-    /**
-     * Test sprawdzający zapis i odczyt notatki aplikacyjnej z bazy.
-     */
+
     @Test
-    public void shouldSaveAndRetrieveApplicationNote() {
-        // Dane testowe: Ferdynand Kiepski
+     void shouldSaveAndRetrieveApplicationNote() {
+
         ApplicationNote note = new ApplicationNote();
         note.setOfferId("offer123");
         note.setOfferUrl("https://kiepscy-jobs.com/offers/ferdynand");
         note.setCompanyName("Kiepscy Enterprises");
         note.setAppliedAt(LocalDateTime.now());
 
-        // Zapis notatki do bazy
         applicationNoteRepository.save(note);
 
-        // Pobranie notatki z bazy
+
         Optional<ApplicationNote> retrievedNote = applicationNoteRepository.findByOfferUrl("https://kiepscy-jobs.com/offers/ferdynand");
 
-        // Weryfikacja
         assertThat(retrievedNote).isPresent();
         assertThat(retrievedNote.get().getCompanyName()).isEqualTo("Kiepscy Enterprises");
     }
 
-    /**
-     * Test sprawdzający brak notatki w bazie.
-     */
+
     @Test
-    public void shouldNotFindNonExistentApplicationNote() {
-        // Próba wyszukania notatki, która nie istnieje
+     void shouldNotFindNonExistentApplicationNote() {
+
         Optional<ApplicationNote> retrievedNote = applicationNoteRepository.findByOfferUrl("https://nieistniejacy-url.com");
 
-        // Weryfikacja, że notatka nie istnieje
+
         assertThat(retrievedNote).isNotPresent();
     }
 

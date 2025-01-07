@@ -1,112 +1,82 @@
 # Offer Browser Prototype
 
-## Opis projektu
+## 📖 Wprowadzenie
 
-Offer Browser Prototype to aplikacja webowa, która umożliwia zarządzanie ofertami pracy, rejestrację użytkowników oraz uwierzytelnianie przy użyciu tokenów JWT. Aplikacja pozwala na przeglądanie ofert pracy z wewnętrznej bazy danych, a także z zewnętrznych źródeł poprzez integracje API, zarówno tworzenie i wystawianie ogłoszeń na zewnętrznych portalach ogłoszeniowych. Dodatkowo zawiera funkcje związane z rejestracją, logowaniem i zarządzaniem profilem użytkownika.
+**Offer Browser Prototype** to zaawansowana aplikacja webowa stworzona z myślą o usprawnieniu procesu zarządzania ofertami pracy. Jest to kompleksowe narzędzie, które umożliwia:
 
-## Funkcjonalności
+- **Pobieranie ofert pracy** z różnych źródeł:
+    - Integracja z API dostawców ofert pracy.
+    - Dynamiczne pozyskiwanie danych z serwisów internetowych.
 
--   **Rejestracja i logowanie użytkowników**: Tworzenie konta, potwierdzenie rejestracji oraz uwierzytelnianie przy użyciu tokenów JWT.
--   **Zarządzanie ofertami pracy**: Dodawanie, edycja, usuwanie oraz przeglądanie ofert pracy.
--   **Pobieranie zewnętrznych ofert pracy**: Integracja z zewnętrznymi dostawcami ofert pracy oraz ich automatyczne pobieranie.
--  **Tworzenie i wypychanie ogłoszenia na zewnętrzny provider.**
--   **Cache i harmonogramowanie**: Wykorzystanie Redis do cachowania ofert oraz zaplanowane zadania (Scheduler) do okresowego pobierania ofert.
+- **Przechowywanie i porządkowanie ofert** w centralnej bazie danych:
+    - Oferty oznaczane jako „zaaplikowane” lub „niezaaplikowane”.
+    - Historia zmian i aktualizacji danych.
 
-## Technologie
+- **Tworzenie i przechowywanie notatek aplikacyjnych**:
+    - Automatyczne zapisywanie szczegółów aplikacji (data, czas, firma, URL oferty).
+    - Możliwość dodawania własnych notatek do każdej oferty.
 
--   **Język programowania**: Java 17
--   **Framework**: Spring Boot 3.2.5
-    -   **Spring Web**: Obsługa REST API.
-    -   **Spring Security**: Uwierzytelnianie przy użyciu JWT.
-    -   **Spring Data MongoDB**: Zarządzanie danymi w bazie MongoDB.
-    -   **Spring Data Redis**: Cachowanie ofert przy użyciu Redis.
-    -   **Spring Retry**: Obsługa retry dla zewnętrznych integracji API.
--   **Baza danych**: MongoDB (przechowywanie użytkowników oraz ofert pracy).
--   **Cache**: Redis (do przechowywania tymczasowych ofert pracy).
--   **Kontrola wersji**: Git
--   **Integracja z zewnętrznymi API**: Pobieranie ofert pracy z zewnętrznych dostawców za pomocą REST API.
--   **Obsługa harmonogramowania**: Automatyczne pobieranie ofert zewnętrznych w oparciu o harmonogram (Spring Scheduler).
--   **Swagger/OpenAPI**: Dokumentacja API oraz testowanie endpointów.
--   **Thymeleaf**: Generowanie szablonów e-mail dla potwierdzenia rejestracji.
+- **Generowanie statystyk i analiz**:
+    - Rozkład ofert według miast i poziomów doświadczenia.
+    - Podsumowania liczby ofert w bazie i ich statusów.
 
+Aplikacja oferuje pełną kontrolę nad procesem rekrutacyjnym, jednocześnie zapewniając użytkownikowi intuicyjne i elastyczne narzędzia do zarządzania.
 
-## Bezpieczeństwo
+---
+## 🛠 Architektura aplikacji
 
-Projekt korzysta z **Spring Security** oraz **JWT** (JSON Web Tokens) do uwierzytelniania użytkowników. Token JWT jest generowany przy logowaniu i wykorzystywany do autoryzacji użytkownika w kolejnych żądaniach.
+Aplikacja została zaprojektowana w sposób modułowy, co umożliwia łatwe rozszerzanie funkcjonalności oraz integrację z różnorodnymi dostawcami ofert pracy.
 
-## Integracje zewnętrzne
+### 📦 Moduły pobierania ofert
+- **Integracje API** – Aplikacja obsługuje integracje z zewnętrznymi systemami API, co pozwala na automatyczne importowanie ofert pracy od wielu dostawców.
+- **Dynamiczne pozyskiwanie danych** – Mechanizm umożliwiający pozyskiwanie ofert ze stron internetowych bez potrzeby integracji API, pozwalając użytkownikowi na dostęp do stale aktualnych danych.
 
-Projekt pobiera oferty pracy z zewnętrznych dostawców poprzez ich API. Za integrację odpowiada fabryka `JobOfferProviderFactory`, która może obsłużyć wielu dostawców.
+### 💾 Przechowywanie danych
+- **MongoDB** – Centralna baza danych służąca do przechowywania ofert pracy, statystyk i notatek aplikacyjnych. Gwarantuje trwałość danych i skalowalność.
+- **Redis** – System cache'owania, który znacząco przyspiesza dostęp do często używanych informacji, takich jak wyniki statystyk czy ostatnio przeglądane oferty.
 
-## Testowanie
+### 🗂 Zarządzanie ofertami
+Aplikacja dostarcza narzędzia umożliwiające pełną kontrolę nad ofertami pracy:
+- **Filtrowanie i sortowanie** – Możliwość przeglądania ofert według statusu, daty pobrania, lokalizacji lub poziomu doświadczenia.
+- **Aktualizacja danych** – Prosta edycja szczegółów ofert, takich jak tytuł, lokalizacja, wynagrodzenie czy opis stanowiska.
+- **Monitorowanie aplikacji** – Automatyczne oznaczanie ofert, na które użytkownik zaaplikował, co pozwala zachować porządek w procesie rekrutacyjnym.
 
-Aktualnie projekt jest w trakcie dodawania testów jednostkowych oraz integracyjnych. Wszystkie główne funkcjonalności zostały przetestowane manualnie, a aplikacja działa zgodnie z oczekiwaniami. Planuje się dodanie:
+### 📊 Statystyki
+Funkcjonalność statystyk w aplikacji pozwala na:
+- analizę rozkładu ofert według miast, co pomaga w identyfikacji lokalnych trendów na rynku pracy,
+- ocenę wymagań doświadczenia w ofertach, ułatwiając wybór najlepiej dopasowanych ogłoszeń,
+- podsumowanie statusu ofert, takich jak liczba zaaplikowanych czy wciąż otwartych ogłoszeń.
 
--   **Testów jednostkowych**: Weryfikacja poprawności pojedynczych komponentów aplikacji.
--   **Testów integracyjnych**: Sprawdzenie poprawności współdziałania pomiędzy różnymi modułami aplikacji.
+### 📝 Notatki aplikacyjne
+Aplikacja działa również jako kompleksowy notatnik rekrutacyjny:
+- **Automatyczne notatki** – Zapis szczegółów aplikacji, takich jak data aplikacji, nazwa firmy czy URL oferty.
+- **Ręczne komentarze** – Użytkownik może dodawać własne notatki do ofert, co wspiera zarządzanie procesem rekrutacyjnym.
+- **Historia aplikacji** – Przegląd zapisanych notatek, pozwalający na szybkie przypomnienie szczegółów aplikacji i dalsze planowanie działań.
 
-> Na obecnym etapie **nie są planowane testy end-to-end (E2E)**, a testowanie aplikacji odbywa się manualnie.
+### 🌟 Kluczowe cechy
+- Elastyczność i skalowalność dzięki modularnej architekturze.
+- Integracja z MongoDB i Redis dla szybkiego i trwałego przechowywania danych.
+- Możliwość łatwego rozszerzania funkcjonalności, w tym dodawania nowych dostawców ofert pracy.
+- Pełna kontrola nad procesem rekrutacyjnym dzięki notatkom aplikacyjnym i statystykom.
 
-## Konfiguracja
+## ✅ Testowanie
 
-Aplikacja korzysta z pliku `application.properties`, w którym można dostosować następujące ustawienia:
+Aplikacja została gruntownie przetestowana:
+- **Jednostkowe testy handlerów** – weryfikacja logiki biznesowej.
+- **Integracyjne testy repozytoriów** – testy zapisu i odczytu z bazy MongoDB.
 
--   **Baza danych MongoDB**: Konfiguracja połączenia do bazy danych.
--   **Cache Redis**: Włączanie/wyłączanie cache oraz ustawienie czasu wygaśnięcia.
--   **JWT**: Klucz tajny, czas wygaśnięcia tokena oraz issuer.
--   **Scheduler**: Ustawienia harmonogramu do automatycznego pobierania ofert.
--   **SMTP**: Konfiguracja serwera pocztowego do wysyłania e-maili potwierdzających rejestrację.
+### Przykładowe obszary testów:
+- Pobieranie i przechowywanie danych w bazie.
+- Generowanie statystyk i przetwarzanie danych.
+- Obsługa notatek aplikacyjnych.
 
-## Uruchomienie projektu
+---
 
-### Wymagania
+## 🌟 Podsumowanie
 
--   Java 17
--   Maven
--   MongoDB
--   Redis (jeśli chcesz korzystać z cache)
+**Offer Browser Prototype** to wszechstronne narzędzie, które wspiera proces rekrutacyjny na każdym etapie:
+- Od pobierania ofert z różnych źródeł.
+- Przez zarządzanie i oznaczanie aplikowanych ofert.
+- Po zaawansowane statystyki i przechowywanie notatek aplikacyjnych.
 
-### Komendy
-
-1.  **Klonowanie repozytorium**:
-    
-    
-    
-    Skopiuj kod
-    
-    `git clone <repo-url>
-    cd OfferBrowserPrototype` 
-    
-2.  **Budowanie projektu**:
-    
-   
-    
-    Skopiuj kod
-    
-    `mvn clean install` 
-    
-3.  **Uruchomienie aplikacji**:
-    
-    
-    
-    Skopiuj kod
-    
-    `mvn spring-boot:run` 
-    
-4.  **Swagger/OpenAPI**: Dokumentacja API dostępna pod adresem:
-    
- 
-    
-    Skopiuj kod
-    
-    `http://localhost:8080/swagger-ui.html` 
-    
-
-## Docker
-
-Projekt zawiera plik `docker-compose.yml` do szybkiego uruchomienia MongoDB w celu pracy na lokalnym środowisku.
-
-
-## Licencja
-
-Projekt jest otwartoźródłowy i udostępniany na licencji **MIT**. Możesz dowolnie kopiować, modyfikować i rozpowszechniać kod projektu pod warunkiem zachowania informacji o licencji i autorach.
+Dzięki elastycznej architekturze i integracjom aplikacja idealnie nadaje się zarówno dla osób indywidualnych, jak i zespołów HR. 🎯

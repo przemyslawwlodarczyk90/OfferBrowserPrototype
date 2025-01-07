@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @DataMongoTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class UserRepositoryIntegrationTest {
+ class UserRepositoryIntegrationTest {
 
     @Autowired
     private UserRepository userRepository;
@@ -26,48 +26,38 @@ public class UserRepositoryIntegrationTest {
         userRepository.deleteAll();
     }
 
-    /**
-     * Test sprawdzający wyszukiwanie użytkownika po nazwie użytkownika.
-     */
+
     @Test
-    public void shouldFindUserByUsername() {
-        // Dane testowe
+     void shouldFindUserByUsername() {
+
         User user = new User();
         user.setUsername("marianpazdzioch");
         user.setEmail("marian.pazdzioch@example.com");
         user.setPassword("tajnehaslo123");
         user.setActive(true);
 
-        // Zapis użytkownika do bazy
         userRepository.save(user);
 
-        // Pobranie użytkownika na podstawie nazwy użytkownika
         Optional<User> foundUser = userRepository.findByUsername("marianpazdzioch");
 
-        // Weryfikacja
         assertThat(foundUser).isPresent();
         assertThat(foundUser.get().getEmail()).isEqualTo("marian.pazdzioch@example.com");
     }
 
-    /**
-     * Test sprawdzający wyszukiwanie użytkownika po adresie email.
-     */
+
     @Test
-    public void shouldFindUserByEmail() {
-        // Dane testowe
+     void shouldFindUserByEmail() {
+
         User user = new User();
         user.setUsername("arnoldboczek");
         user.setEmail("arnold.boczek@example.com");
         user.setPassword("haslodokabanosa");
         user.setActive(true);
 
-        // Zapis użytkownika do bazy
         userRepository.save(user);
 
-        // Pobranie użytkownika na podstawie adresu email
         Optional<User> foundUser = userRepository.findByEmail("arnold.boczek@example.com");
 
-        // Weryfikacja
         assertThat(foundUser).isPresent();
         assertThat(foundUser.get().getUsername()).isEqualTo("arnoldboczek");
     }

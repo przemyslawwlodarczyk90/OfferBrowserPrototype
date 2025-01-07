@@ -75,7 +75,7 @@ class UserRegistrationHandlerTest {
         // When
         RegistrationResultDTO result = userRegistrationHandler.register(registerUserDTO);
 
-        // Then - Sprawdzenie wyników
+        // Then
         assertEquals("waldek_kiepski", result.getUsername());
         assertEquals(true, result.isSuccess());
         assertEquals("Rejestracja udana", result.getMessage());
