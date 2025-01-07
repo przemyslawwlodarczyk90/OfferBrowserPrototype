@@ -8,23 +8,16 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-/**
- * Klasa testowa dla `OfferDetailsHandler`.
- * Sprawdza poprawność pobierania szczegółów oferty na podstawie ID.
- */
 class OfferDetailsHandlerTest {
 
     private OfferRepository offerRepository;
     private OfferMapper offerMapper;
     private OfferDetailsHandler offerDetailsHandler;
 
-    /**
-     * Inicjalizacja testów.
-     * Tworzenie mocków dla `OfferRepository` i `OfferMapper` oraz instancji `OfferDetailsHandler`.
-     */
     @BeforeEach
     void setUp() {
         offerRepository = mock(OfferRepository.class);
@@ -32,52 +25,49 @@ class OfferDetailsHandlerTest {
         offerDetailsHandler = new OfferDetailsHandler(offerRepository, offerMapper);
     }
 
-    /**
-     * Test sprawdza, czy metoda `getOfferById` zwraca poprawne dane dla istniejącej oferty.
-     */
     @Test
-    void shouldReturnOfferDetailsWhenOfferExists() {
-        // Given - Przygotowanie danych testowych
-        String offerId = "1";
-        Offer mockOffer = new Offer();
-        mockOffer.setId(offerId);
-        mockOffer.setTitle("Java Developer");
+    void shouldReturnOfferDTOWhenOfferExists() {
+        // Given
+        String offerId = "123";
+        Offer offer = new Offer();
+        offer.setId(offerId);
+        offer.setTitle("Java Developer");
+        offer.setDescription("Job description");
+        offer.setLocation("Warsaw");
+        offer.setOfferUrl("https://example.com/offer/123");
 
-        OfferDTO mockOfferDTO = new OfferDTO();
-        mockOfferDTO.setId(offerId);
-        mockOfferDTO.setTitle("Java Developer");
+        OfferDTO offerDTO = new OfferDTO();
+        offerDTO.setId(offerId);
+        offerDTO.setTitle("Java Developer");
+        offerDTO.setDescription("Job description");
+        offerDTO.setLocation("Warsaw");
+        offerDTO.setOfferUrl("https://example.com/offer/123");
 
-        when(offerRepository.findById(offerId)).thenReturn(Optional.of(mockOffer));
-        when(offerMapper.toDTO(mockOffer)).thenReturn(mockOfferDTO);
+        when(offerRepository.findById(offerId)).thenReturn(Optional.of(offer));
+        when(offerMapper.toDTO(offer)).thenReturn(offerDTO);
 
-        // When - Wywołanie metody
+        // When
         OfferDTO result = offerDetailsHandler.getOfferById(offerId);
 
-        // Then - Weryfikacja wyników
-        assertNotNull(result);
-        assertEquals(offerId, result.getId());
-        assertEquals("Java Developer", result.getTitle());
+        // Then
+        assertThat(result).isEqualTo(offerDTO);
         verify(offerRepository, times(1)).findById(offerId);
-        verify(offerMapper, times(1)).toDTO(mockOffer);
+        verify(offerMapper, times(1)).toDTO(offer);
     }
 
-    /**
-     * Test sprawdza, czy metoda `getOfferById` rzuca wyjątek dla nieistniejącej oferty.
-     */
     @Test
     void shouldThrowExceptionWhenOfferDoesNotExist() {
-        // Given - Przygotowanie danych testowych
-        String offerId = "nonexistent-id";
+        // Given
+        String nonExistentOfferId = "non-existent-id";
+        when(offerRepository.findById(nonExistentOfferId)).thenReturn(Optional.empty());
 
-        when(offerRepository.findById(offerId)).thenReturn(Optional.empty());
-
-        // When & Then - Wywołanie metody i sprawdzenie, czy rzucono wyjątek
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            offerDetailsHandler.getOfferById(offerId);
+        // When & Then
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            offerDetailsHandler.getOfferById(nonExistentOfferId);
         });
 
-        assertEquals("Offer not found", exception.getMessage());
-        verify(offerRepository, times(1)).findById(offerId);
-        verifyNoInteractions(offerMapper); // Mapper nie powinien być wywołany
+        assertThat(exception.getMessage()).isEqualTo("Offer not found");
+        verify(offerRepository, times(1)).findById(nonExistentOfferId);
+        verifyNoInteractions(offerMapper);
     }
 }

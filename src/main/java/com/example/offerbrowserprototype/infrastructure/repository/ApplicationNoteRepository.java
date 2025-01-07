@@ -5,10 +5,12 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ApplicationNoteRepository extends MongoRepository<ApplicationNote, String> {
 
 
     List<ApplicationNote> findByCompanyNameIgnoreCase(String companyName);
+    Optional<ApplicationNote> findByOfferUrl(String offerUrl);
 }

@@ -72,7 +72,7 @@ public class ApplicationNoteFacade {
 
 
         long count = countHandler.countAllNotes();
-        redisTemplate.opsForValue().set(NOTES_COUNT_CACHE_KEY, count, 1, TimeUnit.HOURS); // Cache na 1 godzinę
+        redisTemplate.opsForValue().set(NOTES_COUNT_CACHE_KEY, count, 1, TimeUnit.HOURS);
         return count;
     }
 }

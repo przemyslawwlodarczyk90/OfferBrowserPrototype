@@ -19,10 +19,10 @@ public class OfferFromUrlHandler {
     private static final Logger logger = LoggerFactory.getLogger(OfferFromUrlHandler.class);
 
     @Value("${python.path}")
-    private String pythonPath;
+    public String pythonPath;
 
     @Value("${python.script.offer-url-scraper}")
-    private String scriptPath;
+    public String scriptPath;
 
     private final OfferRepository offerRepository;
     private final OfferMapper offerMapper;
@@ -56,7 +56,7 @@ public class OfferFromUrlHandler {
         return offerMapper.toDTO(offer);
     }
 
-    private OfferDTO handleOfferFromUrl(String offerUrl) {
+    public OfferDTO handleOfferFromUrl(String offerUrl) {
         logger.info("Handling offer URL: {}", offerUrl);
 
         if (offerUrl == null || offerUrl.isBlank()) {

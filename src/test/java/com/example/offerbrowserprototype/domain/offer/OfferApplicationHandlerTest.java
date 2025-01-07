@@ -1,72 +1,110 @@
-//package com.example.offerbrowserprototype.domain.offer;
-//
-//import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.mockito.Mock;
-//import org.mockito.Mockito;
-//import org.mockito.MockitoAnnotations;
-//
-//import java.util.Optional;
-//
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
-//import static org.mockito.ArgumentMatchers.any;
-//
-///**
-// * Testy jednostkowe dla klasy {@link OfferApplicationHandler}.
-// */
-//class OfferApplicationHandlerTest {
+package com.example.offerbrowserprototype.domain.offer;
 
-//    @Mock
-//    private OfferRepository offerRepository;
-//
-//    private OfferApplicationHandler offerApplicationHandler;
-//
-//    /**
-//     * Inicjalizacja zasobów przed każdym testem.
-//     */
-//    @BeforeEach
-//    void setUp() {
-//        MockitoAnnotations.openMocks(this);
-//        offerApplicationHandler = new OfferApplicationHandler(offerRepository);
-//    }
-//
-//    /**
-//     * Test sprawdzający poprawne oznaczenie oferty jako aplikowanej.
-//     */
-//    @Test
-//    void shouldMarkOfferAsAppliedSuccessfully() {
-//        // Given - Dane testowe
-//        String offerId = "1";
-//        Offer offer = new Offer();
-//        offer.setId(offerId);
-//        offer.setApplied(false);
-//
-//        Mockito.when(offerRepository.findById(offerId)).thenReturn(Optional.of(offer));
-//        Mockito.when(offerRepository.save(any(Offer.class))).thenAnswer(invocation -> invocation.getArgument(0));
-//
-//        // When - Wywołanie metody
-//        offerApplicationHandler.applyToOffer(offerId);
-//
-//        // Then - Sprawdzenie wyników
-//        assertTrue(offer.isApplied(), "Oferta powinna zostać oznaczona jako aplikowana.");
-//        Mockito.verify(offerRepository).save(offer);
-//    }
-//
-//    /**
-//     * Test sprawdzający rzucenie wyjątku, gdy oferta nie istnieje.
-//     */
-//    @Test
-//    void shouldThrowExceptionWhenOfferNotFound() {
-//        // Given - Dane testowe
-//        String offerId = "non-existent";
-//
-//        Mockito.when(offerRepository.findById(offerId)).thenReturn(Optional.empty());
-//
-//        // When & Then - Wywołanie metody i oczekiwanie wyjątku
-//        assertThrows(IllegalArgumentException.class,
-//                () -> offerApplicationHandler.applyToOffer(offerId),
-//                "Powinien zostać rzucony wyjątek, gdy oferta nie istnieje.");
-//    }
-//}
+import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.*;
+
+class OfferApplicationHandlerTest {
+
+    private OfferRepository offerRepository;
+    private OfferDetailsHandler offerDetailsHandler;
+    private ApplicationNoteHandler applicationNoteHandler;
+    private OfferApplicationHandler offerApplicationHandler;
+
+    @BeforeEach
+    void setUp() {
+        offerRepository = Mockito.mock(OfferRepository.class);
+        offerDetailsHandler = Mockito.mock(OfferDetailsHandler.class);
+        applicationNoteHandler = Mockito.mock(ApplicationNoteHandler.class);
+        offerApplicationHandler = new OfferApplicationHandler(offerRepository, offerDetailsHandler, applicationNoteHandler);
+    }
+
+    @Test
+    void shouldApplyToOfferAndSaveApplicationNote() {
+        // Given
+        String offerId = "123";
+        OfferDTO mockOfferDTO = new OfferDTO();
+        mockOfferDTO.setOfferUrl("https://example.com/offer");
+        mockOfferDTO.setCompany("Test Company");
+        when(offerDetailsHandler.getOfferById(offerId)).thenReturn(mockOfferDTO);
+
+        Offer mockOffer = new Offer();
+        when(offerRepository.findById(offerId)).thenReturn(Optional.of(mockOffer));
+
+        // When
+        offerApplicationHandler.applyToOfferWithNote(offerId);
+
+        // Then
+        verify(offerDetailsHandler).getOfferById(offerId);
+        verify(offerRepository).findById(offerId);
+        verify(offerRepository).save(mockOffer);
+        verify(applicationNoteHandler).saveApplicationNote(offerId, "https://example.com/offer", "Test Company");
+
+        assertThat(mockOffer.isApplied()).isTrue();
+    }
+
+    @Test
+    void shouldThrowExceptionIfOfferNotFound() {
+        // Given
+        String offerId = "123";
+        when(offerDetailsHandler.getOfferById(offerId)).thenReturn(null);
+
+        // When / Then
+        assertThatThrownBy(() -> offerApplicationHandler.applyToOfferWithNote(offerId))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Offer not found for ID: " + offerId);
+
+        verify(offerDetailsHandler).getOfferById(offerId);
+        verifyNoInteractions(offerRepository);
+        verifyNoInteractions(applicationNoteHandler);
+    }
+
+    @Test
+    void shouldThrowExceptionIfOfferDetailsAreIncomplete() {
+        // Given
+        String offerId = "123";
+        OfferDTO incompleteOffer = new OfferDTO();
+        incompleteOffer.setCompany(null);
+        incompleteOffer.setOfferUrl(null);
+
+        when(offerDetailsHandler.getOfferById(offerId)).thenReturn(incompleteOffer);
+
+        // When / Then
+        assertThatThrownBy(() -> offerApplicationHandler.applyToOfferWithNote(offerId))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Offer details are incomplete. Cannot save application note.");
+
+        verify(offerDetailsHandler).getOfferById(offerId);
+        verifyNoInteractions(offerRepository);
+        verifyNoInteractions(applicationNoteHandler);
+    }
+
+    @Test
+    void shouldThrowExceptionIfOfferEntityNotFound() {
+        // Given
+        String offerId = "123";
+        OfferDTO mockOfferDTO = new OfferDTO();
+        mockOfferDTO.setOfferUrl("https://example.com/offer");
+        mockOfferDTO.setCompany("Test Company");
+
+        when(offerDetailsHandler.getOfferById(offerId)).thenReturn(mockOfferDTO);
+        when(offerRepository.findById(offerId)).thenReturn(Optional.empty());
+
+        // When / Then
+        assertThatThrownBy(() -> offerApplicationHandler.applyToOfferWithNote(offerId))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Offer not found");
+
+        verify(offerDetailsHandler).getOfferById(offerId);
+        verify(offerRepository).findById(offerId);
+        verifyNoInteractions(applicationNoteHandler);
+    }
+}

@@ -23,7 +23,7 @@ public class UserRepositoryIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        userRepository.deleteAll(); // Czyszczenie bazy przed każdym testem
+        userRepository.deleteAll();
     }
 
     /**

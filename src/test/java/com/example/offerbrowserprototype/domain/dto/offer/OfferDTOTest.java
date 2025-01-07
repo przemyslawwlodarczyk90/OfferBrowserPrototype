@@ -1,159 +1,139 @@
-//package com.example.offerbrowserprototype.domain.dto.offer;
-//
-//import jakarta.validation.ConstraintViolation;
-//import jakarta.validation.Validation;
-//import jakarta.validation.Validator;
-//import jakarta.validation.ValidatorFactory;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//
-//import java.time.LocalDateTime;
-//import java.util.Set;
-//
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-//
-//class OfferDTOTest {
-//
-//    private Validator validator;
-//
-//    @BeforeEach
-//    void setUp() {
-//        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-//        validator = factory.getValidator();
-//    }
-//
-//    @Test
-//    void whenAllFieldsAreValid_thenValidationSucceeds() {
-//        OfferDTO offerDTO = new OfferDTO(
-//                "Java Developer",
-//                "Great job opportunity",
-//                "New York",
-//                "60k-80k",
-//                "Mid-level",
-//                "http://example.com/job/java-developer", // offerUrl
-//                false,
-//                LocalDateTime.now()
-//        );
-//
-//        Set<ConstraintViolation<OfferDTO>> violations = validator.validate(offerDTO);
-//
-//        assertTrue(violations.isEmpty());
-//    }
-//
-//    @Test
-//    void whenTitleIsBlank_thenValidationFails() {
-//        OfferDTO offerDTO = new OfferDTO(
-//                "",
-//                "Great job opportunity",
-//                "New York",
-//                "60k-80k",
-//                "Mid-level",
-//                "http://example.com/job/java-developer", // offerUrl
-//                false,
-//                LocalDateTime.now()
-//        );
-//
-//        Set<ConstraintViolation<OfferDTO>> violations = validator.validate(offerDTO);
-//
-//        assertEquals(1, violations.size());
-//        assertEquals("Title cannot be empty", violations.iterator().next().getMessage());
-//    }
-//
-//    @Test
-//    void whenDescriptionIsBlank_thenValidationFails() {
-//        OfferDTO offerDTO = new OfferDTO(
-//                "Java Developer",
-//                "",
-//                "New York",
-//                "60k-80k",
-//                "Mid-level",
-//                "http://example.com/job/java-developer", // offerUrl
-//                false,
-//                LocalDateTime.now()
-//        );
-//
-//        Set<ConstraintViolation<OfferDTO>> violations = validator.validate(offerDTO);
-//
-//        assertEquals(1, violations.size());
-//        assertEquals("Description cannot be empty", violations.iterator().next().getMessage());
-//    }
-//
-//    @Test
-//    void whenLocationIsBlank_thenValidationFails() {
-//        OfferDTO offerDTO = new OfferDTO(
-//                "Java Developer",
-//                "Great job opportunity",
-//                "",
-//                "60k-80k",
-//                "Mid-level",
-//                "http://example.com/job/java-developer", // offerUrl
-//                false,
-//                LocalDateTime.now()
-//        );
-//
-//        Set<ConstraintViolation<OfferDTO>> violations = validator.validate(offerDTO);
-//
-//        assertEquals(1, violations.size());
-//        assertEquals("Location cannot be empty", violations.iterator().next().getMessage());
-//    }
-//
-//    @Test
-//    void whenAllFieldsAreValidIncludingId_thenValidationSucceeds() {
-//        OfferDTO offerDTO = new OfferDTO(
-//                "123",
-//                "Java Developer",
-//                "Great job opportunity",
-//                "New York",
-//                "60k-80k",
-//                "Mid-level",
-//                "http://example.com/job/java-developer", // offerUrl
-//                false,
-//                LocalDateTime.now()
-//        );
-//
-//        Set<ConstraintViolation<OfferDTO>> violations = validator.validate(offerDTO);
-//
-//        assertTrue(violations.isEmpty());
-//    }
-//
-//    @Test
-//    void whenOptionalFieldsAreNull_thenValidationSucceeds() {
-//        OfferDTO offerDTO = new OfferDTO(
-//                "Java Developer",
-//                "Great job opportunity",
-//                "New York",
-//                null, // salaryRange is null
-//                null, // level is null
-//                "http://example.com/job/java-developer", // offerUrl
-//                false,
-//                LocalDateTime.now()
-//        );
-//
-//        Set<ConstraintViolation<OfferDTO>> violations = validator.validate(offerDTO);
-//
-//        assertTrue(violations.isEmpty());
-//    }
-//
-//    @Test
-//    void whenOptionalFieldsAreNull_thenValidationSucceeds() {
-//        OfferDTO offerDTO = new OfferDTO(
-//                "Java Developer",
-//                "Great job opportunity",
-//                "New York",
-//                null, // salaryRange is null
-//                null, // level is null
-//                null, // offerUrl is null
-//                false,
-//                LocalDateTime.now()
-//        );
-//
-//        Set<ConstraintViolation<OfferDTO>> violations = validator.validate(offerDTO);
-//
-//        // Debugging log
-//        violations.forEach(violation -> System.out.println("Validation error: " + violation.getMessage()));
-//
-//        assertTrue(violations.isEmpty(), "Validation failed for optional fields.");
-//    }
-//
-//}
+package com.example.offerbrowserprototype.domain.dto.offer;
+
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+class OfferDTOTest {
+
+    @Test
+    public void shouldCreateDefaultConstructor() {
+        // Given & When
+        OfferDTO offerDTO = new OfferDTO();
+
+        // Then
+        assertThat(offerDTO).isNotNull();
+        assertThat(offerDTO.getId()).isNull();
+        assertThat(offerDTO.getTitle()).isNull();
+        assertThat(offerDTO.getDescription()).isNull();
+        assertThat(offerDTO.getLocation()).isNull();
+        assertThat(offerDTO.getOfferUrl()).isNull();
+        assertThat(offerDTO.getSalaryRange()).isNull();
+        assertThat(offerDTO.getCompany()).isNull();
+        assertThat(offerDTO.getLevel()).isNull();
+        assertThat(offerDTO.isApplied()).isFalse();
+        assertThat(offerDTO.getFetchedAt()).isNull();
+    }
+
+    @Test
+    public void shouldSetAndGetAllFields() {
+        // Given
+        OfferDTO offerDTO = new OfferDTO();
+        LocalDateTime fetchedAt = LocalDateTime.of(2025, 1, 7, 15, 0);
+
+        // When
+        offerDTO.setId("123");
+        offerDTO.setTitle("Software Engineer");
+        offerDTO.setDescription("Development of scalable applications");
+        offerDTO.setLocation("Remote");
+        offerDTO.setOfferUrl("https://example.com/offers/123");
+        offerDTO.setSalaryRange("10,000-15,000 USD");
+        offerDTO.setCompany("Example Corp");
+        offerDTO.setLevel("Mid");
+        offerDTO.setApplied(true);
+        offerDTO.setFetchedAt(fetchedAt);
+
+        // Then
+        assertThat(offerDTO.getId()).isEqualTo("123");
+        assertThat(offerDTO.getTitle()).isEqualTo("Software Engineer");
+        assertThat(offerDTO.getDescription()).isEqualTo("Development of scalable applications");
+        assertThat(offerDTO.getLocation()).isEqualTo("Remote");
+        assertThat(offerDTO.getOfferUrl()).isEqualTo("https://example.com/offers/123");
+        assertThat(offerDTO.getSalaryRange()).isEqualTo("10,000-15,000 USD");
+        assertThat(offerDTO.getCompany()).isEqualTo("Example Corp");
+        assertThat(offerDTO.getLevel()).isEqualTo("Mid");
+        assertThat(offerDTO.isApplied()).isTrue();
+        assertThat(offerDTO.getFetchedAt()).isEqualTo(fetchedAt);
+    }
+
+    @Test
+    public void shouldTestParameterizedConstructor() {
+        // Given
+        LocalDateTime fetchedAt = LocalDateTime.of(2025, 1, 7, 15, 0);
+
+        // When
+        OfferDTO offerDTO = new OfferDTO(
+                "123",
+                "Software Engineer",
+                "Development of scalable applications",
+                "Remote",
+                "https://example.com/offers/123",
+                "10,000-15,000 USD",
+                "Example Corp",
+                "Mid",
+                true,
+                fetchedAt
+        );
+
+        // Then
+        assertThat(offerDTO.getId()).isEqualTo("123");
+        assertThat(offerDTO.getTitle()).isEqualTo("Software Engineer");
+        assertThat(offerDTO.getDescription()).isEqualTo("Development of scalable applications");
+        assertThat(offerDTO.getLocation()).isEqualTo("Remote");
+        assertThat(offerDTO.getOfferUrl()).isEqualTo("https://example.com/offers/123");
+        assertThat(offerDTO.getSalaryRange()).isEqualTo("10,000-15,000 USD");
+        assertThat(offerDTO.getCompany()).isEqualTo("Example Corp");
+        assertThat(offerDTO.getLevel()).isEqualTo("Mid");
+        assertThat(offerDTO.isApplied()).isTrue();
+        assertThat(offerDTO.getFetchedAt()).isEqualTo(fetchedAt);
+    }
+
+    @Test
+    public void shouldTestEqualsAndHashCode() {
+        // Given
+        LocalDateTime fetchedAt = LocalDateTime.of(2025, 1, 7, 15, 0);
+        OfferDTO dto1 = new OfferDTO(
+                "123",
+                "Software Engineer",
+                "Development of scalable applications",
+                "Remote",
+                "https://example.com/offers/123",
+                "10,000-15,000 USD",
+                "Example Corp",
+                "Mid",
+                true,
+                fetchedAt
+        );
+
+        OfferDTO dto2 = new OfferDTO(
+                "123",
+                "Software Engineer",
+                "Development of scalable applications",
+                "Remote",
+                "https://example.com/offers/123",
+                "10,000-15,000 USD",
+                "Example Corp",
+                "Mid",
+                true,
+                fetchedAt
+        );
+
+        // Then
+        assertThat(dto1).isEqualTo(dto2);
+        assertThat(dto1.hashCode()).isEqualTo(dto2.hashCode());
+    }
+
+    @Test
+    public void shouldTestNotEquals() {
+        // Given
+        OfferDTO dto1 = new OfferDTO("Software Engineer", "Description 1", "Remote", "https://url1.com", "10,000-15,000 USD", "Company A", "Mid", false, LocalDateTime.now());
+        OfferDTO dto2 = new OfferDTO("Product Manager", "Description 2", "On-site", "https://url2.com", "15,000-20,000 USD", "Company B", "Senior", true, LocalDateTime.now());
+
+        // Then
+        assertThat(dto1).isNotEqualTo(dto2);
+    }
+
+}

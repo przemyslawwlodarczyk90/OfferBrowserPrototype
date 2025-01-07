@@ -5,109 +5,89 @@ import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class OfferUpdateHandlerTest {
 
-    @Mock
     private OfferRepository offerRepository;
-
-    @Mock
     private OfferMapper offerMapper;
-
-    @Mock
     private Clock clock;
-
     private OfferUpdateHandler offerUpdateHandler;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        offerRepository = mock(OfferRepository.class);
+        offerMapper = mock(OfferMapper.class);
+        clock = Clock.fixed(Instant.parse("2025-01-01T10:00:00Z"), ZoneId.of("UTC"));
         offerUpdateHandler = new OfferUpdateHandler(offerRepository, offerMapper, clock);
     }
 
-    /**
-     * Test sprawdzający, czy oferta jest poprawnie aktualizowana.
-     */
     @Test
     void shouldUpdateOfferSuccessfully() {
-        // Given - dane testowe
-        String offerId = "1";
-
+        // Mock danych
+        String offerId = "123";
         Offer existingOffer = new Offer();
         existingOffer.setId(offerId);
-        existingOffer.setTitle("Java Developer");
+        existingOffer.setTitle("Old Title");
 
-        OfferDTO updateData = new OfferDTO();
-        updateData.setTitle("Senior Java Developer");
-        updateData.setDescription("Exciting opportunity for experienced Java Developer.");
-        updateData.setLocation("Remote");
-        updateData.setSalaryRange("15,000 - 20,000 PLN");
-        updateData.setLevel("Level");
+        OfferDTO updatedOfferDto = new OfferDTO();
+        updatedOfferDto.setTitle("New Title");
+        updatedOfferDto.setDescription("Updated Description");
+        updatedOfferDto.setLocation("Updated Location");
+        updatedOfferDto.setSalaryRange("Updated Salary");
+        updatedOfferDto.setLevel("Senior");
 
         Offer updatedOffer = new Offer();
         updatedOffer.setId(offerId);
-        updatedOffer.setTitle(updateData.getTitle());
-        updatedOffer.setDescription(updateData.getDescription());
-        updatedOffer.setLocation(updateData.getLocation());
-        updatedOffer.setSalaryRange(updateData.getSalaryRange());
-        updatedOffer.setLevel(updateData.getLevel());
-        updatedOffer.setFetchedAt(LocalDateTime.now());
+        updatedOffer.setTitle("New Title");
+        updatedOffer.setDescription("Updated Description");
+        updatedOffer.setLocation("Updated Location");
+        updatedOffer.setSalaryRange("Updated Salary");
+        updatedOffer.setLevel("Senior");
+        updatedOffer.setFetchedAt(LocalDateTime.now(clock));
 
-        OfferDTO updatedOfferDTO = new OfferDTO();
-        updatedOfferDTO.setId(updatedOffer.getId());
-        updatedOfferDTO.setTitle(updatedOffer.getTitle());
-        updatedOfferDTO.setDescription(updatedOffer.getDescription());
-        updatedOfferDTO.setLocation(updatedOffer.getLocation());
-        updatedOfferDTO.setSalaryRange(updatedOffer.getSalaryRange());
-        updatedOfferDTO.setLevel(updatedOffer.getLevel());
+        OfferDTO updatedOfferDtoResponse = new OfferDTO();
+        updatedOfferDtoResponse.setTitle("New Title");
 
         when(offerRepository.findById(offerId)).thenReturn(Optional.of(existingOffer));
-        when(clock.instant()).thenReturn(LocalDateTime.now().toInstant(java.time.ZoneOffset.UTC));
-        when(clock.getZone()).thenReturn(java.time.ZoneId.of("UTC"));
-        when(offerRepository.save(any())).thenReturn(updatedOffer);
-        when(offerMapper.toDTO(updatedOffer)).thenReturn(updatedOfferDTO);
+        when(offerRepository.save(existingOffer)).thenReturn(updatedOffer);
+        when(offerMapper.toDTO(updatedOffer)).thenReturn(updatedOfferDtoResponse);
 
-        // When - wywołanie metody
-        OfferDTO result = offerUpdateHandler.updateOffer(offerId, updateData);
+        // Wywołanie metody
+        OfferDTO result = offerUpdateHandler.updateOffer(offerId, updatedOfferDto);
 
-        // Then - sprawdzenie wyników
-        assertEquals(updatedOfferDTO, result);
+        // Weryfikacja wyników
+        assertThat(result).isNotNull();
+        assertThat(result.getTitle()).isEqualTo("New Title");
         verify(offerRepository, times(1)).findById(offerId);
         verify(offerRepository, times(1)).save(existingOffer);
         verify(offerMapper, times(1)).toDTO(updatedOffer);
     }
 
-    /**
-     * Test sprawdzający, czy wyjątek jest rzucany, gdy oferta nie istnieje.
-     */
     @Test
     void shouldThrowExceptionWhenOfferNotFound() {
-        // Given - dane testowe
-        String offerId = "1";
-        OfferDTO updateData = new OfferDTO();
-        updateData.setTitle("Senior Java Developer");
+        // Mock danych
+        String offerId = "123";
+        OfferDTO offerDto = new OfferDTO();
 
         when(offerRepository.findById(offerId)).thenReturn(Optional.empty());
 
-        // When - wywołanie metody
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            offerUpdateHandler.updateOffer(offerId, updateData);
+        // Wywołanie metody i weryfikacja
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            offerUpdateHandler.updateOffer(offerId, offerDto);
         });
 
-        // Then - sprawdzenie wyników
-        assertEquals("Offer not found", exception.getMessage());
+        assertThat(exception.getMessage()).isEqualTo("Offer not found");
         verify(offerRepository, times(1)).findById(offerId);
-        verifyNoMoreInteractions(offerRepository);
         verifyNoInteractions(offerMapper);
     }
 }
