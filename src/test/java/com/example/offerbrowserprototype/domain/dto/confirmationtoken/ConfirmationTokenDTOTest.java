@@ -6,17 +6,12 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Testy jednostkowe dla klasy ConfirmationTokenDTO.
- * Klasa służy do przechowywania danych o tokenie potwierdzającym rejestrację użytkownika.
- */
-public class ConfirmationTokenDTOTest {
 
-    /**
-     * Testuje konstruktor oraz poprawność przypisania wartości do pól.
-     */
+ class ConfirmationTokenDTOTest {
+
+
     @Test
-    public void shouldCreateConfirmationTokenDTOWithAllFields() {
+     void shouldCreateConfirmationTokenDTOWithAllFields() {
         String id = "1";
         String token = "FERDINAND2023";
         LocalDateTime createdAt = LocalDateTime.of(2023, 12, 1, 12, 0);
@@ -36,11 +31,9 @@ public class ConfirmationTokenDTOTest {
         assertEquals(userId, tokenDTO.getUserId(), "Pole userId powinno być poprawnie przypisane.");
     }
 
-    /**
-     * Testuje setter pola confirmedAt.
-     */
+
     @Test
-    public void shouldUpdateConfirmedAtField() {
+     void shouldUpdateConfirmedAtField() {
         // Dane testowe
         ConfirmationTokenDTO tokenDTO = new ConfirmationTokenDTO();
         LocalDateTime confirmedAt = LocalDateTime.of(2023, 12, 12, 12, 0);
@@ -52,11 +45,8 @@ public class ConfirmationTokenDTOTest {
         assertEquals(confirmedAt, tokenDTO.getConfirmedAt(), "Pole confirmedAt powinno być poprawnie zaktualizowane.");
     }
 
-    /**
-     * Testuje walidację pól oznaczonych jako @NotNull.
-     */
     @Test
-    public void shouldThrowExceptionWhenRequiredFieldsAreNull() {
+     void shouldThrowExceptionWhenRequiredFieldsAreNull() {
         ConfirmationTokenDTO tokenDTO = new ConfirmationTokenDTO();
 
         // Sprawdzanie, czy pola wymagane są ustawione jako null

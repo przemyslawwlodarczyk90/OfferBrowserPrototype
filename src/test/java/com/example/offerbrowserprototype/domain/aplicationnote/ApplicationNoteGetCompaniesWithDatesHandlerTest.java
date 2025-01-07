@@ -29,7 +29,7 @@ class ApplicationNoteGetCompaniesWithDatesHandlerTest {
     }
 
     @Test
-    public void shouldReturnEmptyMapWhenNoNotesExist() {
+     void shouldReturnEmptyMapWhenNoNotesExist() {
         // Given
         when(applicationNoteRepository.findAll()).thenReturn(Collections.emptyList());
 
@@ -41,7 +41,7 @@ class ApplicationNoteGetCompaniesWithDatesHandlerTest {
     }
 
     @Test
-    public void shouldGroupCompaniesWithSortedApplicationDates() {
+     void shouldGroupCompaniesWithSortedApplicationDates() {
         // Given
         ApplicationNote note1 = new ApplicationNote();
         note1.setCompanyName("Kiepscy Enterprises");
@@ -67,7 +67,7 @@ class ApplicationNoteGetCompaniesWithDatesHandlerTest {
     }
 
     @Test
-    public void shouldIgnoreNotesWithNullAppliedAt() {
+     void shouldIgnoreNotesWithNullAppliedAt() {
         // Given
         ApplicationNote note1 = new ApplicationNote();
         note1.setCompanyName("Kiepscy Enterprises");
@@ -88,7 +88,7 @@ class ApplicationNoteGetCompaniesWithDatesHandlerTest {
     }
 
     @Test
-    public void shouldReturnEmptyMapWhenAllNotesHaveNullAppliedAt() {
+     void shouldReturnEmptyMapWhenAllNotesHaveNullAppliedAt() {
         // Given
         ApplicationNote note1 = new ApplicationNote();
         note1.setCompanyName("Kiepscy Enterprises");

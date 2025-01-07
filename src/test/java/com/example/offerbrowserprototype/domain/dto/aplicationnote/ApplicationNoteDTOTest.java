@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ApplicationNoteDTOTest {
 
     @Test
-    public void shouldCreateApplicationNoteDTOWithAllFields() {
+     void shouldCreateApplicationNoteDTOWithAllFields() {
         // Given
         String id = "123";
         String offerId = "offer123";
@@ -34,7 +34,7 @@ class ApplicationNoteDTOTest {
     }
 
     @Test
-    public void shouldUpdateFieldsInApplicationNoteDTO() {
+     void shouldUpdateFieldsInApplicationNoteDTO() {
         // Given
         ApplicationNoteDTO dto = new ApplicationNoteDTO();
 
@@ -53,7 +53,7 @@ class ApplicationNoteDTOTest {
     }
 
     @Test
-    public void shouldSupportEqualityBasedOnAllFields() {
+     void shouldSupportEqualityBasedOnAllFields() {
         // Given
         ApplicationNoteDTO dto1 = new ApplicationNoteDTO();
         dto1.setId("123");
@@ -75,7 +75,7 @@ class ApplicationNoteDTOTest {
     }
 
     @Test
-    public void shouldNotBeEqualWhenFieldsDiffer() {
+     void shouldNotBeEqualWhenFieldsDiffer() {
         // Given
         ApplicationNoteDTO dto1 = new ApplicationNoteDTO();
         dto1.setId("123");
@@ -96,7 +96,7 @@ class ApplicationNoteDTOTest {
     }
 
     @Test
-    public void shouldReturnCorrectStringRepresentation() {
+     void shouldReturnCorrectStringRepresentation() {
         // Given
         ApplicationNoteDTO dto = new ApplicationNoteDTO();
         dto.setId("123");

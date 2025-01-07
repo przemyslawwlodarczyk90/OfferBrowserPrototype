@@ -5,12 +5,11 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OfferDTOTest {
 
     @Test
-    public void shouldCreateDefaultConstructor() {
+     void shouldCreateDefaultConstructor() {
         // Given & When
         OfferDTO offerDTO = new OfferDTO();
 
@@ -29,7 +28,7 @@ class OfferDTOTest {
     }
 
     @Test
-    public void shouldSetAndGetAllFields() {
+     void shouldSetAndGetAllFields() {
         // Given
         OfferDTO offerDTO = new OfferDTO();
         LocalDateTime fetchedAt = LocalDateTime.of(2025, 1, 7, 15, 0);
@@ -60,11 +59,10 @@ class OfferDTOTest {
     }
 
     @Test
-    public void shouldTestParameterizedConstructor() {
-        // Given
+     void shouldTestParameterizedConstructor() {
+
         LocalDateTime fetchedAt = LocalDateTime.of(2025, 1, 7, 15, 0);
 
-        // When
         OfferDTO offerDTO = new OfferDTO(
                 "123",
                 "Software Engineer",
@@ -92,8 +90,7 @@ class OfferDTOTest {
     }
 
     @Test
-    public void shouldTestEqualsAndHashCode() {
-        // Given
+     void shouldTestEqualsAndHashCode() {
         LocalDateTime fetchedAt = LocalDateTime.of(2025, 1, 7, 15, 0);
         OfferDTO dto1 = new OfferDTO(
                 "123",
@@ -121,18 +118,15 @@ class OfferDTOTest {
                 fetchedAt
         );
 
-        // Then
         assertThat(dto1).isEqualTo(dto2);
         assertThat(dto1.hashCode()).isEqualTo(dto2.hashCode());
     }
 
     @Test
-    public void shouldTestNotEquals() {
-        // Given
+     void shouldTestNotEquals() {
         OfferDTO dto1 = new OfferDTO("Software Engineer", "Description 1", "Remote", "https://url1.com", "10,000-15,000 USD", "Company A", "Mid", false, LocalDateTime.now());
         OfferDTO dto2 = new OfferDTO("Product Manager", "Description 2", "On-site", "https://url2.com", "15,000-20,000 USD", "Company B", "Senior", true, LocalDateTime.now());
 
-        // Then
         assertThat(dto1).isNotEqualTo(dto2);
     }
 

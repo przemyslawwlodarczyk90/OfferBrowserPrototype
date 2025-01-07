@@ -8,7 +8,7 @@ import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class ApplicationNoteCountHandlerTest {
+ class ApplicationNoteCountHandlerTest {
 
     private ApplicationNoteRepository applicationNoteRepository;
     private ApplicationNoteCountHandler applicationNoteCountHandler;
@@ -21,7 +21,7 @@ public class ApplicationNoteCountHandlerTest {
     }
 
     @Test
-    public void shouldReturnCountOfNotesWhenRepositoryIsNotEmpty() {
+     void shouldReturnCountOfNotesWhenRepositoryIsNotEmpty() {
         // Given
         long expectedCount = 5L;
         when(applicationNoteRepository.count()).thenReturn(expectedCount);
@@ -35,7 +35,7 @@ public class ApplicationNoteCountHandlerTest {
     }
 
     @Test
-    public void shouldReturnZeroWhenRepositoryIsEmpty() {
+     void shouldReturnZeroWhenRepositoryIsEmpty() {
         // Given
         when(applicationNoteRepository.count()).thenReturn(0L);
 
@@ -48,7 +48,7 @@ public class ApplicationNoteCountHandlerTest {
     }
 
     @Test
-    public void shouldHandleRepositoryExceptionsGracefully() {
+     void shouldHandleRepositoryExceptionsGracefully() {
         // Given
         when(applicationNoteRepository.count()).thenThrow(new RuntimeException("Database error"));
 

@@ -13,21 +13,21 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class ApplicationNoteGetByCompanyNameHandlerTest {
+ class ApplicationNoteGetByCompanyNameHandlerTest {
 
     private ApplicationNoteRepository applicationNoteRepository;
     private ApplicationNoteGetByCompanyNameHandler applicationNoteGetByCompanyNameHandler;
 
     @BeforeEach
     public void setUp() {
-        // Mockowanie repozytorium
+
         applicationNoteRepository = Mockito.mock(ApplicationNoteRepository.class);
-        // Inicjalizacja klasy testowanej
+
         applicationNoteGetByCompanyNameHandler = new ApplicationNoteGetByCompanyNameHandler(applicationNoteRepository);
     }
 
     @Test
-    public void shouldReturnNotesForGivenCompanyName() {
+     void shouldReturnNotesForGivenCompanyName() {
         // Given
         String companyName = "Kiepscy Enterprises";
         ApplicationNote note1 = new ApplicationNote();
@@ -57,7 +57,7 @@ public class ApplicationNoteGetByCompanyNameHandlerTest {
     }
 
     @Test
-    public void shouldReturnEmptyListWhenNoNotesForGivenCompanyName() {
+     void shouldReturnEmptyListWhenNoNotesForGivenCompanyName() {
         // Given
         String companyName = "Nonexistent Company";
         when(applicationNoteRepository.findByCompanyNameIgnoreCase(companyName)).thenReturn(Collections.emptyList());
@@ -71,7 +71,7 @@ public class ApplicationNoteGetByCompanyNameHandlerTest {
     }
 
     @Test
-    public void shouldTrimWhitespaceFromCompanyName() {
+     void shouldTrimWhitespaceFromCompanyName() {
         // Given
         String companyName = "   Kiepscy Enterprises   ";
         ApplicationNote note = new ApplicationNote();
@@ -94,7 +94,7 @@ public class ApplicationNoteGetByCompanyNameHandlerTest {
     }
 
     @Test
-    public void shouldHandleNullCompanyName() {
+     void shouldHandleNullCompanyName() {
         // Given
         String companyName = null;
 

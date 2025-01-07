@@ -13,21 +13,21 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class ApplicationNoteGetAllHandlerTest {
+ class ApplicationNoteGetAllHandlerTest {
 
     private ApplicationNoteRepository applicationNoteRepository;
     private ApplicationNoteGetAllHandler applicationNoteGetAllHandler;
 
     @BeforeEach
-    public void setUp() {
-        // Mockowanie repozytorium
+     void setUp() {
+
         applicationNoteRepository = Mockito.mock(ApplicationNoteRepository.class);
-        // Inicjalizacja klasy testowanej
+
         applicationNoteGetAllHandler = new ApplicationNoteGetAllHandler(applicationNoteRepository);
     }
 
     @Test
-    public void shouldReturnAllNotesWhenRepositoryIsNotEmpty() {
+     void shouldReturnAllNotesWhenRepositoryIsNotEmpty() {
         // Given
         ApplicationNote note1 = new ApplicationNote();
         note1.setId("1");
@@ -56,7 +56,7 @@ public class ApplicationNoteGetAllHandlerTest {
     }
 
     @Test
-    public void shouldReturnEmptyListWhenRepositoryIsEmpty() {
+     void shouldReturnEmptyListWhenRepositoryIsEmpty() {
         // Given
         when(applicationNoteRepository.findAll()).thenReturn(Collections.emptyList());
 
@@ -69,7 +69,7 @@ public class ApplicationNoteGetAllHandlerTest {
     }
 
     @Test
-    public void shouldHandleRepositoryExceptionsGracefully() {
+     void shouldHandleRepositoryExceptionsGracefully() {
         // Given
         when(applicationNoteRepository.findAll()).thenThrow(new RuntimeException("Database error"));
 
@@ -78,7 +78,7 @@ public class ApplicationNoteGetAllHandlerTest {
         try {
             actualNotes = applicationNoteGetAllHandler.getAllNotes();
         } catch (RuntimeException e) {
-            // Expected exception, no action required
+
         }
 
         // Then

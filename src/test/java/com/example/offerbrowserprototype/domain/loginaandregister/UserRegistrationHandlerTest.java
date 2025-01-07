@@ -72,7 +72,7 @@ class UserRegistrationHandlerTest {
         Mockito.doNothing().when(mailService).sendConfirmationEmail(any(), any(), any(), any());
         Mockito.doNothing().when(confirmationTokenService).saveConfirmationToken(any());
 
-        // When - Wywołanie metody
+        // When
         RegistrationResultDTO result = userRegistrationHandler.register(registerUserDTO);
 
         // Then - Sprawdzenie wyników
@@ -83,7 +83,7 @@ class UserRegistrationHandlerTest {
 
     @Test
     void shouldFailWhenUsernameAlreadyTaken() {
-        // Given - Dane testowe
+        // Given
         RegisterUserDTO registerUserDTO = new RegisterUserDTO();
         registerUserDTO.setUsername("waldek_kiepski");
         registerUserDTO.setEmail("waldek@example.com");
@@ -91,10 +91,10 @@ class UserRegistrationHandlerTest {
 
         Mockito.when(userRepository.findByUsername("waldek_kiepski")).thenReturn(java.util.Optional.of(new com.example.offerbrowserprototype.domain.user.User()));
 
-        // When - Wywołanie metody
+        // When
         RegistrationResultDTO result = userRegistrationHandler.register(registerUserDTO);
 
-        // Then - Sprawdzenie wyników
+        // Then
         assertEquals("waldek_kiepski", result.getUsername());
         assertEquals(false, result.isSuccess());
         assertEquals("Username already taken", result.getMessage());

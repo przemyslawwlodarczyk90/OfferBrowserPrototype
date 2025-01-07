@@ -9,25 +9,18 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Testy jednostkowe dla klasy OfferMapper.
- * Klasa ta zajmuje się mapowaniem obiektów `Offer` na `OfferDTO` i odwrotnie.
- */
+
 class OfferMapperTest {
 
     private OfferMapper offerMapper;
 
-    /**
-     * Przygotowanie środowiska testowego przed każdym testem.
-     */
+
     @BeforeEach
     void setUp() {
         offerMapper = new OfferMapper();
     }
 
-    /**
-     * Test mapowania obiektu `Offer` na `OfferDTO`.
-     */
+
     @Test
     void shouldMapOfferToOfferDTO() {
         // Given - Dane testowe
@@ -41,10 +34,8 @@ class OfferMapperTest {
         offer.setApplied(true);
         offer.setFetchedAt(LocalDateTime.now());
 
-        // When - Wywołanie metody mapującej
         OfferDTO dto = offerMapper.toDTO(offer);
 
-        // Then - Weryfikacja wyników
         assertEquals(offer.getId(), dto.getId());
         assertEquals(offer.getTitle(), dto.getTitle());
         assertEquals(offer.getDescription(), dto.getDescription());
@@ -55,12 +46,9 @@ class OfferMapperTest {
         assertEquals(offer.getFetchedAt(), dto.getFetchedAt());
     }
 
-    /**
-     * Test mapowania obiektu `OfferDTO` na `Offer`.
-     */
     @Test
     void shouldMapOfferDTOToOffer() {
-        // Given - Dane testowe
+        // Given
         OfferDTO dto = new OfferDTO();
         dto.setTitle("Java Developer");
         dto.setDescription("Exciting job opportunity for a Java Developer.");
@@ -70,10 +58,10 @@ class OfferMapperTest {
         dto.setApplied(true);
         dto.setFetchedAt(LocalDateTime.now());
 
-        // When - Wywołanie metody mapującej
+        // When
         Offer offer = offerMapper.toEntity(dto);
 
-        // Then - Weryfikacja wyników
+        // Then
         assertEquals(dto.getTitle(), offer.getTitle());
         assertEquals(dto.getDescription(), offer.getDescription());
         assertEquals(dto.getLocation(), offer.getLocation());
@@ -83,18 +71,15 @@ class OfferMapperTest {
         assertEquals(dto.getFetchedAt(), offer.getFetchedAt());
     }
 
-    /**
-     * Test mapowania `Offer` na `OfferDTO` z pustymi polami.
-     */
     @Test
     void shouldHandleNullFieldsWhenMappingOfferToDTO() {
-        // Given - Obiekt `Offer` z pustymi polami
+        // Given
         Offer offer = new Offer();
 
-        // When - Wywołanie metody mapującej
+        // When
         OfferDTO dto = offerMapper.toDTO(offer);
 
-        // Then - Weryfikacja wyników
+        // Then
         assertNull(dto.getId());
         assertNull(dto.getTitle());
         assertNull(dto.getDescription());
@@ -105,18 +90,16 @@ class OfferMapperTest {
         assertNull(dto.getFetchedAt());
     }
 
-    /**
-     * Test mapowania `OfferDTO` na `Offer` z pustymi polami.
-     */
+
     @Test
     void shouldHandleNullFieldsWhenMappingDTOToOffer() {
-        // Given - Obiekt `OfferDTO` z pustymi polami
+        // Given
         OfferDTO dto = new OfferDTO();
 
-        // When - Wywołanie metody mapującej
+        // When
         Offer offer = offerMapper.toEntity(dto);
 
-        // Then - Weryfikacja wyników
+        // Then
         assertNull(offer.getId());
         assertNull(offer.getTitle());
         assertNull(offer.getDescription());

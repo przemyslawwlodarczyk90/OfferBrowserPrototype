@@ -16,10 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-/**
- * Klasa testowa dla komponentu {@link UserLoginHandler}.
- * Testuje logikę autoryzacji użytkownika na podstawie podanych danych logowania.
- */
+
 class UserLoginHandlerTest {
 
     @Mock
@@ -33,19 +30,14 @@ class UserLoginHandlerTest {
 
     private UserLoginHandler userLoginHandler;
 
-    /**
-     * Inicjalizacja obiektów przed każdym testem.
-     */
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         userLoginHandler = new UserLoginHandler(userRepository, passwordEncoder, jwtService);
     }
 
-    /**
-     * Test pozytywny: metoda {@code login} powinna zwrócić token JWT,
-     * gdy użytkownik istnieje i poda poprawne dane logowania.
-     */
+
     @Test
     void shouldReturnTokenWhenLoginIsSuccessful() {
         // Given
@@ -69,10 +61,7 @@ class UserLoginHandlerTest {
         verify(jwtService, times(1)).generateToken(Mockito.any());
     }
 
-    /**
-     * Test negatywny: metoda {@code login} powinna wyrzucić wyjątek,
-     * gdy użytkownik o podanym username nie istnieje.
-     */
+
     @Test
     void shouldThrowExceptionWhenUsernameNotFound() {
         // Given
@@ -89,10 +78,7 @@ class UserLoginHandlerTest {
         verify(jwtService, never()).generateToken(Mockito.any());
     }
 
-    /**
-     * Test negatywny: metoda {@code login} powinna wyrzucić wyjątek,
-     * gdy użytkownik poda niepoprawne hasło.
-     */
+
     @Test
     void shouldThrowExceptionWhenPasswordIsIncorrect() {
         // Given

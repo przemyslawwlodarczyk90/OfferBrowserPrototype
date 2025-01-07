@@ -26,7 +26,7 @@ class ExternalSourceApplicationNoteHandlerTest {
     }
 
     @Test
-    public void shouldCreateAndSaveNoteForValidInput() {
+     void shouldCreateAndSaveNoteForValidInput() {
         // Given
         String companyName = "Kiepscy Enterprises";
         String url = "https://kiepscy-jobs.com/offers/ferdynand";
@@ -51,7 +51,7 @@ class ExternalSourceApplicationNoteHandlerTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenCompanyNameIsNull() {
+     void shouldThrowExceptionWhenCompanyNameIsNull() {
         // Given
         String url = "https://kiepscy-jobs.com/offers/ferdynand";
 
@@ -64,7 +64,7 @@ class ExternalSourceApplicationNoteHandlerTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenCompanyNameIsBlank() {
+     void shouldThrowExceptionWhenCompanyNameIsBlank() {
         // Given
         String companyName = "   ";
         String url = "https://kiepscy-jobs.com/offers/ferdynand";
@@ -78,7 +78,7 @@ class ExternalSourceApplicationNoteHandlerTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenUrlIsNull() {
+     void shouldThrowExceptionWhenUrlIsNull() {
         // Given
         String companyName = "Kiepscy Enterprises";
 
@@ -91,7 +91,7 @@ class ExternalSourceApplicationNoteHandlerTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenUrlIsBlank() {
+     void shouldThrowExceptionWhenUrlIsBlank() {
         // Given
         String companyName = "Kiepscy Enterprises";
         String url = "   ";
@@ -105,7 +105,7 @@ class ExternalSourceApplicationNoteHandlerTest {
     }
 
     @Test
-    public void shouldInvokeRepositorySaveMethod() {
+     void shouldInvokeRepositorySaveMethod() {
         // Given
         String companyName = "Paździoch Holdings";
         String url = "https://kiepscy-jobs.com/offers/pazdzioch";

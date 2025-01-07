@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ApplicationNoteTest {
 
     @Test
-    public void shouldSetAndGetPropertiesForFerdynandKiepski() {
+     void shouldSetAndGetPropertiesForFerdynandKiepski() {
         // Dane Ferdynanda Kiepskiego
         String expectedId = "1";
         String expectedOfferId = "offer001";
@@ -34,7 +34,7 @@ public class ApplicationNoteTest {
     }
 
     @Test
-    public void shouldSetAndGetPropertiesForMarianPazdzioch() {
+     void shouldSetAndGetPropertiesForMarianPazdzioch() {
         // Dane Mariana Paździocha
         String expectedId = "2";
         String expectedOfferId = "offer002";
@@ -59,7 +59,7 @@ public class ApplicationNoteTest {
     }
 
     @Test
-    public void shouldVerifyEqualityForHelenaKopciowa() {
+     void shouldVerifyEqualityForHelenaKopciowa() {
         // Dane Heleny Kopciowej
         ApplicationNote note1 = new ApplicationNote();
         note1.setId("3");
@@ -81,7 +81,7 @@ public class ApplicationNoteTest {
     }
 
     @Test
-    public void shouldNotEqualDifferentNotes() {
+     void shouldNotEqualDifferentNotes() {
         // Dane różnych postaci
         ApplicationNote note1 = new ApplicationNote();
         note1.setId("4");

@@ -16,10 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-/**
- * Klasa testowa dla komponentu {@link UserProfileUpdater}.
- * Testuje logikę aktualizacji profilu użytkownika.
- */
+
 class UserProfileUpdaterTest {
 
     @Mock
@@ -30,19 +27,13 @@ class UserProfileUpdaterTest {
 
     private UserProfileUpdater userProfileUpdater;
 
-    /**
-     * Inicjalizacja obiektów przed każdym testem.
-     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         userProfileUpdater = new UserProfileUpdater(userRepository, userMapper);
     }
 
-    /**
-     * Test pozytywny: metoda {@code updateUserProfile} powinna zwrócić zaktualizowanego użytkownika,
-     * gdy wszystkie dane wejściowe są poprawne.
-     */
+
     @Test
     void shouldUpdateUserProfileSuccessfully() {
         // Given
@@ -75,10 +66,7 @@ class UserProfileUpdaterTest {
         verify(userMapper, times(1)).toDTO(updatedUser);
     }
 
-    /**
-     * Test negatywny: metoda {@code updateUserProfile} powinna rzucić wyjątek,
-     * gdy użytkownik o podanym ID nie istnieje.
-     */
+
     @Test
     void shouldThrowExceptionWhenUserNotFound() {
         // Given

@@ -15,10 +15,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-/**
- * Klasa testowa dla komponentu {@link UserPasswordChanger}.
- * Testuje logikę zmiany hasła użytkownika.
- */
 class UserPasswordChangerTest {
 
     @Mock
@@ -29,19 +25,14 @@ class UserPasswordChangerTest {
 
     private UserPasswordChanger userPasswordChanger;
 
-    /**
-     * Inicjalizacja obiektów przed każdym testem.
-     */
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         userPasswordChanger = new UserPasswordChanger(userRepository, passwordEncoder);
     }
 
-    /**
-     * Test pozytywny: metoda {@code changeUserPassword} powinna zwrócić `true`,
-     * gdy hasło użytkownika zostało poprawnie zmienione.
-     */
+
     @Test
     void shouldChangePasswordWhenCurrentPasswordIsCorrect() {
         // Given
@@ -67,10 +58,7 @@ class UserPasswordChangerTest {
         verify(userRepository, times(1)).save(user);
     }
 
-    /**
-     * Test negatywny: metoda {@code changeUserPassword} powinna zwrócić `false`,
-     * gdy użytkownik poda niepoprawne obecne hasło.
-     */
+
     @Test
     void shouldNotChangePasswordWhenCurrentPasswordIsIncorrect() {
         // Given
@@ -94,10 +82,7 @@ class UserPasswordChangerTest {
         verify(userRepository, never()).save(user);
     }
 
-    /**
-     * Test negatywny: metoda {@code changeUserPassword} powinna zwrócić `false`,
-     * gdy użytkownik o podanym username nie istnieje.
-     */
+
     @Test
     void shouldNotChangePasswordWhenUserNotFound() {
         // Given
