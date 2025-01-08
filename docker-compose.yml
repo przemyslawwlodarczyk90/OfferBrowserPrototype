@@ -12,5 +12,46 @@ services:
     volumes:
       - mongodb_data:/data/db                 # Przechowywanie danych w wolumenie
 
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always                           # Restart kontenera w razie błędów
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin123
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin123@mongodb:27017/  # Wskazanie MongoDB jako hosta
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: always
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-commander
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis:6379          # Wskazanie Redis jako hosta
+    ports:
+      - "8082:8081"
+
+  lotto:
+    container_name: browser
+    build: .
+    restart: always
+    ports:
+      - '8000:8000'
+    environment:
+      MONGO_USER: admin
+      MONGO_PASSWORD: admin123
+      MONGO_HOST: mongodb
+      MONGO_PORT: 27017
+      MONGO_DB_NAME: browser-web
+      MONGO_AUTH_SOURCE: admin
+
 volumes:
   mongodb_data:
