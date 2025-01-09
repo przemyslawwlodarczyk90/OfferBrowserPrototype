@@ -68,8 +68,8 @@ services:
       MAIL_PORT: 587
       MAIL_USERNAME: userbridge9@gmail.com
       MAIL_PASSWORD: mnuv bxzq bvla oieg
-      MAIL_SMTP_AUTH: true
-      MAIL_SMTP_STARTTLS: true
+      MAIL_SMTP_AUTH: "true"  # Poprawiona wartość
+      MAIL_SMTP_STARTTLS: "true"  # Poprawiona wartość
       SPRING_TIMEZONE: UTC
       PYTHON_PATH: /usr/bin/python3
       PYTHON_SCRIPT_PATH: scripts/scraper.py
@@ -77,5 +77,3 @@ services:
 
       DAILY_OFFERS_EMAIL_RECIPIENT: userbridge9@gmail.com
 
-volumes:
-  mongodb_data:
