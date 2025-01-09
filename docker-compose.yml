@@ -5,23 +5,23 @@ services:
     image: mongo:latest
     container_name: mongodb
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin        # Ustawienie nazwy użytkownika
-      MONGO_INITDB_ROOT_PASSWORD: admin123     # Ustawienie hasła użytkownika
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
     ports:
-      - "27017:27017"                         # Mapowanie portów
+      - "27017:27017"
     volumes:
-      - mongodb_data:/data/db                 # Przechowywanie danych w wolumenie
+      - mongodb_data:/data/db
 
   mongo-express:
     image: mongo-express
     container_name: mongo-express
-    restart: always                           # Restart kontenera w razie błędów
+    restart: always
     ports:
       - "8081:8081"
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: admin123
-      ME_CONFIG_MONGODB_URL: mongodb://admin:admin123@mongodb:27017/  # Wskazanie MongoDB jako hosta
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin123@mongodb:27017/
 
   redis:
     image: redis:latest
@@ -35,13 +35,13 @@ services:
     container_name: redis-commander
     restart: always
     environment:
-      - REDIS_HOSTS=local:redis:6379          # Wskazanie Redis jako hosta
+      - REDIS_HOSTS=local:redis:6379
     ports:
       - "8082:8081"
 
   lotto:
     container_name: browser
-    image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:latest  # Adres obrazu z ECR
+    image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:latest
     restart: always
     ports:
       - '8000:8000'
@@ -68,8 +68,8 @@ services:
       MAIL_PORT: 587
       MAIL_USERNAME: userbridge9@gmail.com
       MAIL_PASSWORD: mnuv bxzq bvla oieg
-      MAIL_SMTP_AUTH: "true"  # Poprawiona wartość
-      MAIL_SMTP_STARTTLS: "true"  # Poprawiona wartość
+      MAIL_SMTP_AUTH: "true"
+      MAIL_SMTP_STARTTLS: "true"
       SPRING_TIMEZONE: UTC
       PYTHON_PATH: /usr/bin/python3
       PYTHON_SCRIPT_PATH: scripts/scraper.py
@@ -77,3 +77,5 @@ services:
 
       DAILY_OFFERS_EMAIL_RECIPIENT: userbridge9@gmail.com
 
+volumes:
+  mongodb_data:
