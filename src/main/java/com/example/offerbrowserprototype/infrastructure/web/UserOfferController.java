@@ -1,11 +1,9 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
-
 import com.example.offerbrowserprototype.domain.dto.useroffer.UserOfferStatusDTO;
 import com.example.offerbrowserprototype.domain.exception.OfferAlreadyAppliedException;
 import com.example.offerbrowserprototype.infrastructure.facade.UserOfferFacade;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -96,4 +94,30 @@ public class UserOfferController {
         model.addAttribute("offers", offers);
         return "daily-job-offers";
     }
+
+
+    @GetMapping("/applied")
+    @Operation(summary = "Get applied offers", description = "Retrieves offers the user has applied to.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved applied offers"),
+            @ApiResponse(responseCode = "404", description = "No applied offers found")
+    })
+    public ResponseEntity<List<OfferDTO>> getAppliedOffers(@RequestHeader("userId") String userId) {
+        List<OfferDTO> appliedOffers = userOfferFacade.getAppliedOffersForUser(userId);
+        if (appliedOffers.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(appliedOffers);
+    }
+
+    @GetMapping("/applied/count")
+    @Operation(summary = "Get count of applied offers", description = "Retrieves the count of offers the user has applied to.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved count of applied offers")
+    })
+    public ResponseEntity<Long> countAppliedOffers(@RequestHeader("userId") String userId) {
+        long count = userOfferFacade.countAppliedOffersForUser(userId);
+        return ResponseEntity.ok(count);
+    }
+
 }
