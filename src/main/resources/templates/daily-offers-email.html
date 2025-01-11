@@ -36,6 +36,8 @@
             background-color: #2a2a2a;
             border-radius: 8px;
             border: 1px solid #333;
+            display: flex;
+            align-items: center;
             transition: transform 0.2s ease, background-color 0.3s ease;
         }
         .offer-item:hover {
@@ -45,6 +47,7 @@
         .offer-item p {
             margin: 0 0 10px;
             font-size: 14px;
+            color: #fff; /* Kolor tekstu "Offer URL" na biało */
         }
         .offer-item a {
             text-decoration: none;
@@ -77,6 +80,11 @@
             font-size: 12px;
             color: #757575;
         }
+        .offer-index {
+            font-size: 16px;
+            color: #fff; /* Kolor numeru indeksu */
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -91,19 +99,18 @@
         <div th:if="${offers.isEmpty()}">
             <p style="text-align: center; color: #e0e0e0;">No unapplied offers available at the moment.</p>
         </div>
-
-        <!-- Wyświetl URL każdej oferty i przycisk "Apply" -->
-        <div th:each="offer : ${offers}" class="offer-item">
-            <p>
-                Offer URL:
-                <a th:href="${offer.offerUrl}" th:text="${offer.offerUrl}" target="_blank"></a>
-            </p>
-
-            <!-- Guzik "Apply" -->
-            <a th:href="@{'http://localhost:8080/api/user-offers/' + ${offer.id} + '/apply?email=' + ${email}}"
-               class="apply-button">
-                Apply
-            </a>
+        <div th:each="offer, iterStat : ${offers}" class="offer-item">
+            <span class="offer-index" th:text="${iterStat.index + 1}">1</span>
+            <div>
+                <p>
+                    Offer URL:
+                    <a th:href="${offer.offerUrl}" th:text="${offer.offerUrl}" target="_blank"></a>
+                </p>
+                <a th:href="@{'http://localhost:8080/api/user-offers/' + ${offer.id} + '/apply?email=' + ${email}}"
+                   class="apply-button">
+                    Apply
+                </a>
+            </div>
         </div>
     </div>
     <footer>

@@ -1,9 +1,11 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
-import com.example.offerbrowserprototype.domain.user.User;
+
+import com.example.offerbrowserprototype.domain.dto.useroffer.UserOfferStatusDTO;
+import com.example.offerbrowserprototype.domain.exception.OfferAlreadyAppliedException;
 import com.example.offerbrowserprototype.infrastructure.facade.UserOfferFacade;
-import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -24,7 +26,6 @@ import java.util.List;
 public class UserOfferController {
 
     private final UserOfferFacade userOfferFacade;
-    private final UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(UserOfferController.class);
 
     @Operation(summary = "Apply to an offer", description = "Marks an offer as applied for the user.")
@@ -47,26 +48,25 @@ public class UserOfferController {
         }
 
         try {
-            User user = userRepository.findByEmail(email)
-                    .orElseThrow(() -> new IllegalArgumentException("User with email " + email + " not found"));
+            UserOfferStatusDTO userOfferStatusDTO = userOfferFacade.applyToOfferByEmail(email, offerId);
 
-            logger.info("User found: {}", user);
+            if (userOfferStatusDTO.isApplied()) {
+                model.addAttribute("message", "You have successfully applied to the offer!");
+                return "success";
+            }
 
-            userOfferFacade.applyToOffer(user.getId(), offerId);
+        } catch (OfferAlreadyAppliedException e) {
+            logger.warn("Offer already applied for email: {}, offerId: {}", email, offerId);
+            model.addAttribute("message", "This offer has already been applied!");
+            return "already applied before to this offer";
 
-            model.addAttribute("message", "You have successfully applied to the offer!");
-            return "success";
         } catch (Exception e) {
             logger.error("Error occurred while applying to offer. email: {}, offerId: {}, error: {}", email, offerId, e.getMessage());
             model.addAttribute("message", "An error occurred: " + e.getMessage());
             return "error";
         }
+        return "error";
     }
-
-
-
-
-
 
     @GetMapping("/not-applied")
     @Operation(summary = "Get not applied offers", description = "Retrieves offers the user hasn't applied to.")
@@ -82,20 +82,6 @@ public class UserOfferController {
         return ResponseEntity.ok(notAppliedOffers);
     }
 
-//    @GetMapping("/applied")
-//    @Operation(summary = "Get applied offers", description = "Retrieves offers the user has applied to.")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Successfully retrieved applied offers"),
-//            @ApiResponse(responseCode = "404", description = "No applied offers found")
-//    })
-//    public ResponseEntity<List<OfferDTO>> getAppliedOffers(@RequestHeader("userId") String userId) {
-//        List<OfferDTO> appliedOffers = userOfferFacade.getAppliedOffersForUser(userId);
-//        if (appliedOffers.isEmpty()) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(appliedOffers);
-//    }
-
     @GetMapping("/daily-unapplied")
     @Operation(summary = "Get daily unapplied offers for the user", description = "Generates a list of unapplied offers for a specific user.")
     @ApiResponses(value = {
@@ -110,8 +96,4 @@ public class UserOfferController {
         model.addAttribute("offers", offers);
         return "daily-job-offers";
     }
-
-
-
 }
-
