@@ -15,17 +15,17 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # Lista URL z różnymi opcjami sortowania
 SORTED_URLS = [
     "https://nofluffjobs.com/pl/Java?sort=default",
-    "https://nofluffjobs.com/pl/Java?sort=newest",
-    "https://nofluffjobs.com/pl/Java?sort=salary-asc",
-    "https://nofluffjobs.com/pl/Java?criteria=seniority%3Dtrainee,junior",
-        "https://nofluffjobs.com/pl/warszawa/Java?criteria=seniority%3Dtrainee,junior",
-        "https://nofluffjobs.com/pl/warszawa/Java?criteria=seniority%3Dmid",
-        "https://nofluffjobs.com/pl/warszawa/Java?sort=newest",
-        "https://nofluffjobs.com/pl/warszawa/Java?sort=salary-asc",
-        "https://nofluffjobs.com/pl/lodz/Java?criteria=seniority%3Dtrainee,junior",
-        "https://nofluffjobs.com/pl/lodz/Java?criteria=seniority%3Dmid",
-        "https://nofluffjobs.com/pl/lodz/Java?sort=newest",
-        "https://nofluffjobs.com/pl/lodz/Java?sort=salary-asc"
+#     "https://nofluffjobs.com/pl/Java?sort=newest",
+#     "https://nofluffjobs.com/pl/Java?sort=salary-asc",
+#     "https://nofluffjobs.com/pl/Java?criteria=seniority%3Dtrainee,junior",
+#         "https://nofluffjobs.com/pl/warszawa/Java?criteria=seniority%3Dtrainee,junior",
+#         "https://nofluffjobs.com/pl/warszawa/Java?criteria=seniority%3Dmid",
+#         "https://nofluffjobs.com/pl/warszawa/Java?sort=newest",
+#         "https://nofluffjobs.com/pl/warszawa/Java?sort=salary-asc",
+#         "https://nofluffjobs.com/pl/lodz/Java?criteria=seniority%3Dtrainee,junior",
+#         "https://nofluffjobs.com/pl/lodz/Java?criteria=seniority%3Dmid",
+#         "https://nofluffjobs.com/pl/lodz/Java?sort=newest",
+#         "https://nofluffjobs.com/pl/lodz/Java?sort=salary-asc"
 ]
 
 def scrape_offers():

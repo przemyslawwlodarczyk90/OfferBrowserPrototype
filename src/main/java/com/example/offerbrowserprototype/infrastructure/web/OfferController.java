@@ -116,7 +116,6 @@ public class OfferController {
     })
     @PostMapping("/{offerId}/apply")
     public ResponseEntity<Void> applyToOffer(@PathVariable String offerId) {
-        // Delegacja do fasady
         offerFacade.applyToOffer(offerId);
         return ResponseEntity.ok().build();
     }

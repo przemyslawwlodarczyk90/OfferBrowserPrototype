@@ -1,6 +1,8 @@
 package com.example.offerbrowserprototype.infrastructure.service;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.domain.user.User;
+import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MailService {
@@ -20,10 +23,12 @@ public class MailService {
 
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
+    private final UserRepository userRepository;
 
-    public MailService(JavaMailSender mailSender, TemplateEngine templateEngine) {
+    public MailService(JavaMailSender mailSender, TemplateEngine templateEngine, UserRepository userRepository) {
         this.mailSender = mailSender;
         this.templateEngine = templateEngine;
+        this.userRepository = userRepository;
     }
 
     public void sendConfirmationEmail(String to, String subject, String username, String confirmationLink) {
@@ -72,4 +77,7 @@ public class MailService {
             throw new IllegalStateException("Failed to send daily offers email", e);
         }
     }
+
+
+
 }

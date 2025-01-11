@@ -49,7 +49,7 @@
         .offer-item a {
             text-decoration: none;
             color: #64ffda;
-            word-break: break-all;
+            word-break: break-word;
         }
         .offer-item span {
             color: #64ffda;
@@ -89,13 +89,17 @@
     </div>
     <div class="email-body">
         <h2 style="color: #64ffda; text-align: center;">Here are your daily unapplied job offers</h2>
-        <div th:each="offer, iterStat : ${offers}" class="offer-item">
+        <div th:if="${offers.isEmpty()}">
+            <p style="text-align: center; color: #e0e0e0;">No unapplied offers available at the moment.</p>
+        </div>
+        <div th:each="offer, iterStat : ${offers}" class="offer-item" th:if="${!offers.isEmpty()}">
             <p>
                 Offer <span th:text="${iterStat.index + 1}"></span>:
                 <a th:href="${offer.offerUrl}" th:text="${offer.offerUrl}" target="_blank"></a>
             </p>
-            <a th:href="@{'http://localhost:8080/api/offers/' + ${offer.id} + '/apply'}"
-               th:classappend="${offer.applied} ? 'applied-button applied' : 'applied-button'"
+            <a th:href="@{'http://localhost:8080/api/user-offers/' + ${offer.id} + '/apply'}"
+               th:attr="data-userId=${userId}"
+               th:class="${offer.applied} ? 'applied-button applied' : 'applied-button'"
                target="_blank">Apply</a>
         </div>
     </div>
