@@ -34,16 +34,17 @@ public class UserOfferFacade {
     }
 
     public List<OfferDTO> getNotAppliedOffersForUser(String userId) {
+        // Wywołanie handlera i mapowanie na DTO
         return queryHandler.getNotAppliedOffersForUser(userId)
                 .stream()
                 .map(offerMapper::toDTO)
                 .toList();
     }
-
-    public List<OfferDTO> getAppliedOffersForUser(String userId) {
-        return queryHandler.getAppliedOffersForUser(userId)
-                .stream()
-                .map(offerMapper::toDTO)
-                .toList();
-    }
+//
+//    public List<OfferDTO> getAppliedOffersForUser(String userId) {
+//        return queryHandler.getAppliedOffersForUser(userId)
+//                .stream()
+//                .map(offerMapper::toDTO)
+//                .toList();
+//    }
 }

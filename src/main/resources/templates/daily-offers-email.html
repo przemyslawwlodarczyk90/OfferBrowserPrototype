@@ -51,11 +51,7 @@
             color: #64ffda;
             word-break: break-word;
         }
-        .offer-item span {
-            color: #64ffda;
-        }
-
-        .applied-button {
+        .apply-button {
             display: inline-block;
             padding: 10px 15px;
             color: white;
@@ -66,12 +62,13 @@
             cursor: pointer;
             font-weight: bold;
             transition: background-color 0.3s ease;
+            margin-top: 10px;
         }
-        .applied-button:hover {
+        .apply-button:hover {
             background-color: #0056b3;
         }
-        .applied-button.applied {
-            background-color: #ff5252;
+        .apply-button.disabled {
+            background-color: #555;
             cursor: not-allowed;
         }
         footer {
@@ -89,18 +86,24 @@
     </div>
     <div class="email-body">
         <h2 style="color: #64ffda; text-align: center;">Here are your daily unapplied job offers</h2>
+
+        <!-- Wyświetl komunikat, jeśli lista jest pusta -->
         <div th:if="${offers.isEmpty()}">
             <p style="text-align: center; color: #e0e0e0;">No unapplied offers available at the moment.</p>
         </div>
-        <div th:each="offer, iterStat : ${offers}" class="offer-item" th:if="${!offers.isEmpty()}">
+
+        <!-- Wyświetl URL każdej oferty i przycisk "Apply" -->
+        <div th:each="offer : ${offers}" class="offer-item">
             <p>
-                Offer <span th:text="${iterStat.index + 1}"></span>:
+                Offer URL:
                 <a th:href="${offer.offerUrl}" th:text="${offer.offerUrl}" target="_blank"></a>
             </p>
-            <a th:href="@{'http://localhost:8080/api/user-offers/' + ${offer.id} + '/apply'}"
-               th:attr="data-userId=${userId}"
-               th:class="${offer.applied} ? 'applied-button applied' : 'applied-button'"
-               target="_blank">Apply</a>
+
+            <!-- Guzik "Apply" -->
+            <a th:href="@{'http://localhost:8080/api/user-offers/' + ${offer.id} + '/apply?email=' + ${email}}"
+               class="apply-button">
+                Apply
+            </a>
         </div>
     </div>
     <footer>

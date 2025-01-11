@@ -3,12 +3,13 @@ package com.example.offerbrowserprototype.domain.usseroffer;
 import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 @Document(collection = "user_offer_status")
+@CompoundIndex(name = "user_offer_idx", def = "{'userId': 1, 'offerId': 1}")
 @Data
 @NoArgsConstructor
 public class UserOfferStatus {
@@ -16,10 +17,8 @@ public class UserOfferStatus {
     @Id
     private String id;
 
-    @Indexed
     private String userId;
 
-    @Indexed
     private String offerId;
 
     private boolean applied;
@@ -29,7 +28,6 @@ public class UserOfferStatus {
     public UserOfferStatus(String userId, String offerId, boolean applied) {
         this.userId = userId;
         this.offerId = offerId;
-        this.applied = applied;
         this.appliedAt = applied ? LocalDateTime.now() : null;
     }
 }

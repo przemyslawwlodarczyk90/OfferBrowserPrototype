@@ -17,4 +17,5 @@ public interface UserOfferStatusRepository extends MongoRepository<UserOfferStat
     List<UserOfferStatus> findByUserIdAndAppliedFalse(String userId);
 
 
+
 }

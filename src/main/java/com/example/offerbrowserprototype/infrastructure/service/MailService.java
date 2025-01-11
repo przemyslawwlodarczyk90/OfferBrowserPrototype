@@ -63,6 +63,7 @@ public class MailService {
 
             Context context = new Context();
             context.setVariable("offers", offers);
+            context.setVariable("email", recipientEmail); // Dodanie zmiennej email do kontekstu
 
             String htmlContent = templateEngine.process("daily-offers-email", context);
 
@@ -77,6 +78,7 @@ public class MailService {
             throw new IllegalStateException("Failed to send daily offers email", e);
         }
     }
+
 
 
 
