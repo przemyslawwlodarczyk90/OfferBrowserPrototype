@@ -1,5 +1,6 @@
 package com.example.offerbrowserprototype.domain.offer;
 
+import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNoteHandler;
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;

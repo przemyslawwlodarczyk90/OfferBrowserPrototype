@@ -1,6 +1,5 @@
-package com.example.offerbrowserprototype.domain.offer;
+package com.example.offerbrowserprototype.domain.aplicationnote;
 
-import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNote;
 import com.example.offerbrowserprototype.infrastructure.repository.ApplicationNoteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

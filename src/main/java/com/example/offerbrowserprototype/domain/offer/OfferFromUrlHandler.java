@@ -1,5 +1,6 @@
 package com.example.offerbrowserprototype.domain.offer;
 
+import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNoteHandler;
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
@@ -46,7 +47,7 @@ public class OfferFromUrlHandler {
 
         logger.info("Saved offer with ID: {}", offer.getId());
 
-        // Save application note
+
         if (offer.getOfferUrl() != null && offer.getCompany() != null) {
             applicationNoteHandler.saveApplicationNote(offer.getId(), offer.getOfferUrl(), offer.getCompany());
         } else {
