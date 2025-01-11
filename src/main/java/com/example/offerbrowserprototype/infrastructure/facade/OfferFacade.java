@@ -1,5 +1,6 @@
 package com.example.offerbrowserprototype.infrastructure.facade;
 
+import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNoteHandler;
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.offer.*;
 import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheFacade;
@@ -14,8 +15,7 @@ import java.util.List;
 @Component
 public class OfferFacade {
 
-    private final OfferFromUrlHandler offerFromUrlHandler;
-    private final OfferApplicationHandler offerApplicationHandler;
+//    private final OfferApplicationHandler offerApplicationHandler;
     private final OfferAdditionHandler additionHandler;
     private final OfferUpdateHandler updateHandler;
     private final OfferDeletionHandler deletionHandler;
@@ -29,8 +29,8 @@ public class OfferFacade {
     private final ApplicationNoteHandler applicationNoteHandler;
     private final MarkAsDuplicateHandler markAsDuplicateHandler;
 
-    public OfferFacade(OfferFromUrlHandler offerFromUrlHandler,
-                       OfferApplicationHandler offerApplicationHandler,
+    public OfferFacade(
+//                       OfferApplicationHandler offerApplicationHandler,
                        OfferAdditionHandler additionHandler,
                        OfferUpdateHandler updateHandler,
                        OfferDeletionHandler deletionHandler,
@@ -43,8 +43,8 @@ public class OfferFacade {
                        OfferPushHandler pushHandler,
                        ApplicationNoteHandler applicationNoteHandler,
                        MarkAsDuplicateHandler markAsDuplicateHandler) {
-        this.offerFromUrlHandler = offerFromUrlHandler;
-        this.offerApplicationHandler = offerApplicationHandler;
+
+//        this.offerApplicationHandler = offerApplicationHandler;
         this.additionHandler = additionHandler;
         this.updateHandler = updateHandler;
         this.deletionHandler = deletionHandler;
@@ -111,14 +111,11 @@ public class OfferFacade {
         pushHandler.pushOfferToProvider(offerId, providerName);
     }
 
-    public OfferDTO addOfferFromUrl(String offerUrl) {
-        return offerFromUrlHandler.addOfferFromUrl(offerUrl);
-    }
 
-    @CacheEvict(value = {"appliedOffers", "notAppliedOffers", "allOffers"}, allEntries = true)
-    public void applyToOffer(String offerId) {
-        offerApplicationHandler.applyToOfferWithNote(offerId);
-    }
+//    @CacheEvict(value = {"appliedOffers", "notAppliedOffers", "allOffers"}, allEntries = true)
+//    public void applyToOffer(String offerId) {
+//        offerApplicationHandler.applyToOfferWithNote(offerId);
+//    }
 
     @CacheEvict(value = {"allOffers", "offerDetails"}, allEntries = true)
     public void markAsDuplicateById(String offerId) {

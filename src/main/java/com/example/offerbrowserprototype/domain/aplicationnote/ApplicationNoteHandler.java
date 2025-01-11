@@ -1,12 +1,12 @@
-package com.example.offerbrowserprototype.domain.offer;
+package com.example.offerbrowserprototype.domain.aplicationnote;
 
-import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNote;
 import com.example.offerbrowserprototype.infrastructure.repository.ApplicationNoteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+
 
 @Component
 public class ApplicationNoteHandler {
@@ -18,13 +18,26 @@ public class ApplicationNoteHandler {
         this.applicationNoteRepository = applicationNoteRepository;
     }
 
-    public void saveApplicationNote(String offerId, String offerUrl, String companyName) {
-        logger.info("Saving application note for offer: {} (URL: {}, Company: {})", offerId, offerUrl, companyName);
+    public void saveApplicationNote(String userId, String offerId, String offerUrl, String companyName) {
+        if (userId == null || userId.trim().isEmpty()) {
+            throw new IllegalArgumentException("User ID cannot be null or empty.");
+        }
+        if (offerUrl == null || offerUrl.trim().isEmpty()) {
+            throw new IllegalArgumentException("Offer URL cannot be null or empty.");
+        }
+        if (companyName == null || companyName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Company name cannot be null or empty.");
+        }
+
+        logger.info("Saving application note for user: {}, offer: {} (URL: {}, Company: {})", userId, offerId, offerUrl, companyName);
+
         ApplicationNote note = new ApplicationNote();
+        note.setUserId(userId); // Dodano ustawienie userId
         note.setOfferId(offerId);
         note.setOfferUrl(offerUrl);
         note.setCompanyName(companyName);
         note.setAppliedAt(LocalDateTime.now());
+
         applicationNoteRepository.save(note);
     }
 }

@@ -14,7 +14,10 @@ public class ExternalSourceApplicationNoteHandler {
         this.applicationNoteRepository = applicationNoteRepository;
     }
 
-    public ApplicationNote createNoteForExternalSource(String companyName, String url) {
+    public ApplicationNote createNoteForExternalSource(String userId, String companyName, String url) {
+        if (userId == null || userId.isBlank()) {
+            throw new IllegalArgumentException("User ID cannot be null or empty.");
+        }
         if (companyName == null || companyName.isBlank()) {
             throw new IllegalArgumentException("Company name cannot be null or empty.");
         }
@@ -22,12 +25,11 @@ public class ExternalSourceApplicationNoteHandler {
             throw new IllegalArgumentException("URL cannot be null or empty.");
         }
 
-
         ApplicationNote note = new ApplicationNote();
+        note.setUserId(userId);
         note.setCompanyName(companyName);
         note.setOfferUrl(url);
         note.setAppliedAt(LocalDateTime.now());
-
 
         return applicationNoteRepository.save(note);
     }

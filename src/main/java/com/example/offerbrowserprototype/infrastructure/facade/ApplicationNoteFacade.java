@@ -18,8 +18,8 @@ public class ApplicationNoteFacade {
     private final ApplicationNoteCountHandler countHandler;
     private final RedisTemplate<String, Object> redisTemplate;
 
-    private static final String ALL_NOTES_CACHE_KEY = "applicationNotes:all";
-    private static final String NOTES_COUNT_CACHE_KEY = "applicationNotes:count";
+    private static final String ALL_NOTES_CACHE_KEY_PREFIX = "applicationNotes:all:";
+    private static final String NOTES_COUNT_CACHE_KEY_PREFIX = "applicationNotes:count:";
 
     public ApplicationNoteFacade(
             ApplicationNoteGetAllHandler getAllHandler,
@@ -36,43 +36,48 @@ public class ApplicationNoteFacade {
         this.redisTemplate = redisTemplate;
     }
 
-    public List<ApplicationNote> getAllApplicationNotes() {
+    public List<ApplicationNote> getAllApplicationNotes(String userId) {
+        String cacheKey = ALL_NOTES_CACHE_KEY_PREFIX + userId;
 
-        List<ApplicationNote> cachedNotes = (List<ApplicationNote>) redisTemplate.opsForValue().get(ALL_NOTES_CACHE_KEY);
+        List<ApplicationNote> cachedNotes = (List<ApplicationNote>) redisTemplate.opsForValue().get(cacheKey);
         if (cachedNotes != null) {
             return cachedNotes;
         }
 
-        List<ApplicationNote> notes = getAllHandler.getAllNotes();
-        redisTemplate.opsForValue().set(ALL_NOTES_CACHE_KEY, notes, 1, TimeUnit.HOURS);
+        List<ApplicationNote> notes = getAllHandler.getAllNotes(userId);
+        redisTemplate.opsForValue().set(cacheKey, notes, 1, TimeUnit.HOURS);
         return notes;
     }
 
-    public List<ApplicationNote> getApplicationNotesByCompanyName(String companyName) {
-        return getByCompanyNameHandler.getNotesByCompanyName(companyName);
+    public List<ApplicationNote> getApplicationNotesByCompanyName(String userId, String companyName) {
+        return getByCompanyNameHandler.getNotesByCompanyName(userId, companyName);
     }
 
-    public Map<String, List<String>> getCompaniesWithApplicationDates() {
-        return getCompaniesWithDatesHandler.getCompaniesWithApplicationDates();
+    public Map<String, List<String>> getCompaniesWithApplicationDates(String userId) {
+        return getCompaniesWithDatesHandler.getCompaniesWithApplicationDates(userId);
     }
 
-    public ApplicationNote createNoteForExternalSource(String companyName, String url) {
-        ApplicationNote note = externalSourceApplicationNoteHandler.createNoteForExternalSource(companyName, url);
+    public ApplicationNote createNoteForExternalSource(String userId, String companyName, String url) {
+        ApplicationNote note = externalSourceApplicationNoteHandler.createNoteForExternalSource(userId, companyName, url);
 
-        redisTemplate.delete(ALL_NOTES_CACHE_KEY);
-        redisTemplate.delete(NOTES_COUNT_CACHE_KEY);
+        String allNotesCacheKey = ALL_NOTES_CACHE_KEY_PREFIX + userId;
+        String notesCountCacheKey = NOTES_COUNT_CACHE_KEY_PREFIX + userId;
+
+        redisTemplate.delete(allNotesCacheKey);
+        redisTemplate.delete(notesCountCacheKey);
         return note;
     }
 
-    public long countAllApplicationNotes() {
-        Long cachedCount = (Long) redisTemplate.opsForValue().get(NOTES_COUNT_CACHE_KEY);
+    public long countAllApplicationNotes(String userId) {
+        String cacheKey = NOTES_COUNT_CACHE_KEY_PREFIX + userId;
+
+        Long cachedCount = (Long) redisTemplate.opsForValue().get(cacheKey);
         if (cachedCount != null) {
             return cachedCount;
         }
 
-
-        long count = countHandler.countAllNotes();
-        redisTemplate.opsForValue().set(NOTES_COUNT_CACHE_KEY, count, 1, TimeUnit.HOURS);
+        long count = countHandler.countAllNotes(userId);
+        redisTemplate.opsForValue().set(cacheKey, count, 1, TimeUnit.HOURS);
         return count;
     }
 }

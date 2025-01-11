@@ -12,7 +12,10 @@ public class ApplicationNoteCountHandler {
         this.applicationNoteRepository = applicationNoteRepository;
     }
 
-    public long countAllNotes() {
-        return applicationNoteRepository.count();
+    public long countAllNotes(String userId) {
+        if (userId == null || userId.trim().isEmpty()) {
+            throw new IllegalArgumentException("User ID cannot be null or empty.");
+        }
+        return applicationNoteRepository.countByUserId(userId);
     }
 }

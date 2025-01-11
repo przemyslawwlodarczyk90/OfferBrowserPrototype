@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class ApplicationNote {
     @Id
     private String id;
+    private String userId; 
     private String offerId;
     @Indexed(unique = true)
     private String offerUrl;

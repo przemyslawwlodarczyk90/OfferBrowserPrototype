@@ -13,4 +13,7 @@ public interface ApplicationNoteRepository extends MongoRepository<ApplicationNo
 
     List<ApplicationNote> findByCompanyNameIgnoreCase(String companyName);
     Optional<ApplicationNote> findByOfferUrl(String offerUrl);
+    List<ApplicationNote> findByUserId(String userId);
+    List<ApplicationNote> findByUserIdAndCompanyNameIgnoreCase(String userId, String companyName);
+    long countByUserId(String userId);
 }

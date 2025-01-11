@@ -17,8 +17,8 @@ public class ApplicationNoteGetCompaniesWithDatesHandler {
         this.applicationNoteRepository = applicationNoteRepository;
     }
 
-    public Map<String, List<String>> getCompaniesWithApplicationDates() {
-        List<ApplicationNote> notes = applicationNoteRepository.findAll();
+    public Map<String, List<String>> getCompaniesWithApplicationDates(String userId) {
+        List<ApplicationNote> notes = applicationNoteRepository.findByUserId(userId);
 
         return notes.stream()
                 .filter(note -> note.getAppliedAt() != null)
@@ -34,3 +34,4 @@ public class ApplicationNoteGetCompaniesWithDatesHandler {
                 ));
     }
 }
+

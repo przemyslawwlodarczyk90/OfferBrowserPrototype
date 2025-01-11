@@ -75,23 +75,23 @@ public class NoFluffController {
         }
     }
 
-    @Operation(summary = "Import offer from URL", description = "Scrapes a job offer from the given URL and saves it to the database.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Offer imported successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid URL or scraping error")
-    })
-    @PostMapping("/import-from-url")
-    public ResponseEntity<String> importOfferFromUrl(@RequestParam String offerUrl) {
-        try {
-            OfferDTO importedOffer = offerFacade.addOfferFromUrl(offerUrl);
-            return ResponseEntity.ok("Offer successfully imported from URL.");
-        } catch (IllegalStateException e) {
-            logger.warn("Duplicate offer detected: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        } catch (Exception e) {
-            logger.error("Error importing offer from URL: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error importing offer: " + e.getMessage());
-        }
-    }
+//    @Operation(summary = "Import offer from URL", description = "Scrapes a job offer from the given URL and saves it to the database.")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Offer imported successfully"),
+//            @ApiResponse(responseCode = "400", description = "Invalid URL or scraping error")
+//    })
+//    @PostMapping("/import-from-url")
+//    public ResponseEntity<String> importOfferFromUrl(@RequestParam String offerUrl) {
+//        try {
+//            OfferDTO importedOffer = offerFacade.addOfferFromUrl(offerUrl);
+//            return ResponseEntity.ok("Offer successfully imported from URL.");
+//        } catch (IllegalStateException e) {
+//            logger.warn("Duplicate offer detected: {}", e.getMessage());
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+//        } catch (Exception e) {
+//            logger.error("Error importing offer from URL: {}", e.getMessage());
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error importing offer: " + e.getMessage());
+//        }
+//    }
 
 }
