@@ -36,7 +36,7 @@ public class OfferDTO implements Serializable {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private String level;
-    private boolean applied;
+
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -51,7 +51,6 @@ public class OfferDTO implements Serializable {
         this.salaryRange = salaryRange;
         this.company = company;
         this.level = level;
-        this.applied = applied;
         this.fetchedAt = fetchedAt;
     }
 
@@ -64,7 +63,6 @@ public class OfferDTO implements Serializable {
         this.salaryRange = salaryRange;
         this.company = company;
         this.level = level;
-        this.applied = applied;
         this.fetchedAt = fetchedAt;
     }
 }

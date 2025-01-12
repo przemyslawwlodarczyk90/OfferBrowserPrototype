@@ -30,8 +30,8 @@ public class StatisticController {
     @Operation(summary = "Get total offers", description = "Returns the total number of job offers.")
     public ResponseEntity<StatisticsSummaryDTO> getTotalOffers() {
         long totalOffers = statisticsFacade.getTotalOffers();
-        long appliedOffers = statisticsFacade.getAppliedOffers();
-        return ResponseEntity.ok(statisticsMapper.toDTO(totalOffers, appliedOffers));
+
+        return ResponseEntity.ok(statisticsMapper.toDTO(totalOffers));
     }
 
     @GetMapping("/level-distribution")

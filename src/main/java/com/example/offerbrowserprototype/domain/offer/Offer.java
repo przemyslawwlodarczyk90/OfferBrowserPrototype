@@ -27,7 +27,7 @@ public class Offer {
     @Indexed(unique = true)
     private String offerUrl;
 
-    private boolean applied;
+
 
     private boolean isDuplicate;
 
@@ -46,7 +46,6 @@ public class Offer {
         this.salaryRange = salaryRange;
         this.level = level;
         this.company = company;
-        this.applied = false;
         this.isDuplicate = false;
         this.fetchedAt = LocalDateTime.now(clock);
     }

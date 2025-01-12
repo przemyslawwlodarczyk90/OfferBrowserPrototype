@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 @Component
 public class StatisticsMapper {
 
-    public StatisticsSummaryDTO toDTO(long totalOffers, long appliedOffers) {
-        return new StatisticsSummaryDTO(totalOffers, appliedOffers);
+    public StatisticsSummaryDTO toDTO(long totalOffers) {
+        return new StatisticsSummaryDTO(totalOffers );
     }
 
     public List<CityDistributionDTO> toCityDistributionDTOs(Map<String, Long> cityDistribution) {

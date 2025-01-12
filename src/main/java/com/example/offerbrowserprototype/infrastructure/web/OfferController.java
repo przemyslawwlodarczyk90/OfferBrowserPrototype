@@ -94,61 +94,8 @@ public class OfferController {
         return ResponseEntity.ok().build();
     }
 
-    // ============================
-    // Sekcja: Zarządzanie aplikacjami
-    // ============================
-
-//    @Operation(summary = "Get applied offers", description = "Retrieve all offers that have been applied to.")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Successfully retrieved applied offers")
-//    })
-//    @GetMapping("/applied")
-//    public ResponseEntity<List<OfferDTO>> getAppliedOffers() {
-//        return ResponseEntity.ok(offerFacade.getAppliedOffers());
-//    }
-
-//    @Operation(summary = "Apply to an offer", description = "Mark an offer as applied using POST.")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Successfully applied to the offer")
-//    })
-//    @PostMapping("/{offerId}/apply")
-//    public ResponseEntity<Void> applyToOffer(@PathVariable String offerId) {
-//        offerFacade.applyToOffer(offerId);
-//        return ResponseEntity.ok().build();
-//    }
-
-//    @Operation(summary = "Apply to an offer (GET for email links)", description = "Mark an offer as applied using GET (for email links).")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Successfully applied to the offer"),
-//            @ApiResponse(responseCode = "404", description = "Offer not found")
-//    })
-//    @GetMapping("/{offerId}/apply")
-//    public ResponseEntity<String> applyToOfferByGet(@PathVariable String offerId) {
-//        offerFacade.applyToOffer(offerId);
-//        return ResponseEntity.ok("Offer applied successfully!");
-//    }
-
-    // ============================
-    // Sekcja: Zarządzanie e-mailami
-    // ============================
-
-//    @Operation(summary = "Get not applied offers", description = "Retrieve all offers that haven't been applied to.")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Successfully retrieved not applied offers")
-//    })
-//    @GetMapping("/not-applied")
-//    public ResponseEntity<List<OfferDTO>> getNotAppliedOffers() {
-//        return ResponseEntity.ok(offerFacade.getNotAppliedOffers());
-//    }
 
 
-    // ============================
-    // Sekcja: Zarządzanie duplikatami
-    // ============================
-
-
-
-    // Oznaczanie jako duplicate przez ID
     @Operation(summary = "Mark offer as duplicate by ID", description = "Marks the specified job offer as duplicated using its ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Offer marked as duplicate successfully"),

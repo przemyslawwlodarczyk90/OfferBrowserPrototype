@@ -22,10 +22,7 @@ public class StatisticsFacade {
         return offerCountHandler.getTotalOffers();
     }
 
-    @Cacheable(value = "appliedOffers", unless = "#result == 0")
-    public long getAppliedOffers() {
-        return offerCountHandler.getAppliedOffers();
-    }
+
 
     @Cacheable(value = "levelDistribution", unless = "#result.isEmpty()")
     public Map<String, Long> getLevelDistribution() {

@@ -13,8 +13,5 @@ public class OfferCountHandler {
     public long getTotalOffers() {
         return offerRepository.countByIsDuplicateFalse();
     }
-
-    public long getAppliedOffers() {
-        return offerRepository.countByAppliedTrue();
-    }
+    
 }

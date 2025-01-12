@@ -7,5 +7,4 @@ import lombok.Data;
 @AllArgsConstructor
 public class StatisticsSummaryDTO {
     private long totalOffers;
-    private long appliedOffers;
 }

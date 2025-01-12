@@ -22,13 +22,11 @@ public interface OfferRepository extends MongoRepository<Offer, String> {
 
     List<Offer> findAllByOrderByFetchedAtDesc();
 
-    List<Offer> findByAppliedFalseOrderByFetchedAtDesc();
 
-    List<Offer> findByAppliedTrueOrderByFetchedAtDesc();
 
     Optional<Offer> findByOfferUrl(String offerUrl);
 
-    long countByAppliedTrue();
+
 
     long countByIsDuplicateFalse();
 
