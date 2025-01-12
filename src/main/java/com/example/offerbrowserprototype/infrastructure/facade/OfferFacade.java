@@ -20,8 +20,8 @@ public class OfferFacade {
     private final OfferUpdateHandler updateHandler;
     private final OfferDeletionHandler deletionHandler;
     private final OfferRetrievalHandler retrievalHandler;
-    private final OfferNotAppliedHandler notAppliedHandler;
-    private final OfferAppliedListHandler appliedHandler;
+//    private final OfferNotAppliedHandler notAppliedHandler;
+//    private final OfferAppliedListHandler appliedHandler;
     private final OfferDetailsHandler detailsHandler;
     private final OfferCacheFacade offerCacheFacade;
     private final ExternalJobOfferService externalJobOfferService;
@@ -35,8 +35,8 @@ public class OfferFacade {
                        OfferUpdateHandler updateHandler,
                        OfferDeletionHandler deletionHandler,
                        OfferRetrievalHandler retrievalHandler,
-                       OfferNotAppliedHandler notAppliedHandler,
-                       OfferAppliedListHandler appliedHandler,
+//                       OfferNotAppliedHandler notAppliedHandler,
+//                       OfferAppliedListHandler appliedHandler,
                        OfferDetailsHandler detailsHandler,
                        OfferCacheFacade offerCacheFacade,
                        ExternalJobOfferService externalJobOfferService,
@@ -49,8 +49,8 @@ public class OfferFacade {
         this.updateHandler = updateHandler;
         this.deletionHandler = deletionHandler;
         this.retrievalHandler = retrievalHandler;
-        this.notAppliedHandler = notAppliedHandler;
-        this.appliedHandler = appliedHandler;
+//        this.notAppliedHandler = notAppliedHandler;
+//        this.appliedHandler = appliedHandler;
         this.detailsHandler = detailsHandler;
         this.offerCacheFacade = offerCacheFacade;
         this.externalJobOfferService = externalJobOfferService;
@@ -79,15 +79,15 @@ public class OfferFacade {
         deletionHandler.deleteOffer(id);
     }
 
-    @Cacheable(value = "notAppliedOffers", unless = "#result.isEmpty()")
-    public List<OfferDTO> getNotAppliedOffers() {
-        return notAppliedHandler.getNotAppliedOffers();
-    }
-
-    @Cacheable(value = "appliedOffers", unless = "#result.isEmpty()")
-    public List<OfferDTO> getAppliedOffers() {
-        return appliedHandler.getAppliedOffers();
-    }
+//    @Cacheable(value = "notAppliedOffers", unless = "#result.isEmpty()")
+//    public List<OfferDTO> getNotAppliedOffers() {
+//        return notAppliedHandler.getNotAppliedOffers();
+//    }
+//
+//    @Cacheable(value = "appliedOffers", unless = "#result.isEmpty()")
+//    public List<OfferDTO> getAppliedOffers() {
+//        return appliedHandler.getAppliedOffers();
+//    }
 
     @Cacheable(value = "allOffers", unless = "#result.isEmpty()")
     public List<OfferDTO> getAllOffers() {

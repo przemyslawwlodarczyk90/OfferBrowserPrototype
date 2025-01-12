@@ -32,7 +32,7 @@ public class ApplicationNoteHandler {
         logger.info("Saving application note for user: {}, offer: {} (URL: {}, Company: {})", userId, offerId, offerUrl, companyName);
 
         ApplicationNote note = new ApplicationNote();
-        note.setUserId(userId); // Dodano ustawienie userId
+        note.setUserId(userId);
         note.setOfferId(offerId);
         note.setOfferUrl(offerUrl);
         note.setCompanyName(companyName);
