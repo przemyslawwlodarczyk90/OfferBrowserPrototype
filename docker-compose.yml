@@ -87,6 +87,7 @@ services:
       PYTHON_OFFER_URL_SCRAPER: src/main/resources/scripts/scrape_offer_from_url.py
 
       DAILY_OFFERS_EMAIL_RECIPIENT: userbridge9@gmail.com
+      APP_BASE_URL: http://localhost:8080
 
 volumes:
   mongodb_data:

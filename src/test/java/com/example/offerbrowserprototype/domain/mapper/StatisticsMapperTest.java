@@ -24,15 +24,15 @@ class StatisticsMapperTest {
     void shouldMapToStatisticsSummaryDTO() {
         // Given
         long totalOffers = 100;
-        long appliedOffers = 25;
+
 
         // When
-        StatisticsSummaryDTO dto = statisticsMapper.toDTO(totalOffers, appliedOffers);
+        StatisticsSummaryDTO dto = statisticsMapper.toDTO(totalOffers);
 
         // Then
         assertThat(dto).isNotNull();
         assertThat(dto.getTotalOffers()).isEqualTo(totalOffers);
-        assertThat(dto.getAppliedOffers()).isEqualTo(appliedOffers);
+
     }
 
     @Test

@@ -31,7 +31,7 @@ class OfferMapperTest {
         offer.setLocation("Warsaw");
         offer.setSalaryRange("10,000 - 15,000 PLN");
         offer.setLevel("Java, Spring Boot");
-        offer.setApplied(true);
+
         offer.setFetchedAt(LocalDateTime.now());
 
         OfferDTO dto = offerMapper.toDTO(offer);
@@ -42,7 +42,7 @@ class OfferMapperTest {
         assertEquals(offer.getLocation(), dto.getLocation());
         assertEquals(offer.getSalaryRange(), dto.getSalaryRange());
         assertEquals(offer.getLevel(), dto.getLevel());
-        assertEquals(offer.isApplied(), dto.isApplied());
+
         assertEquals(offer.getFetchedAt(), dto.getFetchedAt());
     }
 
@@ -55,7 +55,7 @@ class OfferMapperTest {
         dto.setLocation("Warsaw");
         dto.setSalaryRange("10,000 - 15,000 PLN");
         dto.setLevel("Java, Spring Boot");
-        dto.setApplied(true);
+
         dto.setFetchedAt(LocalDateTime.now());
 
         // When
@@ -67,7 +67,7 @@ class OfferMapperTest {
         assertEquals(dto.getLocation(), offer.getLocation());
         assertEquals(dto.getSalaryRange(), offer.getSalaryRange());
         assertEquals(dto.getLevel(), offer.getLevel());
-        assertEquals(dto.isApplied(), offer.isApplied());
+
         assertEquals(dto.getFetchedAt(), offer.getFetchedAt());
     }
 
@@ -86,7 +86,7 @@ class OfferMapperTest {
         assertNull(dto.getLocation());
         assertNull(dto.getSalaryRange());
         assertNull(dto.getLevel());
-        assertFalse(dto.isApplied());
+
         assertNull(dto.getFetchedAt());
     }
 
@@ -106,7 +106,7 @@ class OfferMapperTest {
         assertNull(offer.getLocation());
         assertNull(offer.getSalaryRange());
         assertNull(offer.getLevel());
-        assertFalse(offer.isApplied());
+
         assertNull(offer.getFetchedAt());
     }
 }

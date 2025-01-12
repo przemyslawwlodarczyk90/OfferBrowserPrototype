@@ -35,7 +35,6 @@ class OfferTest {
         assertThat(offer.getSalaryRange()).isEqualTo("$100,000 - $120,000");
         assertThat(offer.getLevel()).isEqualTo("Mid-Level");
         assertThat(offer.getCompany()).isEqualTo("Tech Company");
-        assertThat(offer.isApplied()).isFalse();
         assertThat(offer.isDuplicate()).isFalse();
         assertThat(offer.getFetchedAt()).isEqualTo(LocalDateTime.of(2025, 1, 1, 12, 0));
     }
@@ -92,12 +91,11 @@ class OfferTest {
 
         // When
         offer.setTitle("Senior Software Engineer");
-        offer.setApplied(true);
         offer.setDuplicate(true);
 
         // Then
         assertThat(offer.getTitle()).isEqualTo("Senior Software Engineer");
-        assertThat(offer.isApplied()).isTrue();
+
         assertThat(offer.isDuplicate()).isTrue();
     }
 

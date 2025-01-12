@@ -35,18 +35,7 @@ class OfferCountHandlerTest {
         assertThat(totalOffers).isEqualTo(mockTotalOffers);
     }
 
-    @Test
-    void shouldReturnAppliedOffersCount() {
-        // Given
-        long mockAppliedOffers = 50L;
-        when(offerRepository.countByAppliedTrue()).thenReturn(mockAppliedOffers);
 
-        // When
-        long appliedOffers = offerCountHandler.getAppliedOffers();
-
-        // Then
-        assertThat(appliedOffers).isEqualTo(mockAppliedOffers);
-    }
 
     @Test
     void shouldReturnZeroWhenNoTotalOffers() {
@@ -60,15 +49,5 @@ class OfferCountHandlerTest {
         assertThat(totalOffers).isEqualTo(0L);
     }
 
-    @Test
-    void shouldReturnZeroWhenNoAppliedOffers() {
-        // Given
-        when(offerRepository.countByAppliedTrue()).thenReturn(0L);
 
-        // When
-        long appliedOffers = offerCountHandler.getAppliedOffers();
-
-        // Then
-        assertThat(appliedOffers).isEqualTo(0L);
-    }
 }

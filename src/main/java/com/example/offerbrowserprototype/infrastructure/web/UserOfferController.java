@@ -7,31 +7,26 @@ import com.example.offerbrowserprototype.infrastructure.facade.UserOfferFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/user-offers")
-@Tag(name = "User Offers", description = "Manage user-specific offers")
 @RequiredArgsConstructor
 public class UserOfferController {
 
     private final UserOfferFacade userOfferFacade;
     private static final Logger logger = LoggerFactory.getLogger(UserOfferController.class);
 
-    @Operation(summary = "Apply to an offer", description = "Marks an offer as applied for the user.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully applied to the offer"),
-            @ApiResponse(responseCode = "404", description = "Offer not found"),
-            @ApiResponse(responseCode = "400", description = "Invalid input data")
-    })
+    @Value("${app.base-url}")
+    private String baseUrl;
+
     @GetMapping("/{offerId}/apply")
     public String applyToOffer(
             @RequestParam(value = "email", required = false) String email,
@@ -56,8 +51,7 @@ public class UserOfferController {
         } catch (OfferAlreadyAppliedException e) {
             logger.warn("Offer already applied for email: {}, offerId: {}", email, offerId);
             model.addAttribute("message", "This offer has already been applied!");
-            return "already applied before to this offer";
-
+            return "already-applied";
         } catch (Exception e) {
             logger.error("Error occurred while applying to offer. email: {}, offerId: {}, error: {}", email, offerId, e.getMessage());
             model.addAttribute("message", "An error occurred: " + e.getMessage());
