@@ -27,9 +27,10 @@ public class UserOfferQueryHandler {
                 .map(status -> status.getOfferId())
                 .collect(Collectors.toList());
 
-        // Pobierz oferty, które nie są zaaplikowane
+        // Pobierz oferty, które nie są zaaplikowane i nie są oznaczone jako duplikaty
         return offerRepository.findAll().stream()
-                .filter(offer -> !appliedOfferIds.contains(offer.getId()))
+                .filter(offer -> !appliedOfferIds.contains(offer.getId())) // Filtruj oferty, które nie są zaaplikowane
+                .filter(offer -> !offer.isDuplicate()) // Filtruj oferty, które nie są oznaczone jako duplikaty
                 .collect(Collectors.toList());
     }
 }
