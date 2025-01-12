@@ -47,7 +47,8 @@ services:
 
   lotto:
     container_name: browser
-    build .
+#    build:
+#      context: .
     image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:latest
     restart: always
     ports:
