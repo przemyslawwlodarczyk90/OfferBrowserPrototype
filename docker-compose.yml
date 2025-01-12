@@ -47,6 +47,7 @@ services:
 
   lotto:
     container_name: browser
+    build .
     image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:latest
     restart: always
     ports:
@@ -87,7 +88,8 @@ services:
       PYTHON_OFFER_URL_SCRAPER: src/main/resources/scripts/scrape_offer_from_url.py
 
       DAILY_OFFERS_EMAIL_RECIPIENT: userbridge9@gmail.com
-      APP_BASE_URL: http://localhost:8080
+#      APP_BASE_URL: http://localhost:8080
+      APP_BASE_URL: http://ec2-16-171-116-191.eu-north-1.compute.amazonaws.com:8080
 
 volumes:
   mongodb_data:
