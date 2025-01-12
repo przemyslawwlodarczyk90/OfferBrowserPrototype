@@ -15,47 +15,41 @@ import java.util.List;
 @Component
 public class OfferFacade {
 
-//    private final OfferApplicationHandler offerApplicationHandler;
+    private final OfferFromUrlHandler offerFromUrlHandler;
+    private final OfferDetailsHandler  detailsHandler;
     private final OfferAdditionHandler additionHandler;
     private final OfferUpdateHandler updateHandler;
     private final OfferDeletionHandler deletionHandler;
     private final OfferRetrievalHandler retrievalHandler;
-//    private final OfferNotAppliedHandler notAppliedHandler;
-//    private final OfferAppliedListHandler appliedHandler;
-    private final OfferDetailsHandler detailsHandler;
+
     private final OfferCacheFacade offerCacheFacade;
+
     private final ExternalJobOfferService externalJobOfferService;
     private final OfferPushHandler pushHandler;
-    private final ApplicationNoteHandler applicationNoteHandler;
+
     private final MarkAsDuplicateHandler markAsDuplicateHandler;
 
-    public OfferFacade(
-//                       OfferApplicationHandler offerApplicationHandler,
+    public OfferFacade(OfferFromUrlHandler offerFromUrlHandler,
+
                        OfferAdditionHandler additionHandler,
                        OfferUpdateHandler updateHandler,
                        OfferDeletionHandler deletionHandler,
                        OfferRetrievalHandler retrievalHandler,
-//                       OfferNotAppliedHandler notAppliedHandler,
-//                       OfferAppliedListHandler appliedHandler,
                        OfferDetailsHandler detailsHandler,
                        OfferCacheFacade offerCacheFacade,
                        ExternalJobOfferService externalJobOfferService,
                        OfferPushHandler pushHandler,
                        ApplicationNoteHandler applicationNoteHandler,
                        MarkAsDuplicateHandler markAsDuplicateHandler) {
-
-//        this.offerApplicationHandler = offerApplicationHandler;
+        this.offerFromUrlHandler = offerFromUrlHandler;
         this.additionHandler = additionHandler;
         this.updateHandler = updateHandler;
         this.deletionHandler = deletionHandler;
         this.retrievalHandler = retrievalHandler;
-//        this.notAppliedHandler = notAppliedHandler;
-//        this.appliedHandler = appliedHandler;
         this.detailsHandler = detailsHandler;
         this.offerCacheFacade = offerCacheFacade;
         this.externalJobOfferService = externalJobOfferService;
         this.pushHandler = pushHandler;
-        this.applicationNoteHandler = applicationNoteHandler;
         this.markAsDuplicateHandler = markAsDuplicateHandler;
     }
 
@@ -79,15 +73,7 @@ public class OfferFacade {
         deletionHandler.deleteOffer(id);
     }
 
-//    @Cacheable(value = "notAppliedOffers", unless = "#result.isEmpty()")
-//    public List<OfferDTO> getNotAppliedOffers() {
-//        return notAppliedHandler.getNotAppliedOffers();
-//    }
-//
-//    @Cacheable(value = "appliedOffers", unless = "#result.isEmpty()")
-//    public List<OfferDTO> getAppliedOffers() {
-//        return appliedHandler.getAppliedOffers();
-//    }
+
 
     @Cacheable(value = "allOffers", unless = "#result.isEmpty()")
     public List<OfferDTO> getAllOffers() {
@@ -111,11 +97,12 @@ public class OfferFacade {
         pushHandler.pushOfferToProvider(offerId, providerName);
     }
 
+    public OfferDTO addOfferFromUrl(String userId, String offerUrl) {
+        return offerFromUrlHandler.addOfferFromUrl(userId, offerUrl);
+    }
 
-//    @CacheEvict(value = {"appliedOffers", "notAppliedOffers", "allOffers"}, allEntries = true)
-//    public void applyToOffer(String offerId) {
-//        offerApplicationHandler.applyToOfferWithNote(offerId);
-//    }
+
+
 
     @CacheEvict(value = {"allOffers", "offerDetails"}, allEntries = true)
     public void markAsDuplicateById(String offerId) {
