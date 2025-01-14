@@ -22,22 +22,37 @@ public class MongoConfig {
 
     @Bean
     public MongoTemplate mongoTemplate() {
-        logger.info("Initializing MongoTemplate with URI: {}", mongoUri);
+        logger.info("Starting MongoTemplate initialization.");
+        logger.debug("MongoDB URI: {}", mongoUri);
 
-        ConnectionString connectionString = new ConnectionString(mongoUri);
-        MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
-                .applyConnectionString(connectionString)
-                .readPreference(ReadPreference.primary())
-                .build();
+        ConnectionString connectionString;
+        MongoClientSettings mongoClientSettings;
 
         try {
+            logger.info("Parsing MongoDB URI.");
+            connectionString = new ConnectionString(mongoUri);
+            logger.debug("Parsed MongoDB connection string: {}", connectionString);
+
+            logger.info("Building MongoClientSettings.");
+            mongoClientSettings = MongoClientSettings.builder()
+                    .applyConnectionString(connectionString)
+                    .readPreference(ReadPreference.primary())
+                    .build();
+            logger.debug("MongoClientSettings built successfully: {}", mongoClientSettings);
+        } catch (Exception e) {
+            logger.error("Error while parsing MongoDB URI or building MongoClientSettings", e);
+            throw e;
+        }
+
+        try {
+            logger.info("Creating MongoTemplate instance.");
             MongoTemplate mongoTemplate = new MongoTemplate(
                     new SimpleMongoClientDatabaseFactory(MongoClients.create(mongoClientSettings), connectionString.getDatabase())
             );
-            logger.info("MongoTemplate initialized successfully");
+            logger.info("MongoTemplate created successfully for database: {}", connectionString.getDatabase());
             return mongoTemplate;
         } catch (Exception e) {
-            logger.error("Failed to initialize MongoTemplate", e);
+            logger.error("Failed to create MongoTemplate", e);
             throw e;
         }
     }

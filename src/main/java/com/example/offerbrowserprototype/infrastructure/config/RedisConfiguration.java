@@ -3,6 +3,8 @@ package com.example.offerbrowserprototype.infrastructure.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.annotation.EnableCaching;
@@ -15,36 +17,82 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 @Configuration
 @EnableCaching
 @ConditionalOnProperty(value = "spring.cache.type", havingValue = "redis")
 public class RedisConfiguration {
 
+    private static final Logger logger = LoggerFactory.getLogger(RedisConfiguration.class);
+
+    @Value("${spring.redis.host:localhost}")
+    private String redisHost;
+
+    @Value("${spring.redis.port:6379}")
+    private int redisPort;
+
     @Bean
-    public JedisConnectionFactory redisConnectionFactory(@Value("${spring.redis.host:localhost}") String hostname,
-                                                         @Value("${spring.redis.port:6379}") int port) {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(hostname, port);
-        return new JedisConnectionFactory(redisStandaloneConfiguration);
+    public JedisConnectionFactory redisConnectionFactory() {
+        logger.info("Initializing RedisConnectionFactory.");
+        logger.debug("Redis host: {}", redisHost);
+        logger.debug("Redis port: {}", redisPort);
+
+        try {
+            RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+            configuration.setHostName(redisHost);
+            configuration.setPort(redisPort);
+
+            JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(configuration);
+            logger.info("RedisConnectionFactory initialized successfully.");
+            return jedisConnectionFactory;
+        } catch (Exception e) {
+            logger.error("Error initializing RedisConnectionFactory", e);
+            throw e;
+        }
     }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory);
+        logger.info("Initializing RedisTemplate.");
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        try {
+            RedisTemplate<String, Object> template = new RedisTemplate<>();
+            template.setConnectionFactory(connectionFactory);
 
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer(mapper));
-        template.setKeySerializer(new StringRedisSerializer());
-        return template;
+            // Configure the serializer for keys and values
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule());
+            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+            GenericJackson2JsonRedisSerializer valueSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
+
+            template.setKeySerializer(new StringRedisSerializer());
+            template.setValueSerializer(valueSerializer);
+            template.setHashKeySerializer(new StringRedisSerializer());
+            template.setHashValueSerializer(valueSerializer);
+
+            logger.info("RedisTemplate initialized successfully.");
+            return template;
+        } catch (Exception e) {
+            logger.error("Error initializing RedisTemplate", e);
+            throw e;
+        }
     }
 
     @Bean
-    public RedisSerializer<Object> redisSerializer(Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder) {
-        return new GenericJackson2JsonRedisSerializer(jackson2ObjectMapperBuilder.build());
+    public RedisSerializer<Object> redisSerializer() {
+        logger.info("Initializing RedisSerializer.");
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule());
+            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+            RedisSerializer<Object> serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
+            logger.info("RedisSerializer initialized successfully.");
+            return serializer;
+        } catch (Exception e) {
+            logger.error("Error initializing RedisSerializer", e);
+            throw e;
+        }
     }
 }

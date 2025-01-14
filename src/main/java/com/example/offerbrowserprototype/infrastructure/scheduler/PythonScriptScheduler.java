@@ -2,6 +2,7 @@ package com.example.offerbrowserprototype.infrastructure.scheduler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -12,20 +13,24 @@ import org.springframework.web.client.RestTemplate;
 public class PythonScriptScheduler {
 
     private static final Logger logger = LoggerFactory.getLogger(PythonScriptScheduler.class);
+
     private final RestTemplate restTemplate;
+
+    @Value("${python.script.scheduler.url:http://localhost:8080/api/python-script/run}")
+    private String pythonScriptUrl;
 
     public PythonScriptScheduler(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
+
     @Scheduled(cron = "${python.script.scheduler.cron}")
     public void runPythonScript() {
-        String url = "http://localhost:8080/api/python-script/run";
-        logger.info("Executing Python script via endpoint: {}", url);
+        logger.info("Starting Python script execution via endpoint: {}", pythonScriptUrl);
         try {
-            restTemplate.getForObject(url, String.class);
-            logger.info("Python script executed successfully.");
+            String response = restTemplate.getForObject(pythonScriptUrl, String.class);
+            logger.info("Python script executed successfully. Response: {}", response);
         } catch (Exception e) {
-            logger.error("Error during Python script execution: {}", e.getMessage());
+            logger.error("Error during Python script execution", e);
         }
     }
 }
