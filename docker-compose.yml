@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mongodb:
-    image: mongo:latest
+    image: mongo:8.0
     container_name: mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
@@ -13,18 +13,15 @@ services:
     volumes:
       - mongodb_data:/data/db
     healthcheck:
-      test: ["CMD", "mongo", "--username", "admin", "--password", "admin123", "--eval", "db.adminCommand('ping')"]
-      interval: 20s
-      timeout: 10s
-      retries: 10
+      test: ["CMD", "pgrep", "mongod"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   mongo-express:
     image: mongo-express
     container_name: mongo-express
     restart: always
-    depends_on:
-      mongodb:
-        condition: service_healthy
     ports:
       - "8081:8081"
     environment:
@@ -38,30 +35,19 @@ services:
     ports:
       - "6379:6379"
     restart: always
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   redis-commander:
     image: rediscommander/redis-commander:latest
     container_name: redis-commander
     restart: always
-    depends_on:
-      redis:
-        condition: service_healthy
     environment:
-      - REDIS_HOSTS=local:redis
+      REDIS_HOSTS: local:redis
     ports:
       - "8082:8081"
 
   lotto:
     container_name: browser
-    # Uncomment the following block if you need to build from a local context
-    # build:
-    #   context: .
-    image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:latest
+    image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:1.0
     restart: always
     ports:
       - '8080:8080'
@@ -69,7 +55,7 @@ services:
       mongodb:
         condition: service_healthy
       redis:
-        condition: service_healthy
+        condition: service_started
     environment:
       SPRING_APP_NAME: OfferBrowserPrototype
       REDIS_HOST: redis
@@ -101,7 +87,6 @@ services:
       PYTHON_OFFER_URL_SCRAPER: src/main/resources/scripts/scrape_offer_from_url.py
 
       DAILY_OFFERS_EMAIL_RECIPIENT: userbridge9@gmail.com
-      APP_BASE_URL: http://ec2-16-171-116-191.eu-north-1.compute.amazonaws.com:8080
 
 volumes:
   mongodb_data:
