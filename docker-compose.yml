@@ -1,8 +1,11 @@
 version: '3.8'
 
+networks:
+  app_network:
+
 services:
   mongodb:
-    image: mongo:8.0
+    image: mongo:latest
     container_name: mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
@@ -17,8 +20,13 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - app_network
 
   mongo-express:
+    depends_on:
+      mongodb:
+        condition: service_healthy
     image: mongo-express
     container_name: mongo-express
     restart: always
@@ -28,6 +36,8 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: admin123
       ME_CONFIG_MONGODB_URL: mongodb://admin:admin123@mongodb:27017/
+    networks:
+      - app_network
 
   redis:
     image: redis:latest
@@ -35,6 +45,8 @@ services:
     ports:
       - "6379:6379"
     restart: always
+    networks:
+      - app_network
 
   redis-commander:
     image: rediscommander/redis-commander:latest
@@ -44,10 +56,14 @@ services:
       REDIS_HOSTS: local:redis
     ports:
       - "8082:8081"
+    networks:
+      - app_network
 
-  lotto:
+  browser:
     container_name: browser
-    image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:1.0
+#    build:
+#      context: .
+    image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:1.4
     restart: always
     ports:
       - '8080:8080'
@@ -56,37 +72,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
-    environment:
-      SPRING_APP_NAME: OfferBrowserPrototype
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      MONGO_USER: admin
-      MONGO_PASSWORD: admin123
-      MONGO_HOST: mongodb
-      MONGO_PORT: 27017
-      MONGO_DB_NAME: offer_browser_db
-      MONGO_AUTH_SOURCE: admin
-      SERVER_PORT: 8080
-      JWT_SECRET: yourSuperSecretKeyThatIsAtLeast32CharactersLong
-      JWT_ISSUER: offer-browser-prototype
-      JWT_EXPIRATION: 3600000
-      SPRINGDOC_API_DOCS_PATH: /v3/api-docs
-      SPRINGDOC_SWAGGER_UI_PATH: /swagger-ui.html
-      SPRINGDOC_PACKAGES: com.example.offerbrowserprototype.infrastructure.web,com.example.userbridge.infrastructure.api
-      PROVIDER_ONE_API_URL: https://api.providerone.com/job-offers
-
-      MAIL_HOST: smtp.gmail.com
-      MAIL_PORT: 587
-      MAIL_USERNAME: userbridge9@gmail.com
-      MAIL_PASSWORD: mnuv bxzq bvla oieg
-      MAIL_SMTP_AUTH: "true"
-      MAIL_SMTP_STARTTLS: "true"
-      SPRING_TIMEZONE: UTC
-      PYTHON_PATH: /usr/bin/python3
-      PYTHON_SCRIPT_PATH: scripts/scraper.py
-      PYTHON_OFFER_URL_SCRAPER: src/main/resources/scripts/scrape_offer_from_url.py
-
-      DAILY_OFFERS_EMAIL_RECIPIENT: userbridge9@gmail.com
+    networks:
+      - app_network
 
 volumes:
   mongodb_data:
