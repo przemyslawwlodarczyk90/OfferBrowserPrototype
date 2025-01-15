@@ -1,34 +1,77 @@
 services:
-  mongodb:
-    image: mongo:8.0.4
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    networks:
-      - app_network
-
-  redis:
-    image: redis:7.4.2
-    container_name: redis
-    ports:
-      - "6379:6379"
-    networks:
-      - app_network
-
   browser:
-    image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:1.8
-    container_name: browser
+    image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:1.10
     ports:
       - "8080:8080"
     environment:
-
-      - SPRING_DATA_MONGODB_URI=mongodb://admin:adminpassword@mongodb:27017/offerbrowserdb
-
-      - SPRING_DATA_MONGODB_HOST=mongodb
-      - SPRING_DATA_MONGODB_PORT=27017
+      SPRING_DATA_MONGODB_URI: mongodb://admin:adminpassword@mongodb:27017/offerbrowserdb
+      SPRING_PROFILES_ACTIVE: prod
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: always
     networks:
-      - app_network
+      - offer-browser-network
+
+  mongodb:
+    image: mongo:6.0.19
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: adminpassword
+      GLIBC_TUNABLES: glibc.pthread.rseq=0
+    command: ["mongod", "--bind_ip", "0.0.0.0", "--auth"]
+    volumes:
+      - ./mongodb-data:/data/db # Przechowywanie danych MongoDB na hoście
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --username admin --password adminpassword --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 })'"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+    restart: always
+    networks:
+      - offer-browser-network
+
+  redis:
+    image: redis:6.2.17
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: redis-server
+    volumes:
+      - ./redis-data:/data # Przechowywanie danych Redis na hoście
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: always
+    networks:
+      - offer-browser-network
+
+  adminer:
+    image: adminer:latest
+    ports:
+      - "8081:8080"
+    restart: always
+    networks:
+      - offer-browser-network
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer-data:/data # Przechowywanie danych Portainer
+    restart: always
+    networks:
+      - offer-browser-network
 
 networks:
-  app_network:
+  offer-browser-network:
     driver: bridge
