@@ -1,19 +1,5 @@
 services:
-  browser:
-    image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:1.10
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATA_MONGODB_URI: mongodb://admin:adminpassword@mongodb:27017/offerbrowserdb
-      SPRING_PROFILES_ACTIVE: prod
-    depends_on:
-      mongodb:
-        condition: service_healthy
-      redis:
-        condition: service_started
-    restart: always
-    networks:
-      - offer-browser-network
+
 
   mongodb:
     image: mongo:6.0.19
@@ -71,6 +57,25 @@ services:
     restart: always
     networks:
       - offer-browser-network
+
+
+  browser:
+#      build:
+#       context: .
+      image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:1.10
+      ports:
+        - "8080:8080"
+      environment:
+        SPRING_DATA_MONGODB_URI: mongodb://admin:adminpassword@mongodb:27017/offerbrowserdb
+        SPRING_PROFILES_ACTIVE: prod
+      depends_on:
+        mongodb:
+          condition: service_healthy
+        redis:
+          condition: service_started
+      restart: always
+      networks:
+        - offer-browser-network
 
 networks:
   offer-browser-network:
