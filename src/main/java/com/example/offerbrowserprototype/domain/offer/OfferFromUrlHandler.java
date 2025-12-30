@@ -5,6 +5,7 @@ import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.domain.usseroffer.UserOfferStatus;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
+import com.example.offerbrowserprototype.infrastructure.repository.UserOfferStatusRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,26 +17,29 @@ import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 @Component
 public class OfferFromUrlHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(OfferFromUrlHandler.class);
 
     @Value("${python.path}")
-    public String pythonPath;
+    private String pythonPath;
 
     @Value("${python.script.offer-url-scraper}")
-    public String scriptPath;
+    private String scriptPath;
 
     private final OfferRepository offerRepository;
     private final OfferMapper offerMapper;
     private final ApplicationNoteHandler applicationNoteHandler;
     private final UserOfferStatusRepository userOfferStatusRepository;
 
-    public OfferFromUrlHandler(OfferRepository offerRepository,
-                               OfferMapper offerMapper,
-                               ApplicationNoteHandler applicationNoteHandler,
-                               UserOfferStatusRepository userOfferStatusRepository) {
+    public OfferFromUrlHandler(
+            OfferRepository offerRepository,
+            OfferMapper offerMapper,
+            ApplicationNoteHandler applicationNoteHandler,
+            UserOfferStatusRepository userOfferStatusRepository
+    ) {
         this.offerRepository = offerRepository;
         this.offerMapper = offerMapper;
         this.applicationNoteHandler = applicationNoteHandler;
@@ -43,34 +47,37 @@ public class OfferFromUrlHandler {
     }
 
     public OfferDTO addOfferFromUrl(String userId, String offerUrl) {
-        if (userId == null || userId.trim().isEmpty()) {
+        if (userId == null || userId.isBlank()) {
             throw new IllegalArgumentException("User ID cannot be null or empty.");
         }
-        if (offerUrl == null || offerUrl.trim().isEmpty()) {
+        if (offerUrl == null || offerUrl.isBlank()) {
             throw new IllegalArgumentException("Offer URL cannot be null or empty.");
         }
 
-        // Pobierz szczegóły oferty
+        // Scrape
         OfferDTO offerDto = handleOfferFromUrl(offerUrl);
-        if (offerDto == null) {
-            throw new IllegalArgumentException("Failed to scrape offer details from URL: " + offerUrl);
-        }
 
-        // Zapisz ofertę w bazie danych
+        // Map + save
         Offer offer = offerMapper.toEntity(offerDto);
         offer = offerRepository.save(offer);
 
-        logger.info("Saved offer with ID: {}", offer.getId());
+        String offerIdAsString = offer.getId().toString();
+        logger.info("Saved offer with ID: {}", offerIdAsString);
 
-        // Utwórz rekord UserOffer
-        UserOfferStatus userOfferStatus = new UserOfferStatus(userId, offer.getId(), false);
-        userOfferStatus.setAppliedAt(LocalDateTime.now());
-        userOfferStatusRepository.save(userOfferStatus);
+        // Create UserOfferStatus
+        UserOfferStatus status = new UserOfferStatus(userId, offerIdAsString, false);
+        status.setAppliedAt(LocalDateTime.now());
+        userOfferStatusRepository.save(status);
 
-        logger.info("Created UserOffer record for userId: {}, offerId: {}", userId, offer.getId());
+        logger.info("Created UserOfferStatus for userId: {}, offerId: {}", userId, offerIdAsString);
 
-        // Utwórz notatkę aplikacyjną
-        applicationNoteHandler.saveApplicationNote(userId, offer.getId(), offer.getOfferUrl(), offer.getCompany());
+        // Create ApplicationNote
+        applicationNoteHandler.saveApplicationNote(
+                userId,
+                offerIdAsString,
+                offer.getOfferUrl(),
+                offer.getCompany()
+        );
 
         return offerMapper.toDTO(offer);
     }
@@ -79,13 +86,13 @@ public class OfferFromUrlHandler {
         logger.info("Handling offer URL: {}", offerUrl);
 
         if (offerUrl == null || offerUrl.isBlank()) {
-            throw new IllegalArgumentException("Offer URL cannot be null or empty");
+            throw new IllegalArgumentException("Offer URL cannot be null or empty.");
         }
 
         Optional<Offer> existingOffer = offerRepository.findByOfferUrl(offerUrl);
         if (existingOffer.isPresent()) {
-            logger.warn("Offer with URL {} already exists in the database.", offerUrl);
-            throw new IllegalStateException("Offer already exists in the database");
+            logger.warn("Offer with URL {} already exists.", offerUrl);
+            throw new IllegalStateException("Offer already exists in the database.");
         }
 
         ProcessBuilder processBuilder = new ProcessBuilder(pythonPath, scriptPath, offerUrl);
@@ -96,19 +103,17 @@ public class OfferFromUrlHandler {
             Process process = processBuilder.start();
 
             String output;
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            try (BufferedReader reader =
+                         new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 output = reader.lines().collect(Collectors.joining("\n"));
             }
 
             int exitCode = process.waitFor();
-            logger.info("Python script completed with exit code: {}", exitCode);
+            logger.info("Python script finished with exit code: {}", exitCode);
 
             if (exitCode != 0) {
-                logger.error("Python script failed with exit code: {}. Output: {}", exitCode, output);
-                throw new RuntimeException("Python script failed with exit code " + exitCode);
+                throw new RuntimeException("Python script failed. Output: " + output);
             }
-
-            logger.info("Python script output: {}", output);
 
             String[] lines = output.split("\n");
             String jsonResponse = lines[lines.length - 1];
@@ -116,8 +121,8 @@ public class OfferFromUrlHandler {
             return new ObjectMapper().readValue(jsonResponse, OfferDTO.class);
 
         } catch (Exception e) {
-            logger.error("Error executing Python script: {}", e.getMessage(), e);
-            throw new RuntimeException("Error scraping offer details: " + e.getMessage(), e);
+            logger.error("Error scraping offer from URL", e);
+            throw new RuntimeException("Error scraping offer details", e);
         }
     }
 }

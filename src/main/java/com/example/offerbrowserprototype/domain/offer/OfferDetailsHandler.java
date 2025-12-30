@@ -5,6 +5,8 @@ import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class OfferDetailsHandler {
 
@@ -17,7 +19,7 @@ public class OfferDetailsHandler {
     }
 
     public OfferDTO getOfferById(String offerId) {
-        Offer offer = offerRepository.findById(offerId)
+        Offer offer = offerRepository.findById(UUID.fromString(offerId))
                 .orElseThrow(() -> new IllegalArgumentException("Offer not found"));
         return offerMapper.toDTO(offer);
     }

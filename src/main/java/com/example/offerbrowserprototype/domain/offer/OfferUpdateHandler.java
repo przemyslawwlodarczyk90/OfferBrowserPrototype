@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Component
 public class OfferUpdateHandler {
@@ -22,7 +23,7 @@ public class OfferUpdateHandler {
     }
 
     public OfferDTO updateOffer(String id, OfferDTO offerDto) {
-        Offer existingOffer = offerRepository.findById(id)
+        Offer existingOffer = offerRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new RuntimeException("Offer not found"));
 
         existingOffer.setTitle(offerDto.getTitle());
@@ -32,7 +33,6 @@ public class OfferUpdateHandler {
         existingOffer.setLevel(offerDto.getLevel());
         existingOffer.setFetchedAt(LocalDateTime.now(clock));
 
-        Offer updatedOffer = offerRepository.save(existingOffer);
-        return offerMapper.toDTO(updatedOffer);
+        return offerMapper.toDTO(offerRepository.save(existingOffer));
     }
 }

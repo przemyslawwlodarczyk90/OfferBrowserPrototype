@@ -4,6 +4,8 @@ import com.example.offerbrowserprototype.infrastructure.repository.OfferReposito
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class MarkAsDuplicateHandler {
@@ -12,8 +14,11 @@ public class MarkAsDuplicateHandler {
 
 
     public void handleById(String offerId) {
-        Offer offer = offerRepository.findById(offerId)
-                .orElseThrow(() -> new IllegalArgumentException("Offer with ID " + offerId + " not found."));
+        UUID uuid = UUID.fromString(offerId);
+
+        Offer offer = offerRepository.findById(uuid)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Offer with ID " + offerId + " not found."));
         markAsDuplicate(offer);
     }
 

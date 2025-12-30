@@ -8,6 +8,7 @@ import com.example.offerbrowserprototype.infrastructure.service.ExternalJobOffer
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -22,8 +23,9 @@ public class OfferRetrievalHandler {
         this.offerMapper = offerMapper;
     }
 
+
     public OfferDTO getOffer(String id) {
-        return offerRepository.findById(id)
+        return offerRepository.findById(UUID.fromString(id))
                 .map(offerMapper::toDTO)
                 .orElse(null);
     }

@@ -2,6 +2,7 @@ package com.example.offerbrowserprototype.domain.usseroffer;
 
 import com.example.offerbrowserprototype.domain.offer.Offer;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
+import com.example.offerbrowserprototype.infrastructure.repository.UserOfferStatusRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

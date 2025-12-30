@@ -5,10 +5,7 @@ import com.example.offerbrowserprototype.domain.dto.useroffer.UserOfferStatusDTO
 import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.domain.mapper.UserOfferStatusMapper;
 import com.example.offerbrowserprototype.domain.offer.Offer;
-import com.example.offerbrowserprototype.domain.usseroffer.UserAppliedOffersCountHandler;
-import com.example.offerbrowserprototype.domain.usseroffer.UserAppliedOffersHandler;
-import com.example.offerbrowserprototype.domain.usseroffer.UserOfferApplyHandler;
-import com.example.offerbrowserprototype.domain.usseroffer.UserOfferQueryHandler;
+import com.example.offerbrowserprototype.domain.usseroffer.*;
 import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -26,20 +23,21 @@ public class UserOfferFacade {
     private final UserOfferQueryHandler queryHandler;
     private final UserAppliedOffersHandler appliedOffersHandler;
     private final UserAppliedOffersCountHandler appliedOffersCountHandler;
-
     private final RedisTemplate<String, Object> redisTemplate;
 
     private static final String APPLIED_OFFERS_CACHE_KEY_PREFIX = "userOffers:applied:";
     private static final String APPLIED_OFFERS_COUNT_CACHE_KEY_PREFIX = "userOffers:appliedCount:";
 
-    public UserOfferFacade(UserOfferApplyHandler applyHandler,
-                           UserRepository userRepository,
-                           UserOfferStatusMapper userOfferStatusMapper,
-                           OfferMapper offerMapper,
-                           UserOfferQueryHandler queryHandler,
-                           UserAppliedOffersHandler appliedOffersHandler,
-                           UserAppliedOffersCountHandler appliedOffersCountHandler,
-                           RedisTemplate<String, Object> redisTemplate) {
+    public UserOfferFacade(
+            UserOfferApplyHandler applyHandler,
+            UserRepository userRepository,
+            UserOfferStatusMapper userOfferStatusMapper,
+            OfferMapper offerMapper,
+            UserOfferQueryHandler queryHandler,
+            UserAppliedOffersHandler appliedOffersHandler,
+            UserAppliedOffersCountHandler appliedOffersCountHandler,
+            RedisTemplate<String, Object> redisTemplate
+    ) {
         this.applyHandler = applyHandler;
         this.userRepository = userRepository;
         this.userOfferStatusMapper = userOfferStatusMapper;
@@ -52,17 +50,15 @@ public class UserOfferFacade {
 
     public UserOfferStatusDTO applyToOfferByEmail(String email, String offerId) {
         String userId = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("User with email " + email + " not found"))
-                .getId();
+                .orElseThrow(() ->
+                        new IllegalArgumentException("User with email " + email + " not found"))
+                .getId()
+                .toString(); // ⬅ UUID → String (świadomie)
 
         var userOfferStatus = applyHandler.applyToOffer(userId, offerId);
 
-        // Usunięcie cache'owanych danych po zmianie stanu aplikacji użytkownika
-        String appliedOffersCacheKey = APPLIED_OFFERS_CACHE_KEY_PREFIX + userId;
-        String appliedOffersCountCacheKey = APPLIED_OFFERS_COUNT_CACHE_KEY_PREFIX + userId;
-
-        redisTemplate.delete(appliedOffersCacheKey);
-        redisTemplate.delete(appliedOffersCountCacheKey);
+        redisTemplate.delete(APPLIED_OFFERS_CACHE_KEY_PREFIX + userId);
+        redisTemplate.delete(APPLIED_OFFERS_COUNT_CACHE_KEY_PREFIX + userId);
 
         return userOfferStatusMapper.toDTO(userOfferStatus);
     }
@@ -77,34 +73,37 @@ public class UserOfferFacade {
     public List<OfferDTO> getAppliedOffersForUser(String userId) {
         String cacheKey = APPLIED_OFFERS_CACHE_KEY_PREFIX + userId;
 
-        // Pobierz dane z cache
-        List<OfferDTO> cachedOffers = (List<OfferDTO>) redisTemplate.opsForValue().get(cacheKey);
+        @SuppressWarnings("unchecked")
+        List<OfferDTO> cachedOffers =
+                (List<OfferDTO>) redisTemplate.opsForValue().get(cacheKey);
+
         if (cachedOffers != null) {
             return cachedOffers;
         }
 
-        // Jeśli brak w cache, pobierz z bazy i zapis w Redis
         List<OfferDTO> appliedOffers = appliedOffersHandler.getAppliedOffersForUser(userId)
                 .stream()
                 .map(offerMapper::toDTO)
                 .toList();
 
-        redisTemplate.opsForValue().set(cacheKey, appliedOffers, 1, TimeUnit.HOURS);
+        redisTemplate.opsForValue()
+                .set(cacheKey, appliedOffers, 1, TimeUnit.HOURS);
+
         return appliedOffers;
     }
 
     public long countAppliedOffersForUser(String userId) {
         String cacheKey = APPLIED_OFFERS_COUNT_CACHE_KEY_PREFIX + userId;
 
-        // Pobierz dane z cache
         Long cachedCount = (Long) redisTemplate.opsForValue().get(cacheKey);
         if (cachedCount != null) {
             return cachedCount;
         }
 
-        // Jeśli brak w cache, pobierz z bazy i zapis w Redis
-        long appliedOffersCount = appliedOffersCountHandler.countAppliedOffersForUser(userId);
-        redisTemplate.opsForValue().set(cacheKey, appliedOffersCount, 1, TimeUnit.HOURS);
-        return appliedOffersCount;
+        long count = appliedOffersCountHandler.countAppliedOffersForUser(userId);
+        redisTemplate.opsForValue()
+                .set(cacheKey, count, 1, TimeUnit.HOURS);
+
+        return count;
     }
 }

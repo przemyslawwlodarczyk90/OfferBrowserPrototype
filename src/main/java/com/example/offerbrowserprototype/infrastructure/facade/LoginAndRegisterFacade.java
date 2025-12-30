@@ -14,6 +14,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class LoginAndRegisterFacade {
 
@@ -67,7 +69,9 @@ public class LoginAndRegisterFacade {
     }
 
     private void activateUser(String userId) {
-        User user = userRepository.findById(userId)
+        UUID uuid = UUID.fromString(userId);
+
+        User user = userRepository.findById(uuid)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         user.setActive(true);

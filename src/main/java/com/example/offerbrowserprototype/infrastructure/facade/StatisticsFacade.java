@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-@RequiredArgsConstructor
 public class StatisticsFacade {
 
     private final OfferCountHandler offerCountHandler;

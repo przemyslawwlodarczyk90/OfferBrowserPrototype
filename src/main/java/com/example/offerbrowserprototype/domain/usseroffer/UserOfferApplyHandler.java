@@ -3,16 +3,19 @@ package com.example.offerbrowserprototype.domain.usseroffer;
 import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNoteHandler;
 import com.example.offerbrowserprototype.domain.exception.OfferAlreadyAppliedException;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
+import com.example.offerbrowserprototype.infrastructure.repository.UserOfferStatusRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Component
 public class UserOfferApplyHandler {
 
     private final UserOfferStatusRepository userOfferStatusRepository;
-    private final OfferRepository offerRepository; // Repozytorium ofert, aby pobrać szczegóły oferty
-    private final ApplicationNoteHandler applicationNoteHandler; // Handler do zapisywania notatek aplikacyjnych
+    private final OfferRepository offerRepository;
+    private final ApplicationNoteHandler applicationNoteHandler;
 
     public UserOfferApplyHandler(UserOfferStatusRepository userOfferStatusRepository,
                                  OfferRepository offerRepository,
@@ -22,25 +25,29 @@ public class UserOfferApplyHandler {
         this.applicationNoteHandler = applicationNoteHandler;
     }
 
+    @Transactional
     public UserOfferStatus applyToOffer(String userId, String offerId) {
-        UserOfferStatus userOfferStatus = userOfferStatusRepository
+
+        UserOfferStatus status = userOfferStatusRepository
                 .findByUserIdAndOfferId(userId, offerId)
                 .orElse(new UserOfferStatus(userId, offerId, false));
 
-        if (userOfferStatus.isApplied()) {
-            throw new OfferAlreadyAppliedException("Offer already applied for userId: " + userId);
+        if (status.isApplied()) {
+            throw new OfferAlreadyAppliedException(
+                    "Offer already applied for userId: " + userId
+            );
         }
 
-        // Zaznacz ofertę jako zaaplikowaną
-        userOfferStatus.setApplied(true);
-        userOfferStatus.setAppliedAt(LocalDateTime.now());
-        userOfferStatusRepository.save(userOfferStatus);
+        status.setApplied(true);
+        status.setAppliedAt(LocalDateTime.now());
+        userOfferStatusRepository.save(status);
 
-        // Pobierz szczegóły oferty
-        var offer = offerRepository.findById(offerId)
-                .orElseThrow(() -> new IllegalArgumentException("Offer not found for ID: " + offerId));
+        UUID offerUuid = UUID.fromString(offerId);
 
-        // Utwórz notatkę aplikacyjną
+        var offer = offerRepository.findById(offerUuid)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Offer not found for ID: " + offerId));
+
         applicationNoteHandler.saveApplicationNote(
                 userId,
                 offerId,
@@ -48,6 +55,6 @@ public class UserOfferApplyHandler {
                 offer.getCompany()
         );
 
-        return userOfferStatus;
+        return status;
     }
 }
