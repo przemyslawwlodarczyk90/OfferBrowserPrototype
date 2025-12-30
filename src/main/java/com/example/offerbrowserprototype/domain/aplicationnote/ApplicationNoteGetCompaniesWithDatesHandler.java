@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 @Component
 public class ApplicationNoteGetCompaniesWithDatesHandler {
 
@@ -18,7 +19,11 @@ public class ApplicationNoteGetCompaniesWithDatesHandler {
     }
 
     public Map<String, List<String>> getCompaniesWithApplicationDates(String userId) {
-        List<ApplicationNote> notes = applicationNoteRepository.findByUserId(userId);
+        if (userId == null || userId.trim().isEmpty()) {
+            throw new IllegalArgumentException("User ID cannot be null or empty.");
+        }
+
+        List<ApplicationNote> notes = applicationNoteRepository.findByUserId(userId.trim());
 
         return notes.stream()
                 .filter(note -> note.getAppliedAt() != null)
@@ -34,4 +39,3 @@ public class ApplicationNoteGetCompaniesWithDatesHandler {
                 ));
     }
 }
-

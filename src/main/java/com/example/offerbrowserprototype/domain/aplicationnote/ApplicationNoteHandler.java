@@ -7,18 +7,18 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-
 @Component
 public class ApplicationNoteHandler {
-    private final ApplicationNoteRepository applicationNoteRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(ApplicationNoteHandler.class);
+
+    private final ApplicationNoteRepository applicationNoteRepository;
 
     public ApplicationNoteHandler(ApplicationNoteRepository applicationNoteRepository) {
         this.applicationNoteRepository = applicationNoteRepository;
     }
 
-    public void saveApplicationNote(String userId, String offerId, String offerUrl, String companyName) {
+    public ApplicationNote saveApplicationNote(String userId, String offerId, String offerUrl, String companyName) {
         if (userId == null || userId.trim().isEmpty()) {
             throw new IllegalArgumentException("User ID cannot be null or empty.");
         }
@@ -29,15 +29,16 @@ public class ApplicationNoteHandler {
             throw new IllegalArgumentException("Company name cannot be null or empty.");
         }
 
-        logger.info("Saving application note for user: {}, offer: {} (URL: {}, Company: {})", userId, offerId, offerUrl, companyName);
+        logger.info("Saving application note for user: {}, offerId: {}, offerUrl: {}, company: {}",
+                userId, offerId, offerUrl, companyName);
 
         ApplicationNote note = new ApplicationNote();
-        note.setUserId(userId);
+        note.setUserId(userId.trim());
         note.setOfferId(offerId);
-        note.setOfferUrl(offerUrl);
-        note.setCompanyName(companyName);
+        note.setOfferUrl(offerUrl.trim());
+        note.setCompanyName(companyName.trim());
         note.setAppliedAt(LocalDateTime.now());
 
-        applicationNoteRepository.save(note);
+        return applicationNoteRepository.save(note);
     }
 }

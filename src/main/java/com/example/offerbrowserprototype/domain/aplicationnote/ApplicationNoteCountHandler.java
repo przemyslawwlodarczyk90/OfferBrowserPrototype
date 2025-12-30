@@ -16,6 +16,6 @@ public class ApplicationNoteCountHandler {
         if (userId == null || userId.trim().isEmpty()) {
             throw new IllegalArgumentException("User ID cannot be null or empty.");
         }
-        return applicationNoteRepository.countByUserId(userId);
+        return applicationNoteRepository.countByUserId(userId.trim());
     }
 }

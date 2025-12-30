@@ -1,6 +1,5 @@
 package com.example.offerbrowserprototype.domain.aplicationnote;
 
-
 import com.example.offerbrowserprototype.infrastructure.repository.ApplicationNoteRepository;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +22,6 @@ public class ApplicationNoteGetByCompanyNameHandler {
         if (companyName == null || companyName.trim().isEmpty()) {
             return Collections.emptyList();
         }
-        return applicationNoteRepository.findByUserIdAndCompanyNameIgnoreCase(userId, companyName.trim());
+        return applicationNoteRepository.findByUserIdAndCompanyNameIgnoreCase(userId.trim(), companyName.trim());
     }
 }

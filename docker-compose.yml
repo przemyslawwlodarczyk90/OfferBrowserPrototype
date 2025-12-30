@@ -1,82 +1,13 @@
+version: '3.9'
+
 services:
-
-
-  mongodb:
-    image: mongo:6.0.19
-    container_name: mongodb
+  postgres:
+    image: postgres:14-alpine
     ports:
-      - "27017:27017"
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: adminpassword
-      GLIBC_TUNABLES: glibc.pthread.rseq=0
-    command: ["mongod", "--bind_ip", "0.0.0.0", "--auth"]
-    volumes:
-      - ./mongodb-data:/data/db # Przechowywanie danych MongoDB na hoście
-    healthcheck:
-      test: ["CMD-SHELL", "mongosh --username admin --password adminpassword --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 })'"]
-      interval: 30s
-      timeout: 15s
-      retries: 5
-    restart: always
-    networks:
-      - offer-browser-network
-
-  redis:
-    image: redis:6.2.17
-    container_name: redis
-    ports:
-      - "6379:6379"
-    command: redis-server
-    volumes:
-      - ./redis-data:/data # Przechowywanie danych Redis na hoście
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-    restart: always
-    networks:
-      - offer-browser-network
-
-  adminer:
-    image: adminer:latest
-    ports:
-      - "8081:8080"
-    restart: always
-    networks:
-      - offer-browser-network
-
-  portainer:
-    image: portainer/portainer-ce:latest
-    ports:
-      - "9000:9000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./portainer-data:/data # Przechowywanie danych Portainer
-    restart: always
-    networks:
-      - offer-browser-network
-
-
-  browser:
-#      build:
-#       context: .
-      image: 135808915638.dkr.ecr.eu-north-1.amazonaws.com/browser1:1.10
-      ports:
-        - "8080:8080"
-      environment:
-        SPRING_DATA_MONGODB_URI: mongodb://admin:adminpassword@mongodb:27017/offerbrowserdb
-        SPRING_PROFILES_ACTIVE: prod
-      depends_on:
-        mongodb:
-          condition: service_healthy
-        redis:
-          condition: service_started
-      restart: always
-      networks:
-        - offer-browser-network
-
-networks:
-  offer-browser-network:
-    driver: bridge
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=user
+      - POSTGRES_DB=pgDB

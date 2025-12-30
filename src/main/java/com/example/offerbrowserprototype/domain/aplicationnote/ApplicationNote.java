@@ -1,30 +1,42 @@
 package com.example.offerbrowserprototype.domain.aplicationnote;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-
-@Data
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
-@Document(collection = "application_notes")
+@AllArgsConstructor
+@Entity
+@Table(name = "application_notes")
 public class ApplicationNote {
+
     @Id
-    private String id;
-    private String userId; 
-    private String offerId;
-    @Indexed(unique = true)
-    private String offerUrl;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+
+    @Column(nullable = false)
+    private String userId;
+
+    @Column(nullable = false)
     private String companyName;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
+
+
+    @Column
+    private String url;
+
+    @Column
+    private String offerId;
+
+
+    @Column
+    private String offerUrl;
+
+
+    @Column
     private LocalDateTime appliedAt;
 }

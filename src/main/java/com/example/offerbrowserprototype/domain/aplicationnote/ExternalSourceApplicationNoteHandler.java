@@ -26,9 +26,13 @@ public class ExternalSourceApplicationNoteHandler {
         }
 
         ApplicationNote note = new ApplicationNote();
-        note.setUserId(userId);
-        note.setCompanyName(companyName);
-        note.setOfferUrl(url);
+        note.setUserId(userId.trim());
+        note.setCompanyName(companyName.trim());
+
+        // nie kasuję pól: ustawiam oba, bo u Ciebie raz jest url, raz offerUrl
+        note.setUrl(url.trim());
+        note.setOfferUrl(url.trim());
+
         note.setAppliedAt(LocalDateTime.now());
 
         return applicationNoteRepository.save(note);

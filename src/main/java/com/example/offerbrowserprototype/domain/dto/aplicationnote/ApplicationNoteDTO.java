@@ -6,9 +6,11 @@ import java.time.LocalDateTime;
 
 @Data
 public class ApplicationNoteDTO {
-    private String id;
+    private Long id;
+    private String userId;
     private String offerId;
     private String offerUrl;
     private String companyName;
+    private String url;
     private LocalDateTime appliedAt;
 }

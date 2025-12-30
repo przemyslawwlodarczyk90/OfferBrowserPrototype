@@ -9,8 +9,7 @@ import org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfigurati
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoReactiveAutoConfiguration.class})
-@EnableMongoRepositories(basePackages = "com.example.offerbrowserprototype.infrastructure.repository")
+@SpringBootApplication
 @EnableScheduling
 public class OfferBrowserPrototypeApplication {
 
