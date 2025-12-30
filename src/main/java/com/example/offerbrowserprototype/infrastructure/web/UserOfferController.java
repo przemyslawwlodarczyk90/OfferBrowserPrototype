@@ -27,6 +27,10 @@ public class UserOfferController {
     @Value("${app.base-url}")
     private String baseUrl;
 
+    public UserOfferController(UserOfferFacade userOfferFacade) {
+        this.userOfferFacade = userOfferFacade;
+    }
+
     @GetMapping("/{offerId}/apply")
     public String applyToOffer(
             @RequestParam(value = "email", required = false) String email,

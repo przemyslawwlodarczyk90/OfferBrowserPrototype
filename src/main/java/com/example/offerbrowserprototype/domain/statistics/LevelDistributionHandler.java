@@ -16,6 +16,10 @@ public class LevelDistributionHandler {
     private static final Logger logger = LoggerFactory.getLogger(LevelDistributionHandler.class);
     private final OfferRepository offerRepository;
 
+    public LevelDistributionHandler(OfferRepository offerRepository) {
+        this.offerRepository = offerRepository;
+    }
+
     public Map<String, Long> getLevelDistribution() {
         logger.info("Fetching level distribution...");
         try {

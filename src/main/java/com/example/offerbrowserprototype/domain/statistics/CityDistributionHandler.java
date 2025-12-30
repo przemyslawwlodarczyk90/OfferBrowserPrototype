@@ -17,6 +17,10 @@ public class CityDistributionHandler {
     private static final Logger logger = LoggerFactory.getLogger(CityDistributionHandler.class);
     private final OfferRepository offerRepository;
 
+    public CityDistributionHandler(OfferRepository offerRepository) {
+        this.offerRepository = offerRepository;
+    }
+
     public Map<String, Long> getCityDistribution() {
         logger.info("Fetching city distribution...");
 

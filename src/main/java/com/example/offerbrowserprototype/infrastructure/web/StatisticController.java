@@ -26,6 +26,11 @@ public class StatisticController {
     private final StatisticsFacade statisticsFacade;
     private final StatisticsMapper statisticsMapper;
 
+    public StatisticController(StatisticsFacade statisticsFacade, StatisticsMapper statisticsMapper) {
+        this.statisticsFacade = statisticsFacade;
+        this.statisticsMapper = statisticsMapper;
+    }
+
     @GetMapping("/total-offers")
     @Operation(summary = "Get total offers", description = "Returns the total number of job offers.")
     public ResponseEntity<StatisticsSummaryDTO> getTotalOffers() {

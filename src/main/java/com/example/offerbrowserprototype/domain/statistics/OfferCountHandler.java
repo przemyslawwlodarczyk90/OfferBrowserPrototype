@@ -10,6 +10,10 @@ public class OfferCountHandler {
 
     private final OfferRepository offerRepository;
 
+    public OfferCountHandler(OfferRepository offerRepository) {
+        this.offerRepository = offerRepository;
+    }
+
     public long getTotalOffers() {
         return offerRepository.countByIsDuplicateFalse();
     }

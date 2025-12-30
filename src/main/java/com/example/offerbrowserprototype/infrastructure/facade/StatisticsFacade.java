@@ -17,6 +17,12 @@ public class StatisticsFacade {
     private final LevelDistributionHandler levelDistributionHandler;
     private final CityDistributionHandler cityDistributionHandler;
 
+    public StatisticsFacade(OfferCountHandler offerCountHandler, LevelDistributionHandler levelDistributionHandler, CityDistributionHandler cityDistributionHandler) {
+        this.offerCountHandler = offerCountHandler;
+        this.levelDistributionHandler = levelDistributionHandler;
+        this.cityDistributionHandler = cityDistributionHandler;
+    }
+
     @Cacheable(value = "totalOffers", unless = "#result == 0")
     public long getTotalOffers() {
         return offerCountHandler.getTotalOffers();

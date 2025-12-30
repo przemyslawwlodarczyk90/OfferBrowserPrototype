@@ -2,7 +2,9 @@ package com.example.offerbrowserprototype.domain.aplicationnote;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,6 +13,8 @@ import java.time.LocalDateTime;
 
 
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Document(collection = "application_notes")
 public class ApplicationNote {
