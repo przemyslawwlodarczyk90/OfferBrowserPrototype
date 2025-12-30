@@ -1,29 +1,42 @@
 package com.example.offerbrowserprototype.domain.user;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@Document(collection = "confirmation_tokens")
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(
+        name = "confirmation_tokens",
+        indexes = {
+                @Index(name = "idx_token_unique", columnList = "token", unique = true)
+        }
+)
 public class ConfirmationToken {
 
     @Id
-    private String id;
-    private String token;
-    private LocalDateTime createdAt;
-    private LocalDateTime expiresAt;
-    private LocalDateTime confirmedAt;
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt, String userId) {
-        this.token = token;
-        this.createdAt = createdAt;
-        this.expiresAt = expiresAt;
-        this.userId = userId;
-    }
+    @Column(nullable = false, unique = true)
+    private String token;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime expiresAt;
+
+    @Column(nullable = true)
+    private LocalDateTime confirmedAt;
+
+
+    @Column(nullable = false)
+    private String userId;
 }

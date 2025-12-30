@@ -5,7 +5,6 @@ import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.domain.usseroffer.UserOfferStatus;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
-import com.example.offerbrowserprototype.infrastructure.repository.UserOfferStatusRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

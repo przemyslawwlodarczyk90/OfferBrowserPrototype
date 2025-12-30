@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-@RequiredArgsConstructor
+
 public class LevelDistributionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(LevelDistributionHandler.class);

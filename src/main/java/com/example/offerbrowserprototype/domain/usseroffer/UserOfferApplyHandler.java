@@ -3,7 +3,6 @@ package com.example.offerbrowserprototype.domain.usseroffer;
 import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNoteHandler;
 import com.example.offerbrowserprototype.domain.exception.OfferAlreadyAppliedException;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
-import com.example.offerbrowserprototype.infrastructure.repository.UserOfferStatusRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

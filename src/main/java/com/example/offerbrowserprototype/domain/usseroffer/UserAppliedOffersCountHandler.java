@@ -1,6 +1,5 @@
 package com.example.offerbrowserprototype.domain.usseroffer;
 
-import com.example.offerbrowserprototype.infrastructure.repository.UserOfferStatusRepository;
 import org.springframework.stereotype.Component;
 
 @Component
