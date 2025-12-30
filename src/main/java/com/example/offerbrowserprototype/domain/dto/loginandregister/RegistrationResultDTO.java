@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegistrationResultDTO {
-    private String userId;
+    private Long userId;
     private String username;
     private boolean isSuccess;
     private String message;

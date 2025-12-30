@@ -14,10 +14,7 @@ public class UserOfferGetNotAppliedStatusesHandler {
         this.repository = repository;
     }
 
-    public List<UserOfferStatus> getNotAppliedStatuses(String userId) {
-        if (userId == null || userId.isBlank()) {
-            throw new IllegalArgumentException("User ID cannot be null or empty.");
-        }
-        return repository.findByUserIdAndAppliedFalse(userId.trim());
+    public List<UserOfferStatus> getNotAppliedStatuses(Long userId) {
+        return repository.findByUser_IdAndAppliedFalse(userId);
     }
 }

@@ -2,6 +2,7 @@ package com.example.offerbrowserprototype.domain.usseroffer;
 
 import com.example.offerbrowserprototype.infrastructure.repository.UserOfferStatusRepository;
 import org.springframework.stereotype.Component;
+
 @Component
 public class UserAppliedOffersCountHandler {
 
@@ -11,9 +12,7 @@ public class UserAppliedOffersCountHandler {
         this.userOfferStatusRepository = userOfferStatusRepository;
     }
 
-    public long countAppliedOffersForUser(String userId) {
-        return userOfferStatusRepository
-                .findByUserIdAndAppliedTrue(userId)
-                .size();
+    public long countAppliedOffersForUser(Long userId) {
+        return userOfferStatusRepository.countByUser_IdAndAppliedTrue(userId);
     }
 }

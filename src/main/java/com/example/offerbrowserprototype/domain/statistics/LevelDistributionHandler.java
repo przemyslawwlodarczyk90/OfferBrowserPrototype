@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-
 public class LevelDistributionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(LevelDistributionHandler.class);
@@ -22,18 +21,14 @@ public class LevelDistributionHandler {
 
     public Map<String, Long> getLevelDistribution() {
         logger.info("Fetching level distribution...");
-        try {
-            var rawDistribution = offerRepository.getLevelDistributionSimple();
-            logger.debug("Raw aggregation result: {}", rawDistribution);
 
-            return rawDistribution.stream()
-                    .collect(Collectors.toMap(
-                            LevelDistribution::getId,
-                            LevelDistribution::getCount
-                    ));
-        } catch (Exception e) {
-            logger.error("Error fetching level distribution", e);
-            throw e;
-        }
+        var rawDistribution = offerRepository.getLevelDistributionSimple();
+
+        return rawDistribution.stream()
+                .collect(Collectors.toMap(
+                        LevelDistributionProjection::getId,
+                        LevelDistributionProjection::getCount
+                ));
     }
 }
+

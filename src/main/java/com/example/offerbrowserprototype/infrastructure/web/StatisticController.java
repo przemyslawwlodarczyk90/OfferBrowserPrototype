@@ -19,7 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/statistics")
 @Tag(name = "Statistics Controller", description = "Operations for retrieving statistics about job offers.")
-@RequiredArgsConstructor
+
 @PreAuthorize("isAuthenticated()")
 public class StatisticController {
 

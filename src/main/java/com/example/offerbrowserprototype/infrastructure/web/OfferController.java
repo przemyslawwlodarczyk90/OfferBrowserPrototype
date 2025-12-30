@@ -2,14 +2,8 @@ package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.infrastructure.facade.OfferFacade;
-
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,93 +24,62 @@ public class OfferController {
         this.offerFacade = offerFacade;
     }
 
-
-    @Operation(summary = "Add a new offer", description = "Creates a new job offer in the system")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Offer created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OfferDTO.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
-    })
     @PostMapping
-    public ResponseEntity<OfferDTO> addOffer(@Valid @RequestBody OfferDTO offerDto) {
-        OfferDTO createdOffer = offerFacade.addOffer(offerDto);
-        return new ResponseEntity<>(createdOffer, HttpStatus.CREATED);
+    @Operation(summary = "Add offer")
+    public ResponseEntity<OfferDTO> addOffer(@Valid @RequestBody OfferDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(offerFacade.addOffer(dto));
     }
 
-    @Operation(summary = "Update an existing offer", description = "Updates an existing job offer by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Offer updated successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OfferDTO.class))),
-            @ApiResponse(responseCode = "404", description = "Offer not found", content = @Content)
-    })
     @PutMapping("/{id}")
-    public ResponseEntity<OfferDTO> updateOffer(@PathVariable String id, @Valid @RequestBody OfferDTO offerDto) {
-        OfferDTO updatedOffer = offerFacade.updateOffer(id, offerDto);
-        return new ResponseEntity<>(updatedOffer, HttpStatus.OK);
+    @Operation(summary = "Update offer")
+    public ResponseEntity<OfferDTO> updateOffer(
+            @PathVariable Long id,
+            @Valid @RequestBody OfferDTO dto
+    ) {
+        return ResponseEntity.ok(offerFacade.updateOffer(id, dto));
     }
 
-    @Operation(summary = "Delete an offer", description = "Deletes a job offer by ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Offer deleted successfully"),
-            @ApiResponse(responseCode = "404", description = "Offer not found", content = @Content)
-    })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOffer(@PathVariable String id) {
+    @Operation(summary = "Delete offer")
+    public ResponseEntity<Void> deleteOffer(@PathVariable Long id) {
         offerFacade.deleteOffer(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Get offer details", description = "Retrieve the details of an offer by its ID.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved offer details"),
-            @ApiResponse(responseCode = "404", description = "Offer not found")
-    })
-    @GetMapping("/{offerId}")
-    public ResponseEntity<OfferDTO> getOfferById(@PathVariable String offerId) {
-        return ResponseEntity.ok(offerFacade.getOffer(offerId));
+    @GetMapping("/{id}")
+    @Operation(summary = "Get offer by ID")
+    public ResponseEntity<OfferDTO> getOffer(@PathVariable Long id) {
+        return ResponseEntity.ok(offerFacade.getOffer(id));
     }
 
-    @Operation(summary = "Get all offers", description = "Retrieve all job offers from the system.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved all offers")
-    })
     @GetMapping
+    @Operation(summary = "Get all offers")
     public ResponseEntity<List<OfferDTO>> getAllOffers() {
         return ResponseEntity.ok(offerFacade.getAllOffers());
     }
 
-    @Operation(summary = "Push offer to a provider", description = "Push a job offer to an external provider.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Offer pushed to provider successfully"),
-            @ApiResponse(responseCode = "404", description = "Offer not found")
-    })
-    @PostMapping("/{offerId}/push/{providerName}")
-    public ResponseEntity<Void> pushOfferToProvider(@PathVariable String offerId, @PathVariable String providerName) {
-        offerFacade.pushOfferToProvider(offerId, providerName);
+    @PostMapping("/{offerId}/push/{provider}")
+    @Operation(summary = "Push offer to provider")
+    public ResponseEntity<Void> pushOffer(
+            @PathVariable Long offerId,
+            @PathVariable String provider
+    ) {
+        offerFacade.pushOfferToProvider(offerId, provider);
         return ResponseEntity.ok().build();
     }
 
-
-
-    @Operation(summary = "Mark offer as duplicate by ID", description = "Marks the specified job offer as duplicated using its ID.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Offer marked as duplicate successfully"),
-            @ApiResponse(responseCode = "404", description = "Offer not found")
-    })
     @PostMapping("/{offerId}/mark-duplicate")
-    public ResponseEntity<Void> markOfferAsDuplicateById(@PathVariable String offerId) {
+    @Operation(summary = "Mark offer as duplicate by ID")
+    public ResponseEntity<Void> markDuplicate(@PathVariable Long offerId) {
         offerFacade.markAsDuplicateById(offerId);
         return ResponseEntity.ok().build();
     }
 
-
-    @Operation(summary = "Mark offer as duplicate by URL", description = "Marks the specified job offer as duplicated using its URL.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Offer marked as duplicate successfully"),
-            @ApiResponse(responseCode = "404", description = "Offer not found")
-    })
     @PostMapping("/mark-duplicate-by-url")
-    public ResponseEntity<Void> markOfferAsDuplicateByUrl(@RequestParam String offerUrl) {
+    @Operation(summary = "Mark offer as duplicate by URL")
+    public ResponseEntity<Void> markDuplicateByUrl(@RequestParam String offerUrl) {
         offerFacade.markAsDuplicateByUrl(offerUrl);
         return ResponseEntity.ok().build();
     }
-
 }

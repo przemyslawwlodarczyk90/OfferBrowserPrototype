@@ -5,35 +5,30 @@ import com.example.offerbrowserprototype.infrastructure.external.JobOfferProvide
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class OfferPushHandler {
 
     private final List<JobOfferProvider> jobOfferProviders;
-    private final OfferRetrievalHandler retrievalHandler;
+    private final OfferDetailsHandler detailsHandler;
 
-    public OfferPushHandler(List<JobOfferProvider> jobOfferProviders, OfferRetrievalHandler retrievalHandler) {
+    public OfferPushHandler(
+            List<JobOfferProvider> jobOfferProviders,
+            OfferDetailsHandler detailsHandler
+    ) {
         this.jobOfferProviders = jobOfferProviders;
-        this.retrievalHandler = retrievalHandler;
+        this.detailsHandler = detailsHandler;
     }
 
-    public void pushOfferToProvider(String offerId, String providerName) {
+    public void pushOfferToProvider(Long offerId, String providerName) {
 
-        OfferDTO offer = retrievalHandler.getOffer(offerId);
-        if (offer == null) {
-            throw new IllegalArgumentException("Offer not found");
-        }
+        OfferDTO offer = detailsHandler.getOfferById(offerId);
 
-        Optional<JobOfferProvider> providerOpt = jobOfferProviders.stream()
-                .filter(provider -> provider.getProviderName().equalsIgnoreCase(providerName))
-                .findFirst();
-
-        if (providerOpt.isEmpty()) {
-            throw new IllegalArgumentException("Provider not found");
-        }
-
-        JobOfferProvider provider = providerOpt.get();
+        JobOfferProvider provider = jobOfferProviders.stream()
+                .filter(p -> p.getProviderName().equalsIgnoreCase(providerName))
+                .findFirst()
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Provider not found: " + providerName));
 
         provider.pushOffer(offer);
     }

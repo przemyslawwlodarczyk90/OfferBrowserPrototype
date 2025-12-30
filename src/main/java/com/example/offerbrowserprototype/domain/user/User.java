@@ -5,24 +5,18 @@ import lombok.*;
 
 import java.util.UUID;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(
-        name = "users",
-        indexes = {
-                @Index(name = "idx_users_email_unique", columnList = "email", unique = true),
-                @Index(name = "idx_users_username_unique", columnList = "username", unique = true)
-        }
-)
 public class User {
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String username;

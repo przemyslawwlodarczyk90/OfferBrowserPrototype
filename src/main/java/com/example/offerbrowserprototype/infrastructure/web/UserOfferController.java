@@ -2,18 +2,12 @@ package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.dto.useroffer.UserOfferStatusDTO;
-import com.example.offerbrowserprototype.domain.exception.OfferAlreadyAppliedException;
 import com.example.offerbrowserprototype.infrastructure.facade.UserOfferFacade;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -22,100 +16,47 @@ import java.util.List;
 public class UserOfferController {
 
     private final UserOfferFacade userOfferFacade;
-    private static final Logger logger = LoggerFactory.getLogger(UserOfferController.class);
 
-    @Value("${app.base-url}")
-    private String baseUrl;
-
-    public UserOfferController(UserOfferFacade userOfferFacade) {
-        this.userOfferFacade = userOfferFacade;
-    }
-
-    @GetMapping("/{offerId}/apply")
-    public String applyToOffer(
-            @RequestParam(value = "email", required = false) String email,
-            @PathVariable String offerId,
-            Model model) {
-        logger.info("Received request to apply to offer. email: {}, offerId: {}", email, offerId);
-
-        if (email == null || email.isEmpty()) {
-            logger.error("Invalid input: email is null or empty");
-            model.addAttribute("message", "Invalid input data. Please provide a valid email.");
-            return "error";
-        }
-
-        try {
-            UserOfferStatusDTO userOfferStatusDTO = userOfferFacade.applyToOfferByEmail(email, offerId);
-
-            if (userOfferStatusDTO.isApplied()) {
-                model.addAttribute("message", "You have successfully applied to the offer!");
-                return "success";
-            }
-
-        } catch (OfferAlreadyAppliedException e) {
-            logger.warn("Offer already applied for email: {}, offerId: {}", email, offerId);
-            model.addAttribute("message", "This offer has already been applied!");
-            return "already-applied";
-        } catch (Exception e) {
-            logger.error("Error occurred while applying to offer. email: {}, offerId: {}, error: {}", email, offerId, e.getMessage());
-            model.addAttribute("message", "An error occurred: " + e.getMessage());
-            return "error";
-        }
-        return "error";
+    @PostMapping("/{offerId}/apply")
+    @Operation(summary = "Apply to offer")
+    public ResponseEntity<UserOfferStatusDTO> apply(
+            @RequestHeader Long userId,
+            @PathVariable Long offerId
+    ) {
+        return ResponseEntity.ok(
+                userOfferFacade.applyToOffer(userId, offerId)
+        );
     }
 
     @GetMapping("/not-applied")
-    @Operation(summary = "Get not applied offers", description = "Retrieves offers the user hasn't applied to.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved unapplied offers"),
-            @ApiResponse(responseCode = "404", description = "No unapplied offers found")
-    })
-    public ResponseEntity<List<OfferDTO>> getNotAppliedOffers(@RequestHeader("userId") String userId) {
-        List<OfferDTO> notAppliedOffers = userOfferFacade.getNotAppliedOffersForUser(userId);
-        if (notAppliedOffers.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(notAppliedOffers);
-    }
-
-    @GetMapping("/daily-unapplied")
-    @Operation(summary = "Get daily unapplied offers for the user", description = "Generates a list of unapplied offers for a specific user.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully generated daily unapplied offers"),
-            @ApiResponse(responseCode = "404", description = "No unapplied offers found")
-    })
-    public String getDailyUnappliedOffers(@RequestHeader("userId") String userId, org.springframework.ui.Model model) {
+    @Operation(summary = "Get not applied offers")
+    public ResponseEntity<List<OfferDTO>> notApplied(
+            @RequestHeader Long userId
+    ) {
         List<OfferDTO> offers = userOfferFacade.getNotAppliedOffersForUser(userId);
-        if (offers.isEmpty()) {
-            return "No unapplied offers found.";
-        }
-        model.addAttribute("offers", offers);
-        return "daily-job-offers";
+        return offers.isEmpty()
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(offers);
     }
-
 
     @GetMapping("/applied")
-    @Operation(summary = "Get applied offers", description = "Retrieves offers the user has applied to.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved applied offers"),
-            @ApiResponse(responseCode = "404", description = "No applied offers found")
-    })
-    public ResponseEntity<List<OfferDTO>> getAppliedOffers(@RequestHeader("userId") String userId) {
-        List<OfferDTO> appliedOffers = userOfferFacade.getAppliedOffersForUser(userId);
-        if (appliedOffers.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(appliedOffers);
+    @Operation(summary = "Get applied offers")
+    public ResponseEntity<List<OfferDTO>> applied(
+            @RequestHeader Long userId
+    ) {
+        List<OfferDTO> offers = userOfferFacade.getAppliedOffersForUser(userId);
+        return offers.isEmpty()
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(offers);
     }
 
     @GetMapping("/applied/count")
-    @Operation(summary = "Get count of applied offers", description = "Retrieves the count of offers the user has applied to.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved count of applied offers")
-    })
-    public ResponseEntity<Long> countAppliedOffers(@RequestHeader("userId") String userId) {
-        long count = userOfferFacade.countAppliedOffersForUser(userId);
-        return ResponseEntity.ok(count);
+    @Operation(summary = "Count applied offers")
+    public ResponseEntity<Long> count(
+            @RequestHeader Long userId
+    ) {
+        return ResponseEntity.ok(
+                userOfferFacade.countAppliedOffersForUser(userId)
+        );
     }
-
 }

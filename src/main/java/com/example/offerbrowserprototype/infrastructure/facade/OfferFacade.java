@@ -1,6 +1,5 @@
 package com.example.offerbrowserprototype.infrastructure.facade;
 
-import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNoteHandler;
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.offer.*;
 import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheFacade;
@@ -16,31 +15,28 @@ import java.util.List;
 public class OfferFacade {
 
     private final OfferFromUrlHandler offerFromUrlHandler;
-    private final OfferDetailsHandler  detailsHandler;
+    private final OfferDetailsHandler detailsHandler;
     private final OfferAdditionHandler additionHandler;
     private final OfferUpdateHandler updateHandler;
     private final OfferDeletionHandler deletionHandler;
     private final OfferRetrievalHandler retrievalHandler;
-
     private final OfferCacheFacade offerCacheFacade;
-
     private final ExternalJobOfferService externalJobOfferService;
     private final OfferPushHandler pushHandler;
-
     private final MarkAsDuplicateHandler markAsDuplicateHandler;
 
-    public OfferFacade(OfferFromUrlHandler offerFromUrlHandler,
-
-                       OfferAdditionHandler additionHandler,
-                       OfferUpdateHandler updateHandler,
-                       OfferDeletionHandler deletionHandler,
-                       OfferRetrievalHandler retrievalHandler,
-                       OfferDetailsHandler detailsHandler,
-                       OfferCacheFacade offerCacheFacade,
-                       ExternalJobOfferService externalJobOfferService,
-                       OfferPushHandler pushHandler,
-                       ApplicationNoteHandler applicationNoteHandler,
-                       MarkAsDuplicateHandler markAsDuplicateHandler) {
+    public OfferFacade(
+            OfferFromUrlHandler offerFromUrlHandler,
+            OfferAdditionHandler additionHandler,
+            OfferUpdateHandler updateHandler,
+            OfferDeletionHandler deletionHandler,
+            OfferRetrievalHandler retrievalHandler,
+            OfferDetailsHandler detailsHandler,
+            OfferCacheFacade offerCacheFacade,
+            ExternalJobOfferService externalJobOfferService,
+            OfferPushHandler pushHandler,
+            MarkAsDuplicateHandler markAsDuplicateHandler
+    ) {
         this.offerFromUrlHandler = offerFromUrlHandler;
         this.additionHandler = additionHandler;
         this.updateHandler = updateHandler;
@@ -54,58 +50,50 @@ public class OfferFacade {
     }
 
     @CacheEvict(value = "offers", allEntries = true)
-    public OfferDTO addOffer(OfferDTO offerDto) {
-        return additionHandler.addOffer(offerDto);
+    public OfferDTO addOffer(OfferDTO dto) {
+        return additionHandler.addOffer(dto);
     }
 
     @CacheEvict(value = "offers", allEntries = true)
-    public OfferDTO updateOffer(String id, OfferDTO offerDto) {
-        return updateHandler.updateOffer(id, offerDto);
+    public OfferDTO updateOffer(Long id, OfferDTO dto) {
+        return updateHandler.updateOffer(id, dto);
     }
 
-    @Cacheable(value = "offerDetails", key = "#id", unless = "#result == null")
-    public OfferDTO getOffer(String id) {
+    @Cacheable(value = "offerDetails", key = "#id")
+    public OfferDTO getOffer(Long id) {
         return detailsHandler.getOfferById(id);
     }
 
     @CacheEvict(value = "offers", allEntries = true)
-    public void deleteOffer(String id) {
+    public void deleteOffer(Long id) {
         deletionHandler.deleteOffer(id);
     }
 
-
-
-    @Cacheable(value = "allOffers", unless = "#result.isEmpty()")
+    @Cacheable(value = "allOffers")
     public List<OfferDTO> getAllOffers() {
-        List<OfferDTO> cachedOffers = offerCacheFacade.getCachedOffers();
-        if (cachedOffers != null && !cachedOffers.isEmpty()) {
-            return cachedOffers;
+        List<OfferDTO> cached = offerCacheFacade.getCachedOffers();
+        if (cached != null && !cached.isEmpty()) {
+            return cached;
         }
 
-        List<OfferDTO> localOffers = retrievalHandler.getAllOffers();
-        List<OfferDTO> externalOffers = externalJobOfferService.fetchExternalOffers();
+        List<OfferDTO> combined = new ArrayList<>();
+        combined.addAll(retrievalHandler.getAllOffers());
+        combined.addAll(externalJobOfferService.fetchExternalOffers());
 
-        List<OfferDTO> combinedOffers = new ArrayList<>(localOffers);
-        combinedOffers.addAll(externalOffers);
-
-        offerCacheFacade.cacheOffers(combinedOffers);
-
-        return combinedOffers;
+        offerCacheFacade.cacheOffers(combined);
+        return combined;
     }
 
-    public void pushOfferToProvider(String offerId, String providerName) {
-        pushHandler.pushOfferToProvider(offerId, providerName);
+    public void pushOfferToProvider(Long offerId, String provider) {
+        pushHandler.pushOfferToProvider(offerId, provider);
     }
 
-    public OfferDTO addOfferFromUrl(String userId, String offerUrl) {
+    public OfferDTO addOfferFromUrl(Long userId, String offerUrl) {
         return offerFromUrlHandler.addOfferFromUrl(userId, offerUrl);
     }
 
-
-
-
     @CacheEvict(value = {"allOffers", "offerDetails"}, allEntries = true)
-    public void markAsDuplicateById(String offerId) {
+    public void markAsDuplicateById(Long offerId) {
         markAsDuplicateHandler.handleById(offerId);
     }
 

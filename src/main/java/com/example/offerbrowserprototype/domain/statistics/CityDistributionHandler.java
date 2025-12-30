@@ -1,7 +1,6 @@
 package com.example.offerbrowserprototype.domain.statistics;
 
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-
 public class CityDistributionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(CityDistributionHandler.class);
@@ -25,17 +23,26 @@ public class CityDistributionHandler {
         logger.info("Fetching city distribution...");
 
         try {
-            List<CityDistribution> rawDistribution = offerRepository.getCityDistributionSimple();
+            List<CityDistributionProjection> rawDistribution =
+                    offerRepository.getCityDistributionSimple();
+
             logger.debug("Raw city distribution result: {}", rawDistribution);
 
             Map<String, Long> processedDistribution = new HashMap<>();
-            rawDistribution.forEach(cityDist -> {
+
+            for (CityDistributionProjection cityDist : rawDistribution) {
+                if (cityDist.getId() == null) {
+                    continue;
+                }
+
+                // np. "Warszawa, Mazowieckie" → "Warszawa"
                 String city = cityDist.getId().split(",")[0].trim();
                 processedDistribution.merge(city, cityDist.getCount(), Long::sum);
-            });
+            }
 
             logger.debug("Processed city distribution: {}", processedDistribution);
             return processedDistribution;
+
         } catch (Exception e) {
             logger.error("Error fetching city distribution", e);
             throw e;

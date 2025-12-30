@@ -14,10 +14,7 @@ public class ApplicationNoteGetAllHandler {
         this.applicationNoteRepository = applicationNoteRepository;
     }
 
-    public List<ApplicationNote> getAllNotes(String userId) {
-        if (userId == null || userId.trim().isEmpty()) {
-            throw new IllegalArgumentException("User ID cannot be null or empty.");
-        }
-        return applicationNoteRepository.findByUserId(userId.trim());
+    public List<ApplicationNote> getAllNotes(Long userId) {
+        return applicationNoteRepository.findByUserId(userId);
     }
 }

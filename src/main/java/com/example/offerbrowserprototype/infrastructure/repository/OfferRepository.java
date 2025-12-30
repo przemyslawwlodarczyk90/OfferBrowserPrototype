@@ -1,48 +1,57 @@
 package com.example.offerbrowserprototype.infrastructure.repository;
 
 import com.example.offerbrowserprototype.domain.offer.Offer;
+import com.example.offerbrowserprototype.domain.statistics.CityDistributionProjection;
+import com.example.offerbrowserprototype.domain.statistics.LevelDistributionProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-
 @Repository
-public interface OfferRepository extends JpaRepository<Offer, UUID> {
-
-    List<Offer> findAllByOrderByFetchedAtDesc();
+public interface OfferRepository extends JpaRepository<Offer, Long> {
 
     Optional<Offer> findByOfferUrl(String offerUrl);
 
-    long countByIsDuplicateFalse();
+    boolean existsByOfferUrl(String offerUrl);
 
-    interface LevelDistributionView {
-        String getLevel();
-        long getCount();
-    }
+    List<Offer> findByDuplicateFalse();
 
-    interface CityDistributionView {
-        String getLocation();
-        long getCount();
-    }
+    List<Offer> findAllByOrderByFetchedAtDesc();
 
     @Query("""
-        select coalesce(o.level, 'unknown') as level, count(o) as count
-        from Offer o
-        where o.isDuplicate = false
-        group by coalesce(o.level, 'unknown')
+        SELECT COUNT(o)
+        FROM Offer o
+        WHERE o.duplicate = false
     """)
-    List<LevelDistributionView> getLevelDistributionSimple();
+    long countNonDuplicateOffers();
 
     @Query("""
-        select coalesce(o.location, 'unknown') as location, count(o) as count
-        from Offer o
-        where o.isDuplicate = false
-        group by coalesce(o.location, 'unknown')
+        SELECT o.level AS id, COUNT(o) AS count
+        FROM Offer o
+        WHERE o.duplicate = false
+        GROUP BY o.level
     """)
-    List<CityDistributionView> getCityDistributionSimple();
+    List<LevelDistributionProjection> getLevelDistributionSimple();
 
-    List<Offer> findByIdNotIn(List<UUID> ids);
+    @Query("""
+        SELECT o.city AS id, COUNT(o) AS count
+        FROM Offer o
+        WHERE o.duplicate = false
+        GROUP BY o.city
+    """)
+    List<CityDistributionProjection> getCityDistributionSimple();
+
+    // alias pod Twoją metodę w handlerze
+    default long countByIsDuplicateFalse() {
+        return countByDuplicateFalse();
+    }
+
+
+
+    List<Offer> findByIdNotInAndDuplicateFalse(List<Long> ids);
+
+    long countByDuplicateFalse();
 }
+

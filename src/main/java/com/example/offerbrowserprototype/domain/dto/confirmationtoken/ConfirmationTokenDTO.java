@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class ConfirmationTokenDTO {
 
     @NotNull
-    private String id;
+    private Long id;
 
     @NotNull
     private String token;
@@ -28,7 +28,7 @@ public class ConfirmationTokenDTO {
     @NotNull
     private String userId;
 
-    public ConfirmationTokenDTO(String id, String token, LocalDateTime createdAt, LocalDateTime expiresAt, LocalDateTime confirmedAt, String userId) {
+    public ConfirmationTokenDTO(@NotNull Long id, String token, LocalDateTime createdAt, LocalDateTime expiresAt, LocalDateTime confirmedAt, String userId) {
         this.id = id;
         this.token = token;
         this.createdAt = createdAt;

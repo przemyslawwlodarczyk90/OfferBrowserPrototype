@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Data
 public class OfferDTO implements Serializable {
 
-    private String id;
+    private Long id;
 
     @NotBlank(message = "Title cannot be empty")
     private String title;
@@ -54,7 +54,7 @@ public class OfferDTO implements Serializable {
         this.fetchedAt = fetchedAt;
     }
 
-    public OfferDTO(String id, String title, String description, String location, String offerUrl, String salaryRange, String company, String level, boolean applied, LocalDateTime fetchedAt) {
+    public OfferDTO(Long id, String title, String description, String location, String offerUrl, String salaryRange, String company, String level, boolean applied, LocalDateTime fetchedAt) {
         this.id = id;
         this.title = title;
         this.description = description;

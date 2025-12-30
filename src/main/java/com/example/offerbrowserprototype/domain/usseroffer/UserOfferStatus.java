@@ -1,33 +1,53 @@
 package com.example.offerbrowserprototype.domain.usseroffer;
 
-import jakarta.persistence.Id;
+import com.example.offerbrowserprototype.domain.offer.Offer;
+import com.example.offerbrowserprototype.domain.user.User;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-@Document(collection = "user_offer_status")
-@CompoundIndex(name = "user_offer_idx", def = "{'userId': 1, 'offerId': 1}")
+@Entity
+@Table(
+        name = "user_offer_status",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_user_offer",
+                        columnNames = {"user_id", "offer_id"}
+                )
+        },
+        indexes = {
+                @Index(name = "idx_user_offer_user", columnList = "user_id"),
+                @Index(name = "idx_user_offer_offer", columnList = "offer_id")
+        }
+)
 @Data
 @NoArgsConstructor
 public class UserOfferStatus {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String userId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    private String offerId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "offer_id", nullable = false)
+    private Offer offer;
 
+    @Column(nullable = false)
     private boolean applied;
 
+    @Column(name = "applied_at")
     private LocalDateTime appliedAt;
 
-    public UserOfferStatus(String userId, String offerId, boolean applied) {
-        this.userId = userId;
-        this.offerId = offerId;
+    public UserOfferStatus(User user, Offer offer, boolean applied) {
+        this.user = user;
+        this.offer = offer;
+        this.applied = applied;
         this.appliedAt = applied ? LocalDateTime.now() : null;
     }
 }

@@ -4,9 +4,10 @@ import com.example.offerbrowserprototype.domain.dto.loginandregister.UpdateUserD
 import com.example.offerbrowserprototype.domain.user.User;
 import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
 import com.example.offerbrowserprototype.domain.mapper.UserMapper;
-
 import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 public class UserProfileUpdater {
@@ -21,12 +22,12 @@ public class UserProfileUpdater {
 
     public UserDTO updateUserProfile(UpdateUserDto updateUserDto) {
 
-        User existingUser = userRepository.findById(updateUserDto.getId().toString())
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        Long userId = updateUserDto.getId();
 
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found for id: " + userId));
 
         userMapper.updateUserFromDto(updateUserDto, existingUser);
-
 
         User updatedUser = userRepository.save(existingUser);
 

@@ -81,7 +81,7 @@ public class NoFluffController {
             @ApiResponse(responseCode = "400", description = "Invalid URL or scraping error")
     })
     @PostMapping("/import-from-url")
-    public ResponseEntity<String> importOfferFromUrl(@RequestParam String userId, @RequestParam String offerUrl) {
+    public ResponseEntity<String> importOfferFromUrl(@RequestParam Long userId, @RequestParam String offerUrl) {
         try {
             OfferDTO importedOffer = offerFacade.addOfferFromUrl(userId, offerUrl);
             return ResponseEntity.ok("Offer successfully imported from URL.");

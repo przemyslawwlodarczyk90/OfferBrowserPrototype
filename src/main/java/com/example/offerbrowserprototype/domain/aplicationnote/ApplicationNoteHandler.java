@@ -10,35 +10,31 @@ import java.time.LocalDateTime;
 @Component
 public class ApplicationNoteHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationNoteHandler.class);
+    private final ApplicationNoteRepository repository;
 
-    private final ApplicationNoteRepository applicationNoteRepository;
-
-    public ApplicationNoteHandler(ApplicationNoteRepository applicationNoteRepository) {
-        this.applicationNoteRepository = applicationNoteRepository;
+    public ApplicationNoteHandler(ApplicationNoteRepository repository) {
+        this.repository = repository;
     }
 
-    public ApplicationNote saveApplicationNote(String userId, String offerId, String offerUrl, String companyName) {
-        if (userId == null || userId.trim().isEmpty()) {
-            throw new IllegalArgumentException("User ID cannot be null or empty.");
-        }
-        if (offerUrl == null || offerUrl.trim().isEmpty()) {
-            throw new IllegalArgumentException("Offer URL cannot be null or empty.");
-        }
-        if (companyName == null || companyName.trim().isEmpty()) {
-            throw new IllegalArgumentException("Company name cannot be null or empty.");
-        }
+    public ApplicationNote saveApplicationNote(
+            Long userId,
+            Long offerId,
+            String offerUrl,
+            String companyName
+    ) {
+        if (userId == null) throw new IllegalArgumentException("User ID cannot be null");
+        if (companyName == null || companyName.isBlank())
+            throw new IllegalArgumentException("Company name cannot be empty");
 
-        logger.info("Saving application note for user: {}, offerId: {}, offerUrl: {}, company: {}",
-                userId, offerId, offerUrl, companyName);
+        ApplicationNote note = ApplicationNote.builder()
+                .userId(userId)
+                .offerId(offerId)
+                .offerUrl(offerUrl)
+                .companyName(companyName)
+                .appliedAt(LocalDateTime.now())
+                .build();
 
-        ApplicationNote note = new ApplicationNote();
-        note.setUserId(userId.trim());
-        note.setOfferId(offerId);
-        note.setOfferUrl(offerUrl.trim());
-        note.setCompanyName(companyName.trim());
-        note.setAppliedAt(LocalDateTime.now());
-
-        return applicationNoteRepository.save(note);
+        return repository.save(note);
     }
 }
+

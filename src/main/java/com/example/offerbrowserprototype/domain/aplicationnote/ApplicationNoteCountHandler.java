@@ -12,10 +12,8 @@ public class ApplicationNoteCountHandler {
         this.applicationNoteRepository = applicationNoteRepository;
     }
 
-    public long countAllNotes(String userId) {
-        if (userId == null || userId.trim().isEmpty()) {
-            throw new IllegalArgumentException("User ID cannot be null or empty.");
-        }
-        return applicationNoteRepository.countByUserId(userId.trim());
+    public long countAllNotes(Long userId) {
+        return applicationNoteRepository.countByUserId(userId);
     }
+
 }

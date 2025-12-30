@@ -18,23 +18,13 @@ public class ApplicationNoteGetCompaniesWithDatesHandler {
         this.applicationNoteRepository = applicationNoteRepository;
     }
 
-    public Map<String, List<String>> getCompaniesWithApplicationDates(String userId) {
-        if (userId == null || userId.trim().isEmpty()) {
-            throw new IllegalArgumentException("User ID cannot be null or empty.");
-        }
-
-        List<ApplicationNote> notes = applicationNoteRepository.findByUserId(userId.trim());
-
-        return notes.stream()
-                .filter(note -> note.getAppliedAt() != null)
+    public Map<String, List<String>> getCompaniesWithApplicationDates(Long userId) {
+        return applicationNoteRepository.findByUserId(userId).stream()
                 .collect(Collectors.groupingBy(
                         ApplicationNote::getCompanyName,
                         Collectors.mapping(
-                                note -> note.getAppliedAt().toLocalDate().format(DATE_FORMATTER),
-                                Collectors.collectingAndThen(Collectors.toList(),
-                                        dates -> dates.stream()
-                                                .sorted((d1, d2) -> d2.compareTo(d1))
-                                                .toList())
+                                n -> n.getAppliedAt().toLocalDate().toString(),
+                                Collectors.toList()
                         )
                 ));
     }

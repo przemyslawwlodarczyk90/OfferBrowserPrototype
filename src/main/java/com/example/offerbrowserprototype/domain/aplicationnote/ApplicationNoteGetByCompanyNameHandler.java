@@ -15,13 +15,8 @@ public class ApplicationNoteGetByCompanyNameHandler {
         this.applicationNoteRepository = applicationNoteRepository;
     }
 
-    public List<ApplicationNote> getNotesByCompanyName(String userId, String companyName) {
-        if (userId == null || userId.trim().isEmpty()) {
-            throw new IllegalArgumentException("User ID cannot be null or empty.");
-        }
-        if (companyName == null || companyName.trim().isEmpty()) {
-            return Collections.emptyList();
-        }
-        return applicationNoteRepository.findByUserIdAndCompanyNameIgnoreCase(userId.trim(), companyName.trim());
+    public List<ApplicationNote> getNotesByCompanyName(Long userId, String companyName) {
+        return applicationNoteRepository
+                .findByUserIdAndCompanyNameIgnoreCase(userId, companyName);
     }
 }

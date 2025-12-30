@@ -27,7 +27,8 @@ public class ApplicationNoteFacade {
             ApplicationNoteGetCompaniesWithDatesHandler getCompaniesWithDatesHandler,
             ExternalSourceApplicationNoteHandler externalSourceApplicationNoteHandler,
             ApplicationNoteCountHandler countHandler,
-            RedisTemplate<String, Object> redisTemplate) {
+            RedisTemplate<String, Object> redisTemplate
+    ) {
         this.getAllHandler = getAllHandler;
         this.getByCompanyNameHandler = getByCompanyNameHandler;
         this.getCompaniesWithDatesHandler = getCompaniesWithDatesHandler;
@@ -36,10 +37,13 @@ public class ApplicationNoteFacade {
         this.redisTemplate = redisTemplate;
     }
 
-    public List<ApplicationNote> getAllApplicationNotes(String userId) {
+    public List<ApplicationNote> getAllApplicationNotes(Long userId) {
         String cacheKey = ALL_NOTES_CACHE_KEY_PREFIX + userId;
 
-        List<ApplicationNote> cachedNotes = (List<ApplicationNote>) redisTemplate.opsForValue().get(cacheKey);
+        @SuppressWarnings("unchecked")
+        List<ApplicationNote> cachedNotes =
+                (List<ApplicationNote>) redisTemplate.opsForValue().get(cacheKey);
+
         if (cachedNotes != null) {
             return cachedNotes;
         }
@@ -49,26 +53,32 @@ public class ApplicationNoteFacade {
         return notes;
     }
 
-    public List<ApplicationNote> getApplicationNotesByCompanyName(String userId, String companyName) {
+    public List<ApplicationNote> getApplicationNotesByCompanyName(Long userId, String companyName) {
         return getByCompanyNameHandler.getNotesByCompanyName(userId, companyName);
     }
 
-    public Map<String, List<String>> getCompaniesWithApplicationDates(String userId) {
+    public Map<String, List<String>> getCompaniesWithApplicationDates(Long userId) {
         return getCompaniesWithDatesHandler.getCompaniesWithApplicationDates(userId);
     }
 
-    public ApplicationNote createNoteForExternalSource(String userId, String companyName, String url) {
-        ApplicationNote note = externalSourceApplicationNoteHandler.createNoteForExternalSource(userId, companyName, url);
+    public ApplicationNote createNoteForExternalSource(
+            Long userId,
+            String companyName,
+            String offerUrl
+    ) {
+        ApplicationNote note =
+                externalSourceApplicationNoteHandler.createNoteForExternalSource(
+                        userId, companyName, offerUrl
+                );
 
-        String allNotesCacheKey = ALL_NOTES_CACHE_KEY_PREFIX + userId;
-        String notesCountCacheKey = NOTES_COUNT_CACHE_KEY_PREFIX + userId;
+        // invalidate cache
+        redisTemplate.delete(ALL_NOTES_CACHE_KEY_PREFIX + userId);
+        redisTemplate.delete(NOTES_COUNT_CACHE_KEY_PREFIX + userId);
 
-        redisTemplate.delete(allNotesCacheKey);
-        redisTemplate.delete(notesCountCacheKey);
         return note;
     }
 
-    public long countAllApplicationNotes(String userId) {
+    public long countAllApplicationNotes(Long userId) {
         String cacheKey = NOTES_COUNT_CACHE_KEY_PREFIX + userId;
 
         Long cachedCount = (Long) redisTemplate.opsForValue().get(cacheKey);

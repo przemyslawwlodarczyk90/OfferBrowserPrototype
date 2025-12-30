@@ -4,37 +4,29 @@ import com.example.offerbrowserprototype.infrastructure.repository.ApplicationNo
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-
 @Component
 public class ExternalSourceApplicationNoteHandler {
 
-    private final ApplicationNoteRepository applicationNoteRepository;
+    private final ApplicationNoteRepository repository;
 
-    public ExternalSourceApplicationNoteHandler(ApplicationNoteRepository applicationNoteRepository) {
-        this.applicationNoteRepository = applicationNoteRepository;
+    public ExternalSourceApplicationNoteHandler(ApplicationNoteRepository repository) {
+        this.repository = repository;
     }
 
-    public ApplicationNote createNoteForExternalSource(String userId, String companyName, String url) {
-        if (userId == null || userId.isBlank()) {
-            throw new IllegalArgumentException("User ID cannot be null or empty.");
-        }
-        if (companyName == null || companyName.isBlank()) {
-            throw new IllegalArgumentException("Company name cannot be null or empty.");
-        }
-        if (url == null || url.isBlank()) {
-            throw new IllegalArgumentException("URL cannot be null or empty.");
-        }
+    public ApplicationNote createNoteForExternalSource(
+            Long userId,
+            String companyName,
+            String offerUrl
+    ) {
+        if (userId == null) throw new IllegalArgumentException("User ID cannot be null");
 
-        ApplicationNote note = new ApplicationNote();
-        note.setUserId(userId.trim());
-        note.setCompanyName(companyName.trim());
+        ApplicationNote note = ApplicationNote.builder()
+                .userId(userId)
+                .companyName(companyName)
+                .offerUrl(offerUrl)
+                .appliedAt(LocalDateTime.now())
+                .build();
 
-        // nie kasuję pól: ustawiam oba, bo u Ciebie raz jest url, raz offerUrl
-        note.setUrl(url.trim());
-        note.setOfferUrl(url.trim());
-
-        note.setAppliedAt(LocalDateTime.now());
-
-        return applicationNoteRepository.save(note);
+        return repository.save(note);
     }
 }

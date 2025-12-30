@@ -1,20 +1,15 @@
 package com.example.offerbrowserprototype.infrastructure.facade;
 
 import com.example.offerbrowserprototype.domain.dto.loginandregister.*;
-import com.example.offerbrowserprototype.domain.loginaandregister.UserLoginHandler;
-import com.example.offerbrowserprototype.domain.loginaandregister.UserPasswordChanger;
-import com.example.offerbrowserprototype.domain.loginaandregister.UserProfileUpdater;
-import com.example.offerbrowserprototype.domain.loginaandregister.UserRegistrationHandler;
+import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
+import com.example.offerbrowserprototype.domain.loginaandregister.*;
 import com.example.offerbrowserprototype.domain.user.ConfirmationToken;
 import com.example.offerbrowserprototype.domain.user.User;
-import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
 import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import com.example.offerbrowserprototype.infrastructure.service.ConfirmationTokenService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 public class LoginAndRegisterFacade {
@@ -26,12 +21,14 @@ public class LoginAndRegisterFacade {
     private final UserPasswordChanger passwordChanger;
     private final UserRepository userRepository;
 
-    public LoginAndRegisterFacade(UserRegistrationHandler registrationHandler,
-                                  UserLoginHandler userLoginHandler,
-                                  UserProfileUpdater profileUpdater,
-                                  ConfirmationTokenService confirmationTokenService,
-                                  UserPasswordChanger passwordChanger,
-                                  UserRepository userRepository) {
+    public LoginAndRegisterFacade(
+            UserRegistrationHandler registrationHandler,
+            UserLoginHandler userLoginHandler,
+            UserProfileUpdater profileUpdater,
+            ConfirmationTokenService confirmationTokenService,
+            UserPasswordChanger passwordChanger,
+            UserRepository userRepository
+    ) {
         this.registrationHandler = registrationHandler;
         this.userLoginHandler = userLoginHandler;
         this.profileUpdater = profileUpdater;
@@ -63,15 +60,13 @@ public class LoginAndRegisterFacade {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid token"));
 
         confirmationTokenService.confirmToken(confirmationToken);
-        activateUser(confirmationToken.getUserId());
+        activateUser(Long.valueOf(confirmationToken.getUserId()));
 
         return "Registration confirmed!";
     }
 
-    private void activateUser(String userId) {
-        UUID uuid = UUID.fromString(userId);
-
-        User user = userRepository.findById(uuid)
+    private void activateUser(Long userId) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         user.setActive(true);

@@ -11,32 +11,29 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "application_notes")
+@Table(name = "application_notes",
+        indexes = {
+                @Index(name = "idx_app_notes_user", columnList = "user_id"),
+                @Index(name = "idx_app_notes_offer", columnList = "offer_id")
+        })
 public class ApplicationNote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
-    @Column(nullable = false)
-    private String userId;
+    @Column(name = "offer_id")
+    private Long offerId;
 
     @Column(nullable = false)
     private String companyName;
 
-
-    @Column
-    private String url;
-
-    @Column
-    private String offerId;
-
-
-    @Column
+    @Column(name = "offer_url")
     private String offerUrl;
 
-
-    @Column
+    @Column(nullable = false)
     private LocalDateTime appliedAt;
 }

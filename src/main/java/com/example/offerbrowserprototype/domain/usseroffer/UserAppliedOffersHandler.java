@@ -6,7 +6,6 @@ import com.example.offerbrowserprototype.infrastructure.repository.UserOfferStat
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class UserAppliedOffersHandler {
@@ -14,19 +13,20 @@ public class UserAppliedOffersHandler {
     private final OfferRepository offerRepository;
     private final UserOfferStatusRepository userOfferStatusRepository;
 
-    public UserAppliedOffersHandler(OfferRepository offerRepository,
-                                    UserOfferStatusRepository userOfferStatusRepository) {
+    public UserAppliedOffersHandler(
+            OfferRepository offerRepository,
+            UserOfferStatusRepository userOfferStatusRepository
+    ) {
         this.offerRepository = offerRepository;
         this.userOfferStatusRepository = userOfferStatusRepository;
     }
 
-    public List<Offer> getAppliedOffersForUser(String userId) {
+    public List<Offer> getAppliedOffersForUser(Long userId) {
 
-        List<UUID> appliedOfferIds = userOfferStatusRepository
-                .findByUserIdAndAppliedTrue(userId)
+        List<Long> appliedOfferIds = userOfferStatusRepository
+                .findByUser_IdAndAppliedTrue(userId)
                 .stream()
-                .map(UserOfferStatus::getOfferId)
-                .map(UUID::fromString)   // ⬅ KLUCZOWE
+                .map(status -> status.getOffer().getId())
                 .toList();
 
         return offerRepository.findAllById(appliedOfferIds);
