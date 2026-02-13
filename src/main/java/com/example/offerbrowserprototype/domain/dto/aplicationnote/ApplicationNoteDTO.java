@@ -7,10 +7,9 @@ import java.time.LocalDateTime;
 @Data
 public class ApplicationNoteDTO {
     private Long id;
-    private String userId;
-    private String offerId;
+    private Long userId;
+    private Long offerId;
     private String offerUrl;
     private String companyName;
-    private String url;
     private LocalDateTime appliedAt;
 }

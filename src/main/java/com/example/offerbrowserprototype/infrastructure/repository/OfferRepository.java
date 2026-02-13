@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
@@ -20,13 +21,11 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
     List<Offer> findAllByOrderByFetchedAtDesc();
 
-    @Query("""
-        SELECT COUNT(o)
-        FROM Offer o
-        WHERE o.duplicate = false
-    """)
-    long countNonDuplicateOffers();
+    // ⬇️ COUNT queries
+    @Query("SELECT COUNT(o) FROM Offer o WHERE o.duplicate = false")
+    long countByDuplicateFalse();
 
+    // ⬇️ LEVEL DISTRIBUTION (PostgreSQL native)
     @Query("""
         SELECT o.level AS id, COUNT(o) AS count
         FROM Offer o
@@ -35,6 +34,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     """)
     List<LevelDistributionProjection> getLevelDistributionSimple();
 
+    // ⬇️ CITY DISTRIBUTION (PostgreSQL native)
     @Query("""
         SELECT o.city AS id, COUNT(o) AS count
         FROM Offer o
@@ -43,15 +43,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     """)
     List<CityDistributionProjection> getCityDistributionSimple();
 
-    // alias pod Twoją metodę w handlerze
-    default long countByIsDuplicateFalse() {
-        return countByDuplicateFalse();
-    }
-
-
-
+    // ⬇️ Helper methods
     List<Offer> findByIdNotInAndDuplicateFalse(List<Long> ids);
-
-    long countByDuplicateFalse();
 }
 

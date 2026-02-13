@@ -6,7 +6,6 @@ import lombok.*;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -29,11 +28,15 @@ public class Offer {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description", columnDefinition = "text")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "location")
     private String location;
+
+    // ⬇️ NOWE POLE - WYMAGANE przez CityDistributionHandler
+    @Column(name = "city")
+    private String city;
 
     @Column(name = "salary_range")
     private String salaryRange;
@@ -41,11 +44,11 @@ public class Offer {
     @Column(name = "level")
     private String level;
 
-    @Column(name = "offer_url", nullable = false)
+    @Column(name = "offer_url", nullable = false, unique = true)
     private String offerUrl;
 
     @Column(name = "is_duplicate", nullable = false)
-    private boolean isDuplicate;
+    private boolean duplicate = false;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,
             pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'",
@@ -56,6 +59,7 @@ public class Offer {
     @Column(name = "company", nullable = false)
     private String company;
 
+    // Konstruktor z Clock
     public Offer(String title, String description, String location, String salaryRange,
                  String level, String company, Clock clock) {
         if (company == null || company.trim().isEmpty()) {
@@ -64,10 +68,26 @@ public class Offer {
         this.title = title;
         this.description = description;
         this.location = location;
+        this.city = extractCityFromLocation(location); // ⬅️ AUTOMATYCZNE WYCIĄGANIE
         this.salaryRange = salaryRange;
         this.level = level;
         this.company = company;
-        this.isDuplicate = false;
+        this.duplicate = false;
         this.fetchedAt = LocalDateTime.now(clock);
+    }
+
+    // ⬇️ HELPER do ekstrakcji miasta z lokacji
+    private String extractCityFromLocation(String location) {
+        if (location == null || location.isBlank()) {
+            return "Unknown";
+        }
+        // np. "Warsaw, Mazovia" → "Warsaw"
+        return location.split(",")[0].trim();
+    }
+
+    // ⬇️ SETTER z automatyczną ekstrakcją miasta
+    public void setLocation(String location) {
+        this.location = location;
+        this.city = extractCityFromLocation(location);
     }
 }

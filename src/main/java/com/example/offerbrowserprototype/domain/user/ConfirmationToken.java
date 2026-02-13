@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,19 +11,17 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(
-        name = "confirmation_tokens",
+@Table(name = "confirmation_tokens",
         indexes = {
                 @Index(name = "idx_token_unique", columnList = "token", unique = true)
-        }
-)
+        })
 public class ConfirmationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 500)
     private String token;
 
     @Column(nullable = false)
@@ -33,10 +30,18 @@ public class ConfirmationToken {
     @Column(nullable = false)
     private LocalDateTime expiresAt;
 
-    @Column(nullable = true)
+    @Column
     private LocalDateTime confirmedAt;
 
-
     @Column(nullable = false)
-    private String userId;
+    private Long userId; // ⬅️ ZMIENIONO z String na Long
+
+    // Konstruktor używany w UserRegistrationHandler
+    public ConfirmationToken(String token, LocalDateTime createdAt,
+                             LocalDateTime expiresAt, Long userId) {
+        this.token = token;
+        this.createdAt = createdAt;
+        this.expiresAt = expiresAt;
+        this.userId = userId;
+    }
 }

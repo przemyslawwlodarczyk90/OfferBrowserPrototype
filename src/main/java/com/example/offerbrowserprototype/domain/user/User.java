@@ -3,9 +3,8 @@ package com.example.offerbrowserprototype.domain.user;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
-
 @Entity
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,12 +12,11 @@ import java.util.UUID;
 @Builder
 public class User {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
@@ -28,5 +26,5 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    private boolean active;
+    private boolean active = false;
 }
