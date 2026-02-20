@@ -11,6 +11,7 @@ import com.example.offerbrowserprototype.infrastructure.service.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +43,7 @@ public class UserRegistrationHandler {
         this.confirmationTokenService = confirmationTokenService;
         this.clock = clock;
     }
+
 
     public RegistrationResultDTO register(RegisterUserDTO userDto) {
         logger.info("Starting registration process for user: {}", userDto.getUsername());

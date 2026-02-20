@@ -45,7 +45,7 @@ public class LoginAndRegisterFacade {
         return userLoginHandler.login(loginDto);
     }
 
-    @CacheEvict(value = "userProfiles", key = "#updateUserDto.userId")
+    @CacheEvict(value = "userProfiles", key = "#updateUserDto.id")
     public UserDTO updateUserProfile(UpdateUserDto updateUserDto) {
         return profileUpdater.updateUserProfile(updateUserDto);
     }
@@ -60,7 +60,7 @@ public class LoginAndRegisterFacade {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid token"));
 
         confirmationTokenService.confirmToken(confirmationToken);
-        activateUser(Long.valueOf(confirmationToken.getUserId()));
+        activateUser(confirmationToken.getUserId());
 
         return "Registration confirmed!";
     }

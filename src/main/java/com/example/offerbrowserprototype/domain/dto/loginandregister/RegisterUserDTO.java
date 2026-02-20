@@ -13,7 +13,7 @@ import java.util.UUID;
 @Data
 public class RegisterUserDTO {
 
-    @NotNull(message = "User ID cannot be null")
+
     private Long id;
 
     @NotBlank

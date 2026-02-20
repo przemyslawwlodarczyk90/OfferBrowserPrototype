@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Base64;
 import java.util.Date;
 
 @Service
@@ -36,22 +35,10 @@ public class JwtService {
         }
     }
 
-    private String normalizeToken(String token) {
-        String[] parts = token.split("\\.");
-        return padBase64(parts[0]) + "." + padBase64(parts[1]) + "." + parts[2];
-    }
-
-
-    private String padBase64(String base64UrlSegment) {
-        int paddingLength = (4 - (base64UrlSegment.length() % 4)) % 4;
-        return base64UrlSegment + "=".repeat(paddingLength);
-    }
-
     public String extractUsername(String token) {
-        logger.debug("Extracting username from token: {}", token);
+        logger.debug("Extracting username from token");
         try {
-            String normalizedToken = normalizeToken(token);
-            DecodedJWT jwt = getDecodedJWT(normalizedToken);
+            DecodedJWT jwt = getDecodedJWT(token);
             String username = jwt.getSubject();
             logger.debug("Extracted username: {}", username);
             return username;
@@ -63,8 +50,7 @@ public class JwtService {
 
     private boolean isTokenExpired(String token) {
         try {
-            String normalizedToken = normalizeToken(token);
-            DecodedJWT jwt = getDecodedJWT(normalizedToken);
+            DecodedJWT jwt = getDecodedJWT(token);
             Date expiration = jwt.getExpiresAt();
             boolean isExpired = expiration.before(new Date());
             logger.debug("Token expiration date: {}, Is expired: {}", expiration, isExpired);
@@ -76,14 +62,13 @@ public class JwtService {
     }
 
     private DecodedJWT getDecodedJWT(String token) {
-        logger.debug("Decoding token: {}", token);
         try {
             Algorithm algorithm = getAlgorithm();
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer(issuer)
                     .build();
             DecodedJWT jwt = verifier.verify(token);
-            logger.debug("Token successfully decoded: {}", jwt.getSubject());
+            logger.debug("Token successfully decoded for subject: {}", jwt.getSubject());
             return jwt;
         } catch (Exception e) {
             logger.error("Error while decoding token: {}", e.getMessage());
@@ -101,7 +86,7 @@ public class JwtService {
                     .withExpiresAt(new Date(System.currentTimeMillis() + expirationTimeMs))
                     .withIssuer(issuer)
                     .sign(algorithm);
-            logger.info("Generated token: {}", token);
+            logger.info("Token generated successfully for user: {}", userDetails.getUsername());
             return token;
         } catch (Exception e) {
             logger.error("Failed to generate token: {}", e.getMessage());
@@ -112,11 +97,10 @@ public class JwtService {
     public boolean validateToken(String token, UserDetails userDetails) {
         logger.info("Validating token for user: {}", userDetails.getUsername());
         try {
-            String normalizedToken = normalizeToken(token);
-            DecodedJWT jwt = getDecodedJWT(normalizedToken);
+            DecodedJWT jwt = getDecodedJWT(token);
             String username = jwt.getSubject();
-            boolean isValid = username.equals(userDetails.getUsername()) && !isTokenExpired(normalizedToken);
-            logger.info("Token validation result: {}", isValid);
+            boolean isValid = username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+            logger.info("Token validation result for user {}: {}", userDetails.getUsername(), isValid);
             return isValid;
         } catch (Exception e) {
             logger.error("Invalid JWT Token: {}", e.getMessage());

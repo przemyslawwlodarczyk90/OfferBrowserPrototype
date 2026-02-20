@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -31,6 +32,7 @@ public class MailService {
         this.userRepository = userRepository;
     }
 
+    @Async
     public void sendConfirmationEmail(String to, String subject, String username, String confirmationLink) {
         MimeMessage message = mailSender.createMimeMessage();
 
