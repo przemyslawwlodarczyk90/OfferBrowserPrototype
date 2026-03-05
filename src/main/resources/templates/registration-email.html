@@ -1,83 +1,122 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Confirm Your Registration</title>
+    <title>Potwierdź rejestrację</title>
+    <meta charset="UTF-8"/>
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: "Roboto", Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #121212;
-            color: #e0e0e0;
+            font-family: 'Georgia', serif;
+            background-color: #0b0f1a;
+            color: #cbd5e0;
+            padding: 32px 16px;
         }
-
-        .email-container {
-            background-color: #1e1e1e;
-            margin: 20px auto;
-            padding: 20px;
-            border-radius: 10px;
+        .container {
             max-width: 600px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin: 0 auto;
+            background: #111827;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #1f2937;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.5);
         }
-
-        .email-header {
+        .header {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            padding: 44px 40px;
             text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #1f2937;
         }
-
-        .email-header h1 {
-            color: #64ffda;
+        .header .label {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #4ade80;
+            text-transform: uppercase;
+            margin-bottom: 14px;
         }
-
-        .email-body {
-            padding: 20px 0;
+        .header h1 {
+            font-size: 28px;
+            font-weight: normal;
+            color: #f0f4f8;
+            letter-spacing: -0.5px;
         }
-
-        .email-body p {
-            margin-bottom: 20px;
+        .body {
+            padding: 36px 40px;
         }
-
+        .greeting {
+            font-size: 16px;
+            color: #e2e8f0;
+            margin-bottom: 16px;
+        }
+        .greeting strong { color: #4ade80; }
+        .body p {
+            font-size: 14px;
+            color: #9ca3af;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+        .btn-wrapper { text-align: center; }
         .btn-confirm {
             display: inline-block;
-            padding: 12px 20px;
-            margin: 20px 0;
-            background-color: #007bff;
-            color: #ffffff;
+            padding: 14px 36px;
+            background: #166534;
+            color: #4ade80;
+            border: 1px solid #15803d;
+            border-radius: 8px;
             text-decoration: none;
-            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            letter-spacing: 1px;
             font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
         }
-
-        .btn-confirm:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
+        .divider {
+            height: 1px;
+            background: #1f2937;
+            margin: 28px 0;
         }
-
-        .email-footer {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #333;
-            color: #757575;
+        .note {
             font-size: 12px;
+            color: #4b5563;
+            text-align: center;
+            line-height: 1.6;
+            font-family: 'Courier New', monospace;
+        }
+        .footer {
+            padding: 20px 40px;
+            border-top: 1px solid #1f2937;
+            text-align: center;
+        }
+        .footer p {
+            font-size: 11px;
+            color: #374151;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
-<div class="email-container">
-    <div class="email-header">
-        <h1>Welcome to Our Service</h1>
+<div class="container">
+    <div class="header">
+        <div class="label">OfferBrowser · Weryfikacja konta</div>
+        <h1>Witaj w OfferBrowser</h1>
     </div>
-    <div class="email-body">
-        <p>Dear <span th:text="${username}"></span>,</p>
-        <p>Thank you for registering with us. Please click the button below to confirm your registration:</p>
-        <a th:href="${confirmationLink}" class="btn-confirm">Confirm Registration</a>
+    <div class="body">
+        <p class="greeting">Cześć, <strong th:text="${username}">Użytkowniku</strong>!</p>
+        <p>
+            Dziękujemy za rejestrację. Aby aktywować swoje konto i uzyskać dostęp
+            do wszystkich funkcji platformy, kliknij przycisk poniżej.
+        </p>
+        <div class="btn-wrapper">
+            <a th:href="${confirmationLink}" class="btn-confirm">→ POTWIERDŹ KONTO</a>
+        </div>
+        <div class="divider"></div>
+        <p class="note">
+            Jeśli nie zakładałeś konta w OfferBrowser, zignoruj tę wiadomość.<br/>
+            Link wygaśnie automatycznie po 24 godzinach.
+        </p>
     </div>
-    <div class="email-footer">
-        <p>If you did not register for this account, please ignore this email.</p>
-        <p>Generated by OfferBrowser Prototype &copy; 2025</p>
+    <div class="footer">
+        <p>OfferBrowser Prototype &copy; 2025 · Wygenerowano automatycznie</p>
     </div>
 </div>
 </body>
