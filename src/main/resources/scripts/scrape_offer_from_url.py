@@ -75,7 +75,6 @@ def scrape_single_offer(offer_url):
             "location": location,
             "salaryRange": salary,
             "level": level,
-            "applied": True,
             "fetchedAt": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z",
             "offerUrl": offer_url,
             "company": company

@@ -54,7 +54,6 @@
         .offer-item span {
             color: #64ffda;
         }
-
         .applied-button {
             display: inline-block;
             padding: 10px 15px;
@@ -69,10 +68,6 @@
         }
         .applied-button:hover {
             background-color: #0056b3;
-        }
-        .applied-button.applied {
-            background-color: #ff5252;
-            cursor: not-allowed;
         }
         footer {
             text-align: center;
@@ -95,7 +90,7 @@
                 <a th:href="${offer.offerUrl}" th:text="${offer.offerUrl}" target="_blank"></a>
             </p>
             <a th:href="@{'http://localhost:8080/api/offers/' + ${offer.id} + '/apply'}"
-               th:classappend="${offer.applied} ? 'applied-button applied' : 'applied-button'"
+               class="applied-button"
                target="_blank">Apply</a>
         </div>
     </div>
