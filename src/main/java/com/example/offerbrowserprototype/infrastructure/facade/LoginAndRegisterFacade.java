@@ -1,5 +1,4 @@
 package com.example.offerbrowserprototype.infrastructure.facade;
-
 import com.example.offerbrowserprototype.domain.dto.loginandregister.*;
 import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
 import com.example.offerbrowserprototype.domain.loginaandregister.*;
@@ -15,33 +14,34 @@ import org.springframework.stereotype.Component;
 public class LoginAndRegisterFacade {
 
     private final UserRegistrationHandler registrationHandler;
-    private final UserLoginHandler userLoginHandler;
-    private final UserProfileUpdater profileUpdater;
+    private final UserLoginHandler        userLoginHandler;
+    private final UserProfileUpdater      profileUpdater;
     private final ConfirmationTokenService confirmationTokenService;
-    private final UserPasswordChanger passwordChanger;
-    private final UserRepository userRepository;
+    private final UserPasswordChanger     passwordChanger;
+    private final UserRepository          userRepository;
 
     public LoginAndRegisterFacade(
             UserRegistrationHandler registrationHandler,
-            UserLoginHandler userLoginHandler,
-            UserProfileUpdater profileUpdater,
+            UserLoginHandler        userLoginHandler,
+            UserProfileUpdater      profileUpdater,
             ConfirmationTokenService confirmationTokenService,
-            UserPasswordChanger passwordChanger,
-            UserRepository userRepository
+            UserPasswordChanger     passwordChanger,
+            UserRepository          userRepository
     ) {
-        this.registrationHandler = registrationHandler;
-        this.userLoginHandler = userLoginHandler;
-        this.profileUpdater = profileUpdater;
+        this.registrationHandler      = registrationHandler;
+        this.userLoginHandler         = userLoginHandler;
+        this.profileUpdater           = profileUpdater;
         this.confirmationTokenService = confirmationTokenService;
-        this.passwordChanger = passwordChanger;
-        this.userRepository = userRepository;
+        this.passwordChanger          = passwordChanger;
+        this.userRepository           = userRepository;
     }
 
     public RegistrationResultDTO register(RegisterUserDTO userDto) {
         return registrationHandler.register(userDto);
     }
 
-    public String login(LoginDto loginDto) {
+    // ── Zmiana: zwraca LoginResult (token + userId + username + email) ────
+    public UserLoginHandler.LoginResult login(LoginDto loginDto) {
         return userLoginHandler.login(loginDto);
     }
 
@@ -68,7 +68,6 @@ public class LoginAndRegisterFacade {
     private void activateUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
         user.setActive(true);
         userRepository.save(user);
     }
