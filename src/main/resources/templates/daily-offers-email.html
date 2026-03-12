@@ -1,126 +1,113 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
     <title>Codzienne oferty pracy</title>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--[if mso]>
+    <noscript>
+        <xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
+    </noscript>
+    <![endif]-->
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Georgia', serif;
-            background-color: #0b0f1a;
-            color: #cbd5e0;
-            padding: 32px 16px;
+            margin: 0; padding: 0;
+            background-color: #0b0f1a !important;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
         }
-        .container {
-            max-width: 620px;
-            margin: 0 auto;
-            background: #111827;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid #1f2937;
-            box-shadow: 0 24px 80px rgba(0,0,0,0.5);
-        }
-        .header {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            padding: 40px 36px;
-            text-align: center;
-            border-bottom: 1px solid #1f2937;
-        }
-        .header .label {
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            letter-spacing: 2px;
-            color: #4ade80;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-        .header h1 {
-            font-size: 26px;
-            font-weight: normal;
-            color: #f0f4f8;
-            letter-spacing: -0.5px;
-            line-height: 1.3;
-        }
-        .header h1 span { color: #4ade80; }
-        .body { padding: 28px 36px; }
-        .subtitle {
-            font-size: 13px;
-            color: #6b7280;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 0.5px;
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #1f2937;
-        }
-        .offer-item {
-            background: #1a2035;
-            border: 1px solid #1f2937;
-            border-left: 3px solid #4ade80;
-            border-radius: 8px;
-            padding: 18px 20px;
-            margin-bottom: 14px;
-        }
-        .offer-number {
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            color: #4ade80;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-        .offer-url {
-            display: block;
-            font-size: 13px;
-            color: #93c5fd;
-            text-decoration: none;
-            word-break: break-all;
-            line-height: 1.5;
-            margin-bottom: 14px;
-        }
-        .apply-btn {
-            display: inline-block;
-            padding: 9px 20px;
-            background: #166534;
-            color: #4ade80;
-            border: 1px solid #15803d;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 12px;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 0.5px;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-        .footer {
-            padding: 20px 36px;
-            border-top: 1px solid #1f2937;
-            text-align: center;
-        }
-        .footer p {
-            font-size: 11px;
-            color: #374151;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 0.5px;
+        /* Force dark background in supported clients */
+        @media (prefers-color-scheme: dark) {
+            body { background-color: #0b0f1a !important; }
         }
     </style>
 </head>
-<body>
-<div class="container">
-    <div class="header">
-        <div class="label">OfferBrowser · Daily Digest</div>
-        <h1>Twoje <span>nowe oferty</span> pracy na dziś</h1>
-    </div>
-    <div class="body">
-        <p class="subtitle">// NIEZAAPLIKOWANE OFERTY · PRZEGLĄD DZIENNY</p>
-        <div th:each="offer, iterStat : ${offers}" class="offer-item">
-            <div class="offer-number">OFERTA #<span th:text="${iterStat.index + 1}">1</span></div>
-            <a th:href="${offer.offerUrl}" th:text="${offer.offerUrl}" class="offer-url" target="_blank">#</a>
-            <a th:href="@{'http://localhost:8081/api/offers/' + ${offer.id} + '/apply'}"
-               class="apply-btn" target="_blank">→ APLIKUJ</a>
-        </div>
-    </div>
-    <div class="footer">
-        <p>OfferBrowser Prototype &copy; 2025 · Wygenerowano automatycznie</p>
-    </div>
-</div>
+<body style="margin:0;padding:0;background-color:#0b0f1a;font-family:'Courier New',Courier,monospace;">
+
+<!-- Wrapper -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+       style="background-color:#0b0f1a;padding:32px 16px;">
+    <tr>
+        <td align="center">
+
+            <!-- Container -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                   style="max-width:620px;background-color:#111827;border-radius:16px;overflow:hidden;
+                    border:1px solid #2d3748;box-shadow:0 24px 80px rgba(0,0,0,0.6);">
+
+                <!-- HEADER -->
+                <tr>
+                    <td style="background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+                     padding:40px 36px;text-align:center;border-bottom:1px solid #2d3748;">
+                        <p style="margin:0 0 12px;font-family:'Courier New',monospace;font-size:11px;
+                      letter-spacing:2px;color:#4ade80;text-transform:uppercase;">
+                            OfferBrowser · Daily Digest
+                        </p>
+                        <h1 style="margin:0;font-size:26px;font-weight:400;color:#f0f4f8;
+                       letter-spacing:-0.5px;line-height:1.3;">
+                            Twoje <span style="color:#4ade80;">nowe oferty</span> pracy na dziś
+                        </h1>
+                    </td>
+                </tr>
+
+                <!-- BODY -->
+                <tr>
+                    <td style="padding:28px 36px;background-color:#111827;">
+
+                        <p style="margin:0 0 24px;padding-bottom:20px;border-bottom:1px solid #2d3748;
+                      font-family:'Courier New',monospace;font-size:13px;
+                      color:#9ca3af;letter-spacing:0.5px;">
+                            // NIEZAAPLIKOWANE OFERTY · PRZEGLĄD DZIENNY
+                        </p>
+
+                        <!-- OFFERS LOOP -->
+                        <div th:each="offer, iterStat : ${offers}">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                                   style="background-color:#1a2035;border:1px solid #2d3748;
+                            border-left:3px solid #4ade80;border-radius:8px;
+                            margin-bottom:14px;overflow:hidden;">
+                                <tr>
+                                    <td style="padding:18px 20px;">
+                                        <p style="margin:0 0 8px;font-family:'Courier New',monospace;
+                               font-size:11px;color:#4ade80;letter-spacing:1px;">
+                                            OFERTA #<span th:text="${iterStat.index + 1}">1</span>
+                                        </p>
+                                        <a th:href="${offer.offerUrl}" th:text="${offer.offerUrl}"
+                                           style="display:block;margin-bottom:16px;font-family:'Courier New',monospace;
+                              font-size:12px;color:#93c5fd;text-decoration:none;
+                              word-break:break-all;line-height:1.5;" target="_blank">#</a>
+                                        <a th:href="@{'http://localhost:8081/api/user-offers/' + ${offer.id} + '/apply'}"
+                                           style="display:inline-block;padding:9px 20px;background-color:#166534;
+                              color:#4ade80;border:1px solid #15803d;border-radius:6px;
+                              text-decoration:none;font-family:'Courier New',monospace;
+                              font-size:12px;letter-spacing:0.5px;font-weight:bold;"
+                                           target="_blank">→ APLIKUJ</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </td>
+                </tr>
+
+                <!-- FOOTER -->
+                <tr>
+                    <td style="padding:20px 36px;border-top:1px solid #2d3748;
+                     text-align:center;background-color:#0d1117;">
+                        <p style="margin:0;font-family:'Courier New',monospace;font-size:11px;
+                      color:#4b5563;letter-spacing:0.5px;">
+                            OfferBrowser Prototype &copy; 2025 · Wygenerowano automatycznie
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+            <!-- /Container -->
+
+        </td>
+    </tr>
+</table>
+<!-- /Wrapper -->
+
 </body>
 </html>

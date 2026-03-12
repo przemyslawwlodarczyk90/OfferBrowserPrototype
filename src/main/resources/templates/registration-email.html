@@ -1,123 +1,94 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
     <title>Potwierdź rejestrację</title>
     <meta charset="UTF-8"/>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Georgia', serif;
-            background-color: #0b0f1a;
-            color: #cbd5e0;
-            padding: 32px 16px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #111827;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid #1f2937;
-            box-shadow: 0 24px 80px rgba(0,0,0,0.5);
-        }
-        .header {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            padding: 44px 40px;
-            text-align: center;
-            border-bottom: 1px solid #1f2937;
-        }
-        .header .label {
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            letter-spacing: 2px;
-            color: #4ade80;
-            text-transform: uppercase;
-            margin-bottom: 14px;
-        }
-        .header h1 {
-            font-size: 28px;
-            font-weight: normal;
-            color: #f0f4f8;
-            letter-spacing: -0.5px;
-        }
-        .body {
-            padding: 36px 40px;
-        }
-        .greeting {
-            font-size: 16px;
-            color: #e2e8f0;
-            margin-bottom: 16px;
-        }
-        .greeting strong { color: #4ade80; }
-        .body p {
-            font-size: 14px;
-            color: #9ca3af;
-            line-height: 1.7;
-            margin-bottom: 28px;
-        }
-        .btn-wrapper { text-align: center; }
-        .btn-confirm {
-            display: inline-block;
-            padding: 14px 36px;
-            background: #166534;
-            color: #4ade80;
-            border: 1px solid #15803d;
-            border-radius: 8px;
-            text-decoration: none;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            letter-spacing: 1px;
-            font-weight: bold;
-        }
-        .divider {
-            height: 1px;
-            background: #1f2937;
-            margin: 28px 0;
-        }
-        .note {
-            font-size: 12px;
-            color: #4b5563;
-            text-align: center;
-            line-height: 1.6;
-            font-family: 'Courier New', monospace;
-        }
-        .footer {
-            padding: 20px 40px;
-            border-top: 1px solid #1f2937;
-            text-align: center;
-        }
-        .footer p {
-            font-size: 11px;
-            color: #374151;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 0.5px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body>
-<div class="container">
-    <div class="header">
-        <div class="label">OfferBrowser · Weryfikacja konta</div>
-        <h1>Witaj w OfferBrowser</h1>
-    </div>
-    <div class="body">
-        <p class="greeting">Cześć, <strong th:text="${username}">Użytkowniku</strong>!</p>
-        <p>
-            Dziękujemy za rejestrację. Aby aktywować swoje konto i uzyskać dostęp
-            do wszystkich funkcji platformy, kliknij przycisk poniżej.
-        </p>
-        <div class="btn-wrapper">
-            <a th:href="${confirmationLink}" class="btn-confirm">→ POTWIERDŹ KONTO</a>
-        </div>
-        <div class="divider"></div>
-        <p class="note">
-            Jeśli nie zakładałeś konta w OfferBrowser, zignoruj tę wiadomość.<br/>
-            Link wygaśnie automatycznie po 24 godzinach.
-        </p>
-    </div>
-    <div class="footer">
-        <p>OfferBrowser Prototype &copy; 2025 · Wygenerowano automatycznie</p>
-    </div>
-</div>
+<body style="margin:0;padding:0;background-color:#0b0f1a;font-family:Georgia,serif;">
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+       style="background-color:#0b0f1a;padding:32px 16px;">
+    <tr>
+        <td align="center">
+
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                   style="max-width:600px;background-color:#111827;border-radius:16px;overflow:hidden;
+                    border:1px solid #2d3748;box-shadow:0 24px 80px rgba(0,0,0,0.6);">
+
+                <!-- HEADER -->
+                <tr>
+                    <td style="background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+                     padding:44px 40px;text-align:center;border-bottom:1px solid #2d3748;">
+                        <p style="margin:0 0 14px;font-family:'Courier New',monospace;font-size:11px;
+                      letter-spacing:2px;color:#4ade80;text-transform:uppercase;">
+                            OfferBrowser · Weryfikacja konta
+                        </p>
+                        <h1 style="margin:0;font-size:28px;font-weight:400;
+                       color:#f0f4f8;letter-spacing:-0.5px;">
+                            Witaj w OfferBrowser
+                        </h1>
+                    </td>
+                </tr>
+
+                <!-- BODY -->
+                <tr>
+                    <td style="padding:36px 40px;background-color:#111827;">
+
+                        <p style="margin:0 0 16px;font-size:16px;color:#e2e8f0;">
+                            Cześć, <strong style="color:#4ade80;" th:text="${username}">Użytkowniku</strong>!
+                        </p>
+                        <p style="margin:0 0 28px;font-size:14px;color:#9ca3af;line-height:1.7;">
+                            Dziękujemy za rejestrację. Aby aktywować swoje konto i uzyskać dostęp
+                            do wszystkich funkcji platformy, kliknij przycisk poniżej.
+                        </p>
+
+                        <!-- CTA Button -->
+                        <table role="presentation" cellpadding="0" cellspacing="0" border="0"
+                               style="margin:0 auto 28px;">
+                            <tr>
+                                <td style="border-radius:8px;background-color:#166534;border:1px solid #15803d;">
+                                    <a th:href="${confirmationLink}"
+                                       style="display:inline-block;padding:14px 36px;
+                            color:#4ade80;text-decoration:none;
+                            font-family:'Courier New',monospace;font-size:13px;
+                            letter-spacing:1px;font-weight:bold;">
+                                        → POTWIERDŹ KONTO
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Divider -->
+                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                            <tr><td style="height:1px;background-color:#2d3748;"></td></tr>
+                        </table>
+
+                        <p style="margin:28px 0 0;font-family:'Courier New',monospace;font-size:12px;
+                      color:#6b7280;text-align:center;line-height:1.6;">
+                            Jeśli nie zakładałeś konta w OfferBrowser, zignoruj tę wiadomość.<br/>
+                            Link wygaśnie automatycznie po 24 godzinach.
+                        </p>
+
+                    </td>
+                </tr>
+
+                <!-- FOOTER -->
+                <tr>
+                    <td style="padding:20px 40px;border-top:1px solid #2d3748;
+                     text-align:center;background-color:#0d1117;">
+                        <p style="margin:0;font-family:'Courier New',monospace;font-size:11px;
+                      color:#4b5563;letter-spacing:0.5px;">
+                            OfferBrowser Prototype &copy; 2025 · Wygenerowano automatycznie
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+</table>
+
 </body>
 </html>
