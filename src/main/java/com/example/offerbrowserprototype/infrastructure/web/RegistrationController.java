@@ -6,15 +6,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller                              // ← nie @RestController — zwracamy widok Thymeleaf
 @RequestMapping("/api/v1/registration")
 @Tag(name = "Registration", description = "Endpoints for user registration and confirmation")
 @Validated
@@ -28,17 +27,24 @@ public class RegistrationController {
 
     @Operation(summary = "Confirm user registration",
             description = "Confirms the registration of a user by validating the provided confirmation token. " +
-                    "If the token is valid, the user account is activated.")
+                    "If the token is valid, the user account is activated and the confirmation page is shown.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Registration confirmed successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid or expired token")
+            @ApiResponse(responseCode = "200", description = "Registration confirmed — shows confirmation page"),
+            @ApiResponse(responseCode = "200", description = "Invalid or expired token — shows error page")
     })
     @GetMapping("/confirm")
-    public ResponseEntity<String> confirmRegistration(@RequestParam("token") @NotBlank String token) {
+    public String confirmRegistration(
+            @RequestParam("token") @NotBlank String token,
+            Model model
+    ) {
         try {
             loginAndRegisterFacade.confirmRegistration(token);
-            return ResponseEntity.ok("Registration confirmed!");
+            // zwraca templates/registration-confirmed.html
+            return "registration-confirmed";
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            model.addAttribute("message", e.getMessage());
+            // zwraca templates/error.html
+            return "error";
         }
-    }}
+    }
+}
