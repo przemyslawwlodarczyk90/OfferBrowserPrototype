@@ -4,6 +4,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,8 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
+
+    private static final Logger log = LoggerFactory.getLogger(JwtAuthFilter.class);
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
@@ -38,27 +42,35 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        String token = authHeader.substring(7); // odcinamy "Bearer "
+        String token = authHeader.substring(7);
 
         try {
-            String username = jwtService.extractUsername(token);
+            String subject = jwtService.extractUsername(token); // to jest username (sub)
 
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if (subject != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                if (jwtService.validateToken(token, userDetails)) {
-                    UsernamePasswordAuthenticationToken authenticationToken =
+                // Próbuj najpierw po username, potem po email (fallback dla starych tokenów)
+                UserDetails userDetails = null;
+                try {
+                    userDetails = userDetailsService.loadUserByUsername(subject);
+                } catch (Exception e) {
+                    log.warn("Could not load user by username '{}', JWT sub may be email", subject);
+                    // userDetails pozostaje null — nie autentykujemy
+                }
+
+                if (userDetails != null && jwtService.validateToken(token, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(
                                     userDetails, null, userDetails.getAuthorities()
                             );
-                    authenticationToken.setDetails(
+                    authToken.setDetails(
                             new WebAuthenticationDetailsSource().buildDetails(request)
                     );
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }
         } catch (Exception e) {
-            logger.error("Invalid JWT Token: " + e.getMessage());
+            log.error("JWT processing error: {}", e.getMessage());
         }
 
         filterChain.doFilter(request, response);
