@@ -70,27 +70,43 @@ public class ApplicationNoteController {
                 : ResponseEntity.ok(notes);
     }
 
+    @PostMapping
+    @Operation(summary = "Create application note for an internal offer (with offerId)")
+    public ResponseEntity<ApplicationNoteDTO> createNote(
+            @RequestParam Long userId,
+            @RequestParam Long offerId,
+            @RequestParam String companyName,
+            @RequestParam(required = false) String offerUrl
+    ) {
+        logger.info("Creating note for userId={}, offerId={}, company={}", userId, offerId, companyName);
+
+        if (companyName == null || companyName.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        ApplicationNoteDTO created = applicationNoteMapper.toDto(
+                applicationNoteFacade.saveNote(userId, offerId, companyName, offerUrl)
+        );
+
+        return ResponseEntity.status(201).body(created);
+    }
+
     @PostMapping("/external")
     @Operation(summary = "Create application note for external source")
     public ResponseEntity<ApplicationNoteDTO> createNoteForExternalSource(
             @RequestParam Long userId,
             @RequestParam String companyName,
-            @RequestParam String offerUrl
+            @RequestParam(required = false) String offerUrl
     ) {
         logger.info("Creating external application note for userId={}, company={}, url={}",
                 userId, companyName, offerUrl);
 
-        if (companyName == null || companyName.isBlank()
-                || offerUrl == null || offerUrl.isBlank()) {
+        if (companyName == null || companyName.isBlank()) {
             return ResponseEntity.badRequest().build();
         }
 
         ApplicationNoteDTO created = applicationNoteMapper.toDto(
-                applicationNoteFacade.createNoteForExternalSource(
-                        userId,
-                        companyName,
-                        offerUrl
-                )
+                applicationNoteFacade.createNoteForExternalSource(userId, companyName, offerUrl)
         );
 
         return ResponseEntity.status(201).body(created);

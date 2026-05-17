@@ -15,6 +15,7 @@ public class ApplicationNoteFacade {
     private final ApplicationNoteGetByCompanyNameHandler getByCompanyNameHandler;
     private final ApplicationNoteGetCompaniesWithDatesHandler getCompaniesWithDatesHandler;
     private final ExternalSourceApplicationNoteHandler externalSourceApplicationNoteHandler;
+    private final ApplicationNoteHandler applicationNoteHandler;
     private final ApplicationNoteCountHandler countHandler;
     private final RedisTemplate<String, Object> redisTemplate;
 
@@ -26,6 +27,7 @@ public class ApplicationNoteFacade {
             ApplicationNoteGetByCompanyNameHandler getByCompanyNameHandler,
             ApplicationNoteGetCompaniesWithDatesHandler getCompaniesWithDatesHandler,
             ExternalSourceApplicationNoteHandler externalSourceApplicationNoteHandler,
+            ApplicationNoteHandler applicationNoteHandler,
             ApplicationNoteCountHandler countHandler,
             RedisTemplate<String, Object> redisTemplate
     ) {
@@ -33,6 +35,7 @@ public class ApplicationNoteFacade {
         this.getByCompanyNameHandler = getByCompanyNameHandler;
         this.getCompaniesWithDatesHandler = getCompaniesWithDatesHandler;
         this.externalSourceApplicationNoteHandler = externalSourceApplicationNoteHandler;
+        this.applicationNoteHandler = applicationNoteHandler;
         this.countHandler = countHandler;
         this.redisTemplate = redisTemplate;
     }
@@ -59,6 +62,13 @@ public class ApplicationNoteFacade {
 
     public Map<String, List<String>> getCompaniesWithApplicationDates(Long userId) {
         return getCompaniesWithDatesHandler.getCompaniesWithApplicationDates(userId);
+    }
+
+    public ApplicationNote saveNote(Long userId, Long offerId, String companyName, String offerUrl) {
+        ApplicationNote note = applicationNoteHandler.saveApplicationNote(userId, offerId, offerUrl, companyName);
+        redisTemplate.delete(ALL_NOTES_CACHE_KEY_PREFIX + userId);
+        redisTemplate.delete(NOTES_COUNT_CACHE_KEY_PREFIX + userId);
+        return note;
     }
 
     public ApplicationNote createNoteForExternalSource(
