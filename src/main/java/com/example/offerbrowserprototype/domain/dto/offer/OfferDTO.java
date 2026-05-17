@@ -34,6 +34,8 @@ public class OfferDTO implements Serializable {
 
     private String company;
 
+    private String city;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private String level;
 

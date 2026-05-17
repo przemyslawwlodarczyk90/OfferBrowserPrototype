@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class OfferMapper {
 
     public OfferDTO toDTO(Offer offer) {
-        return new OfferDTO(
+        OfferDTO dto = new OfferDTO(
                 offer.getId(),
                 offer.getTitle(),
                 offer.getDescription(),
@@ -20,6 +20,8 @@ public class OfferMapper {
                 false,
                 offer.getFetchedAt()
         );
+        dto.setCity(offer.getCity());
+        return dto;
     }
 
     public Offer toEntity(OfferDTO dto) {
