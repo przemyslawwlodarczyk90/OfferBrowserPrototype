@@ -106,7 +106,8 @@ public class NoFluffController {
                 if (offer != null) { skipped++; continue; }
 
                 offer = new com.example.offerbrowserprototype.domain.offer.Offer();
-                offer.setTitle(str(item, "title"));
+                String rawTitle = str(item, "title");
+                offer.setTitle(rawTitle != null ? rawTitle.replaceAll("(?i)\\s*NOWA\\s*$", "").trim() : null);
                 offer.setDescription(str(item, "description"));
                 offer.setLocation(str(item, "location"));
                 offer.setSalaryRange(str(item, "salaryRange"));

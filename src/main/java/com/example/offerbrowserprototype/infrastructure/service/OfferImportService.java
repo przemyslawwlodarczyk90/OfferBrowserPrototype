@@ -40,6 +40,9 @@ public class OfferImportService {
 
             for (Offer offer : offers) {
                 try {
+                    if (offer.getTitle() != null) {
+                        offer.setTitle(offer.getTitle().replaceAll("(?i)\\s*NOWA\\s*$", "").trim());
+                    }
                     if (offerRepository.findByOfferUrl(offer.getOfferUrl()).isEmpty()) {
                         offerRepository.save(offer);
                         logger.info("Saved new offer: {}", offer.getTitle());
