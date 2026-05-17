@@ -20,6 +20,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -72,21 +73,68 @@ public class NoFluffController {
                 .body(Map.of("message", "Skrypt uruchomiony w tle. Oferty zostaną zaimportowane automatycznie po jego zakończeniu."));
     }
 
-    @Operation(summary = "Import offers from JSON")
+    @Operation(summary = "Import offers from JSON body")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Offers imported successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid JSON structure"),
             @ApiResponse(responseCode = "500", description = "Error during offer import")
     })
     @PostMapping("/import")
-    public ResponseEntity<String> importOffers(
-            @RequestParam(defaultValue = "data/offers/detailed_offers.json") String filePath) {
-        try {
-            offerImportService.importOffersFromJson(filePath);
-            return ResponseEntity.ok("Offers imported successfully from " + filePath);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error during offer import: " + e.getMessage());
+    public ResponseEntity<Map<String, Object>> importOffers(@RequestBody List<Map<String, Object>> payload) {
+        if (payload == null || payload.isEmpty()) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Pusta lista — prześlij tablicę obiektów JSON."));
         }
+
+        int imported = 0, skipped = 0, errors = 0;
+        for (Map<String, Object> item : payload) {
+            try {
+                if (!item.containsKey("offerUrl") || item.get("offerUrl") == null) {
+                    errors++;
+                    logger.warn("Skipping offer — missing required field 'offerUrl': {}", item);
+                    continue;
+                }
+                if (!item.containsKey("company") || item.get("company") == null) {
+                    errors++;
+                    logger.warn("Skipping offer — missing required field 'company': {}", item.get("offerUrl"));
+                    continue;
+                }
+
+                com.example.offerbrowserprototype.domain.offer.Offer offer =
+                        offerRepository.findByOfferUrl(item.get("offerUrl").toString()).orElse(null);
+
+                if (offer != null) { skipped++; continue; }
+
+                offer = new com.example.offerbrowserprototype.domain.offer.Offer();
+                offer.setTitle(str(item, "title"));
+                offer.setDescription(str(item, "description"));
+                offer.setLocation(str(item, "location"));
+                offer.setSalaryRange(str(item, "salaryRange"));
+                offer.setLevel(str(item, "level"));
+                offer.setOfferUrl(item.get("offerUrl").toString());
+                offer.setCompany(item.get("company").toString());
+                offer.setDuplicate(false);
+                offer.setFetchedAt(java.time.LocalDateTime.now());
+
+                offerRepository.save(offer);
+                imported++;
+            } catch (Exception e) {
+                errors++;
+                logger.error("Error processing offer: {}", e.getMessage());
+            }
+        }
+
+        return ResponseEntity.ok(Map.of(
+                "imported",  imported,
+                "skipped",   skipped,
+                "errors",    errors,
+                "total",     payload.size()
+        ));
+    }
+
+    private static String str(Map<String, Object> m, String key) {
+        Object v = m.get(key);
+        return v != null ? v.toString() : null;
     }
 
     @Operation(summary = "Import offer from URL",
