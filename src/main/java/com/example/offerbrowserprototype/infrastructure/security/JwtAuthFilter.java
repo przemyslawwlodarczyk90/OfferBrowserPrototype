@@ -1,5 +1,6 @@
 package com.example.offerbrowserprototype.infrastructure.security;
 
+import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,10 +24,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
 
-    public JwtAuthFilter(JwtService jwtService, UserDetailsService userDetailsService) {
+    public JwtAuthFilter(JwtService jwtService, UserDetailsService userDetailsService, UserRepository userRepository) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -49,13 +52,23 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             if (subject != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                // Próbuj najpierw po username, potem po email (fallback dla starych tokenów)
+                // Próbuj po username, fallback po email (JWT sub może być emailem)
                 UserDetails userDetails = null;
                 try {
                     userDetails = userDetailsService.loadUserByUsername(subject);
                 } catch (Exception e) {
-                    log.warn("Could not load user by username '{}', JWT sub may be email", subject);
-                    // userDetails pozostaje null — nie autentykujemy
+                    try {
+                        String usernameByEmail = userRepository.findByEmail(subject)
+                                .map(u -> u.getUsername())
+                                .orElse(null);
+                        if (usernameByEmail != null) {
+                            userDetails = userDetailsService.loadUserByUsername(usernameByEmail);
+                        } else {
+                            log.warn("Could not load user by username or email '{}'", subject);
+                        }
+                    } catch (Exception ex) {
+                        log.warn("Could not load user by email '{}': {}", subject, ex.getMessage());
+                    }
                 }
 
                 if (userDetails != null && jwtService.validateToken(token, userDetails)) {
