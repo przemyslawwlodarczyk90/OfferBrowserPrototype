@@ -30,8 +30,8 @@ public class UserRegistrationHandler {
     private final ConfirmationTokenService confirmationTokenService;
     private final Clock clock;
 
-    @Value("${app.server.base-url}")
-    private String serverBaseUrl;
+    @Value("${app.frontend.base-url}")
+    private String frontendBaseUrl;
 
     public UserRegistrationHandler(UserRepository userRepository, PasswordEncoder passwordEncoder,
                                    UserMapper userMapper, MailService mailService,
@@ -61,7 +61,7 @@ public class UserRegistrationHandler {
         logger.info("New user saved successfully with ID: {}", newUser.getId());
 
         String confirmationToken = generateConfirmationToken();
-        String confirmationLink = serverBaseUrl + "/api/v1/registration/confirm?token=" + confirmationToken;
+        String confirmationLink = frontendBaseUrl + "/confirm?token=" + confirmationToken;
         logger.debug("Confirmation token generated: {}", confirmationToken);
         logger.debug("Confirmation link: {}", confirmationLink);
 
