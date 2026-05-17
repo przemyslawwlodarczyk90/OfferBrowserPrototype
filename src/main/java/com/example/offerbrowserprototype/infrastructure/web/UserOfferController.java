@@ -33,10 +33,7 @@ public class UserOfferController {
     public ResponseEntity<List<OfferDTO>> notApplied(
             @RequestHeader Long userId
     ) {
-        List<OfferDTO> offers = userOfferFacade.getNotAppliedOffersForUser(userId);
-        return offers.isEmpty()
-                ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(offers);
+        return ResponseEntity.ok(userOfferFacade.getNotAppliedOffersForUser(userId));
     }
 
     @GetMapping("/applied")
@@ -44,10 +41,7 @@ public class UserOfferController {
     public ResponseEntity<List<OfferDTO>> applied(
             @RequestHeader Long userId
     ) {
-        List<OfferDTO> offers = userOfferFacade.getAppliedOffersForUser(userId);
-        return offers.isEmpty()
-                ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(offers);
+        return ResponseEntity.ok(userOfferFacade.getAppliedOffersForUser(userId));
     }
 
     @GetMapping("/applied/count")
@@ -75,9 +69,6 @@ public class UserOfferController {
     public ResponseEntity<List<OfferDTO>> useless(
             @RequestHeader Long userId
     ) {
-        List<OfferDTO> offers = userOfferFacade.getUselessOffersForUser(userId);
-        return offers.isEmpty()
-                ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(offers);
+        return ResponseEntity.ok(userOfferFacade.getUselessOffersForUser(userId));
     }
 }
