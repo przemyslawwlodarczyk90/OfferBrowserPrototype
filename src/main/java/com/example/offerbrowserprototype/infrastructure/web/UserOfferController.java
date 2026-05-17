@@ -59,4 +59,25 @@ public class UserOfferController {
                 userOfferFacade.countAppliedOffersForUser(userId)
         );
     }
+
+    @PostMapping("/{offerId}/useless")
+    @Operation(summary = "Mark offer as useless")
+    public ResponseEntity<Void> markUseless(
+            @RequestHeader Long userId,
+            @PathVariable Long offerId
+    ) {
+        userOfferFacade.markAsUseless(userId, offerId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/useless")
+    @Operation(summary = "Get useless offers")
+    public ResponseEntity<List<OfferDTO>> useless(
+            @RequestHeader Long userId
+    ) {
+        List<OfferDTO> offers = userOfferFacade.getUselessOffersForUser(userId);
+        return offers.isEmpty()
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(offers);
+    }
 }

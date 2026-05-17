@@ -17,13 +17,13 @@ public interface UserOfferStatusRepository extends JpaRepository<UserOfferStatus
 
     List<UserOfferStatus> findByUser_IdAndAppliedFalse(Long userId);
 
-
-
     Optional<UserOfferStatus> findByUserAndOffer(User user, Offer offer);
 
     long countByUser_IdAndAppliedTrue(Long userId);
 
     List<UserOfferStatus> findByUser_IdAndAppliedTrue(Long userId);
+
+    List<UserOfferStatus> findByUser_IdAndUselessTrue(Long userId);
 
 
 }

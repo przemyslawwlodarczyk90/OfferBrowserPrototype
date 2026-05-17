@@ -5,6 +5,7 @@ import com.example.offerbrowserprototype.infrastructure.repository.OfferReposito
 import com.example.offerbrowserprototype.infrastructure.repository.UserOfferStatusRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -22,17 +23,16 @@ public class UserOfferQueryHandler {
     }
 
     public List<Offer> getNotAppliedOffersForUser(Long userId) {
+        List<Long> excluded = new ArrayList<>();
 
-        List<Long> appliedOfferIds = userOfferStatusRepository
-                .findByUser_IdAndAppliedTrue(userId)
-                .stream()
-                .map(status -> status.getOffer().getId())
-                .toList();
+        userOfferStatusRepository.findByUser_IdAndAppliedTrue(userId)
+                .forEach(s -> excluded.add(s.getOffer().getId()));
+        userOfferStatusRepository.findByUser_IdAndUselessTrue(userId)
+                .forEach(s -> excluded.add(s.getOffer().getId()));
 
-        if (appliedOfferIds.isEmpty()) {
+        if (excluded.isEmpty()) {
             return offerRepository.findByDuplicateFalse();
         }
-
-        return offerRepository.findByIdNotInAndDuplicateFalse(appliedOfferIds);
+        return offerRepository.findByIdNotInAndDuplicateFalse(excluded);
     }
 }

@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 public class UserOfferFacade {
 
     private final UserOfferApplyHandler applyHandler;
+    private final UserOfferMarkUselessHandler markUselessHandler;
+    private final UserOfferGetUselessHandler getUselessHandler;
     private final UserOfferStatusMapper statusMapper;
     private final OfferMapper offerMapper;
     private final UserOfferQueryHandler queryHandler;
@@ -23,11 +25,14 @@ public class UserOfferFacade {
     private final UserAppliedOffersCountHandler countHandler;
     private final RedisTemplate<String, Object> redisTemplate;
 
-    private static final String APPLIED_KEY = "userOffers:applied:";
-    private static final String COUNT_KEY = "userOffers:appliedCount:";
+    private static final String APPLIED_KEY  = "userOffers:applied:";
+    private static final String COUNT_KEY    = "userOffers:appliedCount:";
+    private static final String USELESS_KEY  = "userOffers:useless:";
 
     public UserOfferFacade(
             UserOfferApplyHandler applyHandler,
+            UserOfferMarkUselessHandler markUselessHandler,
+            UserOfferGetUselessHandler getUselessHandler,
             UserOfferStatusMapper statusMapper,
             OfferMapper offerMapper,
             UserOfferQueryHandler queryHandler,
@@ -36,6 +41,8 @@ public class UserOfferFacade {
             RedisTemplate<String, Object> redisTemplate
     ) {
         this.applyHandler = applyHandler;
+        this.markUselessHandler = markUselessHandler;
+        this.getUselessHandler = getUselessHandler;
         this.statusMapper = statusMapper;
         this.offerMapper = offerMapper;
         this.queryHandler = queryHandler;
@@ -46,11 +53,30 @@ public class UserOfferFacade {
 
     public UserOfferStatusDTO applyToOffer(Long userId, Long offerId) {
         var status = applyHandler.applyToOffer(userId, offerId);
-
         redisTemplate.delete(APPLIED_KEY + userId);
         redisTemplate.delete(COUNT_KEY + userId);
-
         return statusMapper.toDTO(status);
+    }
+
+    public void markAsUseless(Long userId, Long offerId) {
+        markUselessHandler.markAsUseless(userId, offerId);
+        redisTemplate.delete(USELESS_KEY + userId);
+    }
+
+    public List<OfferDTO> getUselessOffersForUser(Long userId) {
+        String key = USELESS_KEY + userId;
+
+        @SuppressWarnings("unchecked")
+        List<OfferDTO> cached = (List<OfferDTO>) redisTemplate.opsForValue().get(key);
+        if (cached != null) return cached;
+
+        List<OfferDTO> offers = getUselessHandler.getUselessOffersForUser(userId)
+                .stream()
+                .map(offerMapper::toDTO)
+                .toList();
+
+        redisTemplate.opsForValue().set(key, offers, 1, TimeUnit.HOURS);
+        return offers;
     }
 
     public List<OfferDTO> getNotAppliedOffersForUser(Long userId) {

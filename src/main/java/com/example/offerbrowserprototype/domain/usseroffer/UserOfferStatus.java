@@ -44,6 +44,12 @@ public class UserOfferStatus {
     @Column(name = "applied_at")
     private LocalDateTime appliedAt;
 
+    @Column(nullable = false)
+    private boolean useless = false;
+
+    @Column(name = "useless_at")
+    private LocalDateTime uselessAt;
+
     public UserOfferStatus(User user, Offer offer, boolean applied) {
         this.user = user;
         this.offer = offer;
