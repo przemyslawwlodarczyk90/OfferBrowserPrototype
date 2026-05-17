@@ -20,6 +20,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -54,20 +55,21 @@ public class NoFluffController {
             @ApiResponse(responseCode = "500", description = "Error during script execution")
     })
     @GetMapping("/run")
-    public ResponseEntity<String> runPythonScript() {
-        String result = scriptService.runScript();
-
+    public ResponseEntity<Map<String, String>> runPythonScript() {
         CompletableFuture.runAsync(() -> {
             try {
-                logger.info("Starting automatic offer import...");
+                logger.info("Python script started in background...");
+                String output = scriptService.runScript();
+                logger.info("Python script completed. Output: {}", output);
                 offerImportService.importOffersFromJson("data/offers/detailed_offers.json");
-                logger.info("Automatic offer import completed successfully.");
+                logger.info("Offer import completed successfully.");
             } catch (Exception e) {
-                logger.error("Error during automatic offer import: {}", e.getMessage());
+                logger.error("Error during script execution or import: {}", e.getMessage());
             }
         });
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.accepted()
+                .body(Map.of("message", "Skrypt uruchomiony w tle. Oferty zostaną zaimportowane automatycznie po jego zakończeniu."));
     }
 
     @Operation(summary = "Import offers from JSON")
