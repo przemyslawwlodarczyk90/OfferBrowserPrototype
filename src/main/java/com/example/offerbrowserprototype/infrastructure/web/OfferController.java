@@ -59,16 +59,6 @@ public class OfferController {
         return ResponseEntity.ok(offerFacade.getAllOffers());
     }
 
-    @PostMapping("/{offerId}/push/{provider}")
-    @Operation(summary = "Push offer to provider")
-    public ResponseEntity<Void> pushOffer(
-            @PathVariable Long offerId,
-            @PathVariable String provider
-    ) {
-        offerFacade.pushOfferToProvider(offerId, provider);
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping("/{offerId}/mark-duplicate")
     @Operation(summary = "Mark offer as duplicate by ID")
     public ResponseEntity<Void> markDuplicate(@PathVariable Long offerId) {

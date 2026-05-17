@@ -1,14 +1,11 @@
 package com.example.offerbrowserprototype.infrastructure.facade;
 
-
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.offer.*;
 import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheFacade;
-import com.example.offerbrowserprototype.infrastructure.service.ExternalJobOfferService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -21,8 +18,6 @@ public class OfferFacade {
     private final OfferDeletionHandler   deletionHandler;
     private final OfferRetrievalHandler  retrievalHandler;
     private final OfferCacheFacade       offerCacheFacade;
-    private final ExternalJobOfferService externalJobOfferService;
-    private final OfferPushHandler       pushHandler;
     private final MarkAsDuplicateHandler markAsDuplicateHandler;
 
     public OfferFacade(
@@ -33,19 +28,15 @@ public class OfferFacade {
             OfferRetrievalHandler  retrievalHandler,
             OfferDetailsHandler    detailsHandler,
             OfferCacheFacade       offerCacheFacade,
-            ExternalJobOfferService externalJobOfferService,
-            OfferPushHandler       pushHandler,
             MarkAsDuplicateHandler markAsDuplicateHandler
     ) {
-        this.offerFromUrlHandler   = offerFromUrlHandler;
-        this.additionHandler       = additionHandler;
-        this.updateHandler         = updateHandler;
-        this.deletionHandler       = deletionHandler;
-        this.retrievalHandler      = retrievalHandler;
-        this.detailsHandler        = detailsHandler;
-        this.offerCacheFacade      = offerCacheFacade;
-        this.externalJobOfferService = externalJobOfferService;
-        this.pushHandler           = pushHandler;
+        this.offerFromUrlHandler    = offerFromUrlHandler;
+        this.additionHandler        = additionHandler;
+        this.updateHandler          = updateHandler;
+        this.deletionHandler        = deletionHandler;
+        this.retrievalHandler       = retrievalHandler;
+        this.detailsHandler         = detailsHandler;
+        this.offerCacheFacade       = offerCacheFacade;
         this.markAsDuplicateHandler = markAsDuplicateHandler;
     }
 
@@ -68,47 +59,23 @@ public class OfferFacade {
         deletionHandler.deleteOffer(id);
     }
 
-    // ── POPRAWKA: zawsze pobiera z DB, Redis tylko jako opcjonalny cache ──
     public List<OfferDTO> getAllOffers() {
-
-        // 1. Spróbuj Redis (szybka ścieżka)
         try {
             List<OfferDTO> cached = offerCacheFacade.getCachedOffers();
             if (cached != null && !cached.isEmpty()) {
                 return cached;
             }
-        } catch (Exception ignored) {
-            // Redis niedostępny — kontynuuj
-        }
+        } catch (Exception ignored) {}
 
-        // 2. Zawsze pobierz dane z bazy PostgreSQL
-        List<OfferDTO> dbOffers = retrievalHandler.getAllOffers();
+        List<OfferDTO> offers = retrievalHandler.getAllOffers();
 
-        // 3. Dołącz zewnętrznych providerów (cicho pomijaj błędy)
-        List<OfferDTO> combined = new ArrayList<>(dbOffers);
-        try {
-            List<OfferDTO> external = externalJobOfferService.fetchExternalOffers();
-            if (external != null && !external.isEmpty()) {
-                combined.addAll(external);
-            }
-        } catch (Exception ignored) {
-            // Provider niedostępny — zwróć same dane z DB
-        }
-
-        // 4. Zapisz do cache TYLKO jeśli lista nie jest pusta
-        if (!combined.isEmpty()) {
+        if (!offers.isEmpty()) {
             try {
-                offerCacheFacade.cacheOffers(combined);
-            } catch (Exception ignored) {
-                // Redis niedostępny — nie blokuj odpowiedzi
-            }
+                offerCacheFacade.cacheOffers(offers);
+            } catch (Exception ignored) {}
         }
 
-        return combined;
-    }
-
-    public void pushOfferToProvider(Long offerId, String provider) {
-        pushHandler.pushOfferToProvider(offerId, provider);
+        return offers;
     }
 
     public OfferDTO addOfferFromUrl(Long userId, String offerUrl) {
