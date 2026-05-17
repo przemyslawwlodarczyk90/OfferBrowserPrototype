@@ -115,12 +115,12 @@ public class OfferFacade {
         return offerFromUrlHandler.addOfferFromUrl(userId, offerUrl);
     }
 
-    @CacheEvict(value = {"allOffers", "offerDetails"}, allEntries = true)
+    @CacheEvict(value = "offers", allEntries = true)
     public void markAsDuplicateById(Long offerId) {
         markAsDuplicateHandler.handleById(offerId);
     }
 
-    @CacheEvict(value = {"allOffers", "offerDetails"}, allEntries = true)
+    @CacheEvict(value = "offers", allEntries = true)
     public void markAsDuplicateByUrl(String offerUrl) {
         markAsDuplicateHandler.handleByUrl(offerUrl);
     }
