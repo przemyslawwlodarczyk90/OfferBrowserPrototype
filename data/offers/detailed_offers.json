@@ -1,13 +1,153 @@
 [
     {
-        "title": "Junior Fullstack Developer (Java + Javascript)",
-        "description": "Ta oferta jest dla Ciebie, jeśli:\nmasz doświadczenie w pracy z Java i JavaScript w kontekście aplikacji webowych,\npracowałeś z narzędziami wspierającymi development i testowanie (jUnit, Maven, Jenkins, Bitbucket, Selenium),\npotrafisz projektować i rozwijać aplikacje webowe z uwzględnieniem jakości i wydajności,\nrozumiesz zasady projektowania interfejsów użytkownika i potrafisz je zastosować w praktyce,\nznasz HTML i CSS oraz potrafisz wykorzystać je w codziennej pracy,\nkorzystasz z narzędzi AI w celu zwiększenia efektywności pracy,\npotrafisz proponować rozwiązania,\ndobrze odnajdujesz się w pracy zespołowej,\nswobodnie komunikujesz się w języku angielskim,\nmile widziana: znajomość platformy Eximee lub innej platformy low-code, praktyczna znajomość XML, XSLT, SQL, znajomość UI/UX, Design Thinking, Scrum, Jira, Splunk.",
+        "title": "Senior Java Engineer Data Acquisition NOWA",
+        "description": "What will help you succeed\nSolid Java expertise, with proven experience in development and architectural design.\nDevOps knowledge, including AWS, Kubernetes, and CI/CD pipelines.\nFamiliarity with frontend technologies, preferably React.\nA strong focus on end-user experience and passion for enabling people with innovative tools.\nAbility to adapt quickly to new technologies and environments.\nExcellent communication skills in English, both written and spoken.",
         "location": "Nieokreślona",
-        "salaryRange": "13 440 – 15 120 PLN",
+        "salaryRange": "16 000 – 20 500 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:24.018210Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-engineer-data-acquisition-dynatrace-gdansk",
+        "company": "Dynatrace"
+    },
+    {
+        "title": "Senior Java Backend Developer (Node.js / TypeScript) NOWA",
+        "description": "Commercial backend development experience:\nSenior: 6+ years\nStrong expertise in:\nJava 21+\nSpring Boot 3.x\nREST API / OpenAPI\nSpring Security / OAuth2 / JWT\nExperience with:\nAPI design and system integrations\nEvent-driven architecture and distributed systems\nAsynchronous flows and messaging concepts\nUnit and integration testing\nMonitoring, logging, troubleshooting, and observability\nHands-on knowledge of:\nMongoDB or similar NoSQL databases\nMaven or similar build tools\nProduction-grade backend engineering practices\nEnglish level B2+ for technical documentation and collaboration\nSenior-level candidates should additionally demonstrate:\nDistributed system design experience\nProduction ownership and incident resolution\nMentoring and technical leadership experience\nTechnology migration/transformation experience\nAbility to influence engineering standards and best practices\nNice To Have\nCommercial experience with Node.js and TypeScript\nExperience with Express, Fastify, or NestJS frameworks\nKnowledge of Kafka or RabbitMQ\nExperience with Docker and Kubernetes\nFamiliarity with GraphQL\nExperience with Terraform and Infrastructure as Code\nKnowledge of OpenTelemetry and distributed tracing\nExperience with Jest or Vitest testing frameworks\nUnderstanding of npm / pnpm ecosystem\nTeam structure: Squad within Digital Domain (6–12 developers)\nPreferred mindset and personality traits:\nProduction Engineer\nComplexity Navigator\nPragmatic Modernizer\nStatus-Quo Challenger",
+        "location": "Nieokreślona",
+        "salaryRange": "20 160 – 25 200 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:24.995020Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-backend-developer-node-js-typescript-square-one-resources-warszawa",
+        "company": "Square One Resources"
+    },
+    {
+        "title": "Mid Java Backend Developer (Node.js / TypeScript) NOWA",
+        "description": "Commercial backend development experience:\nMID: 4+ years\nStrong expertise in:\nJava 21+\nSpring Boot 3.x\nREST API / OpenAPI\nSpring Security / OAuth2 / JWT\nExperience with:\nAPI design and system integrations\nEvent-driven architecture and distributed systems\nAsynchronous flows and messaging concepts\nUnit and integration testing\nMonitoring, logging, troubleshooting, and observability\nHands-on knowledge of:\nMongoDB or similar NoSQL databases\nMaven or similar build tools\nProduction-grade backend engineering practices\nEnglish level B2+ for technical documentation and collaboration\nSenior-level candidates should additionally demonstrate:\nDistributed system design experience\nProduction ownership and incident resolution\nMentoring and technical leadership experience\nTechnology migration/transformation experience\nAbility to influence engineering standards and best practices\nNice To Have\nCommercial experience with Node.js and TypeScript\nExperience with Express, Fastify, or NestJS frameworks\nKnowledge of Kafka or RabbitMQ\nExperience with Docker and Kubernetes\nFamiliarity with GraphQL\nExperience with Terraform and Infrastructure as Code\nKnowledge of OpenTelemetry and distributed tracing\nExperience with Jest or Vitest testing frameworks\nUnderstanding of npm / pnpm ecosystem\nTeam structure: Squad within Digital Domain (6–12 developers)\nPreferred mindset and personality traits:\nProduction Engineer\nComplexity Navigator\nPragmatic Modernizer\nStatus-Quo Challenger\nCollaborative Problem-Solver",
+        "location": "Nieokreślona",
+        "salaryRange": "16 800 – 19 320 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:05:25.990282Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/mid-java-backend-developer-node-js-typescript-square-one-resources-warszawa",
+        "company": "Square One Resources"
+    },
+    {
+        "title": "Software Engineer (Java / Angular) NOWA",
+        "description": "Twoje doświadczenie i umiejętności:\nMasz min. 5 lat doświadczenia jako Inżynier oprogramowania.\nMasz wykształcenie techniczne (informatyka, matematyka, fizyka lub pokrewne).\nZnasz Spring Boot (Core, Data) i potrafisz pisać czysty, testowalny kod.\nTworzysz testy jednostkowe i integracyjne (JUnit).\nDobrze czujesz się w pracy z algorytmami, strukturami danych i relacyjnymi bazami.\nRozumiesz koncepcje SOA, REST, SOAP, mikroserwisy, OpenAPI.\nMasz doświadczenie z systemami orkiestracji kontenerów np. Kubernetes, OpenShift.\nZnasz wzorce projektowe i integracyjne – i potrafisz je stosować w praktyce.\nPrzykładasz wagę do jakości, szczegółów i działania „z głową”.\nBiegle posługujesz się językiem polskim oraz angielskim w mowie i piśmie.\nFajnie, jeśli dodatkowo: \nMasz doświadczenie w projektowaniu systemów z użyciem podejścia Model Driven Development (BPMN, UML).\nZnasz Angulara i chętnie zaglądasz też na frontend.\nMiałeś styczność z Apache Kafka lub Keycloak i czujesz się w tym pewnie.",
+        "location": "Wrocław, Powstańców Śląskich 9",
+        "salaryRange": "18 000 – 26 000 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:27.138904Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/software-engineer-java-angular-inteca-remote-1",
+        "company": "Inteca"
+    },
+    {
+        "title": "Java Developer NOWA",
+        "description": "3–5 years of experience in Java backend development.\nPractical knowledge of Spring Boot and REST APIs.\nExperience with SQL databases.\nBasic familiarity with AWS or willingness to learn cloud services.\nUnderstanding of microservices or distributed systems fundamentals.\nAbility to work in a collaborative environment and deliver consistent results.\nNice to Have:\nFamiliarity with Kafka or other event-driven systems.\nAbility to assist occasionally with small tasks in React.\nExperience working on projects in healthcare or Life Sciences.",
+        "location": "Nieokreślona",
+        "salaryRange": "8 500 – 14 000 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:28.120478Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-iteamly-remote",
+        "company": "iTeamly"
+    },
+    {
+        "title": "Kotlin/Java Developer NOWA",
+        "description": "Skills & Experience Required\nStrong experience in Kotlin (or Java with willingness to learn Kotlin).\nProficiency in at least two or three of the following: API development, SQL/databases, HTML/JavaScript.\nStrong technical and analytical troubleshooting skills.\nExperience working in Agile environments, including Jira and Confluence.\nUnderstanding of Microservices architecture.\nGood interpersonal skills.\nEnglish proficiency (B2+).\nNice to Have\nKnowledge of cloud technologies (AWS, Azure, GCP).\nExperience with CI/CD pipelines using Jenkins.\nBackground in Systems Administration across Linux/AIX/WAS platforms.\nTools & Technologies\nRequired: Kotlin, Java, API development, SQL, HTML/JavaScript, Bitbucket, Jira, Confluence.\nOptional: Jenkins, Test automation.\nJoining this project you’ll become part of Mindbox – a tech-driven company where consulting, engineering, and talent meet to build meaningful digital solutions. We’ll back you up every step of the way, accelerate your development, and ensure your skills make a difference. ",
+        "location": "Nieokreślona",
+        "salaryRange": "27 300 – 31 500 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:05:29.369500Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/kotlin-java-developer-mindbox-krakow",
+        "company": "Mindbox Sp. z o.o."
+    },
+    {
+        "title": "Senior Java Developer (Java, Spring Boot, Microservices) NOWA",
+        "description": "3–5 years of professional backend development experience.\nStrong hands-on experience with Java and Spring Boot in production systems.\nProven experience building and maintaining backend services and APIs at scale.\nSolid understanding of SQL and NoSQL databases (e.g., PostgreSQL/MySQL, MongoDB).\nKnowledge of microservices architecture, distributed systems, and asynchronous processing.\nExperience across full SDLC: architecture, development, testing, deployment, and maintenance.\nExperience operating systems in cloud environments such as AWS or Azure.\nExcellent communication skills in English.\nNice to Have\nExperience with Spring AI.\nPrevious exposure to banking, payments, trading, or financial transaction systems.\nDegree in Computer Science or equivalent practical experience.",
+        "location": "Nieokreślona",
+        "salaryRange": "23 100 – 25 200 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:30.587432Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-developer-java-spring-boot-microservices-upvanta-remote-1",
+        "company": "Upvanta"
+    },
+    {
+        "title": "Senior Java Developer NOWA",
+        "description": "Wieloletnie doświadczenie komercyjne w pracy z Java oraz Spring Boot.\nDoświadczenie w pracy z Kubernetes.\nPraktyczna znajomość środowisk chmurowych, w szczególności AWS.\nDobra znajomość narzędzi CI/CD oraz technologii takich jak GitHub, Jira, Jenkins, Maven, Groovy.\nBardzo dobra znajomość projektowania API, standardów i dobrych praktyk: REST, JSON, Swagger, OpenAPI 3.0, mikroserwisy.\nZnajomość zagadnień związanych z OAuth 2, autoryzacją usług oraz doświadczenie z API Gateway.\nDobra znajomość praktyk Agile, Scrum, TDD oraz jakości wytwarzania oprogramowania.\nUmiejętność proponowania nowoczesnych rozwiązań technicznych dla złożonych problemów biznesowych.\nUmiejętność współpracy z biznesem i przekładania wymagań funkcjonalnych na rozwiązania techniczne.\nGotowość do nauki nowych technologii i poznawania nowych domen biznesowych.\nDoświadczenie w mentoringu oraz wspieraniu rozwoju innych inżynierów będzie dodatkowym atutem.",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:32.168615Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-developer-antal-krakow-7",
+        "company": "Antal"
+    },
+    {
+        "title": "Programista Fullstack / Programistka Fullstack (Java, TypeScript) NOWA",
+        "description": "- Znajomość standardowych usług chmurowych (preferowane GCP) oraz swobodne poruszanie się w konsoli środowiska,\n- Bardzo dobra znajomość: HTML, CSS, JavaScript, TypeScript oraz Java i Spring Framework\n- Doświadczenie w projektowaniu i programowaniu RESTful API\n- Umiejętność tworzenia responsywnych interfejsów użytkownika przy użyciu CSS\n- Praktyczna znajomość zagadnień Web Accessibility\n- Bardzo dobra znajomość SQL (PostgreSQL, Oracle)\n- Znajomość Kubernetes (K8S)\n- Znajomość systemów i narzędzi: Kafka, Redis, Service Mesh (w szczególności Consul),\n- Znajomość narzędzi CI/CD, GIT, Azure DevOps\n- Umiejętność pisania testów jednostkowych\n- Znajomość zagadnień związanych z: optymalizacją szybkości witryn internetowych i optymalizacją działania aplikacji backendowych\n-Dbałość o szczegóły, dokładność oraz zmysł estetyczny\n-Dobra znajomość języka angielskiego umożliwiająca czytanie i tworzenie dokumentacji technicznej\n-Wrażliwość na koncepcje TDD oraz DDD\n-Mile widziana znajomość Web Components",
+        "location": "Nieokreślona",
+        "salaryRange": "21 000 – 25 200 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:05:33.244656Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/programista-fullstack-programistka-fullstack-java-typescript-astek-polska-remote",
+        "company": "ASTEK Polska"
+    },
+    {
+        "title": "Fullstack Java/Angular Developer (BDS) | Poland NOWA",
+        "description": "🎯 What We’re Looking For\n\n✔️ Solid experience as a Fullstack Developer in enterprise environments\n☕ Strong Java backend expertise\n🌐 Hands-on with Angular and modern frontend development\n🔍 Understanding of APIs, integrations & distributed systems\n🗄️ Experience with databases and data processing\n🔐 Knowledge of secure coding & enterprise standards\n🔄 Familiarity with Git, PR workflows & Agile collaboration\n💬 Strong communication skills & problem-solving mindset\n📍you must be based in Poland and speak Polish fluently",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:05:34.422224Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-java-angular-developer-bds-poland-deloitte-gdansk",
+        "company": "Deloitte"
+    },
+    {
+        "title": "Młodszy Programista Java / Młodsza Programistka Java NOWA",
+        "description": "— 2 letnie doświadczenie w projektowaniu, wdrażaniu i utrzymaniu Java 17+ / Spring.\n— Dobra znajomość protokołu HTTP.\n— Praktyczna znajomość ORM (np. Hibernate).\n— Znajomość podstawowych narzędzi do tworzenia oprogramowania - GIT, Gradle, Jenkins i wybrane IDE.\n— Znajomość baz danych SQL - najlepiej PostgreSQL i/lub MySQL.\n— Praktyczna znajomość systemów operacyjnych z rodziny Linux.\n— Znajomość języka angielskiego na poziomie B2 lub wyższym.\n— Chęć do nauki i rozwoju osobistego.\nMile widziane\n— Doświadczenie z usługami w chmurze (np. AWS).\n— Praktyczna znajomość kontenerów aplikacyjnych - Tomcat, Wildfly.\n— Praktyczne doświadczenie z wyzwaniami wysokiej skalowalności systemu, GC, modelu pamięci Java.\n— Znajomość języka hiszpańskiego.",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
         "level": "Junior",
-        "fetchedAt": "2026-05-17T08:53:45.007251Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/junior-fullstack-developer-java-javascript-scalo-lodz",
-        "company": "Scalo"
+        "fetchedAt": "2026-05-17T09:05:35.521614Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/mlodszy-programista-java-mlodsza-programistka-java-redge-technologies-warszawa",
+        "company": "Redge Technologies"
+    },
+    {
+        "title": "Senior Java Developer | Branża Finansowa NOWA",
+        "description": "Realizację projektu ułatwi Ci\nBardzo dobra znajomość Java 8+ oraz zagadnień programowania obiektowego\nPraktyczne doświadczenie w projektowaniu, implementacji, dokumentowaniu i testowaniu komponentów aplikacji\nBardzo dobra znajomość Spring, Spring Boot, Hibernate, JPA\nDoświadczenie w pracy z systemami kolejkowymi, w szczególności RabbitMQ\nZnajomość narzędzi wspierających proces wytwarzania oprogramowania, takich jak: Maven, Git, GitLab, GitLab CI/CD, Jenkins, Nexus, Jira\nZnajomość relacyjnych baz danych, w szczególności Oracle\nPraktyczna znajomość Dockera, w tym tworzenie i zarządzanie kontenerami oraz budowanie obrazów\nZnajomość systemów Linux oraz umiejętność pracy ze środowiskami serwerowymi (konfiguracja, utrzymanie)\nDoświadczenie w projektowaniu REST API\nDoświadczenie w integracji systemów\nZnajomość serwerów aplikacyjnych: JBoss, WildFly, narzędzi do skanowania bezpieczeństwa, takich jak: Fortify, Sonatype\nDoświadczenie w pracy z systemami rozproszonymi\nZnajomość języka angielskiego na poziomie minimum B2\nMile widziana znajomość narzędzi AI wspierających programowanie, w szczególności Codex",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:36.549689Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-developer-branza-finansowa-edge-one-solutions-warszawa",
+        "company": "Edge One Solutions Sp. z o.o."
+    },
+    {
+        "title": "Senior Java Developer - financial systems NOWA",
+        "description": "5+ years of experience developing financial systems in Java\nStrong expertise in concurrency and multi-threaded programming\nExperience with distributed systems\nStrong communication skills and ability to work in fast-paced environments",
+        "location": "Nieokreślona",
+        "salaryRange": "30 000 – 45 000 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:37.738100Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-developer-financial-systems-link-group-warszawa-1",
+        "company": "Link Group"
+    },
+    {
+        "title": "Senior Java Developer NOWA",
+        "description": "At least 5 years of professional experience\nGood knowledge of Java 8 and Spring framework\nStrong capacity to identify requirements and define technical solutions\nKnowledge of Kafka (or at least familiar with any other queuing system)\nVersion control tools, especially Git\nDesign patterns and clean code\nGood English level\nExperience with RESTful Web Services / Microservices\nExperience with automating deployment, scaling and management of containerized applications (e.g Kubernetes)\nExperience with Continuous Integration / Continuous Delivery practices",
+        "location": "Warszawa, Kraków, Gdynia",
+        "salaryRange": "22 000 – 28 000 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:38.827883Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-developer-link-group-remote-13",
+        "company": "Link Group"
+    },
+    {
+        "title": "Mid Java Developer NOWA",
+        "description": "At least 3 years of professional experience;\nGood knowledge of Java 8 and Spring framework;\nStrong capacity to identify requirements and define technical solutions;\nKnowledge of Kafka (or at least familiar with any other queuing system);\nVersion control tools, especially Git;\nDesign patterns and clean code;\nGood English level\nExperience with RESTful Web Services / Microservices;\nExperience with automating deployment, scaling and management of containerized applications (e.g Kubernetes);\nExperience with Continuous Integration / Continuous Delivery practices.",
+        "location": "Warszawa, Kraków, Gdynia",
+        "salaryRange": "16 000 – 21 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:05:40.021397Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/mid-java-developer-link-group-remote-1",
+        "company": "Link Group"
     },
     {
         "title": "Junior Java Developer NOWA",
@@ -15,9 +155,209 @@
         "location": "Warszawa, Kraków, Gdynia",
         "salaryRange": "9 000 – 12 000 PLN",
         "level": "Junior",
-        "fetchedAt": "2026-05-17T08:53:45.829616Z",
+        "fetchedAt": "2026-05-17T09:05:41.047331Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-link-group-remote-5",
         "company": "Link Group"
+    },
+    {
+        "title": "Technical Lead – AI Engineering (Java) NOWA",
+        "description": "Kluczowe kompetencje\nLiderska ekspertyza w developmentcie (Java + frontend)\nBardzo dobra znajomość:\nJava (Spring Boot, Web API)\nReact (lub inny nowoczesny framework frontendowy)\nDoświadczenie w projektowaniu skalowalnych systemów backendowych\nBardzo dobra znajomość baz danych i SQL (np. SQL Server, optymalizacja zapytań)\nDoświadczenie w DevOps (CI/CD, automatyzacja, deployment)\nZnajomość pełnego SDLC\nAI & nowoczesne podejście\nDoświadczenie lub praktyczna ekspozycja na:\nzastosowanie AI w procesie developmentu\nintegracje z modelami LLM / API AI\nRozumienie, jak AI może zwiększyć produktywność zespołów inżynierskich\nLeadership & mindset\nDoświadczenie w roli Tech Leada / Seniora prowadzącego technicznie\nUmiejętność pracy w środowisku wysokiej presji i złożoności\nSilne umiejętności rozwiązywania problemów i dbałość o szczegóły\nUmiejętność przekładania wymagań biznesowych na rozwiązania techniczne\nProaktywność i ownership\nProfil idealnego kandydata\n„Player-coach” — prowadzi zespół, ale nadal koduje\nPotrafi skalować jakość zespołu, nie tylko systemów\nMyśli systemowo: architektura, UX, DevOps i AI jako całość\nNastawiony na delivery i realne efekty, nie tylko design\nKomfortowo porusza się w środowisku greenfield + eksperymenty AI",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:42.466271Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/technical-lead-ai-engineering-java-antal-krakow",
+        "company": "Antal"
+    },
+    {
+        "title": "Starter Kit Upskilling Program (Java, with German) NOWA",
+        "description": "Status studenta lub ukończenie kierunku technicznego (np. informatyka, automatyka, elektronika, matematyka, fizyka).\nPodstawowa znajomość programowania obiektowego w języku Java.\nZnajomość języka niemieckiego na poziomie komunikatywnym (min. B1+) oraz angielskiego(B2).\nDostępność min. 50% etatu przez pierwsze 3 miesiące, potem pełny etat.\nChęć rozwoju w obszarze Java i pracy projektowej.",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Trainee",
+        "fetchedAt": "2026-05-17T09:05:43.718792Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/starter-kit-upskilling-program-java-with-german-capgemini-wroclaw",
+        "company": "Capgemini"
+    },
+    {
+        "title": "Senior Java Engineer NOWA",
+        "description": "Minimum 5 lat doświadczenia jako Java Developer\nBardzo dobra znajomość:\nJava\nSpring\nREST API\nMikroserwisy\nDocker\nCI/CD (Jenkins)\nDoświadczenie w pracy z podejściem TDD\nUmiejętność rozwiązywania problemów (troubleshooting)\nDoświadczenie pracy w zespołach Agile, cross-funkcyjnych\nChęć nauki i rozwoju\nMile widziane\nZnajomość struktur danych i algorytmów\nProgramowanie współbieżne w Javie\nDobre praktyki OOP i Clean Code\nDoświadczenie w projektowaniu bezpiecznych aplikacji\nKogo szukamy?\nOsób otwartych i nastawionych na współpracę\nSkoncentrowanych na rezultatach i potrzebach użytkownika\nKomunikatywnych i proaktywnych\nCiekawych świata technologii i lubiących rozwiązywać złożone problemy\nGotowych kwestionować status quo i proponować usprawnienia\nElastycznych i adaptujących się do zmian",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:45.467789Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-engineer-antal-krakow-1",
+        "company": "Antal"
+    },
+    {
+        "title": "Fullstack Java Developer / Fullstack Java Developerka NOWA",
+        "description": "Sprawdzisz się w tej roli, jeżeli:\nPosiadasz minimum 5 lat doświadczenia w pracy jako programista,\nMasz bardzo dobrą znajomość Java (17+) oraz Spring Boot,\nPosiadasz doświadczenie z Angular (15+),\nDobrze znasz SQL oraz pracę z bazami danych Oracle lub PostgreSQL,\nMasz doświadczenie w pracy z architekturą heksagonalną,\nZnasz narzędzia i praktyki CI/CD oraz DevOps (Git, Jenkins, Docker, Kubernetes),\nPracujesz zgodnie z dobrymi praktykami wytwarzania oprogramowania (np. TDD),\nPotrafisz efektywnie współpracować w zespołach międzynarodowych,\nBiegle posługujesz się językiem angielskim.\nMile widziane:\nDoświadczenie w pracy w środowisku Agile/Scrum,\nDoświadczenie w środowisku bankowym lub finansowym,\nDoświadczenie w utrzymaniu aplikacji produkcyjnych.",
+        "location": "Nieokreślona",
+        "salaryRange": "23 100 – 28 350 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:46.996797Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-java-developer-fullstack-java-developerka-astek-polska-warszawa",
+        "company": "ASTEK Polska"
+    },
+    {
+        "title": "Pega Developer (Automation Process) with German NOWA",
+        "description": "Experience: At least 4 years of specialized experience in PEGA development, modularization, and maintainability.\nDomain Knowledge: Proven track record in developing building blocks for consulting, brokerage, or application processing.\nTechnical Skills: Expert knowledge of Java (JEE), Web Technologies/XML, and ABAP OO.\n2+ years of experience in PEGA test automation and CI/CD via PEGA Deployment Manager.\nDeep understanding of Accessibility (BITV 2.0 and WCAG 2.0).\nFluency in German (C1)",
+        "location": "Nieokreślona",
+        "salaryRange": "45 360 – 50 400 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:05:48.728919Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/pega-developer-automation-process-with-german-virtusa-remote",
+        "company": "VIRTUSA"
+    },
+    {
+        "title": "Senior System / Business Analyst with (Java/Kafka) NOWA",
+        "description": "Minimum 5 years of experience in system analysis, solution design, or business-system analysis\nStrong knowledge of UML and BPMN\nAbility to read and analyze Java / Spring code\nPractical knowledge of SQL / PL-SQL (Oracle) – reading and writing queries\nExperience with MongoDB\nGood understanding of microservices, event-driven, and monolithic architectures\nExperience with Kafka or RabbitMQ\nKnowledge of REST and SOAP integrations\nExperience working with DevOps practices\nExperience working in Agile/SCRUM environments\nHands-on experience with Jira and Confluence\nFluent English communication skills\nNice to Have\nExperience with AWS\nAbility to read React or Angular code\nExperience with CI/CD pipelines\nFamiliarity with modeling and design tools (e.g. Figma)\nPrevious experience in CRM or Finance domain",
+        "location": "Warsaw, Puławska 2",
+        "salaryRange": "23 520 – 26 880 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:49.986751Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-system-business-analyst-with-java-kafka-square-one-resources-remote",
+        "company": "Square One Resources"
+    },
+    {
+        "title": "Senior FullStack Engineer NOWA",
+        "description": "Requirements:\nAt least 4–5 years of experience as a Full Stack Developer \nStrong proficiency in: React (frontend), Java (backend), and PostgreSQL \nExperience with: Azure Functions, CI/CD pipelines (e.g., Azure DevOps, GitHub Actions, Jenkins) \nKnowledge of software development best practices (Clean Code, code review, testing) \nAbility to work in an Agile/Scrum environment \nGood command of English (min. B2) \nNice to have:\nExperience working in a cloud environment (Azure) \nKnowledge of microservices architecture \nExperience with enterprise projects ",
+        "location": "Nieokreślona",
+        "salaryRange": "16 800 – 25 200 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:51.234368Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-fullstack-engineer-diverse-cg-sp-k--remote",
+        "company": "Diverse CG Sp. z o.o. Sp.k."
+    },
+    {
+        "title": "DevOps Engineer NOWA",
+        "description": "Wymagania kluczowe:\nDoświadczenie w pracy z:\nDocker\nKubernetes\nJenkins (pipeline’y w bash/groovy) w środowisku GCP\nNarzędziami kontroli wersji (Git, Git Flow / GitHub Flow)\nOrkiestracją kontenerów (Kubernetes)\nMile widziane:\nWykształcenie wyższe (informatyka, inżynieria lub pokrewne)\nMinimum 3 lata doświadczenia w projektowaniu i utrzymaniu systemów/infrastruktury\nBardzo dobra znajomość zasad DevOps oraz koncepcji Infrastructure as Code\nZnajomość języków programowania (np. Python, Java, JavaScript, Go, Groovy, Scala)\nDoświadczenie z usługami technologicznymi (Identity, Networking, Compute, Storage, Containers, Databases, Analytics, AI/ML, BigQuery, DataFlow)\nUmiejętność automatyzacji (Terraform, Ansible lub podobne)\nDoświadczenie w pracy w środowisku Agile\nUmiejętność współpracy z różnymi zespołami (lokalnymi i globalnymi)\nDoświadczenie z infrastrukturą o wysokiej dostępności i dużym obciążeniu (np. reverse proxy, web proxy)\nUmiejętność zarządzania ryzykiem\nBardzo dobre umiejętności komunikacyjne\nZdolność budowania relacji i pracy zespołowej\nSzybkie przyswajanie nowych technologii i narzędzi",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:52.535475Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/devops-engineer-antal-krakow-4",
+        "company": "Antal"
+    },
+    {
+        "title": "Software Engineer 2 (Python) - maternity cover NOWA",
+        "description": "We are looking for people who:\nCode in Python, Java and Kotlin;\nExpect work that requires creative approach to search experience challenges, to be proud of enjoying its results together with all Allegro users;\nWant to create solid code, eagerly accept comments and share knowledge during code reviews;\nCan look for effective solutions to the requirements set by users;\nWant to constantly develop and update their knowledge;\nKnow English at at least B2 level.\nNice to have:\nYou are open to diverse technologies and workflows, including dev-operational tools on one hand, and working with data on the other.\n Basic experience with LLM tuning (LoRA, PEFT), training and evaluation pipelines for models and/or basic frameworks for building AI Agents (Agent Development Kit, LangChain, AutoGen, CrewAI) would be great!",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:05:53.880056Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/software-engineer-2-python-maternity-cover-allegro-poznan",
+        "company": "Allegro"
+    },
+    {
+        "title": "Senior DevOps Engineer NOWA",
+        "description": "Wymagania\nMin. 6-letnie doświadczenie jako DevOps\nDuże doświadczenie praktyczne z Kubernetes, najlepiej GKE, w tym wdrożenia, usługi/ruch przychodzący, zarządzanie konfiguracją i rozwiązywanie problemów\nDoświadczenie w migracji lub obsłudze platform mikrousług na dużą skalę.\nPraktyczne doświadczenie we wdrażaniu i wspieraniu usług Java i Python w Kubernetes.\nSolidne doświadczenie w monitorowaniu/obserwowalności/śledzeniu, najlepiej z wykorzystaniem produktów Grafana (np. Prometheus/Loki/Tempo) oraz najlepszych praktyk w zakresie alertów.\nDoświadczenie w budowaniu i utrzymywaniu CI/CD pipelines dla aplikacji konteneryzowanych.\nDoświadczenie z Infrastructure as a Code (preferowany Terraform) i zautomatyzowanym dostarczaniem środowisk.\nSilne nastawienie na produkcję: niezawodność, reagowanie na incydenty i ciągłe doskonalenie.\nUmiejętność pracy z lokalnymi i globalnymi zespołami; dobra znajomość języka angielskiego i języka polskiego w mowie i piśmie.\nPragmatyczne podejście zorientowane na realizację zadań; Komfortowe łączenie prędkości z kontrolą i zarządzaniem ryzykiem.\nOtwarty umysł, chęć nauki i umiejętność doradzania/kierowania innymi w razie potrzeby.\nNice to have:\nDoświadczenie z usługami GCP powszechnie używanymi w GKE (np. IAM, VPC, Cloud Logging/Monitoring, Artifact Registry).\nOpracowywanie i standaryzacja schematów Helm w wielu zespołach.\nDoświadczenie w zakresie Service Mesh (Istio) i/lub wzorców bram/wejść API.\nZnajomość narzędzi i praktyk bezpieczeństwa (skanowanie kontenerów, policy-as-code, identyfikacja obciążenia).",
+        "location": "Nieokreślona",
+        "salaryRange": "26 880 – 32 760 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:55.111031Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-devops-engineer-j-labs-software-specialist-krakow",
+        "company": "j-labs software specialist"
+    },
+    {
+        "title": "Senior Tester Automatyzujący / Senior Testerka Automatyzująca NOWA",
+        "description": "Wymagania\nMinimum 4 lata doświadczenia w automatyzacji testów  \nBardzo dobra znajomość języka Java  \nPraktyczne doświadczenie w pracy z Selenium  \nZnajomość Playwright  \nUmiejętność pracy z Cucumber i podejściem BDD  \nZnajomość wzorców projektowych oraz umiejętność ich praktycznego wykorzystania  \nUmiejętność myślenia systemowego i analizowania procesów całościowo  \nDoświadczenie w pracy z Git, GitLab oraz JIRA  \nUmiejętność tworzenia czytelnej dokumentacji technicznej  ",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:56.273213Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-tester-automatyzujacy-senior-testerka-automatyzujaca-finture-warszawa",
+        "company": "Finture Sp. z o.o"
+    },
+    {
+        "title": "Pega Developer - Mediation, with German NOWA",
+        "description": "Minimum 3 years of specialized experience in PEGA development, modularization, and platform architecture.  \nProven experience in developing generic applications for funding decisions with extension points for domain-specific questionnaires and data.  \nExpert knowledge in Java (JEE), XML, and ABAP OO.  \n2+ years of experience in PEGA test automation and CI/CD via the PEGA Deployment Manager.  \nStrong understanding of ISO/IEC 9126 quality standards and Accessibility (BITV 2.0 / WCAG 2.0).  \nGerman and English Proficiency min B2   \nNice to Have\nExperience with Pega Constellation and advanced UX design.  \nKnowledge of RPA, BOT, or BPE technologies.  \nFamiliarity with SAP Social Service Management (SSM) integration.  ",
+        "location": "Nieokreślona",
+        "salaryRange": "45 360 – 50 400 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:57.432098Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/pega-developer-mediation-with-german-virtusa-remote",
+        "company": "VIRTUSA"
+    },
+    {
+        "title": "C++ Engineer NOWA",
+        "description": "What will help you succeed\nExpert-level Modern C++ (17/20) with a passion for systems programming.\nYou write clean, production-grade code and expect the same from your peers.\nGreat English communication (B2+) and a collaborative, problem-solving attitude.\nExperience with Java or Python is a plus.",
+        "location": "Nieokreślona",
+        "salaryRange": "16 400 – 20 500 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:05:58.653638Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/c-engineer-dynatrace-gdansk",
+        "company": "Dynatrace"
+    },
+    {
+        "title": "Data Engineer NOWA",
+        "description": "Minimum 5 lat doświadczenia komercyjnego w obszarze Data Engineering lub Big Data\nBardzo dobra znajomość Spark oraz Scala wykorzystywanych do przetwarzania dużych wolumenów danych\nZaawansowana znajomość Python wykorzystywanego do budowy i utrzymania pipeline’ów danych\nSwobodne poruszanie się w środowisku Linux\nDoświadczenie w pracy z rozproszonymi systemami przetwarzania danych oraz platformami Big Data\nPraktyczna znajomość ekosystemu Hadoop, w tym Hive, Oozie oraz MapReduce\nBardzo dobra znajomość SQL i pracy z bazami danych\nUmiejętność projektowania, tworzenia i rozwijania przepływów danych\nBardzo dobra znajomość systemów kontroli wersji Git oraz Bitbucket\nDoświadczenie w zakresie testów jednostkowych (JUnit 5, Mockito, testowanie Spark)\nUmiejętność pracy w środowisku wymagającym wysokiej jakości kodu i automatyzacji procesów\nZnajomość języka angielskiego na poziomie umożliwiającym swobodną komunikację (min. B2+)\nMile widziane:\nZnajomość strategii wersjonowania kodu oraz branchingu\nDoświadczenie w pracy w środowisku Agile/SAFe\nZnajomość zagadnień związanych z Continuous Delivery w środowiskach Big Data\nDodatkowe doświadczenie w pracy z Java w połączeniu ze Spark i Python",
+        "location": "Nieokreślona",
+        "salaryRange": "150 – 170 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:05:59.788384Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/data-engineer-itfs-remote-11",
+        "company": "ITFS Sp. z o.o."
+    },
+    {
+        "title": "Senior Full-Stack Engineer (JavaScript, Java) NOWA",
+        "description": "What will help you succeed\n5+ years of experience working in Java or any other backend language\n3+ years of experience in developing web-based software using JavaScript/TypeScript\nTechnical studies related to Software Engineering or equivalent experience\nHands-on experience with React or a comparable framework.\nFocus on user experience and customer-centric end-to-end thinking\nStrong focus on software quality, performance, and clean architecture\nSupportive team player who fosters a positive and inclusive work environment.\nGood English communication",
+        "location": "Nieokreślona",
+        "salaryRange": "16 400 – 20 500 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:06:00.850402Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-full-stack-engineer-javascript-java-dynatrace-gdansk",
+        "company": "Dynatrace"
+    },
+    {
+        "title": "Praktyki Euvic Camp 2026",
+        "description": "💥Jaką masz supermoc, która otworzy Ci drzwi do świata IT? Pokaż nam się i weź udział w rekrutacji na Euvic Camp 2026!💥\nZapraszamy studentów, którzy naprawdę interesują się IT i chcą się rozwijać. W gronie #theGoodPeople dajemy naprawdę solidne możliwości do prawdziwego rozwoju!🚀\n W aplikacjach zwracamy uwagę nie tylko na formalną edukację, ale przede wszystkim na:\nprojekty realizowane poza uczelnią (indywidualne lub zespołowe)\nlinki do repozytoriów (np. GitHub)\nkursy, szkolenia, laboratoria (online / offline)\nudział w hackathonach, kołach naukowych, własnych inicjatywach technologicznych\nkrótki opis problemów, z którymi mierzyłaś / mierzyłeś się w projektach i sposobu ich rozwiązania\nNie szukamy szablonowych CV. Chcemy zobaczyć ciekawość świata IT, zaangażowanie i Twoją drogę rozwoju!💥",
+        "location": "Nieokreślona",
+        "salaryRange": "Bezpłatny staż",
+        "level": "Trainee",
+        "fetchedAt": "2026-05-17T09:06:03.324910Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/praktyki-euvic-camp-2026-euvic-gliwice",
+        "company": "Euvic S.A."
+    },
+    {
+        "title": "Praktykant - w obszarze testów automatyzujących / programowania (k/m)",
+        "description": "Studia na kierunku IT lub pokrewnym.\nZnajomość C#/Java\nZnajomość Git, Selenium, Playwright.\nZnajomość dobrych zasad programowania i podstawowych wzorców projektowych.\nUmiejętność analitycznego myślenia.\nChęć rozwoju i nauki, otwartość na zdobywanie wiedzy.\nUmiejętność pracy w zespole.\nDoskonała organizacja pracy własnej.\nMile widziane\nDoświadczenie w tworzeniu testów automatycznych/kodu aplikacji.\nUdział w projektach związanych z tworzeniem aplikacji/pisaniem testów automatycznych",
+        "location": "Nieokreślona",
+        "salaryRange": "Bezpłatny staż",
+        "level": "Trainee",
+        "fetchedAt": "2026-05-17T09:06:04.450944Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/praktykant-w-obszarze-testow-automatyzujacych-programowania-k-m-apator-rector-zielonagora",
+        "company": "Apator Rector Sp. z o.o."
+    },
+    {
+        "title": "Junior manual tester",
+        "description": "Co najmniej 1 rok doświadczenia w przeprowadzaniu testów manualnych\nPrzygotowywanie scenariuszy testowych do testów manualnych (integracyjne/systemowe) na podstawie analizy wymagań\nTestowanie frontendu oraz backendu - REST API poprzez Postman / Swagger\nPodstawowa znajomość programowania w JAVA,\nPodstawowa znajomość SQL, znajomość baz danych\nZnajomość narzędzi do wyciągania logów np. Kibana\nZnajomość podejścia zwinnego do wytwarzania oprogramowania w szczególności SCRUM\nZnajomości JIRA i Confluence",
+        "location": "Nieokreślona",
+        "salaryRange": "5 040 – 8 400 PLN",
+        "level": "Junior",
+        "fetchedAt": "2026-05-17T09:06:05.662903Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/junior-manual-tester-itfs-warszawa",
+        "company": "ITFS Sp. z o.o."
+    },
+    {
+        "title": "Tester manualny/automatyzujący (K/M)",
+        "description": "Min. 2 letnie doświadczenie w testowaniu oprogramowania w projektach komercyjnych – testy funkcjonalne, niefunkcjonalne, integracyjne, akceptacyjne, wydajnościowe, automatyczne.\nZnajomość zagadnień IT i z zakresu testowania oprogramowania.\nZnajomość języka angielskiego na poziomie B2.\nPraktyczna znajomość narzędzi do zarządzania projektami i testami oraz zgłaszania błędów zgodnie z dobrymi praktykami.\nUmiejętność tworzenia dokumentacji projektowo-testowej, w tym pisanie przypadków i scenariuszy testowych.\nPodstawowa znajomość jednego z języków programowania Java/Python/JavaScript/TS używanych w testach automatycznych oraz narzędzia do automatyzacji, preferowane: Playwright.\nDoświadczenie w automatyzacji testów w Playwright z użyciem AI.\nznajomość zagadnień dot. AI i jej użycia w testach.\nPodstawowa znajomość baz danych i języka SQL.\nDoświadczenia w pracy z narzędziami wspomagającymi testy np. Postman, JMeter.\nZnajomość narzędzi do zarządzania projektami np. JIRA oraz testami np. Xray/Testlink/Testrail/Qase.\nSumienność, odpowiedzialność oraz zaangażowanie w realizację powierzonych zadań.\nDobra organizacja czasu pracy.\nMile widziane\nDoświadczenie w pracy związanej z wdrożeniami lub rozwojem kompleksowych systemów informatycznych.\nUmiejętność analizy wymagań biznesowych i technicznych.\nDoświadczenie w pracy w metodologii Agile (Scrum, Kanban).\nPosiadanie certyfikatu ISTQB Foundation Level.\nWykształcenie wyższe (absolwenci kierunków ścisłych).\nUmiejętność analitycznego myślenia i rozwiązywania problemów.",
+        "location": "Warszawa, Białystok, Lublin",
+        "salaryRange": "6 500 – 9 500 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:06.914352Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/tester-manualny-automatyzujacy-k-m-transition-technologies-systems-remote",
+        "company": "Transition Technologies-Systems Sp. z o.o."
+    },
+    {
+        "title": "Automation QA Engineer",
+        "description": "2+ years of experience in web applications testing with a focus on automation and performance testing\nAt least 1 year of experience as automation QA\nExperience with usage of Robot framework for automated testing\nExperience in performance testing\nProficiency with Postman\nGood understanding of testing processes and Agile methodologies, especially SAFe\nStrong experience working with test management systems\nExcellent communication and teamwork skills\nNice to have:\nExperience with Python or Java\nFamiliarity with MS Azure\nExperience with usage of Jenkins, Octopus, TeamCity, GitHub and GitHub Actions",
+        "location": "Kraków, Wrocław, Warsaw",
+        "salaryRange": "7 122 – 9 496 PLN",
+        "level": "Junior",
+        "fetchedAt": "2026-05-17T09:06:08.168912Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/automation-qa-engineer-n-ix-remote",
+        "company": "N-iX"
     },
     {
         "title": "Fullstack Software Engineer (junior) NOWA",
@@ -25,7 +365,7 @@
         "location": "Wrocław, plac Nowy Targ 28",
         "salaryRange": "7 224 – 11 760 PLN",
         "level": "Junior",
-        "fetchedAt": "2026-05-17T08:53:46.606496Z",
+        "fetchedAt": "2026-05-17T09:06:09.296887Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-software-engineer-junior-spyrosoft-remote",
         "company": "Spyrosoft"
     },
@@ -35,19 +375,169 @@
         "location": "Wrocław, Ruska 3-4",
         "salaryRange": "8 000 – 12 000 PLN",
         "level": "Junior",
-        "fetchedAt": "2026-05-17T08:53:47.389387Z",
+        "fetchedAt": "2026-05-17T09:06:10.378748Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-big-data-developer-comscore-via-cc-remote",
         "company": "Comscore (via CC)"
     },
     {
-        "title": "Automation QA Engineer",
-        "description": "2+ years of experience in web applications testing with a focus on automation and performance testing\nAt least 1 year of experience as automation QA\nExperience with usage of Robot framework for automated testing\nExperience in performance testing\nProficiency with Postman\nGood understanding of testing processes and Agile methodologies, especially SAFe\nStrong experience working with test management systems\nExcellent communication and teamwork skills\nNice to have:\nExperience with Python or Java\nFamiliarity with MS Azure\nExperience with usage of Jenkins, Octopus, TeamCity, GitHub and GitHub Actions",
-        "location": "Kraków, Wrocław, Warsaw",
-        "salaryRange": "7 122 – 9 496 PLN",
+        "title": "Junior Java Developer (f/m)",
+        "description": "A Bachelor's or Master’s degree in a relevant IT specialization is required\nFully flexible and open to working with various technological platforms and tools\nStrong willingness to improve programming skills and take on new IT challenges\nA basic understanding of object-oriented programming is a must\nExcellent communication, and collaboration abilities\nProficiency in the English language is required",
+        "location": "Nieokreślona",
+        "salaryRange": "8 200 – 9 800 PLN",
         "level": "Junior",
-        "fetchedAt": "2026-05-17T08:53:48.156802Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/automation-qa-engineer-n-ix-remote",
-        "company": "N-iX"
+        "fetchedAt": "2026-05-17T09:06:11.963980Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-f-m-netcompany-poland-warsaw",
+        "company": "Netcompany Poland"
+    },
+    {
+        "title": "QA Automation Engineer",
+        "description": "Minimum rok doświadczenia komercyjnego w obszarze testowania oprogramowania (Junior)\nDoświadczenie w automatyzacji testów UI z wykorzystaniem Selenium WebDriver lub Playwright\nZnajomość wzorców projektowych typu Page Object Model\nDoświadczenie w testowaniu REST API\nZnajomość narzędzi takich jak Postman, REST Assured lub podobnych\nUmiejętność tworzenia i utrzymania automatycznych scenariuszy testowych\nZnajomość podstaw programowania w Java, JavaScript lub TypeScript\nUmiejętność analizy wymagań oraz projektowania przypadków testowych\nDoświadczenie w pracy z Jira i Confluence\nPodstawowa znajomość SQL lub MongoDB\nZnajomość zagadnień związanych z CI/CD (Jenkins, GitLab CI lub podobne)\nUmiejętność analizy logów oraz diagnozowania problemów\nZnajomość systemu kontroli wersji Git\nJęzyk angielski na poziomie minimum B2\nMile widziane\nDoświadczenie z Playwright i TypeScript\nZnajomość Swagger / OpenAPI\nDoświadczenie z Docker lub Kubernetes\nDoświadczenie w rozwijaniu frameworków automatyzacji testów\nZnajomość nowoczesnych praktyk QA Engineering\nUmiejętność łączenia testów UI i API",
+        "location": "Nieokreślona",
+        "salaryRange": "8 400 – 11 760 PLN",
+        "level": "Junior",
+        "fetchedAt": "2026-05-17T09:06:13.747941Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/qa-automation-engineer-itconnect-warszawa",
+        "company": "ITConnect"
+    },
+    {
+        "title": "QA Specialist/Automated Testing NOWA",
+        "description": "If you have competent testing skills, are a team player, love challenges and you enjoy being part of this endeavor, then we are a perfect match.\nYour profile:\nExcitement for software development process\nBasic testing skills that you would like to develop\nSkilled in\n- Manual testing\n- Basic IT knowledge\n- Basic SQL\n- You know agile methods\n- You are eager to learn\nWould be appreciated:\nExperience in test automation skills (Selenium, Playwright etc.)",
+        "location": "Nieokreślona",
+        "salaryRange": "9 000 – 14 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:15.342904Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/qa-specialist-automated-testing-vhv-informatyka-warszawa",
+        "company": "VHV Informatyka Sp. z o.o."
+    },
+    {
+        "title": "Java Developer (systemy zarządzania ERP/CRM/workflow)",
+        "description": "Komercyjne doświadczenie w pracy na stanowisku Java Developera.\nTeoretyczna i praktyczna znajomość technologii wymienionych w sekcji „Technologie – wymagane”.\nUmiejętność tworzenia kodu zgodnie z zasadami SOLID, DRY.\nUmiejętność tworzenia optymalnych kwerend PostgreSQL.\nKomunikatywność i umiejętność pracy w zespole.\nChęć doskonalenia kompetencji i proponowania nowatorskich rozwiązań.\nSamodzielność w rozwiązywaniu problemów",
+        "location": "Nieokreślona",
+        "salaryRange": "9 000 – 15 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:16.777634Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-systemy-zarzadzania-erp-crm-workflow-unity-t-group-krakow",
+        "company": "Unity-T Group"
+    },
+    {
+        "title": "Java Developer (f/m)",
+        "description": "About you:\nGraduate (Bachelor’s or Master’s Degree) of Computer Science or other related numerate discipline\nHave at least 1 - 3 years of commercial Java development experience after graduation\nGood English skills, both spoken and written\nStrong understanding of object-oriented programming and data modelling\nFamiliar with various design, architectural patterns and modern system development\nOpen towards and able to quickly learn new technologies",
+        "location": "Nieokreślona",
+        "salaryRange": "9 000 – 12 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:18.732414Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-f-m-netcompany-poland-warsaw",
+        "company": "Netcompany Poland"
+    },
+    {
+        "title": "Trader w Wydziale Krypto",
+        "description": "XTB is a global company from the financial industry, focusing on online trading of financial instruments. We are the largest FinTech in Poland and a leader in Central and Eastern Europe, and the range of our operations covers several countries, including Asia and South America. At XTB, we focus on the development of our employees, giving them opportunities to gain knowledge and skills in various fields, as well as offering a number of training and development programs. If you are looking for challenges and want to gain valuable experience in an international business environment, XTB is the right place for you.\nWe are a certified Great Place to Work company.\nResponsibilities\nMonitoring the correct execution of orders and responding to any irregularities\nAnalyzing cryptocurrency projects and preparing business and technical specifications necessary for their implementation on the platform\nMonitoring the crypto market to expand XTB’s product offering\nSupporting the introduction of new products, including cooperation with other internal departments\nCooperating with external crypto-related service providers\nExpanding internal company knowledge about cryptocurrencies\nHandling customer complaints\nImplementing solutions and practices that streamline and automate work processes\n\nRequirements\nCommercial experience in the crypto industry (exchange, broker, market maker, etc.) – Mandatory\nExperience in handling and monitoring exchange or brokerage trading\nExperience working with audit and legal documentation\nKnowledge of EU crypto regulations – MiCA\nEnglish proficiency (minimum B2)\nUnderstanding of technical aspects of cryptocurrencies and blockchain, including:\ntransactions\nwallets\nPoW and PoS consensus mechanisms\nsmart contracts\nERC‑20\nKnowledge of how cryptocurrency exchanges operate (CEX, DEX)\nUnderstanding of information security principles\nExperience in data processing and preparing reports, summaries, etc.\n(Optional) Investment experience in crypto\n(Optional) Knowledge of programming languages (Python, Solidity, Java) and SQL\n\nWhat we offer\nAttractive compensation\nWork in an experienced team of traders within an international financial institution\nOpportunities to develop new skills\nExceptionally friendly working atmosphere\nFlexible working hours (shift system)\nParticipation in ambitious and interesting projects\nModern office in a prime location (Skyliner tower, right next to the Rondo Daszyńskiego metro station)",
+        "location": "Nieokreślona",
+        "salaryRange": "9 500 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:20.273026Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/trader-w-wydziale-krypto-xtb-warszawa",
+        "company": "XTB"
+    },
+    {
+        "title": "Java Developer",
+        "description": "Komercyjne doświadczenie w pracy na stanowisku Java Developera.\nTeoretyczna i praktyczna znajomość technologii wymienionych w sekcji „Technologie – wymagane”.\nUmiejętność tworzenia kodu zgodnie z zasadami SOLID, DRY.\nUmiejętność tworzenia optymalnych kwerend PostgreSQL.\nKomunikatywność i umiejętność pracy w zespole.\nChęć doskonalenia kompetencji i proponowania nowatorskich rozwiązań.\nSamodzielność w rozwiązywaniu problemów.",
+        "location": "Nieokreślona",
+        "salaryRange": "10 000 – 17 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:21.770492Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-unity-t-group-krakow",
+        "company": "Unity-T Group"
+    },
+    {
+        "title": "Java Developer (aplikacje mobilne)",
+        "description": "Komercyjne doświadczenie w pracy na stanowisku Java Developer.\nZnajomość dobrych praktyk, w szczególności związanych z wydajnością aplikacji mobilnych.\nZnajomość systemu kontroli wersji Git.\nZnajomość Gradle oraz Android Studio.\nZnajomość architektury REST.\nZnajomość baz danych PostgreSQL.\nZnajomość obsługi systemu Linux.\nSpring Framework / Spring Boot.\nAnalityczne podejście podczas tworzenia funkcjonalności i rozwiązywania problemów.\nUmiejętność pracy w zespole i chęć doskonalenia kompetencji.",
+        "location": "Nieokreślona",
+        "salaryRange": "10 000 – 17 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:23.318297Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-aplikacje-mobilne-unity-t-group-krakow-1",
+        "company": "UNITY-T GROUP"
+    },
+    {
+        "title": "Junior Java developer",
+        "description": "You have a university degree in a technical field (ideally with a focus on software development) or a relevant experiences.\nYou have at least 2 years of experience in software development.\nGood knowledge of Java J2SE or EE.\nSQL or XML.\nExperience with Maven, Spring, Git, JUnit, Webservices, Swing, Hibernate, and CI (Jenkins, Nexus).\nKnowledge of TypeScript, vue.JS and frontend development is an advantage\nSolid understanding of software engineering principles and design patterns.\nExcellent analytical and debugging skills.\nEnjoy developing innovative solutions in motivated, international development teams",
+        "location": "Nieokreślona",
+        "salaryRange": "10 000 – 16 000 PLN",
+        "level": "Junior",
+        "fetchedAt": "2026-05-17T09:06:24.865926Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-gk-software-poland-katowice",
+        "company": "GK Software Poland"
+    },
+    {
+        "title": "Java Software Developer NOWA",
+        "description": "Proficiency in Java (JDK 21)\nSolid knowledge of Java Concurrency\nKnowledge of Python or BASH for scripting, automation, or tool development\nStrong understanding of networking protocols (e.g., TCP/IP, UDP) and IP programming on Linux\nPractical experience with Linux operating systems and virtualization\nAbility to write comprehensive JUnit tests\nStrong English language communication skills\nAbility to work from the office 2 days per week\nAdditional Knowledge/Skills\nExperience with dependency injection in Java (CDI), Spring, or Quarkus\nFamiliarity with the Netty Framework\nExperience with CI/CD tools and techniques (e.g., Jenkins, GIT, Artifactory, JIRA)\nKnowledge of WebSockets and garbage collection tuning\nExperience handling audio streams (e.g., RTP, SRTP, ACELP)",
+        "location": "Nieokreślona",
+        "salaryRange": "11 000 – 15 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:26.230779Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-software-developer-motorola-solutions-systems-polska-krakow-2",
+        "company": "Motorola Solutions Systems Polska"
+    },
+    {
+        "title": "Junior Fullstack Developer (Java + Javascript)",
+        "description": "Ta oferta jest dla Ciebie, jeśli:\nmasz doświadczenie w pracy z Java i JavaScript w kontekście aplikacji webowych,\npracowałeś z narzędziami wspierającymi development i testowanie (jUnit, Maven, Jenkins, Bitbucket, Selenium),\npotrafisz projektować i rozwijać aplikacje webowe z uwzględnieniem jakości i wydajności,\nrozumiesz zasady projektowania interfejsów użytkownika i potrafisz je zastosować w praktyce,\nznasz HTML i CSS oraz potrafisz wykorzystać je w codziennej pracy,\nkorzystasz z narzędzi AI w celu zwiększenia efektywności pracy,\npotrafisz proponować rozwiązania,\ndobrze odnajdujesz się w pracy zespołowej,\nswobodnie komunikujesz się w języku angielskim,\nmile widziana: znajomość platformy Eximee lub innej platformy low-code, praktyczna znajomość XML, XSLT, SQL, znajomość UI/UX, Design Thinking, Scrum, Jira, Splunk.",
+        "location": "Nieokreślona",
+        "salaryRange": "13 440 – 15 120 PLN",
+        "level": "Junior",
+        "fetchedAt": "2026-05-17T09:06:28.511964Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/junior-fullstack-developer-java-javascript-scalo-lodz",
+        "company": "Scalo"
+    },
+    {
+        "title": "Java Developer Internship (with German) NOWA",
+        "description": "You are an active and independent person with strong analytical thinking skills.\nYou have initial experience with object‑oriented programming languages, ideally Java.\nYou have already gained experience in a similar role (for example through an internship).\nYou are a student in at least your second year of studies in a relevant field, or you have already taken your first steps in IT through practice or completed courses.\nYou communicate in German at a B1/B2 level and also have a good command of English.",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Trainee",
+        "fetchedAt": "2026-05-17T09:06:30.096952Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-internship-with-german-capgemini-katowice",
+        "company": "Capgemini"
+    },
+    {
+        "title": "Junior Java Developer",
+        "description": "Minimum 1 year of professional experience in Java backend development, preferably within microservices-based architectures\nStrong hands-on experience with Java 21+ and related frameworks (Spring, Spring Boot, Hibernate, JSON, XML)\nProven experience designing and developing REST/SOAP APIs\nSolid understanding of unit, component, and integration testing (JUnit, Mockito)\nFamiliarity with Git, Maven, and CI/CD environments (Jenkins, Bitbucket)\nStrong knowledge of object-oriented programming, design patterns, and SOLID principles\nFluent English communication skills (spoken and written)\nNice to have:\nBasic knowledge of SQL; experience with Kafka and Kubernetes\nPrevious experience in the banking or financial services sector",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Junior",
+        "fetchedAt": "2026-05-17T09:06:31.283259Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-dcg-gdynia",
+        "company": "DCG sp. z o.o."
+    },
+    {
+        "title": "Staż - Programista/Programistka Java (z językiem Niemieckim) (Sourcing Requisition)",
+        "description": "Jesteś osobą aktywną i samodzielną, o silnych umiejętnościach analitycznego myślenia.\nPotrafisz posługiwać się Javą (pierwsze realizowane projekty, zajęcia na studiach).\nMasz już za sobą doświadczenie na podobnym stanowisku, na przykład zdobyte podczas stażu.\nStudiujesz na co najmniej drugim roku studiów w obszarze IT lub masz już za sobą pierwsze kroki w branży IT dzięki praktykom lub ukończonym kursom.\nPosługujesz się językiem niemieckim na poziomie B1/B2 i masz dobrą znajomość języka angielskiego.",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Trainee",
+        "fetchedAt": "2026-05-17T09:06:32.650530Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/staz-programista-programistka-java-z-jezykiem-niemieckim-sourcing-requisition-capgemini-krakow",
+        "company": "Capgemini"
+    },
+    {
+        "title": "Junior Backend Java Developer",
+        "description": "Hands-on experience with Java 8, Java 11, or Kotlin\nWorking knowledge of SQL databases\nBasic understanding of HTML and CSS\nFamiliarity with JavaScript, especially for debugging client-side request-response flows\nExperience with client-server architecture, HTTP, and RESTful APIs\nKnowledge of dependency injection, services, and API integration\nStrong technical problem-solving skills\nSolid foundation in object-oriented programming\nExperience developing business applications, including data storage and application integration\nExperience implementing, configuring, and integrating third-party software solutions\nUnderstanding of information management, data modeling, system integration, and development methodologies (including unit testing)\nAdvanced written and verbal communication skills in English\nQuick learner with a proactive attitude\nNice to have\nExperience with protocol buffers and gRPC\nFamiliarity with all phases of the Software Development Life Cycle (analyze, design, build, test, implement, support)\nExperience working on Linux environments",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Junior",
+        "fetchedAt": "2026-05-17T09:06:34.096081Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/junior-backend-java-developer-epam-systems-krakow",
+        "company": "EPAM Systems"
+    },
+    {
+        "title": "Junior Java Developer",
+        "description": "Degree in Computer Science Computer Engineering or a related technical discipline\nFoundational programming and development skills (experience as Junior Java Developer role)\nPrevious hands-on experience in software development projects\nStrong willingness to learn adapt and embrace new challenges\nGood written and spoken English skills (B1+/B2)\nNice to have\nExposure to AI/ML or data-related domains\nPractical knowledge of Generative AI tools frameworks or technologies",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Junior",
+        "fetchedAt": "2026-05-17T09:06:35.416729Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-epam-systems-wroclaw",
+        "company": "EPAM Systems"
     },
     {
         "title": "Java Support Engineer",
@@ -55,9 +545,59 @@
         "location": "Nieokreślona",
         "salaryRange": "Brak wynagrodzenia",
         "level": "Trainee",
-        "fetchedAt": "2026-05-17T08:53:49.110049Z",
+        "fetchedAt": "2026-05-17T09:06:36.413963Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/java-support-engineer-cloudfide-remote",
         "company": "CLOUDFIDE SP. Z.O.O"
+    },
+    {
+        "title": "Junior Automation Tester in Java",
+        "description": "1+ years of experience with Java, Kotlin, or Selenium\nProficiency in test plan and strategy implementation, writing test suites, and debugging\nFamiliarity with JUnit, Maven, or Gradle tools\nUnderstanding of test methodologies and automation frameworks\nStrong verbal English skills (B2+) for collaboration with clients\nCapability to work independently and acquire new skills effectively\nNice to have\nBackground in Google Cloud Platform (GCP) and Kotlin\nBasic knowledge of Linux, Kubernetes, and building container images\nExpertise in Cloud platforms and DevOps/SysAdmin practices",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Junior",
+        "fetchedAt": "2026-05-17T09:06:38.235334Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/junior-automation-tester-in-java-epam-systems-krakow",
+        "company": "EPAM Systems"
+    },
+    {
+        "title": "Intern Java Developer (with German)",
+        "description": "You are an active and independent person with strong analytical thinking skills.\nYou have initial experience with object‑oriented programming languages, ideally Java.\nYou have already gained experience in a similar role (for example through an internship).\nYou are a student in at least your second year of studies in a relevant field, or you have already taken your first steps in IT through practice or completed courses.\nYou communicate in German at a B1/B2 level and also have a good command of English.",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Trainee",
+        "fetchedAt": "2026-05-17T09:06:39.323040Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/intern-java-developer-with-german-capgemini-krakow-1",
+        "company": "Capgemini"
+    },
+    {
+        "title": "Junior Java Developer NOWA",
+        "description": "At least 1 year of professional experience;\nKnowledge of Java 8 and Spring framework;\nStrong capacity to identify requirements and define technical solutions;\nKnowledge of Kafka (or at least familiar with any other queuing system);\nVersion control tools, especially Git;\nDesign patterns and clean code;\nGood English level\nNice to have:\nExperience with RESTful Web Services / Microservices;\nExperience with automating deployment, scaling and management of containerized applications (e.g Kubernetes);\nExperience with Continuous Integration / Continuous Delivery practices.",
+        "location": "Warszawa, Kraków, Gdynia",
+        "salaryRange": "9 000 – 12 000 PLN",
+        "level": "Junior",
+        "fetchedAt": "2026-05-17T09:06:41.277592Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/junior-java-developer-link-group-warszawa-2",
+        "company": "Link Group"
+    },
+    {
+        "title": "Automation QA Engineer",
+        "description": "2+ years of experience in web applications testing with a focus on automation and performance testing\nAt least 1 year of experience as automation QA\nExperience with usage of Robot framework for automated testing\nExperience in performance testing\nProficiency with Postman\nGood understanding of testing processes and Agile methodologies, especially SAFe\nStrong experience working with test management systems\nExcellent communication and teamwork skills\nNice to have:\nExperience with Python or Java\nFamiliarity with MS Azure\nExperience with usage of Jenkins, Octopus, TeamCity, GitHub and GitHub Actions",
+        "location": "Warsaw, Kraków, Wrocław",
+        "salaryRange": "7 122 – 9 496 PLN",
+        "level": "Junior",
+        "fetchedAt": "2026-05-17T09:06:42.399686Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/automation-qa-engineer-n-ix-warsaw",
+        "company": "N-iX"
+    },
+    {
+        "title": "Praktykant/Praktykantka w Zespole Testów",
+        "description": "Pełna dyspozycyjność do podjęcia płatnych praktyk w terminie od 1-go lipca do 30-go września - zapraszamy studentów IV roku kierunków informatycznych, w pełni dyspozycyjnych do podjęcia pracy w wymiarze 40 godzin tygodniowo\nPodstawowa wiedza na temat Cyklu Wytwarzania Oprogramowania;\nPodstawowa wiedza na temat aplikacji webowych i sieci;\nPodstawowa wiedza na temat relacyjnych baz danych\nPodstawowa znajomość SQL/PLSQL\nPodstawowa wiedza na temat obiektowych języków programowania;\nDobre umiejętności interpersonalne i komunikacja\nUmiejętność pracy w zespole i analitycznego myślenia\nMile widziana podstawowa wiedza na temat automatyzacji testów\nMile widziana umiejętność praktycznego wykorzystania języków programowania Java, Python",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Trainee",
+        "fetchedAt": "2026-05-17T09:06:43.438694Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/praktykant-praktykantka-w-zespole-testow-fiserv-polska-warszawa",
+        "company": "Fiserv Polska"
     },
     {
         "title": "Platform Engineer",
@@ -65,9 +605,399 @@
         "location": "Warszawa",
         "salaryRange": "Brak wynagrodzenia",
         "level": "Junior",
-        "fetchedAt": "2026-05-17T08:53:49.989035Z",
+        "fetchedAt": "2026-05-17T09:06:44.512966Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/platform-engineer-antal-warszawa",
+        "company": "Antal"
+    },
+    {
+        "title": "Platform Engineer",
+        "description": "Minimum 3 lata doświadczenia w DevOps / Platform Engineering.\nDoświadczenie z platformami chmurowymi (AWS, Azure lub GCP).\nPraktyczna znajomość Docker oraz Kubernetes.\nDoświadczenie z Infrastructure as Code (Terraform, Ansible lub podobne).\nDoświadczenie w pracy z CI/CD pipelines.\nUmiejętność programowania w jednym z języków: Python, Go, Java, Bash, JavaScript lub TypeScript.\nDobra znajomość Linux oraz sieci komputerowych.\nUmiejętność rozwiązywania problemów i pracy w środowisku projektowym.\nZnajomość języka angielskiego na poziomie min. B2.\nMile widziane\nDoświadczenie z architekturą mikroserwisową i systemami rozproszonymi.\nZnajomość narzędzi monitoringu i observability (Prometheus, Grafana, Elasticsearch).\nDoświadczenie z Cloud Development Environments (CDE).\nWkład w projekty Open Source.\nCertyfikaty technologiczne (np. Terraform Associate, CKA, certyfikaty chmurowe).\nZaawansowana znajomość Git.",
+        "location": "Warszawa",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Junior",
+        "fetchedAt": "2026-05-17T09:06:45.828029Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/platform-engineer-antal-remote",
         "company": "Antal"
+    },
+    {
+        "title": "Mid Java Developer NOWA",
+        "description": "At least 3 years of professional experience;\nGood knowledge of Java 8 and Spring framework;\nStrong capacity to identify requirements and define technical solutions;\nKnowledge of Kafka (or at least familiar with any other queuing system);\nVersion control tools, especially Git;\nDesign patterns and clean code;\nGood English level\nExperience with RESTful Web Services / Microservices;\nExperience with automating deployment, scaling and management of containerized applications (e.g Kubernetes);\nExperience with Continuous Integration / Continuous Delivery practices.",
+        "location": "Warszawa, Kraków, Gdynia",
+        "salaryRange": "16 000 – 21 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:47.781588Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/mid-java-developer-link-group-warszawa",
+        "company": "Link Group"
+    },
+    {
+        "title": "Programista / Programistka IAM (SailPoint / Java) NOWA",
+        "description": "Sprawdzisz się w tej roli, jeżeli:\nPosiadasz doświadczenie z SailPoint (IIQ) oraz Java\nPosiadasz doświadczenie w integracjach (REST/SOAP)\nZnasz SQLa oraz architekturę mikroserwisową\nBardzo dobrze znasz jęz. angielski\nMile widziane:\nSpring / Spring Boot\nCI/CD / Docker / Kubernetes",
+        "location": "Warszawa",
+        "salaryRange": "21 000 – 24 570 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:48.702223Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/programista-programistka-iam-sailpoint-java-astek-polska-warszawa",
+        "company": "ASTEK Polska"
+    },
+    {
+        "title": "Fullstack Developer (Java + Angular) NOWA",
+        "description": "5+ years of experience in software development.\nStrong expertise in Java (8/17) and Spring Boot for back-end development.\nExperience with Angular 15 and modern front-end practices (nx, micro front-end, NgRx).\nFamiliarity with DevOps principles and tools: Bitbucket, Jenkins, Sonar, Kubernetes, ELK.\nGood understanding of both front-end and back-end, with specialization in one area and at least 1+ year of experience in the other.\nTeam player with strong communication skills.\nFluency in English.\nNice to Have:\nExperience with Oracle PL/SQL, Liquibase, Maven, Jest, IBM MQ, Swagger, Feign, vavr.\nKnowledge of CI/CD pipelines and microservices architecture.\nJoining this project you’ll become part of Mindbox – a tech-driven company where consulting, engineering, and talent meet to build meaningful digital solutions. We’ll back you up every step of the way, accelerate your development, and ensure your skills make a difference. ",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:49.786088Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-developer-java-angular-mindbox-warszawa",
+        "company": "Mindbox Sp. z o.o."
+    },
+    {
+        "title": "Programista Java NOWA",
+        "description": "        Min. 4 lata doświadczenia w programowaniu obiektowym (w tym min. 3 lata w Java/Spring/Groovy).\n        Znajomość Git (np. GitFlow, Trunk Development).\n        Doświadczenie z Maven oraz Jenkins (CI/CD).\n        Znajomość Jira/Confluence.\n        Doświadczenie z Kafka i ELK (Elastic, Grafana).\n        Znajomość narzędzi do statycznej analizy kodu (np. SonarQube).\n        Doświadczenie w testach jednostkowych (np. JUnit, Mockito, Spock).\n        Znajomość środowisk IDE dla Java (np. IntelliJ IDEA).\n        Znajomość komunikacji REST (mile widziane MQ).\n        Umiejętność pracy zespołowej i w metodykach zwinnych.\nMile widziane:\n        Znajomość procesów BPM i notacji BPMN.\n        Doświadczenie w Domain Driven Development.\n        Doświadczenie w bankowości oraz znajomość systemów bankowych.\n        Doświadczenie we wdrożeniach i/lub utrzymaniu środowisk testowych.\n        Umiejętność pracy z dużymi bazami kodu.\n        Doświadczenie w refaktoryzacji i stosowaniu wzorców projektowych.",
+        "location": "Nieokreślona",
+        "salaryRange": "16 800 – 23 520 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:50.924705Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/programista-java-itfs-warszawa-2",
+        "company": "ITFS Sp. z o.o."
+    },
+    {
+        "title": "Middle Java Developer NOWA",
+        "description": "3+ years of professional experience in backend development,\nvery good knowledge of Kotlin and Spring Boot,\nopenness to occasional visits to the Warsaw office (1–2 days per quarter),\nhands-on experience with microservices architecture,\npractical experience working with NoSQL databases, especially MongoDB,\nexperience building and maintaining backend systems and APIs,\nunderstanding of system design and scalable architecture principles,\nexperience working with high-performance and high-scale systems,\nstrong analytical thinking and problem-solving skills,\nability to collaborate effectively with stakeholders and engineering teams,\ngood communication skills in English (B2) and Polish (C1),\npractical experience using AI-powered assistants (e.g. Claude Code, GitHub Copilot, Cursor) to improve productivity, quality, or decision-making in software delivery.\nWork from the European Union region and a work permit are required.\nNice to have:\nexperience applying GenAI in a more structured way within the SDLC, including defined workflows, prompt patterns, or tool integrations embedded into daily work,\nInterest in and familiarity with emerging AI-driven practices (e.g. agent-based workflows, automation patterns, AI-augmented development), with a willingness to explore and experiment beyond standard approaches.",
+        "location": "Warszawa, Rzeszów, Wrocław",
+        "salaryRange": "13 400 – 19 200 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:51.963953Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/middle-java-developer-xebia-warszawa",
+        "company": "Xebia sp. z o.o."
+    },
+    {
+        "title": "Full Stack Developer Java + Angular NOWA",
+        "description": "Wymagania\nwykształcenie wyższe kierunkowe (informatyka lub pokrewne), \nminimum 3 lata doświadczenia w utrzymaniu i monitorowaniu aplikacji, \ndoświadczenie w projektowaniu rozwiązań IT oraz znajomość wzorców projektowych, \nbardzo dobra znajomość: Spring Boot,  Angular,  TypeScript,  SCSS,  HTML,   \ndobra znajomość Java (Spring, Hibernate), \nznajomość SOAP, WSDL, XSD, WS-Security oraz REST, \ndoświadczenie w pracy z narzędziami: Git,  Jenkins,  SonarQube,  Jira,  Confluence,   \ndoświadczenie w projektach z branży ubezpieczeniowej, \njęzyk angielski na poziomie B2/C1. ",
+        "location": "Nieokreślona",
+        "salaryRange": "21 840 – 25 200 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:52.957261Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/full-stack-developer-java-angular-makeitright-warszawa-1",
+        "company": "Makeitright Sp. z o.o."
+    },
+    {
+        "title": "Fullstack Java/Angular Developer (BDS) | Poland NOWA",
+        "description": "🎯 What We’re Looking For\n\n✔️ Solid experience as a Fullstack Developer in enterprise environments\n☕ Strong Java backend expertise\n🌐 Hands-on with Angular and modern frontend development\n🔍 Understanding of APIs, integrations & distributed systems\n🗄️ Experience with databases and data processing\n🔐 Knowledge of secure coding & enterprise standards\n🔄 Familiarity with Git, PR workflows & Agile collaboration\n💬 Strong communication skills & problem-solving mindset\n📍you must be based in Poland and speak Polish fluently",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:55.141823Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-java-angular-developer-bds-poland-deloitte-warsaw",
+        "company": "Deloitte"
+    },
+    {
+        "title": "Fullstack Java Developer NOWA",
+        "description": "Very good knowledge of Java 8+ and object-oriented programming issues\nExperience in independent design, implementation, documentation and testing of application components\nVery good and practical knowledge of Spring, Spring Boot, Hibernate/JPA and JEE framework\nPractical knowledge with message queue systems, particularly RabbitMQ\nPractical knowledge of tools supporting the software development process: Maven, Git, Gitlab, Gitlab CI/CD, Jenkins, Nexus, Jira\nKnowledge of relational databases, in particular Oracle\nPractical knowledge of RESTful API design\nExperience in system integration\nExperience with distributed systems\nExperience with application servers, JBoss/WildFly\nKnowledge of scanning tools (Fortify, Sonatype..)\nKnowledge of English / B2",
+        "location": "Nieokreślona",
+        "salaryRange": "27 300 – 30 450 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:55.987040Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-java-developer-verita-hr-warszawa",
+        "company": "Verita HR"
+    },
+    {
+        "title": "Fullstack Developer (Java + Angular) NOWA",
+        "description": "Must have\nMinimum 2-3 lata doświadczenia w komercyjnym rozwoju oprogramowania. \nBardzo dobra znajomość Java (Spring Boot, Hibernate) oraz Angular (TypeScript). \nDoświadczenie w pracy z protokołami komunikacyjnymi (REST, SOAP) oraz standardami bezpieczeństwa. \nUmiejętność projektowania architektury IT z wykorzystaniem wzorców projektowych i zasad Clean Code. \nPraktyczna znajomość ekosystemu narzędziowego (GIT, Jenkins, SonarQube) oraz metodyki Agile. \nSwobodna komunikacja w języku angielskim (poziom min. B2/C1). \nDodatkowym atutem będzie doświadczenie w projektach z obszaru ubezpieczeń. ",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:56.940321Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-developer-java-angular-econsulting-warszawa",
+        "company": "eConsulting"
+    },
+    {
+        "title": "Java Developer (K/M) NOWA",
+        "description": "Minimum 3 lata doświadczenia w programowaniu w Java\nBardzo dobra znajomość Java oraz Spring Boot\nDoświadczenie w budowie i utrzymaniu REST API\nZnajomość relacyjnych baz danych (preferowany MS SQL Server) oraz SQL\nPraktyczna znajomość systemu kontroli wersji Git\nDoświadczenie w pracy z Docker (budowanie i uruchamianie kontenerów)\nZnajomość podstawowych wzorców projektowych oraz zasad clean code\nDoświadczenie w pracy zespołowej w metodykach Agile (Scrum/Kanban)\nUmiejętność analizy i rozwiązywania problemów\nZnajomość języka angielskiego na poziomie min. B1/B2 (czytanie dokumentacji, komunikacja techniczna)",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:58.021701Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-k-m-paytel-warszawa",
+        "company": "Paytel S.A."
+    },
+    {
+        "title": "Java Developer NOWA",
+        "description": "3+ years of professional programming experience with at least one modern backend language (e.g., Java, Python, Go, Scala, C#, C++).\nStrong understanding of microservices architecture, distributed systems, and API design.\nSolid knowledge of data structures, algorithms, and software design principles.\nExperience with relational and/or NoSQL databases.\nProficiency in English (written and spoken) for effective collaboration in an international environment.\nFamiliarity with Agile/Scrum development practices, CI/CD, and modern development workflows.",
+        "location": "Nieokreślona",
+        "salaryRange": "21 000 – 29 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:06:59.083121Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-box-warszawa-2",
+        "company": "Box Inc."
+    },
+    {
+        "title": "Java Developer NOWA",
+        "description": "Proven experience as a Java Developer\nFamiliarity with Spring Framework, Hibernate, Microservices, API, Kafka\nExperience with cloud platforms (AWS, GCP, or Azure)\nStrong problem-solving skills\nExcellent communication and teamwork abilities\nBachelor’s degree in Computer Science or related field",
+        "location": "Nieokreślona",
+        "salaryRange": "23 100 – 27 300 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:00.266584Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-mindbox-warszawa-5",
+        "company": "Mindbox Sp. z o.o."
+    },
+    {
+        "title": "FullStack Java Angular Developer",
+        "description": "Oczekujemy\nMinimum 3 lat doświadczenia w budowaniu aplikacji wydajnych, przetwarzających dużą ilość danych w środowisku JVM.\nBardzo dobrej znajomości Java 17+, Spring / Playframework, TypeScript, RxJs, Hibernate, JPA.\nDobrej znajomości Angular2+.\nZnajomości protokołów TCP, UTP, OAuth/OpenID, Websocket.\nZnajomości Docker, JUnit, Angular, Bash, Linux, event sourcing.\nUmiejętności budowania procesów CI/DC w Jenkins/GitlabCI.\nUmiejętności projektowania obiektowego oraz funkcyjnego.\nDoświadczenia w pracy z systemem kontroli wersji GIT.\n\nMile widziane\nDoświadczenie z Kafką, Redis, Openshift.\nDoświadczenie w Node.js.\nUmiejętności projektowania i modelowania z wykorzystaniem notacji UML znajomość Ansible.",
+        "location": "Warszawa",
+        "salaryRange": "16 000 – 20 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:01.225562Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-java-angular-developer-avenga-agencja-pracy-nr-kraz-8448-warszawa",
+        "company": "AVENGA (Agencja Pracy, nr KRAZ: 8448)"
+    },
+    {
+        "title": "Java Developer",
+        "description": "Komercyjne doświadczenie w pracy na stanowisku Java Developera.\nTeoretyczna i praktyczna znajomość technologii wymienionych w sekcji „Technologie – wymagane”.\nUmiejętność tworzenia kodu zgodnie z zasadami SOLID, DRY.\nUmiejętność tworzenia optymalnych kwerend PostgreSQL.\nKomunikatywność i umiejętność pracy w zespole.\nChęć doskonalenia kompetencji i proponowania nowatorskich rozwiązań.\nSamodzielność w rozwiązywaniu problemów.",
+        "location": "Nieokreślona",
+        "salaryRange": "10 000 – 17 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:02.302763Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-unity-t-group-warszawa",
+        "company": "Unity-T Group"
+    },
+    {
+        "title": "Java Developer",
+        "description": "Ta oferta jest dla Ciebie, jeśli:\nmasz minimum 5 lat komercyjnego doświadczenia w programowaniu w języku Java\nbardzo dobrze znasz Java SE 11 lub wyższą\nposiadasz praktyczne doświadczenie w pracy ze Spring Boot oraz Spring Integration\ndobrze znasz relacyjne bazy danych\npracowałeś/aś z narzędziami Git, Maven, Jira oraz Jenkins\nznasz standardy SOAP, REST, XML oraz JSON\nposiadasz wykształcenie wyższe informatyczne lub pokrewne\npotrafisz efekywnie współpracować w zespole projektowym.",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:03.523717Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-scalo-warszawa-35",
+        "company": "Scalo"
+    },
+    {
+        "title": "Java Developer",
+        "description": "Doświadczenie w migracji aplikacji z on premises do Microsoft Azure\nZnajomość Azure Kubernetes Service (AKS), Azure Key Vault, Azure DevOps Pipelines lub GitHub Actions\nMinimum 3-letnie doświadczenie zawodowe jako Java/Kotlin Developer\nMinimum 3-letnie doświadczenie zawodowe z Spring/Hibernate, Spring Boot i Spring Cloud\nMinimum 3-letnie doświadczenie zawodowe z SQL\nZnajomość narzędzi git, maven\nZnajomość frameworków do pisania testów jednostkowych\nZnajomość paradygmatów Functional Programing i Object Oriented Programing\nUmiejętność pracy w zespole i komunikacji w środowisku Agile (Scrum/Kanban)\nMile widziane:\nZnajomość Microsoft Entra ID\nZnajomość Docker, K8S, helm\nZnajomość Kafka, Rabbit MQ, ElasticSearch",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:04.687059Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-antal-warszawa-4",
+        "company": "Antal"
+    },
+    {
+        "title": "Programista Java",
+        "description": "Wykształcenie wyższe informatyczne lub pokrewne\nMin. 5-letnie doświadczenie komercyjne w programowaniu w Javie SE 11+\nDobra znajomość Spring Boot/Spring Integration\nZnajomość relacyjnych baz danych\nZnajomość narzędzi: Git, Maven, Jira, Jenkins\nZnajomość standardów: SOAP, REST, XML, JSON\nMile widziane:\nDoświadczenie w środowisku chmurowym GCP (BigQuery, CloudSQL, Pub/Sub)\nPraktyczna znajomość nierelacyjnych baz danych\nPraktyczne doświadczenie przy budowaniu skonteneryzowanych aplikacji (Anthos, Kubernetes Engine, Docker)\nZnajomość innych frameworków (np. micronaut)",
+        "location": "Nieokreślona",
+        "salaryRange": "16 800 – 20 160 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:06.358960Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/programista-java-itfs-warszawa-4",
+        "company": "ITFS Sp. z o.o."
+    },
+    {
+        "title": "Full Stack Developer (Java)",
+        "description": "4+ years of experience as a Java / Full Stack Developer\nStrong hands-on experience with: Java, Spring, Spring Boot (DI, Spring Data, Spring Security)\nHibernate, DB2\nApache Kafka (producers, consumers, Kafka Streams, Kafka Connect)\nMongoDB (document modelling, Spring Data MongoDB)\nRESTful APIs, microservices, event‑driven architectures\nMaven (multi-module builds)\nDocker\nGit & CI/CD (GitLab CI preferred)\nExperience working in distributed systems and complex legacy codebases\nStrong analytical skills and ability to understand complex business logic\nGood communication skills and ability to work in a global team",
+        "location": "Nieokreślona",
+        "salaryRange": "28 000 – 35 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:07.467147Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/full-stack-developer-java-harvey-nash-technology-warszawa",
+        "company": "Harvey Nash Technology"
+    },
+    {
+        "title": "Java & React Developer",
+        "description": "znajomość frontend’u: React\ndoświadczenie w budowie aplikacji webowych z elementami konwersacyjnymi (chat): streaming odpowiedzi, historia rozmów, feedback użytkownika, prezentacja źródeł/uzasadnień\ndoświadczenie w budowie backendu: Java – projektowanie i rozwój usług API\npodstawy pracy z BigQuery/SQL\numiejętność projektowania ergonomicznego UI dla danych: tabele, wykresy, drill down, eksport wyników\npraktyka w pracy zespołowej: Git, code review, standardy jakości, dokumentacja, testy (unit/integration/e2e)\ndoświadczenie w środowisku produkcyjnym: CI/CD, monitoring/logowanie, reagowanie na incydenty\ngotowość do współpracy z AI Engineer i zespołami data (kontrakty API, formaty danych, walidacje, ograniczenia kosztowe)\nMile widziana znajomość:\nrozwiązań klasy semantic/metrics layer - semantic layer, caching, pre-aggregations,\ngovernance metryk\nnarzędzia „conversational analytics” / wzorce produktowe dla „chat with data”: citations, „pokaż SQL”, tryby explore vs answer, scoring zaufani\nbiblioteki UI i data-viz\nznajomość GCP: Cloud Run, Pub/Sub\npodstawy konteneryzacji i wdrożeń: Docker/Kubernetes\ndoświadczenie w środowisku regulowanym (bankowość): audyt, zgodność, klasyfikacja danych, procesy bezpieczeństwa",
+        "location": "Nieokreślona",
+        "salaryRange": "20 160 – 24 360 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:08.613044Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-react-developer-pko-finat-warszawa",
+        "company": "PKO Finat Sp. z o.o."
+    },
+    {
+        "title": "Senior System / Business Analyst with (Java/Kafka) NOWA",
+        "description": "Minimum 5 years of experience in system analysis, solution design, or business-system analysis\nStrong knowledge of UML and BPMN\nAbility to read and analyze Java / Spring code\nPractical knowledge of SQL / PL-SQL (Oracle) – reading and writing queries\nExperience with MongoDB\nGood understanding of microservices, event-driven, and monolithic architectures\nExperience with Kafka or RabbitMQ\nKnowledge of REST and SOAP integrations\nExperience working with DevOps practices\nExperience working in Agile/SCRUM environments\nHands-on experience with Jira and Confluence\nFluent English communication skills\nNice to Have\nExperience with AWS\nAbility to read React or Angular code\nExperience with CI/CD pipelines\nFamiliarity with modeling and design tools (e.g. Figma)\nPrevious experience in CRM or Finance domain",
+        "location": "Warsaw, Puławska 2",
+        "salaryRange": "23 520 – 26 880 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:07:10.658836Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-system-business-analyst-with-java-kafka-square-one-resources-warsaw",
+        "company": "Square One Resources"
+    },
+    {
+        "title": "Tester/Testerka NOWA",
+        "description": "Sprawdzisz się w tej roli, jeżeli:\nZnasz frameworki do automatyzacji testów, takie jak WebDriver, Selenium, NightWatch lub Playwright.\nPosługujesz się jednym z języków programowania: Java, Python lub JavaScript.\nZnasz HTML/XHTML oraz potrafisz pracować z selectorami CSS i XPath.\nPotrafisz pisać zapytania SQL.\nKorzystasz z narzędzi SoapUI lub Postman.\nPotrafisz analitycznie rozwiązywać problemy i zwracasz uwagę na detale.\nZnasz JSON, REST API oraz Swagger.\nPracujesz z systemem kontroli wersji Git.\nSwobodnie komunikujesz się w języku angielskim.\nMile widziane:\nPosiadanie certyfikatów ISEB/ISTQB\nZnajomość narządzi CI/CD\nZnajomość JUnit, JBahave, Cucumber\nZnajomość narzędzi do testowania wydajności aplikacji: Gatling\nZnajomość narzędzi do raportowania np. Allure",
+        "location": "Warszawa, Poznań, Gdańsk",
+        "salaryRange": "16 800 – 23 940 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:11.635036Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/tester-testerka-astek-polska-warszawa",
+        "company": "ASTEK Polska"
+    },
+    {
+        "title": "Test Automation Engineer NOWA",
+        "description": "At least 3 years of experience in Test Automation (Java)\nExperience with database concepts and query languages (SQL)\nExperience with Source Code Management tools like Git/SVN\nExperience with testing API\nExperience with integrating test automation code with test management tools\nBasic knowledge of design/implementation of performance tests\nUnderstanding of CI/CD processes\nGood English skills",
+        "location": "Warszawa, Kraków, Gdynia",
+        "salaryRange": "16 000 – 24 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:12.636094Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/test-automation-engineer-link-group-warszawa-5",
+        "company": "Link Group"
+    },
+    {
+        "title": "Senior Java Developer NOWA",
+        "description": "At least 5 years of professional experience\nGood knowledge of Java 8 and Spring framework\nStrong capacity to identify requirements and define technical solutions\nKnowledge of Kafka (or at least familiar with any other queuing system)\nVersion control tools, especially Git\nDesign patterns and clean code\nGood English level\nExperience with RESTful Web Services / Microservices\nExperience with automating deployment, scaling and management of containerized applications (e.g Kubernetes)\nExperience with Continuous Integration / Continuous Delivery practices",
+        "location": "Warszawa, Kraków, Gdynia",
+        "salaryRange": "22 000 – 28 000 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:07:13.663603Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-developer-link-group-warszawa-12",
+        "company": "Link Group"
+    },
+    {
+        "title": "Senior Hadoop/Big Data Developer NOWA",
+        "description": "5+ years of Scala experience\nExperience with functional programming techniques & principles – Scala\nExperience in working in Spark\nKnowledge of Linux Shell Scripting\nKnowledge of SQL\nKnowledge of Hadoop stack (YARN, Sqoop, Hive, Impala, MapReduce, Oozie, etc.)\nFamiliar with version control and CI/CD tools (Git, Ansible, Bamboo, Jenkins)\nNice to have:\nJava experience\nExperience with streaming technologies such as Flink and Kafka\nFamiliar with data analysis\nFamiliar with SAFe Agile way of working",
+        "location": "Nieokreślona",
+        "salaryRange": "21 840 – 28 560 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:07:15.352359Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/senior-hadoop-big-data-developer-dcg-warszawa-1",
+        "company": "DCG sp. z o.o."
+    },
+    {
+        "title": "Scala Developer (Spark) NOWA",
+        "description": "Ta oferta jest dla Ciebie, jeśli:\nmasz minimum 4 lata doświadczenia w obszarze Big Data,\nbardzo dobrze znasz Spark, Scala, Hive oraz SQL,\nmasz doświadczenie w pracy z dużymi zbiorami danych i pipeline’ami przetwarzania danych,\npracowałeś z narzędziami takimi jak Python, Java, CI/CD, DevOps lub Airflow,\nmasz doświadczenie w pracy z systemami produkcyjnymi i dbasz o jakość kodu,\nswobodnie komunikujesz się w języku angielskim - B2+/C1,\nmile widziane: doświadczenie w projektach z branży bankowej lub finansowej.",
+        "location": "Nieokreślona",
+        "salaryRange": "29 400 – 31 080 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:07:16.574086Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/scala-developer-spark-scalo-warszawa-5",
+        "company": "Scalo"
+    },
+    {
+        "title": "Tester Automatyzujący/Testerka Automatyzująca NOWA",
+        "description": "Sprawdzisz się w tej roli, jeżeli: \nPosiadasz minimum 5-letnie doświadczenie w pracy jako Tester Automatyzujący.\nLubisz programować i chcesz rozwijać zmiany w kodzie z wykorzystaniem języków takich jak Java, SQL czy JavaScript.\nDbasz o jakość wdrożeń — przygotowanie repozytorium, konfiguracji czy dokumentacji nie stanowi dla Ciebie problemu.\nUmiesz diagnozować błędy i opracowywać poprawki.\nDobrze odnajdujesz się w zwinnych metodykach pracy i potrafisz efektywnie współpracować z zespołem deweloperskim.",
+        "location": "Nieokreślona",
+        "salaryRange": "21 000 – 25 200 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:07:17.652777Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/tester-automatyzujacy-testerka-automatyzujaca-astek-polska-warszawa",
+        "company": "ASTEK Polska"
+    },
+    {
+        "title": "Java Engineer & Test Automation NOWA",
+        "description": "Strong proficiency in Java 11+ (Java 17+ preferred).\nHands-on experience in test automation and building automation frameworks.\nSolid understanding of RESTful APIs and microservices.\nProficiency with Git.\nComfortable working in Unix/Linux environments.\nExperience with SQL and relational databases (Oracle is a plus).\nKnowledge of Spring / Spring Boot.\nNice-to-have:\nExperience with TDD.\nScripting skills (e.g., Python, Bash).\nPrevious work in a QA-focused environment.\nUnderstanding of application monitoring tools.",
+        "location": "Nieokreślona",
+        "salaryRange": "31 920 – 36 960 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:07:18.742843Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-engineer-test-automation-antal-warszawa",
+        "company": "Antal"
+    },
+    {
+        "title": "Java Developer NOWA",
+        "description": "4/5 lat doświadczenia jako Java Developer\nBardzo dobra znajomość Java, w tym ekosystemu Spring\nDoświadczenie z architekturą mikroserwisową\nZnajomość SQL i zagadnień bazodanowych\nMile widziane: praktyczna znajomość Angular lub React\nUmiejętność pracy w złożonych środowiskach systemowych\nUmiejętność pracy zespołowej i analityczne podejście do rozwiązywania problemów\nTechnologie wymagane: \nBackend: Java 17–21, (mile widzine: Spring Boot 3.x, Python, Node.js)\nFrontend: Angular 16/17, TypeScript\nBazy danych: Oracle SQL, Redis\nIntegracja: REST, SOAP, Kafka\nCI/CD: Jenkins, GitLab CI, Maven\nNarzędzia: Git, IntelliJ, VSCode, JIRA, Confluence\nCloud: Docker, Kubernetes\nMetodyki: Agile, Scrum, Kanban, DevOps\nKogo szukamy:\nOsoby, która dobrze czuje się w pracy zespołowej\nmyśli analitycznie i szuka rozwiązań\npotrafi łączyć jakość kodu z potrzebami biznesu\njest otwarta na rozwój i wymianę wiedzy",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:07:19.820172Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-antal-warszawa-5",
+        "company": "Antal"
+    },
+    {
+        "title": "Tester manualny/automatyzujący (K/M)",
+        "description": "Min. 2 letnie doświadczenie w testowaniu oprogramowania w projektach komercyjnych – testy funkcjonalne, niefunkcjonalne, integracyjne, akceptacyjne, wydajnościowe, automatyczne.\nZnajomość zagadnień IT i z zakresu testowania oprogramowania.\nZnajomość języka angielskiego na poziomie B2.\nPraktyczna znajomość narzędzi do zarządzania projektami i testami oraz zgłaszania błędów zgodnie z dobrymi praktykami.\nUmiejętność tworzenia dokumentacji projektowo-testowej, w tym pisanie przypadków i scenariuszy testowych.\nPodstawowa znajomość jednego z języków programowania Java/Python/JavaScript/TS używanych w testach automatycznych oraz narzędzia do automatyzacji, preferowane: Playwright.\nDoświadczenie w automatyzacji testów w Playwright z użyciem AI.\nznajomość zagadnień dot. AI i jej użycia w testach.\nPodstawowa znajomość baz danych i języka SQL.\nDoświadczenia w pracy z narzędziami wspomagającymi testy np. Postman, JMeter.\nZnajomość narzędzi do zarządzania projektami np. JIRA oraz testami np. Xray/Testlink/Testrail/Qase.\nSumienność, odpowiedzialność oraz zaangażowanie w realizację powierzonych zadań.\nDobra organizacja czasu pracy.\nMile widziane\nDoświadczenie w pracy związanej z wdrożeniami lub rozwojem kompleksowych systemów informatycznych.\nUmiejętność analizy wymagań biznesowych i technicznych.\nDoświadczenie w pracy w metodologii Agile (Scrum, Kanban).\nPosiadanie certyfikatu ISTQB Foundation Level.\nWykształcenie wyższe (absolwenci kierunków ścisłych).\nUmiejętność analitycznego myślenia i rozwiązywania problemów.",
+        "location": "Warszawa, Białystok, Lublin",
+        "salaryRange": "6 500 – 9 500 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:23.575486Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/tester-manualny-automatyzujacy-k-m-transition-technologies-systems-warszawa",
+        "company": "Transition Technologies-Systems Sp. z o.o."
+    },
+    {
+        "title": "Java Developer (aplikacje mobilne)",
+        "description": "Komercyjne doświadczenie w pracy na stanowisku Java Developer.\nZnajomość dobrych praktyk, w szczególności związanych z wydajnością aplikacji mobilnych.\nZnajomość systemu kontroli wersji Git.\nZnajomość Gradle oraz Android Studio.\nZnajomość architektury REST.\nZnajomość baz danych PostgreSQL.\nZnajomość obsługi systemu Linux.\nSpring Framework / Spring Boot.\nAnalityczne podejście podczas tworzenia funkcjonalności i rozwiązywania problemów.\nUmiejętność pracy w zespole i chęć doskonalenia kompetencji.",
+        "location": "Nieokreślona",
+        "salaryRange": "10 000 – 17 000 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:25.509190Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-aplikacje-mobilne-unity-t-group-warszawa-1",
+        "company": "UNITY-T GROUP"
+    },
+    {
+        "title": "Test Automation Engineer in Java NOWA",
+        "description": "Nasze wymagania\nBardzo dobra znajomość Java\nDoświadczenie w pracy z Selenium WebDriver\nZnajomość TestNG i/lub JUnit\nPraktyczna znajomość Maven oraz zarządzania zależnościami\nDoświadczenie w projektowaniu frameworków testowych (Page Object Model)\nZnajomość HTML, JavaScript, CSS oraz XPath\nDoświadczenie w testowaniu REST API\nDoświadczenie w testach wydajnościowych i obciążeniowych (np. JMeter)\nZnajomość Spring Framework\nDoświadczenie w testach integracyjnych\nUmiejętność analizy wyników testów i identyfikacji problemów jakościowych\nMile widziane\nZnajomość React\nDoświadczenie z Spring Boot\nDoświadczenie w testach manualnych\nTesty wydajnościowe / obciążeniowe\nTechnologie chmurowe i konteneryzacja (Kubernetes)\nDoświadczenie z GitLab i CI/CD\nPodstawy UX / designu",
+        "location": "Warsaw, Puławska 2",
+        "salaryRange": "11 760 – 13 440 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:07:27.006115Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/test-automation-engineer-in-java-square-one-resources-warsaw",
+        "company": "Square One Resources"
+    },
+    {
+        "title": "Fullstack Software Engineer (regular) NOWA",
+        "description": "Mid-level commercial experience in software development\nFamiliarity with at least one of the following technology ecosystems:\nJava 17+ with Spring / Spring Boot\nC# with .NET / ASP.NET Core\nTypeScript with Node.js\nServerless or cloud-native frameworks AWS/Azure/GCP basic knowledge\nHTTP protocol knowledge of REST API design\nKnowledge of programming principles and design patterns\nExperience with unit and/or integration testing\nWorking knowledge of SQL databases\nStrong English and Polish communication skills (minimum B2), both written and verbal. You'll be working directly with international clients and cross-functional teams, so clear communication is essential\nNice to have:\nExperienced in using AI tools in day-to-day workflow\nunderstanding of asynchronous communication and messaging systems (e.g. RabbitMQ, Kafka, or cloud-native solutions)\nFamiliarity with Docker and containerized applications\nExposure to Kubernetes\nExperience with NoSQL databases CI/CD pipelines knowledge",
+        "location": "Warszawa, Wrocław, Kraków",
+        "salaryRange": "11 760 – 16 800 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:28.704927Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-software-engineer-regular-spyrosoft-warszawa",
+        "company": "Spyrosoft"
+    },
+    {
+        "title": "(he/she) Tester automatyzujący - Warszawa (Mazowieckie), Polska",
+        "description": "Sprawdzisz się w tej roli, jeżeli:\nmasz minimum 3 lata doświadczenia na podobnym stanowisku\nposiadasz bardzo dobrą znajomość technologii Java – warunek konieczny\nmasz znajomość bazy danych PostgreSQL – warunek konieczny\nmasz umiejętność przeprowadzania testów integracyjnych oprogramowania\nposiadasz znajomość narzędzi do testowania, takich jak:\nCypress, narzędzia do testów API (np. Postman, Swagger, RestAssured) – co najmniej jedno z wymienionych\nmasz doświadczenie w tworzeniu i uruchamianiu testów jednostkowych w środowisku CI/CD\nposiadasz umiejętność pracy z repozytoriami kodu (np. Git)\nmasz podstawową znajomość procesów DevOps / pipeline’ów CI/CD\nMile widziane:\nZnajomość JavaScript\nZnajomość technik testowania akceptacyjnego",
+        "location": "Warszawa",
+        "salaryRange": "12 000 – 14 000 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:07:30.303449Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/he-she-tester-automatyzujacy-warszawa-mazowieckie-polska-astek-polska-warszawa",
+        "company": "ASTEK Polska"
+    },
+    {
+        "title": "Fullstack Programista/Programistka - Praca zdalna",
+        "description": "Sprawdzisz się w tej roli, jeżeli:\nPosiadasz minimum 5 lat doświadczenia w tworzeniu oprogramowania w projektach komercyjnych (enterprise)\nBardzo dobrze znasz Java oraz frameworki takie jak Spring, Hibernate/JPA\nMasz doświadczenie w pracy z architekturą mikroserwisową\nSwobodnie programujesz w JavaScript i TypeScript (Angular 5+ lub React)\nPosiadasz praktyczne doświadczenie w budowie REST API\nPracowałeś/aś z bazami danych SQL i NoSQL\nMasz bardzo dobrą znajomość AWS (m.in. S3, IAM, EC2, ECS, ECR, Lambda, Serverless)\nKorzystasz z Dockera i rozumiesz podejście DevOps\nZnasz Git oraz standardowe workflow (MR/PR, protected branches, semantic versioning)\nPotrafisz samodzielnie wdrażać aplikacje na środowiska produkcyjne\nDobrze odnajdujesz się w pracy zespołowej i komunikacji z klientem\nBiegle posługujesz się językiem angielskim\nMile widziane:\nDobra znajomość protokołu HTTP\nDoświadczenie z RabbitMQ lub innym brokerem wiadomości\nZnajomość OAuth 2.0 i systemów rozproszonych\nDoświadczenie w testach automatycznych (unit, integracyjne, E2E)\nZnajomość Spock (Groovy DSL)\nDoświadczenie w budowie CI/CD pipelines\nZnajomość baz danych Oracle, MySQL lub MongoDB",
+        "location": "Warszawa",
+        "salaryRange": "12 000 – 15 300 PLN",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:07:31.666768Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-programista-programistka-praca-zdalna-astek-polska-warszawa",
+        "company": "ASTEK Polska"
+    },
+    {
+        "title": "Low-code Developer",
+        "description": "Poszukujemy Low-code Developera do budowania aplikacji na naszej platformie low-code, umożliwiającej szybkie tworzenie aplikacji za pomocą narzędzi wizualnych. Developer dysponuje zintegrowanym zestawem narzędzi, umożliwiającym zdefiniowanie aplikacji i środowiskiem uruchomieniowym, interpretującym model aplikacji.\nMust have:\nUmiejętność myślenia algorytmicznego, rozumienie algorytmów w dowolnym języku\nZnajomość podstaw programowania, co najmniej w Java Script\nDoświadczenie w pracy z XSD, XML\nDoświadczenie w wykorzystaniu składni SQL\nDoświadczenie wyższe techniczne lub student (solidne podstawy inżynierskie)\nWysoko rozwinięte zdolności analityczne\nBardzo pożądana jest naturalna umiejętność dekompozycji problemów, naturalne dążenie do stosowania SRP\nNice to have:\nUmiejętność projektowania relacyjnego modelu danych\nZnajomość notacji BPMN, UML\nDoświadczenie w obszarze UX",
+        "location": "Warszawa, Zielona Góra, Kraków",
+        "salaryRange": "12 600 – 16 800 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:33.151928Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/low-code-developer-yarrl-warszawa",
+        "company": "yarrl SA"
+    },
+    {
+        "title": "QA Automation Engineer NOWA",
+        "description": "Commercial experience as a developer or in application testing with automation of Web, Mobile, and API tests,\nGood knowledge of Java/Groovy for creating test scripts and process automation,\nUsing AI tools to support test creation,\nAbility to work with CI/CD tools: GitLab, Kubernetes,\nKnowledge of Git version control systems,\nExperience with Gradle tools,\nPractical knowledge of the software development lifecycle,\nExperience in a test environment based on Agile Scrum methodology,\nAbility to work with tools supporting testing, e.g. Jira, TestFlo,\nAbility to effectively cooperate in a cross-team environment.\nNice to have\nKnowledge or experience related to the financial domain (knowledge of the FX area and trading platforms is welcome),\nAbility to work with Appium, Cucumber, Playwright,\nPractical knowledge of REST Assured and gRPC.",
+        "location": "Warsaw, Prosta 67",
+        "salaryRange": "12 750 – 16 200 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:34.711413Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/qa-automation-engineer-xtb-warsaw-1",
+        "company": "XTB"
+    },
+    {
+        "title": "QA Engineer",
+        "description": "Ta oferta jest dla Ciebie, jeśli:\nposiadasz min. 4 lata doświadczenia jako QA Automation Engineer,\nmasz doświadczenie w automatyzacji testów w Javie,\ndobrze znasz Selenium WebDriver,\nmasz doświadczenie w testowaniu API oraz pracy z REST services,\nznasz SQL i potrafisz pracować z bazami danych,\npracowałeś/aś z frameworkami testowymi JUnit lub TestNG,\ndobrze odnajdujesz się w środowisku Agile,\nsprawnie komunikujesz się w j. angielskim (min. B2/C1).",
+        "location": "Warszawa, Kraków, Wrocław",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Senior",
+        "fetchedAt": "2026-05-17T09:07:35.829988Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/qa-engineer-scalo-warszawa",
+        "company": "Scalo"
+    },
+    {
+        "title": "Tester Manualny",
+        "description": "3 letnie doświadczenie w przeprowadzaniu testów manualnych \nkonieczna znajomość produktów hipotecznych oraz oceny ryzyka kredytowego \ntestowanie frontendu oraz backendu - REST API poprzez Postman / Swagger \npodstawowa znajomość SQL, znajomość baz danych \nznajomość narzędzi do wyciągania logów np. Kibana \nznajomość podejścia zwinnego do wytwarzania oprogramowania w szczególności SCRUM \nznajomości JIRA i Confluence \nCertyfikat ISTQB Foundation level / Agile Tester ",
+        "location": "Nieokreślona",
+        "salaryRange": "13 440 – 20 160 PLN",
+        "level": "Mid",
+        "fetchedAt": "2026-05-17T09:07:37.023983Z",
+        "offerUrl": "https://nofluffjobs.com/pl/job/tester-manualny-pko-finat-warszawa",
+        "company": "PKO Finat Sp. z o.o."
     },
     {
         "title": "Java Developer",
@@ -75,7 +1005,7 @@
         "location": "Łódź, Warsaw, Kraków, Gdańsk",
         "salaryRange": "15 300 – 19 400 PLN",
         "level": "Mid",
-        "fetchedAt": "2026-05-17T08:53:51.963561Z",
+        "fetchedAt": "2026-05-17T09:07:40.496693Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-xtb-lodz-2",
         "company": "XTB"
     },
@@ -85,7 +1015,7 @@
         "location": "Łódź, Wrocław, Kraków",
         "salaryRange": "11 760 – 16 800 PLN",
         "level": "Mid",
-        "fetchedAt": "2026-05-17T08:53:53.177716Z",
+        "fetchedAt": "2026-05-17T09:07:41.873391Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-software-engineer-regular-spyrosoft-lodz",
         "company": "Spyrosoft"
     },
@@ -95,7 +1025,7 @@
         "location": "Nieokreślona",
         "salaryRange": "21 000 – 26 880 PLN",
         "level": "Mid",
-        "fetchedAt": "2026-05-17T08:53:54.101826Z",
+        "fetchedAt": "2026-05-17T09:07:43.302586Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/programista-big-data-programistka-big-data-java-scala-astek-polska-lodz",
         "company": "ASTEK Polska"
     },
@@ -105,7 +1035,7 @@
         "location": "Łódź, Wólczańska 180",
         "salaryRange": "15 000 – 25 000 PLN",
         "level": "Mid",
-        "fetchedAt": "2026-05-17T08:53:55.123226Z",
+        "fetchedAt": "2026-05-17T09:07:44.420874Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/aws-data-engineer-transition-technologies-psc-lodz",
         "company": "Transition Technologies PSC"
     },
@@ -115,7 +1045,7 @@
         "location": "Łódź, Żeromskiego 94B",
         "salaryRange": "18 480 – 22 848 PLN",
         "level": "Mid",
-        "fetchedAt": "2026-05-17T08:53:55.846182Z",
+        "fetchedAt": "2026-05-17T09:07:46.126161Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/ai-first-net-engineer-godel-technologies-europe-lodz",
         "company": "Godel Technologies Europe"
     },
@@ -125,7 +1055,7 @@
         "location": "Nieokreślona",
         "salaryRange": "Brak wynagrodzenia",
         "level": "Mid",
-        "fetchedAt": "2026-05-17T08:53:56.738551Z",
+        "fetchedAt": "2026-05-17T09:07:47.253540Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-java-angular-developer-bds-poland-deloitte-lodz",
         "company": "Deloitte"
     },
@@ -135,7 +1065,7 @@
         "location": "Nieokreślona",
         "salaryRange": "Brak wynagrodzenia",
         "level": "Mid",
-        "fetchedAt": "2026-05-17T08:53:57.640970Z",
+        "fetchedAt": "2026-05-17T09:07:48.451405Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/java-developer-branza-cybersecurity-edge-one-solutions-lodz",
         "company": "Edge One Solutions Sp. z o.o."
     },
@@ -145,348 +1075,108 @@
         "location": "Nieokreślona",
         "salaryRange": "Brak wynagrodzenia",
         "level": "Mid",
-        "fetchedAt": "2026-05-17T08:53:58.527837Z",
+        "fetchedAt": "2026-05-17T09:07:49.697547Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/c-developer-m-f-d-commerzbank-lodz",
         "company": "CommerzBank"
     },
     {
         "title": "Fullstack Developer (m/f/d) FlexHub",
-        "description": "What is important for us? 👌\nAdvanced proficiency in Java development and best practices.\nIn-depth experience with React for building dynamic and responsive user interfaces.\nStrong knowledge in designing and developing RESTful Web Services.\nProficient in SQL for database development and optimization.\nSolid expertise in HTML5 for web application structuring and design.\nSkilled in version control using Git.\nExperience with Unit Testing, ensuring reliability and maintainability of code.\nStrong understanding of Object-oriented Design principles for scalable and modular solutions.\nFamiliarity with Agile Methodologies, fostering collaboration and adaptability.\nHands-on experience with CI/CD practices to streamline development workflows.",
+        "description": "Brak opisu",
         "location": "Nieokreślona",
         "salaryRange": "Brak wynagrodzenia",
-        "level": "Mid",
-        "fetchedAt": "2026-05-17T08:53:59.449328Z",
+        "level": "Nieokreślony poziom",
+        "fetchedAt": "2026-05-17T09:07:50.328754Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-developer-m-f-d-flexhub-commerzbank-lodz",
-        "company": "CommerzBank"
-    },
-    {
-        "title": "Programista Fullstack / Programistka Fullstack (Java, TypeScript) NOWA",
-        "description": "- Znajomość standardowych usług chmurowych (preferowane GCP) oraz swobodne poruszanie się w konsoli środowiska,\n- Bardzo dobra znajomość: HTML, CSS, JavaScript, TypeScript oraz Java i Spring Framework\n- Doświadczenie w projektowaniu i programowaniu RESTful API\n- Umiejętność tworzenia responsywnych interfejsów użytkownika przy użyciu CSS\n- Praktyczna znajomość zagadnień Web Accessibility\n- Bardzo dobra znajomość SQL (PostgreSQL, Oracle)\n- Znajomość Kubernetes (K8S)\n- Znajomość systemów i narzędzi: Kafka, Redis, Service Mesh (w szczególności Consul),\n- Znajomość narzędzi CI/CD, GIT, Azure DevOps\n- Umiejętność pisania testów jednostkowych\n- Znajomość zagadnień związanych z: optymalizacją szybkości witryn internetowych i optymalizacją działania aplikacji backendowych\n-Dbałość o szczegóły, dokładność oraz zmysł estetyczny\n-Dobra znajomość języka angielskiego umożliwiająca czytanie i tworzenie dokumentacji technicznej\n-Wrażliwość na koncepcje TDD oraz DDD\n-Mile widziana znajomość Web Components",
-        "location": "Nieokreślona",
-        "salaryRange": "21 000 – 25 200 PLN",
-        "level": "Mid",
-        "fetchedAt": "2026-05-17T08:54:00.260628Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/programista-fullstack-programistka-fullstack-java-typescript-astek-polska-remote",
-        "company": "ASTEK Polska"
-    },
-    {
-        "title": "Mid Java Developer NOWA",
-        "description": "At least 3 years of professional experience;\nGood knowledge of Java 8 and Spring framework;\nStrong capacity to identify requirements and define technical solutions;\nKnowledge of Kafka (or at least familiar with any other queuing system);\nVersion control tools, especially Git;\nDesign patterns and clean code;\nGood English level\nExperience with RESTful Web Services / Microservices;\nExperience with automating deployment, scaling and management of containerized applications (e.g Kubernetes);\nExperience with Continuous Integration / Continuous Delivery practices.",
-        "location": "Warszawa, Kraków, Gdynia",
-        "salaryRange": "16 000 – 21 000 PLN",
-        "level": "Mid",
-        "fetchedAt": "2026-05-17T08:54:01.142861Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/mid-java-developer-link-group-remote-1",
-        "company": "Link Group"
+        "company": "Brak informacji o firmie"
     },
     {
         "title": "Middle Java Developer NOWA",
-        "description": "3+ years of professional experience in backend development,\nvery good knowledge of Kotlin and Spring Boot,\nopenness to occasional visits to the Warsaw office (1–2 days per quarter),\nhands-on experience with microservices architecture,\npractical experience working with NoSQL databases, especially MongoDB,\nexperience building and maintaining backend systems and APIs,\nunderstanding of system design and scalable architecture principles,\nexperience working with high-performance and high-scale systems,\nstrong analytical thinking and problem-solving skills,\nability to collaborate effectively with stakeholders and engineering teams,\ngood communication skills in English (B2) and Polish (C1),\npractical experience using AI-powered assistants (e.g. Claude Code, GitHub Copilot, Cursor) to improve productivity, quality, or decision-making in software delivery.\nWork from the European Union region and a work permit are required.\nNice to have:\nexperience applying GenAI in a more structured way within the SDLC, including defined workflows, prompt patterns, or tool integrations embedded into daily work,\nInterest in and familiarity with emerging AI-driven practices (e.g. agent-based workflows, automation patterns, AI-augmented development), with a willingness to explore and experiment beyond standard approaches.",
-        "location": "Rzeszów, Wrocław, Gdańsk",
-        "salaryRange": "13 400 – 19 200 PLN",
-        "level": "Mid",
-        "fetchedAt": "2026-05-17T08:54:02.076835Z",
+        "description": "Brak opisu",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Nieokreślony poziom",
+        "fetchedAt": "2026-05-17T09:07:51.670875Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/middle-java-developer-xebia-remote",
-        "company": "Xebia sp. z o.o."
+        "company": "Brak informacji o firmie"
     },
     {
         "title": "Fullstack Developer (Java + Javascprit) NOWA",
-        "description": "Ta oferta jest dla Ciebie, jeśli:\nposiadasz 6+ lat doświadczenia komercyjnego na stanowisku Fullstack Developer lub podobnym,\nbardzo dobrze znasz Java, Spring oraz HTML, JavaScript, TypeScript,\nbardzo dobrze znasz SQL (PostgreSQL, Oracle),\nmożesz pochwalić się znajomością standardowych usług chmurowych (preferowane GCP) oraz swobodnym poruszaniem się w konsoli środowiska,\nznasz k8S,\nmasz doświadczenie w projektowaniu i programowaniu RESTful API,\npotrafisz pisać testy jednostkowe,\numiesz tworzyć responsywne projekty przy użyciu CSS,\nznasz systemy: Kafka, Redis, ServiceMesh (w szczególności Consul),\nzagadnienia z optymalizacji działania aplikacji nie są Ci obce,\nposiadasz paktyczną znajomość zagadnień Web Accessibility,\nznasz i stosujesz koncepcje TDD, DDD,\nw swojej codziennej pracy stosujesz narzędzie CI/CD, Git oraz Azure DevOps,\nTwój poziom języka angielskiego pozwala na czytanie i tworzenie dokumentacji technicznej,\ndbasz o szczegóły, jesteś dokładn_ i wyróżniasz się zmysłem estetycznym.",
-        "location": "Katowice",
-        "salaryRange": "21 840 – 23 520 PLN",
-        "level": "Mid",
-        "fetchedAt": "2026-05-17T08:54:03.004511Z",
+        "description": "Brak opisu",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Nieokreślony poziom",
+        "fetchedAt": "2026-05-17T09:07:53.091919Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-developer-java-javascprit-scalo-remote",
-        "company": "Scalo"
+        "company": "Brak informacji o firmie"
     },
     {
         "title": "FullStack Java Angular Developer",
-        "description": "Oczekujemy\nMinimum 3 lat doświadczenia w budowaniu aplikacji wydajnych, przetwarzających dużą ilość danych w środowisku JVM.\nBardzo dobrej znajomości Java 17+, Spring / Playframework, TypeScript, RxJs, Hibernate, JPA.\nDobrej znajomości Angular2+.\nZnajomości protokołów TCP, UTP, OAuth/OpenID, Websocket.\nZnajomości Docker, JUnit, Angular, Bash, Linux, event sourcing.\nUmiejętności budowania procesów CI/DC w Jenkins/GitlabCI.\nUmiejętności projektowania obiektowego oraz funkcyjnego.\nDoświadczenia w pracy z systemem kontroli wersji GIT.\n\nMile widziane\nDoświadczenie z Kafką, Redis, Openshift.\nDoświadczenie w Node.js.\nUmiejętności projektowania i modelowania z wykorzystaniem notacji UML znajomość Ansible.",
-        "location": "Warszawa",
-        "salaryRange": "16 000 – 20 000 PLN",
-        "level": "Mid",
-        "fetchedAt": "2026-05-17T08:54:04.028007Z",
+        "description": "Brak opisu",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Nieokreślony poziom",
+        "fetchedAt": "2026-05-17T09:07:54.915382Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-java-angular-developer-avenga-agencja-pracy-nr-kraz-8448-remote",
-        "company": "AVENGA (Agencja Pracy, nr KRAZ: 8448)"
+        "company": "Brak informacji o firmie"
     },
     {
         "title": "Fullstack Developer (Java, JavaScript)",
-        "description": "Ta oferta jest dla Ciebie, jeśli:\nposiadasz doświadczenie komercyjne w pracy z Kotlin lub Java 8+,\nznasz Spring Framework oraz masz praktyczne doświadczenie w budowie mikroserwisów,\nmasz doświadczenie z bazami danych (PostgreSQL, Oracle),\nznasz środowisko chmurowe AWS (S3, SNS, SQS, RDS, IAM),\npracujesz zgodnie z podejściem DevOps i korzystasz z narzędzi takich jak Docker, Kubernetes, CI/CD (Jenkins, Git),\nstosujesz dobre praktyki inżynieryjne (DDD, SOLID) oraz dbasz o jakość kodu,\nrozumiesz i stosujesz zasady testowania (piramida testów),\nmasz doświadczenie pracy w pełnym cyklu życia oprogramowania (SDLC),\nznasz podstawy JavaScript/TypeScript (npm) – mile widziane,\nkomunikujesz się w języku angielskim na poziomie umożliwiającym pracę w międzynarodowym środowisku,\njesteś dostępny do rozpoczęcia współpracy w ciągu maksymalnie 30 dni,\ndodatkowym atutem będzie znajomość: Python, Ktor, Terraform, Helm,\ncechuje Cię samodzielność, proaktywność oraz nastawienie na rozwiązywanie problemów i realny wpływ na produkt.",
-        "location": "Kraków",
-        "salaryRange": "18 480 – 20 160 PLN",
-        "level": "Mid",
-        "fetchedAt": "2026-05-17T08:54:05.474804Z",
+        "description": "Brak opisu",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Nieokreślony poziom",
+        "fetchedAt": "2026-05-17T09:07:56.268161Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-developer-java-javascript-scalo-remote-7",
-        "company": "Scalo"
+        "company": "Brak informacji o firmie"
     },
     {
         "title": "Inżynier/Inżynierka Testów Automatycznych NOWA",
-        "description": "Wymagania\nminimum 3 lata doświadczenia komercyjnego w programowaniu w języku Java\nminimum 2 lata doświadczenia w automatyzacji testów aplikacji mobilnych Android oraz w refaktoryzacji\nbardzo dobra znajomość Selenium\npraktyczne doświadczenie z Appium, Allure\ndobra znajomość Jenkins oraz Git\n\nMile widziane\ndoświadczenie w automatyzacji testów iOS\ndoświadczenie w sektorze bankowym\ndoświadczenie w testach API\nznajomość środowisk chmurowych",
-        "location": "Warszawa, ul. Skierniewicka 10A",
+        "description": "Brak opisu",
+        "location": "Nieokreślona",
         "salaryRange": "Brak wynagrodzenia",
-        "level": "Mid",
-        "fetchedAt": "2026-05-17T08:54:06.505557Z",
+        "level": "Nieokreślony poziom",
+        "fetchedAt": "2026-05-17T09:07:57.969252Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/inzynier-inzynierka-testow-automatycznych-finture-remote",
-        "company": "Finture Sp. z o.o"
+        "company": "Brak informacji o firmie"
     },
     {
         "title": "Fullstack JAVA + Angular + Cloud[M/F]",
-        "description": "minimum 5 lat doświadczenia w pracy ze Spring i Spring Boot,\nminimum 3 lata doświadczenia w technologiach frontendowych, w tym Angular, TypeScript, RxJS (NgRx),\ndoświadczenie komercyjne w projektach wykorzystujących chmurę,\ndoświadczenie w pracy z narzędziami i praktykami DevOps — Docker, Kubernetes, Jenkins oraz środowiskami chmurowymi,\nznajomość narzędzi takich jak Maven, JUnit, projektowanie REST API, wzorce projektowe oraz baz danych MongoDB i PostgreSQL,\nznajomość architektury mikroserwisowej oraz rozwiązań event-driven; doświadczenie w przetwarzaniu strumieniowym danych z użyciem Kafki,\ngotowość do udziału w planing meetingach raz na kwartał, lokalizacja: Wrocław.",
+        "description": "Brak opisu",
         "location": "Nieokreślona",
-        "salaryRange": "20 160 – 21 840 PLN",
-        "level": "Mid",
-        "fetchedAt": "2026-05-17T08:54:07.163632Z",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Nieokreślony poziom",
+        "fetchedAt": "2026-05-17T09:07:59.591868Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-java-angular-cloud-m-f-stackmine-remote",
-        "company": "Stackmine"
+        "company": "Brak informacji o firmie"
     },
     {
         "title": "Security Engineer NOWA",
-        "description": "*Mission* \nThis role is responsible for the proactive engineering and technical optimization of the organisation security detection stack. You will take ownership of triaging and investigating security events from GuardDuty, Sysdig, and WAF telemetry, moving beyond dashboard monitoring to perform active troubleshooting via log analysis and direct cluster interaction (with kubectl ang gcloud). You will be expected to proactively tune detection logic to reduce false positives and develop automation scripts in Python or Bash to eliminate manual operational tasks. Additionally, you will drive the remediation of GitHub Advanced Security findings by providing developers with actionable code-level fixes and ensuring security configurations are managed as code.\n*What We Look For in You*\n3+ years of professional experience in application / cloud security\nAbility to analyze WAF traffic and cloud telemetry (e.g., GuardDuty, Sysdig) to identify attack patterns, eliminate false-positives and tune the tooling.\nHands-on experience applying and auditing/remediating security best practices in AWS/GCP, Kubernetes and containerized infrastructure\nStrong understanding of application and API security principles (e.g., OWASP Top 10, OWASP API Top 10).\nPractical experience with source code analysis and the ability to read and understand Python and/or Java.\nHands-on experience with security monitoring tools including SAST, DAST, and SCA + practical experience integrating them within the CI/CD pipelines.\nSolid understanding of data security, encryption techniques, and secure data handling.\nWorking knowledge of network protocols (TCP/IP, DNS) and security concepts (WAFs, IDS).",
-        "location": "Kraków",
+        "description": "Brak opisu",
+        "location": "Nieokreślona",
         "salaryRange": "Brak wynagrodzenia",
-        "level": "Mid",
-        "fetchedAt": "2026-05-17T08:54:07.944699Z",
+        "level": "Nieokreślony poziom",
+        "fetchedAt": "2026-05-17T09:08:01.090955Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/security-engineer-beekeeper-remote-3",
-        "company": "Beekeeper AG"
+        "company": "Brak informacji o firmie"
     },
     {
         "title": "Programista/ Programistka Fullstack (Java + React/Angular)",
-        "description": "Minimum 4 lata komercyjnego doświadczenia w roli Full Stack Developera\nBardzo dobra znajomość Java (8+) oraz frameworka Spring\nDoświadczenie w projektowaniu i implementacji REST API\nPraktyczna znajomość SQL oraz PL/SQL (Oracle; mile widziany PostgreSQL)\nMinimum 2 lata doświadczenia w JavaScript (ES6+) i/lub TypeScript\nDobra znajomość React oraz Angular\nZnajomość HTML5, CSS3 / SCSS\nDoświadczenie w pracy z Kafka\nDoświadczenie w pisaniu testów jednostkowych i integracyjnych (np. JUnit, Jest)\nZnajomość zasad Clean Code i pracy z narzędziami do analizy jakości kodu (np. SonarQube)\nDoświadczenie w pracy z Git oraz w środowisku CI/CD (GitLab CI lub Jenkins)\nPraktyczna znajomość Docker\nPodstawowa znajomość AWS\nDoświadczenie w pracy w metodyce Scrum / Agile\nUmiejętność pracy zespołowej, udział w code review\nZnajomość Jira i Confluence\nJęzyk angielski umożliwiający pracę z dokumentacją techniczną\nMile widziane:\nZnajomość MongoDB\nDoświadczenie z Kubernetes\nDoświadczenie z narzędziami monitorującymi (DataDog, Dynatrace)\nDoświadczenie w TDD / BDD\nZnajomość Cypress, Playwright, React Testing Library\nDoświadczenie w projektach CRM\nDoświadczenie w środowisku enterprise",
-        "location": "Poland",
-        "salaryRange": "21 840 – 25 200 PLN",
-        "level": "Mid",
-        "fetchedAt": "2026-05-17T08:54:08.858228Z",
+        "description": "Brak opisu",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Nieokreślony poziom",
+        "fetchedAt": "2026-05-17T09:08:03.169550Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/programista-programistka-fullstack-java-react-angular-dcg-remote",
-        "company": "DCG sp. z o.o."
+        "company": "Brak informacji o firmie"
     },
     {
         "title": "Java Software Engineer (e-mobility & energy)",
-        "description": "At least 3-5 years of experience and advanced knowledge of developing applications in Java 17+ and Spring Boot\nExperience working with event-driven architecture (RabbitMQ)\nExperience with Docker, Kubernetes, and Terraform\nGood knowledge of SQL and time-series databases (e.g., InfluxDB)\nSolid understanding of the HTTP protocol and REST API design\nKnowledge of design patterns, programming principles, and unit/integration testing\nGood command of English (minimum B2 level)\nExperience in projects related to e-mobility or renewable energy sources\nWe operate in the energy and e-mobility sector, including the development of:\nCharge Point Management Systems (CPMS)\nVirtual Power Plants (VPP)\nDemand Response solutions\nor similar systems\nAdditionally, if you have experience working with one or more of the following industry protocols, you are exactly who we’re looking for:\nOpenADR (Open Automated Demand Response) 2.0b\nOCPP (Open Charge Point Protocol) 1.6j / 2.0.1\nOCPI (Open Charge Point Interface) 2.1.1 / 2.2.1\nIEEE 2030.5 (SEP 2.0 – Smart Energy Profile)\nSunSpec Modbus\nEEBUS",
-        "location": "Kraków, Zablocie 43a",
-        "salaryRange": "18 480 – 26 880 PLN",
-        "level": "Mid",
-        "fetchedAt": "2026-05-17T08:54:09.606016Z",
+        "description": "Brak opisu",
+        "location": "Nieokreślona",
+        "salaryRange": "Brak wynagrodzenia",
+        "level": "Nieokreślony poziom",
+        "fetchedAt": "2026-05-17T09:08:04.582239Z",
         "offerUrl": "https://nofluffjobs.com/pl/job/java-software-engineer-e-mobility-energy-spyrosoft-remote",
-        "company": "Spyrosoft"
-    },
-    {
-        "title": "Fullstack Developer NOWA",
-        "description": "Dobra znajomość Java (min. 5 lat).\nDoświadczenie w pracy z Apache Kafka (min. 3 lata).\nBardzo dobra znajomość Spring Boot, Spring Cloud, Hibernate (min. 5 lat).\nZnajomość i doświadczenie w Angularze.\nDobra znajomość SQL (min. 5 lat).\nZnajomość narzędzi: git, maven.\nDoświadczenie w pisaniu testów jednostkowych.\nZnajomość paradygmatów OOP i FP.\nZnajomość: Docker, Kubernetes, Helm, RabbitMQ, ElasticSearch.\nUmiejętność skalowania aplikacji i pracy z systemami o dużym obciążeniu.\nZnajomość narzędzi do diagnostyki wydajności.",
-        "location": "Nieokreślona",
-        "salaryRange": "25 200 – 28 560 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:11.462446Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-developer-antal-lodz-1",
-        "company": "Antal"
-    },
-    {
-        "title": "Remote Data Engineer (AWS) NOWA",
-        "description": "Proven experience in Big Data or Cloud projects involving processing and visualization of large and unstructured datasets, across various phases of the SDLC.\nHands-on experience with the AWS cloud, including Storage, Compute (and Serverless), Networking, and DevOps services.\nSolid understanding of AWS services, ideally supported by relevant certifications.\nFamiliarity with several of the following technologies: Glue, Redshift, Lambda, Athena, S3, Snowflake, Docker, Terraform, CloudFormation, Kafka, Airflow, Spark.\nBasic proficiency in at least one of the following programming languages: Python, Scala, Java, or Bash.\nGood command of English; German language skills would be an advantage.",
-        "location": "Łódź, Warszawa, Wrocław",
-        "salaryRange": "23 520 – 28 560 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:12.341563Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/remote-data-engineer-aws-ework-group-lodz",
-        "company": "Ework Group"
-    },
-    {
-        "title": "Senior Java Developer IoT NOWA",
-        "description": "Necessary Skills:\nstrong, hands-on experience with Java 17 / Java 21,\ncommercial experience with Kotlin\nproven experience in designing and developing backend systems for distributed environments,\ndeep understanding of asynchronous and event-driven architectures,\nability to design clean, maintainable and testable codebases,\nexperience working with code reviews, technical leadership and mentoring,\nstrong understanding of system reliability, scalability and fault tolerance.\nRequired Experience (Hands-on):\nYou are expected to work independently and lead by example in:\nSpring ecosystem (Spring Boot, WebFlux),\nDocker and containerized applications,\nKubernetes (designing and operating services in k8s),\nGit / Bitbucket workflows,\nCI/CD pipelines (Jenkins),\nAzure cloud environment,\ncloud-native application design principles (12-factor app),\nrelational databases (MySQL, MariaDB),\nsecurity fundamentals (TLS, symmetric / asymmetric cryptography, secrets management).\nNice to Have:\nexperience with IoT platforms or large-scale distributed systems,\nexperience with messaging systems (Kafka, RabbitMQ, MQTT),\nexperience designing event-driven and eventually consistent systems,\nknowledge of cloud architecture patterns,\nexperience with Camunda or other BPMN / workflow engines,\nexperience collaborating closely with QA and DevOps on quality and automation.",
-        "location": "Nieokreślona",
-        "salaryRange": "17 600 – 22 000 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:13.317297Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-developer-iot-idemia-poland-lodz",
-        "company": "IDEMIA Poland"
-    },
-    {
-        "title": "Fullstack Developer with Java and JavaScript (f/m/x) NOWA",
-        "description": "Co najmniej 5 lat doświadczenia w tworzeniu aplikacji w Java z wykorzystaniem Spring Boot i Spring Framework\nKomercyjne doświadczenie w rozwijaniu części frontend aplikacji i bardzo dobra znajomość JavaScript\nWcześniejsza praca w projektowaniu i implementacji RESTful API\nDobra znajomość SQL (PostgreSQL lub Oracle)\nZnajomość narzędzi kontroli wersji (Git) oraz CI/CD (np. Azure DevOps)\nDoświadczenie w pracy z chmurą (preferowane GCP)\nUmiejętność pisania testów jednostkowych\nZnajomość j. polskiego\nZamieszkanie na terenie Polski",
-        "location": "Łódź, Katowice, Gdańsk, Cracow",
-        "salaryRange": "20 000 – 23 500 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:14.329199Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-developer-with-java-and-javascript-f-m-x-sii-polska-lodz",
-        "company": "Sii Polska"
-    },
-    {
-        "title": "Java/Kotlin Developer NOWA",
-        "description": "Doświadczenie w migracji aplikacji on‑premises do Microsoft Azure.\nZnajomość usług Azure, w tym: Azure Kubernetes Service (AKS), Azure Key Vault, CI/CD (Azure DevOps Pipelines lub GitHub Actions).\nMin. 3 lata doświadczenia w pracy z Java/Kotlin.\nBardzo dobra znajomość Spring Boot, Spring Cloud, Hibernate.\nDobra znajomość SQL.\nZnajomość narzędzi: git, maven.\nDoświadczenie w pisaniu testów jednostkowych.\nZnajomość paradygmatów OOP i FP.\nUmiejętność pracy w zespole i komunikacji w środowisku Agile (Scrum/Kanban).\nProaktywność i umiejętność proponowania usprawnień.\nŚwiadczenie usług na terenie Polski, w modelu hybrydowym (min. 1 dzień w tygodniu z biura).\nWymagania (nice to have):\nZnajomość Microsoft Entra ID.\nDoświadczenie z Docker, Kubernetes, Helm.\nZnajomość Kafka, RabbitMQ, ElasticSearch.",
-        "location": "Nieokreślona",
-        "salaryRange": "25 200 – 26 880 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:15.249774Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/java-kotlin-developer-antal-lodz",
-        "company": "Antal"
-    },
-    {
-        "title": "Senior Java Backend Engineer (Core Java, Trading Systems)",
-        "description": "Must have\nStrong understanding of programming concepts, including algorithms, complexity, and data structures.\nGood knowledge of the data structures in the Java standard library - both breadth and internals.\nExperience building distributed service-based applications based on message queues.\nStrong analytical and problem-solving skills, to effectively diagnose production performance issues measured in microseconds.\nOpen mind, curiosity, and a strong desire to learn new technologies and business domains.\nAbility to clearly explain non-trivial systems and algorithms.\nAbility to follow and understand technical conversations.\nKnow when and how to ask questions that speed up learning.\nAbility to align your working schedule to US Eastern business hours.\nNice to have\nExperience with financial markets and trading systems.\nKnowledge of AWS systems.\nExperience with Spring boot (some teams).\nExperience with JVM tuning (some teams).\nExperience working remotely with North American firms.\nA computer science degree from a top Polish school.",
-        "location": "Łódź, Kraków, Wrocław, Poznań",
-        "salaryRange": "36 960 – 40 320 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:16.261501Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-backend-engineer-core-java-trading-systems-vistulo-for-a-major-n-american-bank-lodz-4",
-        "company": "Vistulo (for a major N. American bank)"
-    },
-    {
-        "title": "Senior Baseband System Developer NOWA",
-        "description": "What you’ll bring\n5+ years’ experience in communications theory and digital signal processing\nStrong knowledge of NR system design, especially Physical Layer, RRM and AAS/M-MIMO\nSolid understanding of L1 channel processing (DL/UL algorithms)\nExperience developing software for physical-layer and radio network simulations (modeling and analysis)\nProficiency in one or more of Java, MATLAB, C/C++ and Python\nFamiliarity with 3GPP NR specifications and NR software design principles\nMSc or PhD from a technical university",
-        "location": "Nieokreślona",
-        "salaryRange": "Brak wynagrodzenia",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:17.176448Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-baseband-system-developer-ericsson-lodz-1",
-        "company": "Ericsson"
-    },
-    {
-        "title": "Senior C Embedded Developer- Simulation Services NOWA",
-        "description": "Strong software engineering skills with ability to write qualitative code (must have: C or Golang, nice to have: Python and Java).\nFamiliarity with the standards and protocols used in LTE or 5G networks, including the physical layer (Layer 1)specifications.\nKnowledge of RF propagation, modulation schemes and signal processing.\nKnowledge of embedded systems and how software interacts with hardware components.\nSkills in developing test cases to validate the simulator’s accuracy and reliability.\nKnowledge of Multi-core/multithreading processor programming and parallel processing to simulate multiple data link connections efficiently.\nA spirit of positiveness and creativeness with a can-do-attitude.\nThe skills to be ready to explore new opportunities as well as continuously learn and improve together with the team and really enjoy coding.\nTeamworking with ability to work closely in a diverse team of colleagues.\nMSc or BSc level in Telecommunications, Electronics or Computer Science\nExcellent speaking and writing skills in English",
-        "location": "Nieokreślona",
-        "salaryRange": "Brak wynagrodzenia",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:18.121419Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-c-embedded-developer-simulation-services-ericsson-lodz",
-        "company": "Ericsson"
-    },
-    {
-        "title": "Architect with Java (m/f/d) NOWA",
-        "description": "Which technology & skills are important for us? 👌\nAt least 5 years of relevant experience or proof of another adequate qualification\nDeep knowledge of Java, Spring Framework and other J2EE technologies and frameworks\nDeep knowledge of object-oriented analysis and design/architecture to analyze business requirements and design solutions\nGood knowledge of containerization concepts\nGood knowledge of Javascript/React to develop REST APIs based on the internal coding standards and guidelines\nGood knowledge of Maven, TeamCity, Git\nGood knowledge of relational databases (PosgreSQL)\nBasic knowledge of DevOps solutions in daily developer’s work\nNice to have:\nGeneral understanding of the Enterprise Architecture topics\nBasic knowledge of JIRA / Confluence\nBasic knowledge of Agile / Scrum methodologies\nBasic knowledge of Secure Coding Practices\nDo not worry, if you do not have experience in some of the points - we will provide trainings for you! 😉",
-        "location": "Nieokreślona",
-        "salaryRange": "Brak wynagrodzenia",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:19.128053Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/architect-with-java-m-f-d-commerzbank-lodz",
-        "company": "CommerzBank"
-    },
-    {
-        "title": "Senior Java Developer",
-        "description": "8+ years of professional experience with Java (Java 21+)\n8+ years of experience with Spring Boot\n8+ years of experience working with JPA\nExperience using Maven\nExperience with Liquibase for database schema versioning\nStrong backend development skills with a focus on clean, maintainable code\nVery good communication skills and ability to work in English\nNice to have:\nExperience with Cucumber for testing",
-        "location": "Nieokreślona",
-        "salaryRange": "28 560 – 30 240 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:20.137912Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-developer-dcg-lodz",
-        "company": "DCG sp. z o.o."
-    },
-    {
-        "title": "Senior IT Developer (Angular + Java)",
-        "description": "8+ lat doświadczenia w Java (wersja 17+) i ekosystemie Spring.\n5+ lat doświadczenia w Angular (TypeScript, RxJS, state management).\nGłębokiej znajomości architektury mikroserwisowej i projektowania RESTful API.\nSamodzielności w przejmowaniu odpowiedzialności za funkcjonalności \"end-to-end\".\nBardzo dobrej znajomości języka angielskiego.\nMile widziane: Cucumber | Selenium | Liquibase | Maven",
-        "location": "Nieokreślona",
-        "salaryRange": "21 000 – 25 200 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:21.032662Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-it-developer-angular-java-antal-lodz",
-        "company": "Antal"
-    },
-    {
-        "title": "Performance Tester with Gatling (f/m/x)",
-        "description": "Minimum 5 years of professional experience in software testing, including performance testing\nSolid understanding of performance engineering concepts and optimization (architectural patterns, databases, microservices, queues, JVM tuning)\nSolid understanding of performance testing methodologies, strategies, and workload profiles\nHands-on experience with Gatling (must-have) and programming skills in Java, including a good understanding of OOP principles and best practices (SOLID, DRY, YAGNI, KISS)\nPrevious work with cloud platforms such as Azure or AWS\nPractical experience with containerization and orchestration tools, especially Docker\nFamiliarity with observability and monitoring tools such as Grafana, Kibana, InfluxDB, Prometheus, Azure Application Insights, and Amazon CloudWatch\nExperience working with CI/CD pipelines (e.g., GitHub Actions, Azure DevOps) and version control systems such as Git\nEnglish proficiency at a minimum B2 level\nFluent Polish required\nResiding in Poland required\nNice-to-have requirements\nPerformance testing experience (JMeter, Python, Kubernetes), including mobile apps\nFamiliarity with GitHub Copilot",
-        "location": "Łódź, Białystok, Gdańsk, Pila",
-        "salaryRange": "21 000 – 25 200 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:22.110218Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/performance-tester-with-gatling-f-m-x-sii-polska-lodz",
-        "company": "Sii Polska"
-    },
-    {
-        "title": "Fullstack Developer (Java / Angular)",
-        "description": "Minimum 5 doświadczenia na podobnym stanowisku\nZnajomość technologii Java \nBardzo dobra znajomość JavaScript\nBardzo dobra znajomość Angular\nBardzo dobra znajomość PostgreSQL \nUmiejętność pracy z narzędziem JIRA",
-        "location": "Łódź, Wrocław, Kraków, Gdańsk",
-        "salaryRange": "21 000 – 25 200 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:23.091147Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/fullstack-developer-java-angular-devire-lodz-1",
-        "company": "Devire"
-    },
-    {
-        "title": "Senior Java Developer",
-        "description": "Strong Experience in building Java-based microservices - hands-on expertise in designing, implementing, and evolving microservices, with an understanding of scalability and performance challenges.\nAbility to deliver according to requirements - translating business analysis into concrete technical solutions while ensuring compliance with requirements and deadlines.\nOwnership and proactivity - taking responsibility for assigned tasks, identifying risks, and proposing solutions to ensure successful project delivery.\nCommitment to code quality - adhering to the highest engineering standards, focusing on clean, testable code and alignment with best practices and system architecture.\nActive contribution to project development - engaging in continuous improvement and optimization, proposing innovative solutions, and collaborating closely with the team toward shared goals.\nExperience in effective communication and collaboration with an experienced team - you are comfortable working with professionals with strong expertise, building productive working relationships, and aligning on goals and decisions within a mature team environment.",
-        "location": "Łódź, Warsaw, Kraków, Gdańsk",
-        "salaryRange": "20 400 – 25 900 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:23.987721Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-developer-xtb-lodz-4",
-        "company": "XTB"
-    },
-    {
-        "title": "Hadoop / Big Data Developer (she / he)",
-        "description": "Requirements:\n3+ years of Java 8+ and/or Scala experience\nExperience in working in Spark\nKnowledge of Linux Shell Scripting\nKnowledge of SQL\nKnowledge of Hadoop stack (YARN, Sqoop, Hive, Impala, MapReduce Oozie, etc)\nFamiliar with version control and CI/CD tools (Git, Ansible, Bamboo, Jenkins...)\nNice-to-have skills:\nExperience with functional programming techniques & principles – Scala\nExperience with Streaming Technologies, such as Flink and Kafka\nFamiliar with Data Analysis\n Familiar with SAFe Agile way of working",
-        "location": "Nieokreślona",
-        "salaryRange": "21 000 – 23 520 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:25.432451Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/hadoop-big-data-developer-she-he-astek-polska-lodz",
-        "company": "ASTEK Polska"
-    },
-    {
-        "title": "Senior Java/Python Engineer with React",
-        "description": "A minimum of 5 years of professional experience in production applications development in Java or Python ecosystems including front-end development preferably React with a strong ability to troubleshoot, resolve, and prevent issues in a high-pressure environment\nProficiency in Java and Web API development with a solid understanding of building and maintaining scalable, secure, and efficient backend services\nExpertise in database design and SQL skills particularly with SQL Server including advanced T-SQL scripting, query optimization, and performance tuning\nComprehensive experience in DevOps activities like continuous integration and continuous delivery\nExperience with the software development life cycle including requirements gathering, design, development, testing, deployment, and maintenance\nExceptional problem-solving skills and keen attention to detail ensuring high-quality deliverables and efficient resolution of complex technical challenges\nStrong hands-on experience with services in Java\nStrong hands-on experience with backend services in Python\nExperience with React-based front-end development\nKnowledge of API governance\nExperience with PL/SQL\nSolid understanding and practical application of SDLC",
-        "location": "Nieokreślona",
-        "salaryRange": "14 580 – 22 350 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:27.184171Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-python-engineer-with-react-gft-poland-lodz",
-        "company": "GFT Poland"
-    },
-    {
-        "title": "Senior Java Engineer",
-        "description": "Commercial experience with Java 8+ or 11+ or 17+\nStrong knowledge of Spring and Spring Boot\nHands-on experience with REST APIs\nHands-on experience with microservices architecture\nExperience with SQL databases such as PostgreSQL or Oracle\nFamiliarity with CI/CD pipelines\nExperience with Git\nExperience with Maven or Gradle\nExperience working in Agile or DevOps teams\nVery good English communication skills\nNice to have\nExperience with AWS or GCP or Azure\nExperience with Docker\nExperience with Kubernetes\nExperience with Kafka or MQ or other event-driven messaging systems\nExperience in banking, finance, or other regulated environments",
-        "location": "Nieokreślona",
-        "salaryRange": "14 580 – 22 350 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:28.103486Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-engineer-gft-poland-lodz-1",
-        "company": "GFT Poland"
-    },
-    {
-        "title": "Senior Full Stack Developer",
-        "description": "Minimum 5 years of experience as a Full Stack Developer\nExperience with AI-assisted development (Claude Code, Codex or similar tools)\nStrong experience with TypeScript\nPractical experience with React or Vue\nExperience with Tailwind CSS for building responsive UI\nUnderstanding of RESTful API design and implementation\nKnowledge of PostgreSQL (query optimization, large data volumes)\nExperience with Docker and Git workflows\nSecurity awareness in the context of medical applications\nYou can spot when Claude is confidently wrong\nYou've argued with Copilot and won\nProduct-minded engineer approach - you understand not just how to build, but what to build and why\nNice to have:\nExperience with medical/healthcare projects\nCI/CD pipelines\nExperience with performance optimization (memory management, multi-threaded/asynchronous processing)\nExperience in Java or Go",
-        "location": "Łódź, Piękna 1",
-        "salaryRange": "20 000 – 26 000 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:29.035725Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-full-stack-developer-pixel-technology-lodz-1",
-        "company": "Pixel Technology"
-    },
-    {
-        "title": "Senior Full Stack Developer (Java/Angular)",
-        "description": "Strong experience in building Java-based microservices — hands-on expertise in designing, implementing, and evolving microservices, with an understanding of scalability and performance challenges.\nCommercial experience with the Angular framework and solid knowledge of RxJS, TypeScript, HTML5, CSS3/SCSS.\nAbility to deliver according to requirements — translating business analysis into concrete technical solutions while ensuring compliance with requirements and deadlines.\nOwnership and proactivity — taking responsibility for assigned tasks, identifying risks, and proposing solutions to ensure successful project delivery.\nCommitment to code quality — adhering to the highest engineering standards, focusing on clean, testable code and alignment with best practices and system architecture.\nActive contribution to project development — engaging in continuous improvement and optimization, proposing innovative solutions, and collaborating closely with the team toward shared goals.\nExperience in effective communication and collaboration with an experienced team — you are comfortable working with professionals with strong expertise, building productive working relationships, and aligning on goals and decisions within a mature team environment.",
-        "location": "Łódź, Warsaw, Kraków, Gdańsk",
-        "salaryRange": "20 400 – 25 900 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:29.947020Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-full-stack-developer-java-angular-xtb-lodz",
-        "company": "XTB"
-    },
-    {
-        "title": "Senior Java/Python Consultant with React",
-        "description": "A minimum of 5 years of professional experience in production applications development in Java or Python ecosystems including front-end development preferably React with a strong ability to troubleshoot, resolve, and prevent issues in a high-pressure environment\nProficiency in Java and Web API development with a solid understanding of building and maintaining scalable, secure, and efficient backend services\nExpertise in database design and SQL skills particularly with SQL Server including advanced T-SQL scripting, query optimization, and performance tuning\nComprehensive experience in DevOps activities like continuous integration and continuous delivery\nExperience with the software development life cycle including requirements gathering, design, development, testing, deployment, and maintenance\nExceptional problem-solving skills and keen attention to detail ensuring high-quality deliverables and efficient resolution of complex technical challenges\nStrong hands-on experience with services in Java\nStrong hands-on experience with backend services in Python\nExperience with React-based front-end development\nKnowledge of API governance\nExperience with PL/SQL\nSolid understanding and practical application of SDLC\nOpenness to hybrid work 2 days a week from our client office (for candidates from Kraków) and 6 days per month for candidates based outside Kraków.",
-        "location": "Nieokreślona",
-        "salaryRange": "21 000 – 26 880 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:31.000223Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-python-consultant-with-react-gft-poland-lodz",
-        "company": "GFT Poland"
-    },
-    {
-        "title": "Senior Java Consultant",
-        "description": "Commercial experience with Java 8+ or 11+ or 17+\nStrong knowledge of Spring and Spring Boot\nHands-on experience with REST APIs\nHands-on experience with microservices architecture\nExperience with SQL databases such as PostgreSQL or Oracle\nFamiliarity with CI/CD pipelines\nExperience with Git\nExperience with Maven or Gradle\nExperience working in Agile or DevOps teams\nVery good English communication skills\nOpeness to hybrid work 2 days a week from our client office (for candidates from Kraków) and 6 days per month for candidates based outside Kraków.\nNice to have\nExperience with AWS or GCP or Azure\nExperience with Docker\nExperience with Kubernetes\nExperience with Kafka or MQ or other event-driven messaging systems\nExperience in banking, finance, or other regulated environments",
-        "location": "Nieokreślona",
-        "salaryRange": "21 000 – 26 880 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:31.938640Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-java-consultant-gft-poland-lodz-1",
-        "company": "GFT Poland"
-    },
-    {
-        "title": "Senior Ai-first .NET Engineer",
-        "description": "Requirements\nHands-on experience with Claude Code, GitHub Copilot, Cursor, or equivalent AI coding assistants \nAbility to create custom skills and sub-agents and orchestrate multiple AI agents in parallel for concurrent task execution \nStrong prompt engineering skills; able to produce reliable, high-quality output and critically evaluate AI-generated results \nProduction-grade .NET / C# (REST APIs, middleware, dependency injection) with solid understanding of OAuth 2.0, OpenID Connect, and JWT \nDeep proficiency in JavaScript and TypeScript  \n2+ years of hands-on production experience with React  \nStrong grasp of state management, asynchronous patterns, and frontend testing \nConfident designing systems across monoliths, microservices, and distributed architectures \nWorking knowledge of DDD, CQRS, Event Sourcing, and event-driven systems, including message brokers (Kafka, RabbitMQ, Azure Service Bus, or similar) \nHands-on use of Docker and working knowledge of Kubernetes, along with CI/CD pipelines (GitHub Actions, Azure DevOps, or similar) \nExperience with cloud platforms (Azure, AWS, or GCP) and observability practices (structured logging, distributed tracing, alerting) \nSolid background with SQL databases and ORMs; familiarity with NoSQL is a plus \nAdditional exposure to Python, Java, or Node.js is highly desirable \nClear communication skills in English (B2+), both written and spoken; comfortable in client-facing environments ",
-        "location": "Łódź, Białystok, Warszawa",
-        "salaryRange": "21 840 – 26 880 PLN",
-        "level": "Senior",
-        "fetchedAt": "2026-05-17T08:54:32.813961Z",
-        "offerUrl": "https://nofluffjobs.com/pl/job/senior-ai-first-net-engineer-godel-technologies-europe-lodz",
-        "company": "Godel Technologies Europe"
+        "company": "Brak informacji o firmie"
     }
 ]
