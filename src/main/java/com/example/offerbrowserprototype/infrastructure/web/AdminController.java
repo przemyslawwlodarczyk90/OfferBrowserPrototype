@@ -1,6 +1,8 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
+import com.example.offerbrowserprototype.domain.dto.admin.AdminOfferMarkerDTO;
 import com.example.offerbrowserprototype.domain.dto.admin.AdminUserDTO;
+import com.example.offerbrowserprototype.domain.usseroffer.UserOfferStatus;
 import com.example.offerbrowserprototype.infrastructure.repository.ApplicationNoteRepository;
 import com.example.offerbrowserprototype.infrastructure.repository.UserOfferStatusRepository;
 import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
@@ -47,6 +49,21 @@ public class AdminController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(users);
+    }
+
+    @Operation(summary = "List users who marked an offer as useless")
+    @GetMapping("/offers/{offerId}/markers")
+    public ResponseEntity<List<AdminOfferMarkerDTO>> getOfferMarkers(@PathVariable Long offerId) {
+        List<UserOfferStatus> statuses = userOfferStatusRepository.findByOffer_IdAndUselessTrue(offerId);
+        List<AdminOfferMarkerDTO> markers = statuses.stream()
+                .map(s -> AdminOfferMarkerDTO.builder()
+                        .userId(s.getUser().getId())
+                        .username(s.getUser().getUsername())
+                        .email(s.getUser().getEmail())
+                        .uselessAt(s.getUselessAt())
+                        .build())
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(markers);
     }
 
 }
