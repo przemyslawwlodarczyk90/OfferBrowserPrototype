@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -107,6 +108,49 @@ public class UserOfferController {
     ) {
         userOfferFacade.markAsUseless(userId, offerId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/{offerId}/apply-email", produces = MediaType.TEXT_HTML_VALUE)
+    @Operation(summary = "Apply to offer via email link",
+               description = "GET endpoint for one-click apply from daily email. Returns an HTML confirmation page.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Applied — confirmation page shown"),
+            @ApiResponse(responseCode = "200", description = "Already applied — info page shown")
+    })
+    public ResponseEntity<String> applyViaEmail(
+            @RequestParam Long userId,
+            @PathVariable Long offerId
+    ) {
+        String title;
+        String message;
+        try {
+            UserOfferStatusDTO result = userOfferFacade.applyToOffer(userId, offerId);
+            title   = "Aplikacja zapisana!";
+            message = "Oferta została oznaczona jako zaaplikowana. Możesz zamknąć tę kartę.";
+        } catch (Exception e) {
+            title   = "Już zaaplikowano";
+            message = "Ta oferta była już wcześniej oznaczona jako zaaplikowana.";
+        }
+        String html = """
+                <!DOCTYPE html>
+                <html lang="pl">
+                <head><meta charset="UTF-8"><title>%s</title>
+                <style>
+                  body{margin:0;display:flex;align-items:center;justify-content:center;
+                       min-height:100vh;font-family:'Courier New',monospace;background:#0b0f1a;color:#f0f4f8;}
+                  .box{text-align:center;padding:48px 40px;background:#111827;
+                       border:1px solid #2d3748;border-radius:16px;max-width:440px;}
+                  .icon{font-size:3rem;margin-bottom:16px;}
+                  h1{margin:0 0 12px;font-size:1.3rem;color:#4ade80;}
+                  p{margin:0;font-size:.85rem;color:#9ca3af;line-height:1.6;}
+                </style></head>
+                <body><div class="box">
+                  <div class="icon">✓</div>
+                  <h1>%s</h1>
+                  <p>%s</p>
+                </div></body></html>
+                """.formatted(title, title, message);
+        return ResponseEntity.ok(html);
     }
 
     @GetMapping("/useless")

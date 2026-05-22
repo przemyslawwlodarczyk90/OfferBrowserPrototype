@@ -26,6 +26,9 @@ public class MailService {
     @Value("${app.frontend.base-url}")
     private String frontendBaseUrl;
 
+    @Value("${app.server.base-url}")
+    private String serverBaseUrl;
+
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
     private final UserRepository userRepository;
@@ -61,7 +64,7 @@ public class MailService {
         }
     }
 
-    public void sendDailyOffersEmail(String recipientEmail, List<OfferDTO> offers) {
+    public void sendDailyOffersEmail(String recipientEmail, Long userId, List<OfferDTO> offers) {
         MimeMessage message = mailSender.createMimeMessage();
 
         try {
@@ -70,7 +73,9 @@ public class MailService {
             Context context = new Context();
             context.setVariable("offers", offers);
             context.setVariable("email", recipientEmail);
+            context.setVariable("userId", userId);
             context.setVariable("frontendUrl", frontendBaseUrl);
+            context.setVariable("serverUrl", serverBaseUrl);
 
             String htmlContent = templateEngine.process("daily-offers-email", context);
 

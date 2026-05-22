@@ -76,12 +76,12 @@
                                            style="display:block;margin-bottom:16px;font-family:'Courier New',monospace;
                               font-size:12px;color:#93c5fd;text-decoration:none;
                               word-break:break-all;line-height:1.5;" target="_blank">#</a>
-                                        <a th:href="${frontendUrl + '/offers/' + offer.id}"
+                                        <a th:href="${serverUrl + '/api/user-offers/' + offer.id + '/apply-email?userId=' + userId}"
                                            style="display:inline-block;padding:9px 20px;background-color:#166534;
                               color:#4ade80;border:1px solid #15803d;border-radius:6px;
                               text-decoration:none;font-family:'Courier New',monospace;
                               font-size:12px;letter-spacing:0.5px;font-weight:bold;"
-                                           target="_blank">→ APLIKUJ</a>
+                                           target="_blank">✓ ZAAPLIKUJ</a>
                                     </td>
                                 </tr>
                             </table>

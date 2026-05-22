@@ -63,7 +63,7 @@ public class NotificationController {
             }
 
             try {
-                mailService.sendDailyOffersEmail(user.getEmail(), unappliedOffers);
+                mailService.sendDailyOffersEmail(user.getEmail(), user.getId(), unappliedOffers);
                 log.info("Daily unapplied offers email sent to: {}", user.getEmail());
             } catch (Exception e) {
                 log.error("Failed to send email to {}: {}", user.getEmail(), e.getMessage());
