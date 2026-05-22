@@ -7,6 +7,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -21,6 +22,9 @@ import java.util.Optional;
 public class MailService {
 
     private static final Logger log = LoggerFactory.getLogger(MailService.class);
+
+    @Value("${app.frontend.base-url}")
+    private String frontendBaseUrl;
 
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
@@ -65,7 +69,8 @@ public class MailService {
 
             Context context = new Context();
             context.setVariable("offers", offers);
-            context.setVariable("email", recipientEmail); // Dodanie zmiennej email do kontekstu
+            context.setVariable("email", recipientEmail);
+            context.setVariable("frontendUrl", frontendBaseUrl);
 
             String htmlContent = templateEngine.process("daily-offers-email", context);
 
