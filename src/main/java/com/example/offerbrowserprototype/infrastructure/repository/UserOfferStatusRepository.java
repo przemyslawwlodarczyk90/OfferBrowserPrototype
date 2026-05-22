@@ -31,4 +31,7 @@ public interface UserOfferStatusRepository extends JpaRepository<UserOfferStatus
 
     List<UserOfferStatus> findByOffer_IdAndUselessTrue(Long offerId);
 
+    @org.springframework.data.jpa.repository.Query("SELECT DISTINCT s.offer.id FROM UserOfferStatus s WHERE s.useless = true")
+    java.util.List<Long> findOfferIdsWithAnyUseless();
+
 }

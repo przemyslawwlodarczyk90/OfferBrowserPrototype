@@ -51,6 +51,12 @@ public class AdminController {
         return ResponseEntity.ok(users);
     }
 
+    @Operation(summary = "List IDs of offers that at least one user marked as useless")
+    @GetMapping("/offers/useless-ids")
+    public ResponseEntity<List<Long>> getUselessOfferIds() {
+        return ResponseEntity.ok(userOfferStatusRepository.findOfferIdsWithAnyUseless());
+    }
+
     @Operation(summary = "List users who marked an offer as useless")
     @GetMapping("/offers/{offerId}/markers")
     public ResponseEntity<List<AdminOfferMarkerDTO>> getOfferMarkers(@PathVariable Long offerId) {
