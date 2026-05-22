@@ -6,7 +6,9 @@ import com.example.offerbrowserprototype.infrastructure.security.JwtService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.List;
 
 @Component
 public class UserLoginHandler {
@@ -28,12 +30,14 @@ public class UserLoginHandler {
         public final Long   userId;
         public final String username;
         public final String email;
+        public final String role;
 
-        public LoginResult(String token, Long userId, String username, String email) {
+        public LoginResult(String token, Long userId, String username, String email, String role) {
             this.token    = token;
             this.userId   = userId;
             this.username = username;
             this.email    = email;
+            this.role     = role;
         }
     }
 
@@ -41,18 +45,18 @@ public class UserLoginHandler {
         return userRepository.findByUsername(loginDto.getUsername())
                 .filter(user -> passwordEncoder.matches(loginDto.getPassword(), user.getPassword()))
                 .map(user -> {
-                    // WAŻNE: przekazujemy username jako subject JWT, NIE email
-                    // CustomUserDetailsService.loadUserByUsername(username) musi działać
+                    String roleName = user.getRole() != null ? user.getRole().name() : "USER";
+
                     org.springframework.security.core.userdetails.User principal =
                             new org.springframework.security.core.userdetails.User(
-                                    user.getUsername(),   // ← sub = username
+                                    user.getUsername(),
                                     user.getPassword(),
-                                    new ArrayList<>()
+                                    List.of(new SimpleGrantedAuthority("ROLE_" + roleName))
                             );
 
                     String token = jwtService.generateToken(principal);
 
-                    return new LoginResult(token, user.getId(), user.getUsername(), user.getEmail());
+                    return new LoginResult(token, user.getId(), user.getUsername(), user.getEmail(), roleName);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Invalid username or password"));
     }

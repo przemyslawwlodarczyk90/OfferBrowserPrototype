@@ -3,6 +3,7 @@ package com.example.offerbrowserprototype.domain.mapper;
 import com.example.offerbrowserprototype.domain.dto.loginandregister.RegisterUserDTO;
 import com.example.offerbrowserprototype.domain.dto.loginandregister.UpdateUserDto;
 import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
+import com.example.offerbrowserprototype.domain.user.Role;
 import com.example.offerbrowserprototype.domain.user.User;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -25,6 +26,7 @@ public class UserMapper {
         user.setUsername(registerUserDTO.getUsername());
         user.setEmail(registerUserDTO.getEmail());
         user.setPassword(hashedPassword);
+        user.setRole(Role.USER);
         return user;
     }
 

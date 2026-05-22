@@ -1,7 +1,9 @@
 package com.example.offerbrowserprototype.infrastructure.config;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,12 +70,8 @@ public class RedisConfiguration {
             RedisTemplate<String, Object> template = new RedisTemplate<>();
             template.setConnectionFactory(connectionFactory);
 
-            // Configure the serializer for keys and values
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
-            GenericJackson2JsonRedisSerializer valueSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
+            GenericJackson2JsonRedisSerializer valueSerializer =
+                    new GenericJackson2JsonRedisSerializer(buildObjectMapper());
 
             template.setKeySerializer(new StringRedisSerializer());
             template.setValueSerializer(valueSerializer);
@@ -92,17 +90,30 @@ public class RedisConfiguration {
     public RedisSerializer<Object> redisSerializer() {
         logger.info("Initializing RedisSerializer.");
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
-            RedisSerializer<Object> serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
+            RedisSerializer<Object> serializer =
+                    new GenericJackson2JsonRedisSerializer(buildObjectMapper());
             logger.info("RedisSerializer initialized successfully.");
             return serializer;
         } catch (Exception e) {
             logger.error("Error initializing RedisSerializer", e);
             throw e;
         }
+    }
+
+    // Without activateDefaultTyping, Jackson serializes Long/Integer without type metadata.
+    // On deserialization, small longs come back as Integer causing ClassCastException.
+    private ObjectMapper buildObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        mapper.activateDefaultTyping(
+                BasicPolymorphicTypeValidator.builder()
+                        .allowIfBaseType(Object.class)
+                        .build(),
+                ObjectMapper.DefaultTyping.NON_FINAL,
+                JsonTypeInfo.As.PROPERTY
+        );
+        return mapper;
     }
 
     @Bean

@@ -21,6 +21,10 @@ public interface UserOfferStatusRepository extends JpaRepository<UserOfferStatus
 
     long countByUser_IdAndAppliedTrue(Long userId);
 
+    long countByUser_IdAndAppliedFalse(Long userId);
+
+    long countByUser_IdAndUselessTrue(Long userId);
+
     List<UserOfferStatus> findByUser_IdAndAppliedTrue(Long userId);
 
     List<UserOfferStatus> findByUser_IdAndUselessTrue(Long userId);

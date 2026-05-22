@@ -5,6 +5,7 @@ public class TokenResponse {
     private Long   userId;
     private String username;
     private String email;
+    private String role;
 
     // ── Konstruktor awaryjny (tylko wiadomość błędu) ──────────────────────
     public TokenResponse(String token) {
@@ -12,11 +13,12 @@ public class TokenResponse {
     }
 
     // ── Konstruktor pełny — po udanym logowaniu ───────────────────────────
-    public TokenResponse(String token, Long userId, String username, String email) {
+    public TokenResponse(String token, Long userId, String username, String email, String role) {
         this.token    = token;
         this.userId   = userId;
         this.username = username;
         this.email    = email;
+        this.role     = role;
     }
 
     public String getToken()             { return token;    }
@@ -30,4 +32,7 @@ public class TokenResponse {
 
     public String getEmail()             { return email;    }
     public void   setEmail(String e)     { this.email = e;  }
+
+    public String getRole()              { return role;     }
+    public void   setRole(String r)      { this.role = r;   }
 }

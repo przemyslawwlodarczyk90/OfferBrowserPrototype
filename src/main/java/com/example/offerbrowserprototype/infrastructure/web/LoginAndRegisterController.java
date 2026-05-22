@@ -60,7 +60,8 @@ public class LoginAndRegisterController {
                     result.token,
                     result.userId,
                     result.username,
-                    result.email
+                    result.email,
+                    result.role
             );
 
             return new ResponseEntity<>(response, HttpStatus.OK);

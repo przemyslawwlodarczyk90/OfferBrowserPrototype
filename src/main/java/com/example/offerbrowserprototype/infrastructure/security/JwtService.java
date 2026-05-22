@@ -79,9 +79,15 @@ public class JwtService {
     public String generateToken(UserDetails userDetails) {
         logger.info("Generating token for user: {}", userDetails.getUsername());
         try {
+            String role = userDetails.getAuthorities().stream()
+                    .findFirst()
+                    .map(a -> a.getAuthority().replace("ROLE_", ""))
+                    .orElse("USER");
+
             Algorithm algorithm = getAlgorithm();
             String token = JWT.create()
                     .withSubject(userDetails.getUsername())
+                    .withClaim("role", role)
                     .withIssuedAt(new Date())
                     .withExpiresAt(new Date(System.currentTimeMillis() + expirationTimeMs))
                     .withIssuer(issuer)
@@ -91,6 +97,15 @@ public class JwtService {
         } catch (Exception e) {
             logger.error("Failed to generate token: {}", e.getMessage());
             throw e;
+        }
+    }
+
+    public String extractRole(String token) {
+        try {
+            String role = getDecodedJWT(token).getClaim("role").asString();
+            return role != null ? role : "USER";
+        } catch (Exception e) {
+            return "USER";
         }
     }
 
