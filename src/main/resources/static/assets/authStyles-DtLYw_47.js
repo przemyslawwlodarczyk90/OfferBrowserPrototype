@@ -1,4 +1,4 @@
-import{j as r}from"./index-BXWfP1i_.js";function a(){return r.jsx("style",{children:`
+import{j as r}from"./index-B4E70c8-.js";function a(){return r.jsx("style",{children:`
       .auth-card {
         background: var(--bg-1); border: 1px solid var(--border-1);
         border-radius: var(--radius-xl); padding: 2.2rem 2rem; width: 100%;
