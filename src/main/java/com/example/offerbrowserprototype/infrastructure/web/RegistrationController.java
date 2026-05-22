@@ -29,8 +29,8 @@ public class RegistrationController {
             description = "Confirms the registration of a user by validating the provided confirmation token. " +
                     "If the token is valid, the user account is activated and the confirmation page is shown.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Registration confirmed — shows confirmation page"),
-            @ApiResponse(responseCode = "200", description = "Invalid or expired token — shows error page")
+            @ApiResponse(responseCode = "200", description = "Token valid — registration confirmed, confirmation page shown"),
+            @ApiResponse(responseCode = "400", description = "Token invalid or expired — error page shown")
     })
     @GetMapping("/confirm")
     public String confirmRegistration(

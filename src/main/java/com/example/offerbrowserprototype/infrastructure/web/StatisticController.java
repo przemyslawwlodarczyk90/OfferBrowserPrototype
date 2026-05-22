@@ -6,6 +6,8 @@ import com.example.offerbrowserprototype.domain.dto.statistics.StatisticsSummary
 import com.example.offerbrowserprototype.domain.mapper.StatisticsMapper;
 import com.example.offerbrowserprototype.infrastructure.facade.StatisticsFacade;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 @RestController
 @RequestMapping("/api/statistics")
-@Tag(name = "Statistics Controller", description = "Operations for retrieving statistics about job offers.")
+@Tag(name = "Statistics", description = "Aggregated statistics about job offers in the database.")
 
 @PreAuthorize("isAuthenticated()")
 public class StatisticController {
@@ -32,7 +34,11 @@ public class StatisticController {
     }
 
     @GetMapping("/total-offers")
-    @Operation(summary = "Get total offers", description = "Returns the total number of job offers.")
+    @Operation(summary = "Total offer count", description = "Returns the total number of job offers in the database.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Count returned"),
+            @ApiResponse(responseCode = "401", description = "Not authenticated")
+    })
     public ResponseEntity<StatisticsSummaryDTO> getTotalOffers() {
         long totalOffers = statisticsFacade.getTotalOffers();
 
@@ -40,14 +46,22 @@ public class StatisticController {
     }
 
     @GetMapping("/level-distribution")
-    @Operation(summary = "Get level distribution", description = "Returns the distribution of job offers across levels.")
+    @Operation(summary = "Offer distribution by seniority level", description = "Returns offer counts grouped by seniority level (Junior, Mid, Senior, etc.).")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Distribution returned"),
+            @ApiResponse(responseCode = "401", description = "Not authenticated")
+    })
     public ResponseEntity<List<LevelDistributionDTO>> getLevelDistribution() {
         Map<String, Long> levelDistribution = statisticsFacade.getLevelDistribution();
         return ResponseEntity.ok(statisticsMapper.toLevelDistributionDTOs(levelDistribution));
     }
 
     @GetMapping("/city-distribution")
-    @Operation(summary = "Get city distribution", description = "Returns the distribution of job offers by city.")
+    @Operation(summary = "Offer distribution by city", description = "Returns offer counts grouped by city.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Distribution returned"),
+            @ApiResponse(responseCode = "401", description = "Not authenticated")
+    })
     public ResponseEntity<List<CityDistributionDTO>> getCityDistribution() {
         Map<String, Long> cityDistribution = statisticsFacade.getCityDistribution();
         return ResponseEntity.ok(statisticsMapper.toCityDistributionDTOs(cityDistribution));

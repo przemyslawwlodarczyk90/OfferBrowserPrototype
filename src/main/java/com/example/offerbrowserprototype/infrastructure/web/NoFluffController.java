@@ -26,7 +26,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/python-script")
-@Tag(name = "No Fluff Controller", description = "Operations for downloading and writing to the database of offers from the No Fluff Jobs portal.")
+@Tag(name = "Import & Scripts", description = "Endpoints for importing job offers: run the scraper script, import from JSON body, or import a single offer from a URL.")
 @PreAuthorize("isAuthenticated()")
 public class NoFluffController {
 

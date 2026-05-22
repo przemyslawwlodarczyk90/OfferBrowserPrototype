@@ -7,6 +7,8 @@ import com.example.offerbrowserprototype.infrastructure.repository.ApplicationNo
 import com.example.offerbrowserprototype.infrastructure.repository.UserOfferStatusRepository;
 import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +33,12 @@ public class AdminController {
         this.applicationNoteRepository = applicationNoteRepository;
     }
 
-    @Operation(summary = "List all users with their application statistics")
+    @Operation(summary = "List all users with statistics",
+               description = "Returns every registered user with their applied, watchlist, useless and notes counts. Requires ROLE_ADMIN.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User list returned"),
+            @ApiResponse(responseCode = "403", description = "Access denied — ROLE_ADMIN required")
+    })
     @GetMapping("/users")
     public ResponseEntity<List<AdminUserDTO>> getUsers() {
         List<AdminUserDTO> users = userRepository.findAll().stream()
@@ -57,7 +64,12 @@ public class AdminController {
         return ResponseEntity.ok(userOfferStatusRepository.findOfferIdsWithAnyUseless());
     }
 
-    @Operation(summary = "List users who marked an offer as useless")
+    @Operation(summary = "List users who marked an offer as useless",
+               description = "Returns details (username, email, timestamp) of every user who flagged this offer as useless. Requires ROLE_ADMIN.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Marker list returned (empty if none)"),
+            @ApiResponse(responseCode = "403", description = "Access denied — ROLE_ADMIN required")
+    })
     @GetMapping("/offers/{offerId}/markers")
     public ResponseEntity<List<AdminOfferMarkerDTO>> getOfferMarkers(@PathVariable Long offerId) {
         List<UserOfferStatus> statuses = userOfferStatusRepository.findByOffer_IdAndUselessTrue(offerId);
