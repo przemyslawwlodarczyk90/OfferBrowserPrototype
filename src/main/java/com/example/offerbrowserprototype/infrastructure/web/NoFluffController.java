@@ -114,7 +114,6 @@ public class NoFluffController {
                 offer.setLevel(str(item, "level"));
                 offer.setOfferUrl(item.get("offerUrl").toString());
                 offer.setCompany(item.get("company").toString());
-                offer.setDuplicate(false);
                 offer.setFetchedAt(java.time.LocalDateTime.now());
 
                 offerRepository.save(offer);

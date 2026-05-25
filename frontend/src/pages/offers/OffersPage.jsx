@@ -34,7 +34,12 @@ export default function OffersPage() {
     adminApi.getUselessOfferIds,
     { immediate: isAdmin }
   )
-  const uselessSet = useMemo(() => new Set(uselessIdsRaw ?? []), [uselessIdsRaw])
+  const { data: duplicateIdsRaw } = useApi(
+    adminApi.getDuplicateOfferIds,
+    { immediate: isAdmin }
+  )
+  const uselessSet   = useMemo(() => new Set(uselessIdsRaw   ?? []), [uselessIdsRaw])
+  const duplicateSet = useMemo(() => new Set(duplicateIdsRaw ?? []), [duplicateIdsRaw])
 
   const [search,   setSearch]   = useState('')
   const [sort,     setSort]     = useState('newest')
@@ -45,10 +50,7 @@ export default function OffersPage() {
   const [deleting, setDeleting] = useState(false)
   const q = useDebounce(search, 280)
 
-  const dupCount = useMemo(() =>
-    (raw ?? []).filter(o => o.isDuplicate ?? o.duplicate).length,
-  [raw])
-
+  const dupCount     = duplicateSet.size
   const uselessCount = uselessSet.size
 
   const offers = useMemo(() => {
@@ -56,11 +58,11 @@ export default function OffersPage() {
     if (level !== 'Wszystkie')
       list = list.filter(o => normalizeLevel(o.level) === level)
     if (isAdmin && status === 'Duplikaty')
-      list = list.filter(o => o.isDuplicate ?? o.duplicate)
+      list = list.filter(o => duplicateSet.has(o.id))
     if (isAdmin && status === 'Nieprzydatne')
       list = list.filter(o => uselessSet.has(o.id))
     if (isAdmin && status === 'Normalne')
-      list = list.filter(o => !(o.isDuplicate ?? o.duplicate) && !uselessSet.has(o.id))
+      list = list.filter(o => !duplicateSet.has(o.id) && !uselessSet.has(o.id))
     if (q.trim()) {
       const lq = q.toLowerCase()
       list = list.filter(o =>
@@ -263,7 +265,8 @@ export default function OffersPage() {
               key={offer.id}
               offer={offer}
               isAdmin={isAdmin}
-              isUseless={isAdmin && uselessSet.has(offer.id)}
+              isDuplicate={isAdmin && duplicateSet.has(offer.id)}
+          isUseless={isAdmin && uselessSet.has(offer.id)}
               selected={selected.has(offer.id)}
               onSelect={e => toggleSelect(offer.id, e)}
               onClick={() => goToDetail(offer.id)}
@@ -290,17 +293,15 @@ export default function OffersPage() {
 // ─────────────────────────────────────────────────────────────────
 // Karta oferty
 // ─────────────────────────────────────────────────────────────────
-function OfferCard({ offer, isAdmin, isUseless, selected, onSelect, onClick, style }) {
+function OfferCard({ offer, isAdmin, isDuplicate, isUseless, selected, onSelect, onClick, style }) {
   const level   = normalizeLevel(offer.level)
   const salary  = formatSalary(offer.salaryRange ?? offer.salary)
   const date    = getDate(offer)
-  const isDup   = offer.isDuplicate ?? offer.duplicate ?? false
   const company = offer.companyName ?? offer.company ?? '—'
 
   let cardClass = 'of-card animate-fade-in'
-  if (isAdmin && (isDup || isUseless)) cardClass += ' of-card--admin-dup'
-  else if (isDup)                      cardClass += ' of-card--dup'
-  if (selected)                        cardClass += ' of-card--selected'
+  if (isAdmin && (isDuplicate || isUseless)) cardClass += ' of-card--admin-dup'
+  if (selected)                              cardClass += ' of-card--selected'
 
   return (
     <article
@@ -327,8 +328,8 @@ function OfferCard({ offer, isAdmin, isUseless, selected, onSelect, onClick, sty
       <div className="of-card-top">
         <Badge level={level} />
         <div style={{ display: 'flex', gap: 4 }}>
-          {isDup     && <span className="of-dup">DUPLIKAT</span>}
-          {isUseless && <span className="of-dup">NIEPRZYDATNA</span>}
+          {isDuplicate && <span className="of-dup">DUPLIKAT</span>}
+          {isUseless   && <span className="of-dup">NIEPRZYDATNA</span>}
         </div>
       </div>
 

@@ -83,12 +83,12 @@ public class OfferFacade {
     }
 
     @CacheEvict(value = "offers", allEntries = true)
-    public void markAsDuplicateById(Long offerId) {
-        markAsDuplicateHandler.handleById(offerId);
+    public void markAsDuplicateById(Long userId, Long offerId) {
+        markAsDuplicateHandler.handleById(userId, offerId);
     }
 
     @CacheEvict(value = "offers", allEntries = true)
-    public void markAsDuplicateByUrl(String offerUrl) {
-        markAsDuplicateHandler.handleByUrl(offerUrl);
+    public void markAsDuplicateByUrl(Long userId, String offerUrl) {
+        markAsDuplicateHandler.handleByUrl(userId, offerUrl);
     }
 }

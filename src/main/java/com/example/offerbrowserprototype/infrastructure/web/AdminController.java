@@ -2,8 +2,9 @@ package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.dto.admin.AdminOfferMarkerDTO;
 import com.example.offerbrowserprototype.domain.dto.admin.AdminUserDTO;
-import com.example.offerbrowserprototype.domain.usseroffer.UserOfferStatus;
+import com.example.offerbrowserprototype.domain.offer.FlagType;
 import com.example.offerbrowserprototype.infrastructure.repository.ApplicationNoteRepository;
+import com.example.offerbrowserprototype.infrastructure.repository.OfferFlagRepository;
 import com.example.offerbrowserprototype.infrastructure.repository.UserOfferStatusRepository;
 import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,17 +25,20 @@ public class AdminController {
     private final UserRepository userRepository;
     private final UserOfferStatusRepository userOfferStatusRepository;
     private final ApplicationNoteRepository applicationNoteRepository;
+    private final OfferFlagRepository offerFlagRepository;
 
     public AdminController(UserRepository userRepository,
                            UserOfferStatusRepository userOfferStatusRepository,
-                           ApplicationNoteRepository applicationNoteRepository) {
+                           ApplicationNoteRepository applicationNoteRepository,
+                           OfferFlagRepository offerFlagRepository) {
         this.userRepository = userRepository;
         this.userOfferStatusRepository = userOfferStatusRepository;
         this.applicationNoteRepository = applicationNoteRepository;
+        this.offerFlagRepository = offerFlagRepository;
     }
 
     @Operation(summary = "List all users with statistics",
-               description = "Returns every registered user with their applied, watchlist, useless and notes counts. Requires ROLE_ADMIN.")
+               description = "Returns every registered user with their applied, watchlist, duplicate/useless flag counts and notes counts. Requires ROLE_ADMIN.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User list returned"),
             @ApiResponse(responseCode = "403", description = "Access denied — ROLE_ADMIN required")
@@ -50,7 +54,7 @@ public class AdminController {
                         .active(user.isActive())
                         .appliedCount(userOfferStatusRepository.countByUser_IdAndAppliedTrue(user.getId()))
                         .watchlistCount(userOfferStatusRepository.countByUser_IdAndAppliedFalse(user.getId()))
-                        .uselessCount(userOfferStatusRepository.countByUser_IdAndUselessTrue(user.getId()))
+                        .uselessCount(offerFlagRepository.countByUser_IdAndType(user.getId(), FlagType.USELESS))
                         .notesCount(applicationNoteRepository.countByUserId(user.getId()))
                         .build())
                 .collect(Collectors.toList());
@@ -58,30 +62,35 @@ public class AdminController {
         return ResponseEntity.ok(users);
     }
 
-    @Operation(summary = "List IDs of offers that at least one user marked as useless")
+    @Operation(summary = "List IDs of offers flagged as useless by any user")
     @GetMapping("/offers/useless-ids")
     public ResponseEntity<List<Long>> getUselessOfferIds() {
-        return ResponseEntity.ok(userOfferStatusRepository.findOfferIdsWithAnyUseless());
+        return ResponseEntity.ok(offerFlagRepository.findFlaggedOfferIdsByType(FlagType.USELESS));
     }
 
-    @Operation(summary = "List users who marked an offer as useless",
-               description = "Returns details (username, email, timestamp) of every user who flagged this offer as useless. Requires ROLE_ADMIN.")
+    @Operation(summary = "List IDs of offers flagged as duplicate by any user")
+    @GetMapping("/offers/duplicate-ids")
+    public ResponseEntity<List<Long>> getDuplicateOfferIds() {
+        return ResponseEntity.ok(offerFlagRepository.findFlaggedOfferIdsByType(FlagType.DUPLICATE));
+    }
+
+    @Operation(summary = "List all flags on a given offer",
+               description = "Returns all DUPLICATE and USELESS flags for this offer: who set them and when. Requires ROLE_ADMIN.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Marker list returned (empty if none)"),
+            @ApiResponse(responseCode = "200", description = "Flag list returned (empty if none)"),
             @ApiResponse(responseCode = "403", description = "Access denied — ROLE_ADMIN required")
     })
     @GetMapping("/offers/{offerId}/markers")
     public ResponseEntity<List<AdminOfferMarkerDTO>> getOfferMarkers(@PathVariable Long offerId) {
-        List<UserOfferStatus> statuses = userOfferStatusRepository.findByOffer_IdAndUselessTrue(offerId);
-        List<AdminOfferMarkerDTO> markers = statuses.stream()
-                .map(s -> AdminOfferMarkerDTO.builder()
-                        .userId(s.getUser().getId())
-                        .username(s.getUser().getUsername())
-                        .email(s.getUser().getEmail())
-                        .uselessAt(s.getUselessAt())
+        List<AdminOfferMarkerDTO> markers = offerFlagRepository.findByOffer_Id(offerId).stream()
+                .map(f -> AdminOfferMarkerDTO.builder()
+                        .userId(f.getUser().getId())
+                        .username(f.getUser().getUsername())
+                        .email(f.getUser().getEmail())
+                        .flagType(f.getType().name())
+                        .flaggedAt(f.getFlaggedAt())
                         .build())
                 .collect(Collectors.toList());
         return ResponseEntity.ok(markers);
     }
-
 }

@@ -17,33 +17,27 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
     boolean existsByOfferUrl(String offerUrl);
 
-    List<Offer> findByDuplicateFalse();
-
     List<Offer> findAllByOrderByFetchedAtDesc();
 
-    // ⬇️ COUNT queries
-    @Query("SELECT COUNT(o) FROM Offer o WHERE o.duplicate = false")
-    long countByDuplicateFalse();
+    List<Offer> findByIdNotIn(List<Long> ids);
 
-    // ⬇️ LEVEL DISTRIBUTION (PostgreSQL native)
+    @Query("SELECT COUNT(o) FROM Offer o WHERE o.id NOT IN " +
+           "(SELECT f.offer.id FROM OfferFlag f WHERE f.type = 'DUPLICATE')")
+    long countNonDuplicate();
+
     @Query("""
         SELECT o.level AS id, COUNT(o) AS count
         FROM Offer o
-        WHERE o.duplicate = false
+        WHERE o.id NOT IN (SELECT f.offer.id FROM OfferFlag f WHERE f.type = 'DUPLICATE')
         GROUP BY o.level
     """)
     List<LevelDistributionProjection> getLevelDistributionSimple();
 
-    // ⬇️ CITY DISTRIBUTION (PostgreSQL native)
     @Query("""
         SELECT o.city AS id, COUNT(o) AS count
         FROM Offer o
-        WHERE o.duplicate = false
+        WHERE o.id NOT IN (SELECT f.offer.id FROM OfferFlag f WHERE f.type = 'DUPLICATE')
         GROUP BY o.city
     """)
     List<CityDistributionProjection> getCityDistributionSimple();
-
-    // ⬇️ Helper methods
-    List<Offer> findByIdNotInAndDuplicateFalse(List<Long> ids);
 }
-

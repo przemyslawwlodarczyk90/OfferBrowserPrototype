@@ -3,6 +3,7 @@ package com.example.offerbrowserprototype.infrastructure.web;
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.infrastructure.facade.OfferFacade;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -87,26 +88,38 @@ public class OfferController {
     }
 
     @PostMapping("/{offerId}/mark-duplicate")
-    @Operation(summary = "Mark offer as duplicate by ID", description = "Sets the global duplicate flag on the offer. Admin-only action.")
+    @Operation(summary = "Mark offer as duplicate by ID", description = "Records that the current user considers this offer a duplicate.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Offer marked as duplicate"),
+            @ApiResponse(responseCode = "200", description = "Flag recorded"),
             @ApiResponse(responseCode = "401", description = "Not authenticated"),
             @ApiResponse(responseCode = "404", description = "Offer not found")
     })
-    public ResponseEntity<Void> markDuplicate(@PathVariable Long offerId) {
-        offerFacade.markAsDuplicateById(offerId);
+    public ResponseEntity<Void> markDuplicate(
+            @Parameter(in = io.swagger.v3.oas.annotations.enums.ParameterIn.HEADER,
+                       name = "userId", required = true,
+                       schema = @io.swagger.v3.oas.annotations.media.Schema(type = "integer", format = "int64"))
+            @RequestHeader Long userId,
+            @PathVariable Long offerId
+    ) {
+        offerFacade.markAsDuplicateById(userId, offerId);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/mark-duplicate-by-url")
-    @Operation(summary = "Mark offer as duplicate by URL", description = "Sets the global duplicate flag on the offer matching the given URL.")
+    @Operation(summary = "Mark offer as duplicate by URL", description = "Records that the current user considers the offer at this URL a duplicate.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Offer marked as duplicate"),
+            @ApiResponse(responseCode = "200", description = "Flag recorded"),
             @ApiResponse(responseCode = "401", description = "Not authenticated"),
             @ApiResponse(responseCode = "404", description = "Offer not found for given URL")
     })
-    public ResponseEntity<Void> markDuplicateByUrl(@RequestParam String offerUrl) {
-        offerFacade.markAsDuplicateByUrl(offerUrl);
+    public ResponseEntity<Void> markDuplicateByUrl(
+            @Parameter(in = io.swagger.v3.oas.annotations.enums.ParameterIn.HEADER,
+                       name = "userId", required = true,
+                       schema = @io.swagger.v3.oas.annotations.media.Schema(type = "integer", format = "int64"))
+            @RequestHeader Long userId,
+            @RequestParam String offerUrl
+    ) {
+        offerFacade.markAsDuplicateByUrl(userId, offerUrl);
         return ResponseEntity.ok().build();
     }
 }

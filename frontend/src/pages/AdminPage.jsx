@@ -4,6 +4,119 @@ import { useTitle } from '@/hooks'
 import { toast } from '@/store'
 import { PageHeader } from '@/components/ui'
 
+const FLAG_STYLE = {
+  DUPLICATE: { bg: 'rgba(239,68,68,0.10)',   border: 'rgba(239,68,68,0.35)',   color: '#ef4444', label: 'DUPLIKAT'    },
+  USELESS:   { bg: 'rgba(148,163,184,0.10)', border: 'rgba(148,163,184,0.3)',  color: '#94a3b8', label: 'NIEPRZYDATNA' },
+}
+
+function FlagBadge({ type }) {
+  const s = FLAG_STYLE[type] || FLAG_STYLE.USELESS
+  return (
+    <span style={{
+      background: s.bg, border: `1px solid ${s.border}`, color: s.color,
+      fontFamily: 'var(--font-mono)', fontSize: '0.62rem', fontWeight: 700,
+      letterSpacing: '0.07em', textTransform: 'uppercase',
+      padding: '2px 7px', borderRadius: '100px', whiteSpace: 'nowrap',
+    }}>
+      {s.label}
+    </span>
+  )
+}
+
+function FlaggedOffersPanel() {
+  const [uselessIds,   setUselessIds]   = useState([])
+  const [duplicateIds, setDuplicateIds] = useState([])
+  const [expanded,     setExpanded]     = useState(null)
+  const [markers,      setMarkers]      = useState({})
+  const [loadingMark,  setLoadingMark]  = useState(null)
+
+  useEffect(() => {
+    Promise.all([
+      adminApi.getUselessOfferIds(),
+      adminApi.getDuplicateOfferIds(),
+    ]).then(([u, d]) => {
+      setUselessIds(u.data ?? [])
+      setDuplicateIds(d.data ?? [])
+    }).catch(() => toast.error('Błąd ładowania oflagowanych ofert'))
+  }, [])
+
+  const allFlaggedIds = [...new Set([...uselessIds, ...duplicateIds])]
+
+  const toggleOffer = async (offerId) => {
+    if (expanded === offerId) { setExpanded(null); return }
+    setExpanded(offerId)
+    if (markers[offerId]) return
+    setLoadingMark(offerId)
+    try {
+      const r = await adminApi.getOfferMarkers(offerId)
+      setMarkers(prev => ({ ...prev, [offerId]: r.data }))
+    } catch {
+      toast.error('Błąd pobierania flag')
+    } finally {
+      setLoadingMark(null)
+    }
+  }
+
+  if (allFlaggedIds.length === 0) return (
+    <p className="adm-empty">Brak oflagowanych ofert</p>
+  )
+
+  return (
+    <div className="adm-flags-list">
+      {allFlaggedIds.map(id => {
+        const isDup     = duplicateIds.includes(id)
+        const isUseless = uselessIds.includes(id)
+        const isOpen    = expanded === id
+        const flagMarkers = markers[id] ?? []
+        return (
+          <div key={id} className={`adm-flag-row${isOpen ? ' adm-flag-row--open' : ''}`}>
+            <button className="adm-flag-header" onClick={() => toggleOffer(id)}>
+              <span className="adm-flag-id">Oferta #{id}</span>
+              <div style={{ display: 'flex', gap: 5 }}>
+                {isDup     && <FlagBadge type="DUPLICATE" />}
+                {isUseless && <FlagBadge type="USELESS"   />}
+              </div>
+              <span className="adm-flag-chevron">{isOpen ? '▲' : '▼'}</span>
+            </button>
+            {isOpen && (
+              <div className="adm-flag-markers">
+                {loadingMark === id ? (
+                  <span className="adm-flag-loading">Ładowanie…</span>
+                ) : flagMarkers.length === 0 ? (
+                  <span className="adm-flag-loading">Brak danych</span>
+                ) : (
+                  <table className="adm-mark-table">
+                    <thead>
+                      <tr>
+                        <th>Użytkownik</th>
+                        <th>Email</th>
+                        <th>Typ flagi</th>
+                        <th>Data</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {flagMarkers.map((m, i) => (
+                        <tr key={i}>
+                          <td>{m.username}</td>
+                          <td style={{ color: 'var(--text-2)', fontSize: '0.77rem' }}>{m.email}</td>
+                          <td><FlagBadge type={m.flagType} /></td>
+                          <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-2)' }}>
+                            {m.flaggedAt ? new Date(m.flaggedAt).toLocaleString('pl-PL') : '—'}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 const ROLE_STYLE = {
   ADMIN: { bg: 'rgba(245,158,11,0.13)', border: 'rgba(245,158,11,0.38)', color: '#f59e0b' },
   USER:  { bg: 'rgba(56,189,248,0.10)', border: 'rgba(56,189,248,0.30)', color: '#38bdf8' },
@@ -149,6 +262,12 @@ export default function AdminPage() {
             onClick={handleSendEmails}
           />
         </div>
+      </div>
+
+      {/* ── Flagged offers ── */}
+      <div className="adm-section" style={{ marginBottom: 24 }}>
+        <h2 className="adm-section-title">Oflagowane oferty (duplikaty / nieprzydatne)</h2>
+        <FlaggedOffersPanel />
       </div>
 
       {/* ── User table ── */}
@@ -368,6 +487,45 @@ export default function AdminPage() {
         .adm-num--applied { color: var(--accent); }
         .adm-num--useless { color: var(--red); }
         .adm-num--notes   { color: var(--cyan); }
+
+        /* ── Flagged offers ── */
+        .adm-flags-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; }
+        .adm-flag-row {
+          border: 1px solid var(--border-1); border-radius: var(--radius-md);
+          overflow: hidden; background: var(--bg-2);
+        }
+        .adm-flag-row--open { border-color: var(--accent); }
+        .adm-flag-header {
+          width: 100%; display: flex; align-items: center; gap: 10px;
+          padding: 10px 14px; background: none; border: none;
+          cursor: pointer; text-align: left; color: var(--text-0);
+          transition: background var(--t-fast);
+        }
+        .adm-flag-header:hover { background: var(--bg-3); }
+        .adm-flag-id {
+          font-family: var(--font-mono); font-size: 0.78rem;
+          font-weight: 700; color: var(--text-0); flex-shrink: 0;
+        }
+        .adm-flag-chevron {
+          margin-left: auto; font-size: 0.62rem; color: var(--text-3);
+          flex-shrink: 0;
+        }
+        .adm-flag-markers { padding: 0 14px 12px; }
+        .adm-flag-loading {
+          font-size: 0.78rem; color: var(--text-2); padding: 8px 0; display: block;
+        }
+        .adm-mark-table {
+          width: 100%; border-collapse: collapse;
+          font-size: 0.78rem; color: var(--text-1);
+        }
+        .adm-mark-table th {
+          padding: 6px 10px; text-align: left;
+          font-family: var(--font-mono); font-size: 0.63rem; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.07em;
+          color: var(--text-2); border-bottom: 1px solid var(--border-1);
+        }
+        .adm-mark-table td { padding: 7px 10px; border-bottom: 1px solid var(--border-2); }
+        .adm-mark-table tr:last-child td { border-bottom: none; }
       `}</style>
     </>
   )

@@ -8,14 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public interface UserOfferStatusRepository extends JpaRepository<UserOfferStatus, Long> {
-
-
-
-    List<UserOfferStatus> findByUser_IdAndAppliedFalse(Long userId);
 
     Optional<UserOfferStatus> findByUserAndOffer(User user, Offer offer);
 
@@ -23,17 +18,7 @@ public interface UserOfferStatusRepository extends JpaRepository<UserOfferStatus
 
     long countByUser_IdAndAppliedFalse(Long userId);
 
-    long countByUser_IdAndUselessTrue(Long userId);
-
     List<UserOfferStatus> findByUser_IdAndAppliedTrue(Long userId);
 
-    List<UserOfferStatus> findByUser_IdAndUselessTrue(Long userId);
-
-    List<UserOfferStatus> findByOffer_IdAndUselessTrue(Long offerId);
-
-    @org.springframework.data.jpa.repository.Query("SELECT DISTINCT s.offer.id FROM UserOfferStatus s WHERE s.useless = true")
-    java.util.List<Long> findOfferIdsWithAnyUseless();
-
     void deleteByOffer_Id(Long offerId);
-
 }

@@ -1,31 +1,21 @@
 package com.example.offerbrowserprototype.domain.offer;
 
-import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MarkAsDuplicateHandler {
 
-    private final OfferRepository offerRepository;
+    private final OfferFlagHandler offerFlagHandler;
 
-    public MarkAsDuplicateHandler(OfferRepository offerRepository) {
-        this.offerRepository = offerRepository;
+    public MarkAsDuplicateHandler(OfferFlagHandler offerFlagHandler) {
+        this.offerFlagHandler = offerFlagHandler;
     }
 
-    public void handleById(Long id) {
-        Offer offer = offerRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Offer not found"));
-        mark(offer);
+    public void handleById(Long userId, Long offerId) {
+        offerFlagHandler.flag(userId, offerId, FlagType.DUPLICATE);
     }
 
-    public void handleByUrl(String offerUrl) {
-        Offer offer = offerRepository.findByOfferUrl(offerUrl)
-                .orElseThrow(() -> new IllegalArgumentException("Offer not found"));
-        mark(offer);
-    }
-
-    private void mark(Offer offer) {
-        offer.setDuplicate(true);
-        offerRepository.save(offer);
+    public void handleByUrl(Long userId, String offerUrl) {
+        offerFlagHandler.flagByUrl(userId, offerUrl, FlagType.DUPLICATE);
     }
 }

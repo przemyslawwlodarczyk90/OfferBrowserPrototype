@@ -16,8 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "job_offers",
         uniqueConstraints = @UniqueConstraint(name = "uk_job_offers_offer_url", columnNames = "offer_url"),
         indexes = {
-                @Index(name = "idx_job_offers_fetched_at", columnList = "fetched_at"),
-                @Index(name = "idx_job_offers_duplicate", columnList = "is_duplicate")
+                @Index(name = "idx_job_offers_fetched_at", columnList = "fetched_at")
         })
 public class Offer {
 
@@ -47,9 +46,6 @@ public class Offer {
     @Column(name = "offer_url", nullable = false, unique = true)
     private String offerUrl;
 
-    @Column(name = "is_duplicate", nullable = false)
-    private boolean duplicate = false;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING,
             pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'",
             timezone = "UTC")
@@ -59,7 +55,6 @@ public class Offer {
     @Column(name = "company", nullable = false)
     private String company;
 
-    // Konstruktor z Clock
     public Offer(String title, String description, String location, String salaryRange,
                  String level, String company, Clock clock) {
         if (company == null || company.trim().isEmpty()) {
@@ -68,15 +63,13 @@ public class Offer {
         this.title = title;
         this.description = description;
         this.location = location;
-        this.city = extractCityFromLocation(location); // ⬅️ AUTOMATYCZNE WYCIĄGANIE
+        this.city = extractCityFromLocation(location);
         this.salaryRange = salaryRange;
         this.level = level;
         this.company = company;
-        this.duplicate = false;
         this.fetchedAt = LocalDateTime.now(clock);
     }
 
-    // ⬇️ HELPER do ekstrakcji miasta z lokacji
     private String extractCityFromLocation(String location) {
         if (location == null || location.isBlank()) {
             return "Unknown";
@@ -85,7 +78,6 @@ public class Offer {
         return location.split(",")[0].trim();
     }
 
-    // ⬇️ SETTER z automatyczną ekstrakcją miasta
     public void setLocation(String location) {
         this.location = location;
         this.city = extractCityFromLocation(location);

@@ -15,5 +15,6 @@ public class AdminOfferMarkerDTO {
     private Long userId;
     private String username;
     private String email;
-    private LocalDateTime uselessAt;
+    private String flagType;
+    private LocalDateTime flaggedAt;
 }

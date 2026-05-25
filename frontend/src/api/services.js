@@ -12,12 +12,13 @@ export const authApi = {
 
 // ── Offers ────────────────────────────────────────────────────────
 export const offersApi = {
-  getAll:   ()           => api.get('/offers'),
-  getById:  (id)         => api.get(`/offers/${id}`),
-  create:   (data)       => api.post('/offers', data),
-  update:   (id, data)   => api.put(`/offers/${id}`, data),
-  delete:   (id)         => api.delete(`/offers/${id}`),
-  markDuplicateById: (id) => api.post(`/offers/${id}/mark-duplicate`),
+  getAll:   ()               => api.get('/offers'),
+  getById:  (id)             => api.get(`/offers/${id}`),
+  create:   (data)           => api.post('/offers', data),
+  update:   (id, data)       => api.put(`/offers/${id}`, data),
+  delete:   (id)             => api.delete(`/offers/${id}`),
+  markDuplicateById: (userId, id) =>
+    api.post(`/offers/${id}/mark-duplicate`, null, { headers: { userId } }),
 }
 
 // ── User Offers ───────────────────────────────────────────────────
@@ -62,9 +63,10 @@ export const importApi = {
 
 // ── Admin ─────────────────────────────────────────────────────────
 export const adminApi = {
-  getUsers:          ()         => api.get('/admin/users'),
-  getOfferMarkers:   (offerId)  => api.get(`/admin/offers/${offerId}/markers`),
-  getUselessOfferIds: ()        => api.get('/admin/offers/useless-ids'),
+  getUsers:            ()        => api.get('/admin/users'),
+  getOfferMarkers:     (offerId) => api.get(`/admin/offers/${offerId}/markers`),
+  getUselessOfferIds:  ()        => api.get('/admin/offers/useless-ids'),
+  getDuplicateOfferIds:()        => api.get('/admin/offers/duplicate-ids'),
 }
 
 // ── Notifications ─────────────────────────────────────────────────
