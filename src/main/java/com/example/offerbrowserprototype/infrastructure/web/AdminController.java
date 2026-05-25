@@ -14,7 +14,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -72,6 +74,27 @@ public class AdminController {
     @GetMapping("/offers/duplicate-ids")
     public ResponseEntity<List<Long>> getDuplicateOfferIds() {
         return ResponseEntity.ok(offerFlagRepository.findFlaggedOfferIdsByType(FlagType.DUPLICATE));
+    }
+
+    @Operation(summary = "Dominant flag type per flagged offer",
+               description = "Returns a map of offerId → dominant flag type (DUPLICATE or USELESS) based on which type has more votes. Requires ROLE_ADMIN.")
+    @GetMapping("/offers/flag-dominant")
+    public ResponseEntity<Map<Long, String>> getFlagDominant() {
+        List<Object[]> rows = offerFlagRepository.getFlagCountsByOfferAndType();
+        Map<Long, Map<FlagType, Long>> perOffer = new HashMap<>();
+        for (Object[] row : rows) {
+            Long offerId  = (Long)     row[0];
+            FlagType type = (FlagType) row[1];
+            Long count    = (Long)     row[2];
+            perOffer.computeIfAbsent(offerId, k -> new HashMap<>()).put(type, count);
+        }
+        Map<Long, String> dominant = new HashMap<>();
+        for (var entry : perOffer.entrySet()) {
+            long dupCount     = entry.getValue().getOrDefault(FlagType.DUPLICATE, 0L);
+            long uselessCount = entry.getValue().getOrDefault(FlagType.USELESS,   0L);
+            dominant.put(entry.getKey(), dupCount >= uselessCount ? "DUPLICATE" : "USELESS");
+        }
+        return ResponseEntity.ok(dominant);
     }
 
     @Operation(summary = "List all flags on a given offer",

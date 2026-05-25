@@ -67,6 +67,7 @@ export const adminApi = {
   getOfferMarkers:     (offerId) => api.get(`/admin/offers/${offerId}/markers`),
   getUselessOfferIds:  ()        => api.get('/admin/offers/useless-ids'),
   getDuplicateOfferIds:()        => api.get('/admin/offers/duplicate-ids'),
+  getFlagDominant:     ()        => api.get('/admin/offers/flag-dominant'),
 }
 
 // ── Notifications ─────────────────────────────────────────────────
