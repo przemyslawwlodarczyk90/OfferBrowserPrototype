@@ -20,5 +20,7 @@ public interface UserOfferStatusRepository extends JpaRepository<UserOfferStatus
 
     List<UserOfferStatus> findByUser_IdAndAppliedTrue(Long userId);
 
+    List<UserOfferStatus> findByUser_IdAndAppliedFalse(Long userId);
+
     void deleteByOffer_Id(Long offerId);
 }
