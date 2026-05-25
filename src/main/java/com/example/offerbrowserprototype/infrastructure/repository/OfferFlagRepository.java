@@ -20,7 +20,8 @@ public interface OfferFlagRepository extends JpaRepository<OfferFlag, Long> {
     @Query("SELECT DISTINCT f.offer.id FROM OfferFlag f WHERE f.user.id = :userId AND f.type = :type")
     List<Long> findOfferIdsByUserIdAndType(@Param("userId") Long userId, @Param("type") FlagType type);
 
-    List<OfferFlag> findByOffer_Id(Long offerId);
+    @Query("SELECT f FROM OfferFlag f JOIN FETCH f.user WHERE f.offer.id = :offerId ORDER BY f.flaggedAt DESC")
+    List<OfferFlag> findByOffer_Id(@Param("offerId") Long offerId);
 
     long countByUser_IdAndType(Long userId, FlagType type);
 
