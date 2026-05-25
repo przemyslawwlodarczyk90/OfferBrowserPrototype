@@ -18,8 +18,9 @@ export default defineConfig({
       },
     },
   },
+  base: './',
   build: {
-    outDir: '../OfferBrowserPrototype/src/main/resources/static',
+    outDir: '../src/main/resources/static',
     emptyOutDir: true,
   },
 })
