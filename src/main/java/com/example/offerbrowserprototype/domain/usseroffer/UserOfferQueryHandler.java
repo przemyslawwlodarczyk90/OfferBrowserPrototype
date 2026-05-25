@@ -34,7 +34,6 @@ public class UserOfferQueryHandler {
                 .forEach(s -> excluded.add(s.getOffer().getId()));
 
         excluded.addAll(offerFlagRepository.findOfferIdsByUserIdAndType(userId, FlagType.USELESS));
-        excluded.addAll(offerFlagRepository.findFlaggedOfferIdsByType(FlagType.DUPLICATE));
 
         if (excluded.isEmpty()) {
             return offerRepository.findAllByOrderByFetchedAtDesc();
