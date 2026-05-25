@@ -46,9 +46,10 @@ export default function OfferDetailPage() {
   }
 
   const handleMarkDup = async () => {
+    if (!user?.id) { toast.warn('Brak ID użytkownika w sesji'); return }
     setMarking(true)
     try {
-      await offersApi.markDuplicateById(id)
+      await offersApi.markDuplicateById(user.id, id)
       toast.info('Oferta oznaczona jako duplikat')
       navigate(-1)
     } catch (err) {
@@ -125,16 +126,14 @@ export default function OfferDetailPage() {
           >
             {markingUseless ? '…' : '🗑 Nieprzydatne'}
           </button>
-          {isAdmin && (
-            <button
-              className="btn btn--danger btn--sm"
-              onClick={handleMarkDup}
-              disabled={marking || isDup}
-              title={isDup ? 'Już oznaczono' : 'Oznacz jako duplikat'}
-            >
-              {marking ? '…' : '⊗ Duplikat'}
-            </button>
-          )}
+          <button
+            className="btn btn--danger btn--sm"
+            onClick={handleMarkDup}
+            disabled={marking}
+            title="Oznacz jako duplikat"
+          >
+            {marking ? '…' : '⊗ Duplikat'}
+          </button>
           {isAdmin && (
             <button
               className="btn btn--danger btn--sm detail-delete-btn"
@@ -196,28 +195,31 @@ export default function OfferDetailPage() {
         </section>
       )}
 
-      {/* ── Admin: kto odrzucił ── */}
+      {/* ── Admin: kto oflagował ── */}
       {isAdmin && (
         <section className="detail-section detail-markers-section">
           <h2 className="detail-section-h">
-            ⚑ Odrzucenia przez użytkowników
+            ⚑ Flagi użytkowników
             {markers?.length > 0 && (
               <span className="detail-markers-count">{markers.length}</span>
             )}
           </h2>
           {!markers || markers.length === 0 ? (
-            <p className="detail-markers-empty">Żaden użytkownik nie oznaczył tej oferty jako nieprzydatną.</p>
+            <p className="detail-markers-empty">Żaden użytkownik nie oflagował tej oferty.</p>
           ) : (
             <ul className="detail-markers-list">
-              {markers.map(m => (
-                <li key={m.userId} className="detail-marker-row">
+              {markers.map((m, i) => (
+                <li key={i} className="detail-marker-row">
                   <span className="detail-marker-user">
                     <span className="detail-marker-dot">◉</span>
                     {m.username}
                     <span className="detail-marker-email">({m.email})</span>
                   </span>
+                  <span className={`detail-flag-badge detail-flag-badge--${m.flagType?.toLowerCase()}`}>
+                    {m.flagType === 'DUPLICATE' ? 'DUPLIKAT' : 'NIEPRZYDATNA'}
+                  </span>
                   <time className="detail-marker-date">
-                    {m.uselessAt ? formatDateTime(m.uselessAt) : '—'}
+                    {m.flaggedAt ? formatDateTime(m.flaggedAt) : '—'}
                   </time>
                 </li>
               ))}
@@ -394,6 +396,19 @@ function DetailStyles() {
       .detail-marker-date {
         font-family: var(--font-mono); font-size: 0.67rem; color: var(--text-3);
         white-space: nowrap; flex-shrink: 0;
+      }
+      .detail-flag-badge {
+        font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700;
+        letter-spacing: .08em; padding: 2px 7px; border-radius: 100px;
+        border: 1px solid; flex-shrink: 0;
+      }
+      .detail-flag-badge--duplicate {
+        color: var(--red); border-color: rgba(239,68,68,.4);
+        background: rgba(239,68,68,.08);
+      }
+      .detail-flag-badge--useless {
+        color: var(--text-2); border-color: var(--border-1);
+        background: var(--bg-3);
       }
 
       /* Error */
