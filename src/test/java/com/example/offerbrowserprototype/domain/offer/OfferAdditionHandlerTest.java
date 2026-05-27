@@ -1,117 +1,103 @@
-//package com.example.offerbrowserprototype.domain.offer;
-//
-//import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
-//import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
-//import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.mockito.Mockito;
-//
-//import java.time.Clock;
-//import java.time.LocalDateTime;
-//import java.time.ZoneId;
-//import java.time.ZonedDateTime;
-//
-//import static org.assertj.core.api.Assertions.assertThat;
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.mockito.Mockito.*;
-//
-//class OfferAdditionHandlerTest {
-//
-//    private OfferRepository offerRepository;
-//    private OfferMapper offerMapper;
-//    private Clock clock;
-//    private OfferAdditionHandler offerAdditionHandler;
-//
-//    @BeforeEach
-//    void setUp() {
-//        offerRepository = Mockito.mock(OfferRepository.class);
-//        offerMapper = Mockito.mock(OfferMapper.class);
-//        clock = Clock.fixed(ZonedDateTime.of(2025, 1, 7, 12, 0, 0, 0, ZoneId.of("UTC")).toInstant(), ZoneId.of("UTC"));
-//        offerAdditionHandler = new OfferAdditionHandler(offerRepository, offerMapper, clock);
-//    }
-//
-//    @Test
-//    void shouldAddOfferSuccessfully() {
-//        // Given
-//        OfferDTO inputDto = new OfferDTO("Test Title", "Test Description", "Test Location",
-//                "https://example.com/offer", "5000-7000", "Test Company", "Mid", false, null);
-//
-//        Offer mappedOffer = new Offer();
-//        mappedOffer.setTitle("Test Title");
-//        mappedOffer.setDescription("Test Description");
-//        mappedOffer.setLocation("Test Location");
-//        mappedOffer.setOfferUrl("https://example.com/offer");
-//        mappedOffer.setSalaryRange("5000-7000");
-//        mappedOffer.setCompany("Test Company");
-//        mappedOffer.setLevel("Mid");
-//
-//        Offer savedOffer = new Offer();
-//        savedOffer.setId("123");
-//        savedOffer.setTitle("Test Title");
-//        savedOffer.setDescription("Test Description");
-//        savedOffer.setLocation("Test Location");
-//        savedOffer.setOfferUrl("https://example.com/offer");
-//        savedOffer.setSalaryRange("5000-7000");
-//        savedOffer.setCompany("Test Company");
-//        savedOffer.setLevel("Mid");
-//        savedOffer.setFetchedAt(LocalDateTime.now(clock));
-//
-//        OfferDTO expectedDto = new OfferDTO("123", "Test Title", "Test Description", "Test Location",
-//                "https://example.com/offer", "5000-7000", "Test Company", "Mid", false, LocalDateTime.now(clock));
-//
-//        when(offerMapper.toEntity(inputDto)).thenReturn(mappedOffer);
-//        when(offerRepository.save(any(Offer.class))).thenReturn(savedOffer);
-//        when(offerMapper.toDTO(savedOffer)).thenReturn(expectedDto);
-//
-//        // When
-//        OfferDTO result = offerAdditionHandler.addOffer(inputDto);
-//
-//        // Then
-//        assertThat(result).isNotNull();
-//        assertThat(result.getId()).isEqualTo("123");
-//        assertThat(result.getTitle()).isEqualTo("Test Title");
-//        assertThat(result.getFetchedAt()).isEqualTo(LocalDateTime.now(clock));
-//
-//        verify(offerMapper).toEntity(inputDto);
-//        verify(offerRepository).save(mappedOffer);
-//        verify(offerMapper).toDTO(savedOffer);
-//    }
-//
-//    @Test
-//    void shouldCallRepositorySaveMethod() {
-//        // Given
-//        OfferDTO inputDto = new OfferDTO("Title", "Description", "Location",
-//                "https://example.com/offer", "4000-6000", "Company", "Junior", false, null);
-//        Offer mappedOffer = new Offer();
-//        when(offerMapper.toEntity(inputDto)).thenReturn(mappedOffer);
-//
-//        Offer savedOffer = new Offer();
-//        when(offerRepository.save(any(Offer.class))).thenReturn(savedOffer);
-//        when(offerMapper.toDTO(savedOffer)).thenReturn(new OfferDTO());
-//
-//        // When
-//        offerAdditionHandler.addOffer(inputDto);
-//
-//        // Then
-//        verify(offerRepository).save(mappedOffer);
-//    }
-//
-//    @Test
-//    void shouldSetFetchedAtToCurrentTime() {
-//        // Given
-//        OfferDTO inputDto = new OfferDTO("Title", "Description", "Location",
-//                "https://example.com/offer", "4000-6000", "Company", "Junior", false, null);
-//        Offer mappedOffer = new Offer();
-//        when(offerMapper.toEntity(inputDto)).thenReturn(mappedOffer);
-//
-//        Offer savedOffer = new Offer();
-//        when(offerRepository.save(any(Offer.class))).thenReturn(savedOffer);
-//
-//        // When
-//        offerAdditionHandler.addOffer(inputDto);
-//
-//        // Then
-//        assertThat(mappedOffer.getFetchedAt()).isEqualTo(LocalDateTime.now(clock));
-//    }
-//}
+package com.example.offerbrowserprototype.domain.offer;
+
+import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
+import com.example.offerbrowserprototype.domain.requirement.NiceToHaveCreationHandler;
+import com.example.offerbrowserprototype.domain.requirement.RequirementCreationHandler;
+import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+// Testy jednostkowe handlera dodawania nowej oferty pracy
+@ExtendWith(MockitoExtension.class)
+class OfferAdditionHandlerTest {
+
+    @Mock private OfferRepository offerRepository;
+    @Mock private OfferMapper offerMapper;
+    @Mock private RequirementCreationHandler requirementCreationHandler;
+    @Mock private NiceToHaveCreationHandler niceToHaveCreationHandler;
+
+    // Stały zegar — zapewnia powtarzalność testów zależnych od czasu
+    private final Clock clock = Clock.fixed(Instant.parse("2024-01-15T10:00:00Z"), ZoneId.of("UTC"));
+
+    private OfferAdditionHandler handler;
+
+    @BeforeEach
+    void setUp() {
+        handler = new OfferAdditionHandler(
+                offerRepository, offerMapper, clock,
+                requirementCreationHandler, niceToHaveCreationHandler);
+    }
+
+    @Test
+    void dodaje_oferte_i_zwraca_zmapowane_dto() {
+        // given
+        OfferDTO inputDto = noweDto();
+        Offer entity = Offer.builder().title("Java Dev").company("Firma").build();
+        Offer saved  = Offer.builder().id(1L).title("Java Dev").company("Firma").build();
+        OfferDTO expected = new OfferDTO(1L, "Java Dev", "Opis", "Warszawa",
+                "http://url", "5000", "Firma", "Junior", false, LocalDateTime.now(clock));
+
+        when(offerMapper.toEntity(inputDto)).thenReturn(entity);
+        when(offerRepository.save(entity)).thenReturn(saved);
+        when(offerMapper.toDTO(saved)).thenReturn(expected);
+
+        // when
+        OfferDTO result = handler.addOffer(inputDto);
+
+        // then — wynik powinien być tym co zwrócił mapper po zapisaniu
+        assertThat(result).isEqualTo(expected);
+        verify(offerRepository).save(entity);
+    }
+
+    @Test
+    void ustawia_fetchedAt_na_czas_z_zegara() {
+        // given
+        OfferDTO inputDto = noweDto();
+        Offer entity = Offer.builder().title("T").company("C").build();
+        Offer saved  = Offer.builder().id(1L).title("T").company("C").build();
+        when(offerMapper.toEntity(inputDto)).thenReturn(entity);
+        when(offerRepository.save(entity)).thenReturn(saved);
+        when(offerMapper.toDTO(saved)).thenReturn(inputDto);
+
+        // when
+        handler.addOffer(inputDto);
+
+        // then — czas pobrania oferty ustawiany przez handler, nie przez klienta
+        assertThat(entity.getFetchedAt()).isEqualTo(LocalDateTime.now(clock));
+    }
+
+    @Test
+    void wywoluje_oba_handlery_wymagan_po_zapisaniu_oferty() {
+        // given
+        OfferDTO inputDto = noweDto();
+        Offer entity = Offer.builder().title("T").company("C").build();
+        Offer saved  = Offer.builder().id(1L).title("T").company("C").build();
+        when(offerMapper.toEntity(inputDto)).thenReturn(entity);
+        when(offerRepository.save(entity)).thenReturn(saved);
+        when(offerMapper.toDTO(saved)).thenReturn(inputDto);
+
+        // when
+        handler.addOffer(inputDto);
+
+        // then — oba handlery muszą być wywołane ze ZAPISANĄ ofertą (z id)
+        verify(requirementCreationHandler).createFromOffer(saved);
+        verify(niceToHaveCreationHandler).createFromOffer(saved);
+    }
+
+    private OfferDTO noweDto() {
+        return new OfferDTO("Java Dev", "Opis", "Warszawa",
+                "http://url", "5000", "Firma", "Junior", false, null);
+    }
+}
