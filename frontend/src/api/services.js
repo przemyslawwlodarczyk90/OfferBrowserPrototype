@@ -56,9 +56,10 @@ export const statsApi = {
 
 // ── Requirements Analytics ────────────────────────────────────────
 export const analyticsApi = {
-  getTopSkills:       (limit = 20)               => api.get('/analytics/requirements/top',          { params: { limit } }),
-  getTopSkillsByLevel:(level, limit = 15)        => api.get('/analytics/requirements/top-by-level', { params: { level, limit } }),
-  getAvailableLevels: ()                         => api.get('/analytics/requirements/levels'),
+  getTopSkills:        (sources)        => api.get('/analytics/requirements/top',          sources?.length ? { params: { sources: sources.join(',') } } : {}),
+  getTopSkillsByLevel: (level, sources) => api.get('/analytics/requirements/top-by-level', { params: { level, ...(sources?.length ? { sources: sources.join(',') } : {}) } }),
+  getAvailableLevels:  ()               => api.get('/analytics/requirements/levels'),
+  getAvailableSources: ()               => api.get('/analytics/requirements/sources'),
 }
 
 // ── Import ────────────────────────────────────────────────────────

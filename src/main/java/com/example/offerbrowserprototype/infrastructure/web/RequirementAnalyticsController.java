@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -26,25 +28,36 @@ public class RequirementAnalyticsController {
     }
 
     @GetMapping("/top")
-    @Operation(summary = "Top skills overall", description = "Returns the most frequently required skills across all offers.")
+    @Operation(summary = "All skills overall", description = "Returns all required skills sorted by occurrence count. Optional: ?sources=NoFluff,Pracuj")
     public ResponseEntity<List<SkillCountDTO>> getTopSkills(
-            @RequestParam(defaultValue = "20") int limit
+            @RequestParam(required = false) String sources
     ) {
-        return ResponseEntity.ok(requirementAnalyticsFacade.getTopSkills(limit));
+        return ResponseEntity.ok(requirementAnalyticsFacade.getTopSkills(parseSources(sources)));
     }
 
     @GetMapping("/top-by-level")
-    @Operation(summary = "Top skills by seniority level", description = "Returns the most frequently required skills for a given level.")
+    @Operation(summary = "All skills by seniority level", description = "Returns all required skills for a given level sorted by occurrence count. Optional: ?sources=NoFluff")
     public ResponseEntity<List<SkillCountDTO>> getTopSkillsByLevel(
             @RequestParam String level,
-            @RequestParam(defaultValue = "15") int limit
+            @RequestParam(required = false) String sources
     ) {
-        return ResponseEntity.ok(requirementAnalyticsFacade.getTopSkillsByLevel(level, limit));
+        return ResponseEntity.ok(requirementAnalyticsFacade.getTopSkillsByLevel(level, parseSources(sources)));
     }
 
     @GetMapping("/levels")
     @Operation(summary = "Available levels", description = "Returns distinct seniority levels present in requirements data.")
     public ResponseEntity<List<String>> getAvailableLevels() {
         return ResponseEntity.ok(requirementAnalyticsFacade.getAvailableLevels());
+    }
+
+    @GetMapping("/sources")
+    @Operation(summary = "Available sources", description = "Returns distinct source names present in requirements data.")
+    public ResponseEntity<List<String>> getAvailableSources() {
+        return ResponseEntity.ok(requirementAnalyticsFacade.getAvailableSources());
+    }
+
+    private List<String> parseSources(String sources) {
+        if (sources == null || sources.isBlank()) return Collections.emptyList();
+        return Arrays.asList(sources.split(","));
     }
 }

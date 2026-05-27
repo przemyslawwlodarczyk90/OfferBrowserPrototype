@@ -15,15 +15,19 @@ public class RequirementAnalyticsFacade {
         this.requirementAnalyticsHandler = requirementAnalyticsHandler;
     }
 
-    public List<SkillCountDTO> getTopSkills(int limit) {
-        return requirementAnalyticsHandler.getTopSkills(limit);
+    public List<SkillCountDTO> getTopSkills(List<String> sources) {
+        return requirementAnalyticsHandler.getTopSkills(sources);
     }
 
-    public List<SkillCountDTO> getTopSkillsByLevel(String level, int limit) {
-        return requirementAnalyticsHandler.getTopSkillsByLevel(level, limit);
+    public List<SkillCountDTO> getTopSkillsByLevel(String level, List<String> sources) {
+        return requirementAnalyticsHandler.getTopSkillsByLevel(level, sources);
     }
 
     public List<String> getAvailableLevels() {
         return requirementAnalyticsHandler.getAvailableLevels();
+    }
+
+    public List<String> getAvailableSources() {
+        return requirementAnalyticsHandler.getAvailableSources();
     }
 }
