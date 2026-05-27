@@ -25,10 +25,16 @@ public interface RequirementRepository extends JpaRepository<Requirement, Long> 
     @Query("SELECT r.skill AS skill, COUNT(r) AS count FROM Requirement r WHERE r.level = :level AND r.source IN :sources GROUP BY r.skill ORDER BY COUNT(r) DESC")
     List<SkillCountProjection> findTopSkillsByLevelAndSources(@Param("level") String level, @Param("sources") List<String> sources, Pageable pageable);
 
+    @Query("SELECT r.skill AS skill, COUNT(r) AS count FROM Requirement r WHERE r.level IS NULL GROUP BY r.skill ORDER BY COUNT(r) DESC")
+    List<SkillCountProjection> findTopSkillsByNullLevel(Pageable pageable);
+
+    @Query("SELECT r.skill AS skill, COUNT(r) AS count FROM Requirement r WHERE r.level IS NULL AND r.source IN :sources GROUP BY r.skill ORDER BY COUNT(r) DESC")
+    List<SkillCountProjection> findTopSkillsByNullLevelAndSources(@Param("sources") List<String> sources, Pageable pageable);
+
     @Query("SELECT DISTINCT r.level FROM Requirement r WHERE r.level IS NOT NULL ORDER BY r.level")
     List<String> findDistinctLevels();
 
-    @Query("SELECT DISTINCT r.source FROM Requirement r WHERE r.source IS NOT NULL ORDER BY r.source")
-    List<String> findDistinctSources();
+    @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM Requirement r WHERE r.level IS NULL")
+    boolean existsNullLevel();
 }
 

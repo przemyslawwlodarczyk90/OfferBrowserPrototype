@@ -40,4 +40,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
         GROUP BY o.city
     """)
     List<CityDistributionProjection> getCityDistributionSimple();
+
+    @Query("SELECT DISTINCT o.source FROM Offer o WHERE o.source IS NOT NULL ORDER BY o.source")
+    List<String> findDistinctSources();
 }
