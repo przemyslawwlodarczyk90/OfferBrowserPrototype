@@ -35,6 +35,9 @@ public class OfferUpdateHandler {
         offer.setSalaryRange(dto.getSalaryRange());
         offer.setLevel(dto.getLevel());
         offer.setFetchedAt(LocalDateTime.now(clock));
+        offer.setRequirements(dto.getRequirements());
+        offer.setNiceToHave(dto.getNiceToHave());
+        offer.setSource(dto.getSource());
 
         return offerMapper.toDTO(offerRepository.save(offer));
     }

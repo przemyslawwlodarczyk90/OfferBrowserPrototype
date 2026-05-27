@@ -4,6 +4,9 @@ import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.offer.Offer;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class OfferMapper {
 
@@ -21,7 +24,14 @@ public class OfferMapper {
                 offer.getFetchedAt()
         );
         dto.setCity(offer.getCity());
+        dto.setRequirements(copyList(offer.getRequirements()));
+        dto.setNiceToHave(copyList(offer.getNiceToHave()));
+        dto.setSource(offer.getSource());
         return dto;
+    }
+
+    private List<String> copyList(List<String> source) {
+        return source != null ? new ArrayList<>(source) : null;
     }
 
     public Offer toEntity(OfferDTO dto) {
@@ -34,6 +44,9 @@ public class OfferMapper {
                 .level(dto.getLevel())
                 .company(dto.getCompany())
                 .fetchedAt(dto.getFetchedAt())
+                .requirements(dto.getRequirements())
+                .niceToHave(dto.getNiceToHave())
+                .source(dto.getSource())
                 .build();
     }
 }

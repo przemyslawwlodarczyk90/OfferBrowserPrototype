@@ -4,6 +4,7 @@ import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class OfferDetailsHandler {
@@ -19,6 +20,7 @@ public class OfferDetailsHandler {
         this.offerMapper = offerMapper;
     }
 
+    @Transactional(readOnly = true)
     public OfferDTO getOfferById(Long id) {
         return offerRepository.findById(id)
                 .map(offerMapper::toDTO)

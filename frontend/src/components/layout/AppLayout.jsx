@@ -10,12 +10,13 @@ import ToastContainer from '@/components/ui/ToastContainer'
 
 // ── Definicja nawigacji ───────────────────────────────────────────
 const NAV_TOP = [
-  { to: '/dashboard', icon: '◈', label: 'Dashboard'  },
-  { to: '/offers',    icon: '◉', label: 'Oferty'      },
-  { to: '/my-offers', icon: '◎', label: 'Moje Oferty' },
-  { to: '/notes',     icon: '◷', label: 'Notatki'     },
-  { to: '/import',    icon: '⊕', label: 'Import'      },
-  { to: '/stats',     icon: '▦', label: 'Statystyki'  },
+  { to: '/dashboard', icon: '◈', label: 'Dashboard'   },
+  { to: '/offers',    icon: '◉', label: 'Oferty'       },
+  { to: '/my-offers', icon: '◎', label: 'Moje Oferty'  },
+  { to: '/notes',     icon: '◷', label: 'Notatki'      },
+  { to: '/import',    icon: '⊕', label: 'Import'       },
+  { to: '/stats',     icon: '▦', label: 'Statystyki'   },
+  { to: '/analytics', icon: '⬡', label: 'Wymagania'    },
 ]
 
 // ─────────────────────────────────────────────────────────────────

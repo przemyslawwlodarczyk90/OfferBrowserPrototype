@@ -171,15 +171,42 @@ export default function OfferDetailPage() {
         <MetaBox icon="◎" label="Miasto"  value={offer.city ?? offer.location ?? '—'} />
         <MetaBox icon="⊙" label="Poziom"  value={level} />
         <MetaBox icon="◷" label="Dodano"  value={formatDate(offer.fetchedAt)} />
+        {offer.source && (
+          <MetaBox icon="⊛" label="Serwis" value={offer.source} />
+        )}
         {offer.offerUrl && (
           <div className="meta-box meta-box--wide">
-            <span className="meta-label">Źródło</span>
+            <span className="meta-label">Link do oferty</span>
             <a href={offer.offerUrl} target="_blank" rel="noopener noreferrer" className="meta-link">
               {offer.offerUrl}
             </a>
           </div>
         )}
       </div>
+
+      {/* ── Wymagania ── */}
+      {offer.requirements?.length > 0 && (
+        <section className="detail-section">
+          <h2 className="detail-section-h">Wymagania</h2>
+          <div className="detail-skills">
+            {offer.requirements.map((skill, i) => (
+              <span key={i} className="detail-skill-tag detail-skill-tag--req">{skill}</span>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── Mile widziane ── */}
+      {offer.niceToHave?.length > 0 && (
+        <section className="detail-section">
+          <h2 className="detail-section-h">Mile widziane</h2>
+          <div className="detail-skills">
+            {offer.niceToHave.map((skill, i) => (
+              <span key={i} className="detail-skill-tag detail-skill-tag--nice">{skill}</span>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ── Opis ── */}
       {offer.description && (
@@ -337,6 +364,24 @@ function DetailStyles() {
         text-decoration: none; word-break: break-all;
       }
       .meta-link:hover { text-decoration: underline; }
+
+      /* Tagi skillów */
+      .detail-skills {
+        display: flex; flex-wrap: wrap; gap: 7px;
+      }
+      .detail-skill-tag {
+        font-family: var(--font-mono); font-size: 0.74rem; font-weight: 600;
+        padding: 4px 10px; border-radius: 100px; border: 1px solid;
+        white-space: nowrap;
+      }
+      .detail-skill-tag--req {
+        color: var(--accent); border-color: rgba(245,166,35,.35);
+        background: rgba(245,166,35,.08);
+      }
+      .detail-skill-tag--nice {
+        color: var(--cyan); border-color: rgba(0,212,212,.3);
+        background: rgba(0,212,212,.07);
+      }
 
       /* Opis */
       .detail-section  { margin-bottom: 20px; }

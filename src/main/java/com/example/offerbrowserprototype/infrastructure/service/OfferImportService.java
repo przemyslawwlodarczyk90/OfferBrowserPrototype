@@ -1,6 +1,8 @@
 package com.example.offerbrowserprototype.infrastructure.service;
 
 import com.example.offerbrowserprototype.domain.offer.Offer;
+import com.example.offerbrowserprototype.domain.requirement.NiceToHaveCreationHandler;
+import com.example.offerbrowserprototype.domain.requirement.RequirementCreationHandler;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -19,11 +21,20 @@ public class OfferImportService {
     private static final Logger logger = LoggerFactory.getLogger(OfferImportService.class);
     private final OfferRepository offerRepository;
     private final ObjectMapper objectMapper;
+    private final RequirementCreationHandler requirementCreationHandler;
+    private final NiceToHaveCreationHandler niceToHaveCreationHandler;
 
-    public OfferImportService(OfferRepository offerRepository, ObjectMapper objectMapper) {
+    public OfferImportService(
+            OfferRepository offerRepository,
+            ObjectMapper objectMapper,
+            RequirementCreationHandler requirementCreationHandler,
+            NiceToHaveCreationHandler niceToHaveCreationHandler
+    ) {
         this.offerRepository = offerRepository;
         this.objectMapper = objectMapper;
         this.objectMapper.registerModule(new JavaTimeModule());
+        this.requirementCreationHandler = requirementCreationHandler;
+        this.niceToHaveCreationHandler = niceToHaveCreationHandler;
     }
 
     public void importOffersFromJson(String filePath) {
@@ -44,7 +55,9 @@ public class OfferImportService {
                         offer.setTitle(offer.getTitle().replaceAll("(?i)\\s*NOWA\\s*$", "").trim());
                     }
                     if (offerRepository.findByOfferUrl(offer.getOfferUrl()).isEmpty()) {
-                        offerRepository.save(offer);
+                        Offer saved = offerRepository.save(offer);
+                        requirementCreationHandler.createFromOffer(saved);
+                        niceToHaveCreationHandler.createFromOffer(saved);
                         logger.info("Saved new offer: {}", offer.getTitle());
                     } else {
                         logger.info("Offer already exists in database: {}", offer.getOfferUrl());

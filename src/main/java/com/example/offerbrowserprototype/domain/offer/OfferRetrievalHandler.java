@@ -4,6 +4,7 @@ import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,12 +23,14 @@ public class OfferRetrievalHandler {
         this.offerMapper = offerMapper;
     }
 
+    @Transactional(readOnly = true)
     public OfferDTO getOffer(Long id) {
         return offerRepository.findById(id)
                 .map(offerMapper::toDTO)
                 .orElse(null);
     }
 
+    @Transactional(readOnly = true)
     public List<OfferDTO> getAllOffers() {
         return offerRepository.findAllByOrderByFetchedAtDesc()
                 .stream()

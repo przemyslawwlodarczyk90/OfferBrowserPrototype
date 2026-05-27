@@ -122,16 +122,24 @@ def scrape_offers():
                             except Exception:
                                 company = "Brak informacji o firmie"
 
+                        try:
+                            requirement_elements = driver.find_elements(By.XPATH,
+                                '//*[@id="posting-requirements"]//li')
+                            requirements = [el.text.strip() for el in requirement_elements if el.text.strip()]
+                        except Exception:
+                            requirements = []
+
                         offers.append({
                             "title": title,
                             "description": description,
                             "location": location,
                             "salaryRange": salary,
                             "level": level,
-
                             "fetchedAt": datetime.now(timezone.utc).isoformat(timespec='microseconds').replace('+00:00', 'Z'),
                             "offerUrl": offer_url,
-                            "company": company
+                            "company": company,
+                            "requirements": requirements,
+                            "source": "NoFluff"
                         })
 
                         logging.info(f"Przetworzono ofertę: {title}")

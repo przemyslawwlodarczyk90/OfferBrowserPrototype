@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -54,6 +55,19 @@ public class Offer {
 
     @Column(name = "company", nullable = false)
     private String company;
+
+    @ElementCollection
+    @CollectionTable(name = "offer_requirements", joinColumns = @JoinColumn(name = "offer_id"))
+    @Column(name = "skill")
+    private List<String> requirements;
+
+    @ElementCollection
+    @CollectionTable(name = "offer_nice_to_have", joinColumns = @JoinColumn(name = "offer_id"))
+    @Column(name = "skill")
+    private List<String> niceToHave;
+
+    @Column(name = "source")
+    private String source;
 
     public Offer(String title, String description, String location, String salaryRange,
                  String level, String company, Clock clock) {

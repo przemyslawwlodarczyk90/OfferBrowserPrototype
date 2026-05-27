@@ -54,6 +54,13 @@ export const statsApi = {
   getCityDistribution: () => api.get('/statistics/city-distribution'),
 }
 
+// ── Requirements Analytics ────────────────────────────────────────
+export const analyticsApi = {
+  getTopSkills:       (limit = 20)               => api.get('/analytics/requirements/top',          { params: { limit } }),
+  getTopSkillsByLevel:(level, limit = 15)        => api.get('/analytics/requirements/top-by-level', { params: { level, limit } }),
+  getAvailableLevels: ()                         => api.get('/analytics/requirements/levels'),
+}
+
 // ── Import ────────────────────────────────────────────────────────
 export const importApi = {
   runScript:       ()     => api.get('/python-script/run', { timeout: 0 }),

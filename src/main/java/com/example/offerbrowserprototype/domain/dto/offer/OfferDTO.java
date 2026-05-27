@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
@@ -44,6 +45,10 @@ public class OfferDTO implements Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private LocalDateTime fetchedAt;
+
+    private List<String> requirements;
+    private List<String> niceToHave;
+    private String source;
 
     public OfferDTO(String title, String description, String location, String offerUrl, String salaryRange, String company, String level, boolean applied, LocalDateTime fetchedAt) {
         this.title = title;

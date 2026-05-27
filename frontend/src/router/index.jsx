@@ -19,9 +19,10 @@ const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
 const MyOffersPage  = lazy(() => import('@/pages/MyOffersPage'))
 const ImportPage    = lazy(() => import('@/pages/ImportPage'))
 const NotesPage     = lazy(() => import('@/pages/NotesPage'))
-const StatsPage     = lazy(() => import('@/pages/StatsPage'))
-const ProfilePage   = lazy(() => import('@/pages/ProfilePage'))
-const AdminPage     = lazy(() => import('@/pages/AdminPage'))
+const StatsPage          = lazy(() => import('@/pages/StatsPage'))
+const RequirementsPage   = lazy(() => import('@/pages/analytics/RequirementsPage'))
+const ProfilePage        = lazy(() => import('@/pages/ProfilePage'))
+const AdminPage          = lazy(() => import('@/pages/AdminPage'))
 
 // ── Guards ────────────────────────────────────────────────────────
 export function PrivateRoute({ children }) {
@@ -66,8 +67,9 @@ export const router = createBrowserRouter([
       { path: '/my-offers',  element: <S><MyOffersPage /></S> },
       { path: '/import',     element: <S><ImportPage /></S> },
       { path: '/notes',      element: <S><NotesPage /></S> },
-      { path: '/stats',      element: <S><StatsPage /></S> },
-      { path: '/profile',    element: <S><ProfilePage /></S> },
+      { path: '/stats',        element: <S><StatsPage /></S> },
+      { path: '/analytics',   element: <S><RequirementsPage /></S> },
+      { path: '/profile',     element: <S><ProfilePage /></S> },
       { path: '/admin',      element: <AdminRoute><S><AdminPage /></S></AdminRoute> },
     ],
   },

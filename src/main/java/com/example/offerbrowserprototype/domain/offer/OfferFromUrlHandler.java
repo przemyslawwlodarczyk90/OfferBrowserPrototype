@@ -3,6 +3,8 @@ package com.example.offerbrowserprototype.domain.offer;
 import com.example.offerbrowserprototype.domain.aplicationnote.ApplicationNoteHandler;
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
+import com.example.offerbrowserprototype.domain.requirement.NiceToHaveCreationHandler;
+import com.example.offerbrowserprototype.domain.requirement.RequirementCreationHandler;
 import com.example.offerbrowserprototype.domain.usseroffer.UserOfferStatus;
 import com.example.offerbrowserprototype.domain.user.User;
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
@@ -37,19 +39,25 @@ public class OfferFromUrlHandler {
     private final ApplicationNoteHandler applicationNoteHandler;
     private final UserOfferStatusRepository userOfferStatusRepository;
     private final UserRepository userRepository;
+    private final RequirementCreationHandler requirementCreationHandler;
+    private final NiceToHaveCreationHandler niceToHaveCreationHandler;
 
     public OfferFromUrlHandler(
             OfferRepository offerRepository,
             OfferMapper offerMapper,
             ApplicationNoteHandler applicationNoteHandler,
             UserOfferStatusRepository userOfferStatusRepository,
-            UserRepository userRepository
+            UserRepository userRepository,
+            RequirementCreationHandler requirementCreationHandler,
+            NiceToHaveCreationHandler niceToHaveCreationHandler
     ) {
         this.offerRepository = offerRepository;
         this.offerMapper = offerMapper;
         this.applicationNoteHandler = applicationNoteHandler;
         this.userOfferStatusRepository = userOfferStatusRepository;
         this.userRepository = userRepository;
+        this.requirementCreationHandler = requirementCreationHandler;
+        this.niceToHaveCreationHandler = niceToHaveCreationHandler;
     }
 
     public OfferDTO addOfferFromUrl(Long userId, String offerUrl) {
@@ -62,6 +70,8 @@ public class OfferFromUrlHandler {
 
         Offer offer = offerMapper.toEntity(scrapedOffer);
         offer = offerRepository.save(offer);
+        requirementCreationHandler.createFromOffer(offer);
+        niceToHaveCreationHandler.createFromOffer(offer);
 
         UserOfferStatus status = new UserOfferStatus(user, offer, false);
         status.setAppliedAt(LocalDateTime.now());
