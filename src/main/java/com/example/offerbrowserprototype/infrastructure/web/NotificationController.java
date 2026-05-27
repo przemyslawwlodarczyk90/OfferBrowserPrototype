@@ -41,11 +41,14 @@ public class NotificationController {
         this.userService = userService;
     }
 
-    @Operation(summary = "Send daily unapplied offers email", description = "Manually trigger the daily email with unapplied offers.")
+    @Operation(summary = "Send daily unapplied offers email",
+               description = "Manually triggers the daily email notification for all users. " +
+                             "Each user receives a list of offers they have not yet applied to. " +
+                             "This endpoint is also invoked automatically by the scheduler (cron expression from application.properties). " +
+                             "Returns 200 immediately; email delivery happens synchronously per user.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Email sent successfully"),
-            @ApiResponse(responseCode = "204", description = "No unapplied offers to notify"),
-            @ApiResponse(responseCode = "500", description = "Error occurred while sending the email")
+            @ApiResponse(responseCode = "200", description = "Notification cycle completed (individual failures logged but not surfaced)"),
+            @ApiResponse(responseCode = "401", description = "Not authenticated")
     })
     @GetMapping("/daily-unapplied-offers")
     @Scheduled(cron = "${daily.unapplied.offers.cron}")

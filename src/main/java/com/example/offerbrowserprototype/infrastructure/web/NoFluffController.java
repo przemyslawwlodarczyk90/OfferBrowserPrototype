@@ -50,10 +50,13 @@ public class NoFluffController {
         this.userRepository   = userRepository;
     }
 
-    @Operation(summary = "Run Python script")
+    @Operation(summary = "Run NoFluff scraper script",
+               description = "Starts the Python Selenium scraper in the background. " +
+                             "Returns 202 immediately — offers are imported into the database automatically after the script finishes. " +
+                             "Also backfills requirements/source for existing offers that were imported before those fields were added.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Script executed successfully"),
-            @ApiResponse(responseCode = "500", description = "Error during script execution")
+            @ApiResponse(responseCode = "202", description = "Script started in background"),
+            @ApiResponse(responseCode = "401", description = "Not authenticated")
     })
     @GetMapping("/run")
     public ResponseEntity<Map<String, String>> runPythonScript() {
@@ -73,11 +76,15 @@ public class NoFluffController {
                 .body(Map.of("message", "Skrypt uruchomiony w tle. Oferty zostaną zaimportowane automatycznie po jego zakończeniu."));
     }
 
-    @Operation(summary = "Import offers from JSON body")
+    @Operation(summary = "Import offers from JSON body",
+               description = "Accepts a JSON array of offer objects and imports new ones into the database. " +
+                             "Existing offers (matched by offerUrl) are skipped. " +
+                             "Each object must contain at minimum 'offerUrl' and 'company'. " +
+                             "Supported fields: title, description, location, salaryRange, level, offerUrl, company, fetchedAt, requirements, niceToHave, source.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Offers imported successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid JSON structure"),
-            @ApiResponse(responseCode = "500", description = "Error during offer import")
+            @ApiResponse(responseCode = "200", description = "Import summary returned (imported / skipped / errors count)"),
+            @ApiResponse(responseCode = "400", description = "Empty payload or missing required fields"),
+            @ApiResponse(responseCode = "401", description = "Not authenticated")
     })
     @PostMapping("/import")
     public ResponseEntity<Map<String, Object>> importOffers(@RequestBody List<Map<String, Object>> payload) {

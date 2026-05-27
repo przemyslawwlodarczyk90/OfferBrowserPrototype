@@ -4,6 +4,7 @@ import com.example.offerbrowserprototype.domain.dto.aplicationnote.ApplicationNo
 import com.example.offerbrowserprototype.domain.mapper.ApplicationNoteMapper;
 import com.example.offerbrowserprototype.infrastructure.facade.ApplicationNoteFacade;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,7 +43,7 @@ public class ApplicationNoteController {
             @ApiResponse(responseCode = "401", description = "Not authenticated")
     })
     public ResponseEntity<List<ApplicationNoteDTO>> getAllApplicationNotes(
-            @RequestParam Long userId
+            @Parameter(description = "ID of the authenticated user", required = true) @RequestParam Long userId
     ) {
         logger.info("Fetching all application notes for userId={}", userId);
 
@@ -62,8 +63,8 @@ public class ApplicationNoteController {
             @ApiResponse(responseCode = "404", description = "No notes found for given company")
     })
     public ResponseEntity<List<ApplicationNoteDTO>> getApplicationNotesByCompanyName(
-            @RequestParam Long userId,
-            @RequestParam String companyName
+            @Parameter(description = "ID of the authenticated user", required = true) @RequestParam Long userId,
+            @Parameter(description = "Exact company name to filter by", required = true) @RequestParam String companyName
     ) {
         logger.info("Fetching application notes for userId={}, company={}", userId, companyName);
 
@@ -88,10 +89,10 @@ public class ApplicationNoteController {
             @ApiResponse(responseCode = "401", description = "Not authenticated")
     })
     public ResponseEntity<ApplicationNoteDTO> createNote(
-            @RequestParam Long userId,
-            @RequestParam Long offerId,
-            @RequestParam String companyName,
-            @RequestParam(required = false) String offerUrl
+            @Parameter(description = "ID of the authenticated user", required = true) @RequestParam Long userId,
+            @Parameter(description = "ID of the offer stored in the database", required = true) @RequestParam Long offerId,
+            @Parameter(description = "Name of the company", required = true) @RequestParam String companyName,
+            @Parameter(description = "Original offer URL (optional)") @RequestParam(required = false) String offerUrl
     ) {
         logger.info("Creating note for userId={}, offerId={}, company={}", userId, offerId, companyName);
 
@@ -114,9 +115,9 @@ public class ApplicationNoteController {
             @ApiResponse(responseCode = "401", description = "Not authenticated")
     })
     public ResponseEntity<ApplicationNoteDTO> createNoteForExternalSource(
-            @RequestParam Long userId,
-            @RequestParam String companyName,
-            @RequestParam(required = false) String offerUrl
+            @Parameter(description = "ID of the authenticated user", required = true) @RequestParam Long userId,
+            @Parameter(description = "Name of the company", required = true) @RequestParam String companyName,
+            @Parameter(description = "URL of the external offer (optional)") @RequestParam(required = false) String offerUrl
     ) {
         logger.info("Creating external application note for userId={}, company={}, url={}",
                 userId, companyName, offerUrl);
@@ -139,7 +140,7 @@ public class ApplicationNoteController {
             @ApiResponse(responseCode = "401", description = "Not authenticated")
     })
     public ResponseEntity<Long> countAllApplicationNotes(
-            @RequestParam Long userId
+            @Parameter(description = "ID of the authenticated user", required = true) @RequestParam Long userId
     ) {
         logger.info("Counting application notes for userId={}", userId);
 
@@ -155,7 +156,7 @@ public class ApplicationNoteController {
             @ApiResponse(responseCode = "404", description = "No notes found for user")
     })
     public ResponseEntity<Map<String, List<String>>> getCompaniesWithApplicationDates(
-            @RequestParam Long userId
+            @Parameter(description = "ID of the authenticated user", required = true) @RequestParam Long userId
     ) {
         logger.info("Fetching companies with application dates for userId={}", userId);
 

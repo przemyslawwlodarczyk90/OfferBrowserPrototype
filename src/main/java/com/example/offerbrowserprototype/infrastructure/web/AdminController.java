@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/admin")
 @Tag(name = "Admin", description = "Admin-only endpoints — require ROLE_ADMIN")
+@org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     private final UserRepository userRepository;
@@ -64,13 +65,23 @@ public class AdminController {
         return ResponseEntity.ok(users);
     }
 
-    @Operation(summary = "List IDs of offers flagged as useless by any user")
+    @Operation(summary = "List IDs of offers flagged as useless",
+               description = "Returns the IDs of all offers that at least one user has flagged as USELESS.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "ID list returned"),
+            @ApiResponse(responseCode = "403", description = "Access denied — ROLE_ADMIN required")
+    })
     @GetMapping("/offers/useless-ids")
     public ResponseEntity<List<Long>> getUselessOfferIds() {
         return ResponseEntity.ok(offerFlagRepository.findFlaggedOfferIdsByType(FlagType.USELESS));
     }
 
-    @Operation(summary = "List IDs of offers flagged as duplicate by any user")
+    @Operation(summary = "List IDs of offers flagged as duplicate",
+               description = "Returns the IDs of all offers that at least one user has flagged as DUPLICATE.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "ID list returned"),
+            @ApiResponse(responseCode = "403", description = "Access denied — ROLE_ADMIN required")
+    })
     @GetMapping("/offers/duplicate-ids")
     public ResponseEntity<List<Long>> getDuplicateOfferIds() {
         return ResponseEntity.ok(offerFlagRepository.findFlaggedOfferIdsByType(FlagType.DUPLICATE));
