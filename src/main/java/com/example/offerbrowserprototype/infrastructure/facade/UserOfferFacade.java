@@ -6,6 +6,7 @@ import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.domain.mapper.UserOfferStatusMapper;
 import com.example.offerbrowserprototype.domain.usseroffer.*;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class UserOfferFacade {
         markUselessHandler.markAsUseless(userId, offerId);
     }
 
+    @Transactional(readOnly = true)
     public List<OfferDTO> getUselessOffersForUser(Long userId) {
         return getUselessHandler.getUselessOffersForUser(userId)
                 .stream()
@@ -56,6 +58,7 @@ public class UserOfferFacade {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<OfferDTO> getNotAppliedOffersForUser(Long userId) {
         return queryHandler.getNotAppliedOffersForUser(userId)
                 .stream()
@@ -63,6 +66,7 @@ public class UserOfferFacade {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<OfferDTO> getAppliedOffersForUser(Long userId) {
         return appliedOffersHandler.getAppliedOffersForUser(userId)
                 .stream()
