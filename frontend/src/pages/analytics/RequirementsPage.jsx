@@ -73,15 +73,18 @@ export default function RequirementsPage() {
       .catch(() => {})
   }, [])
 
-  // Klucz cache uwzględnia zakładkę i wybrane źródła
-  const cacheKey = `${activeTab}::${[...selectedSources].sort().join(',')}`
+  // Gdy wszystkie źródła zaznaczone → brak filtra (= pokazuj też stare dane z source=null)
+  const effectiveSources = selectedSources.length === sources.length ? [] : selectedSources
+
+  // Klucz cache uwzględnia zakładkę i efektywne źródła
+  const cacheKey = `${activeTab}::${effectiveSources.sort().join(',')}`
 
   useEffect(() => {
     if (cache[cacheKey] !== undefined) return
     setLoading(true)
     const req = activeTab === ALL_TAB
-      ? analyticsApi.getTopSkills(selectedSources)
-      : analyticsApi.getTopSkillsByLevel(activeTab, selectedSources)
+      ? analyticsApi.getTopSkills(effectiveSources)
+      : analyticsApi.getTopSkillsByLevel(activeTab, effectiveSources)
     req
       .then(res => setCache(c => ({ ...c, [cacheKey]: res.data ?? [] })))
       .catch(() => setCache(c => ({ ...c, [cacheKey]: [] })))

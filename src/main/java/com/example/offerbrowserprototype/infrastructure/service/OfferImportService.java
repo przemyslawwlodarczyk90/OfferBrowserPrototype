@@ -54,13 +54,37 @@ public class OfferImportService {
                     if (offer.getTitle() != null) {
                         offer.setTitle(offer.getTitle().replaceAll("(?i)\\s*NOWA\\s*$", "").trim());
                     }
-                    if (offerRepository.findByOfferUrl(offer.getOfferUrl()).isEmpty()) {
+                    java.util.Optional<Offer> existingOpt = offerRepository.findByOfferUrl(offer.getOfferUrl());
+                    if (existingOpt.isEmpty()) {
                         Offer saved = offerRepository.save(offer);
                         requirementCreationHandler.createFromOffer(saved);
                         niceToHaveCreationHandler.createFromOffer(saved);
                         logger.info("Saved new offer: {}", offer.getTitle());
                     } else {
-                        logger.info("Offer already exists in database: {}", offer.getOfferUrl());
+                        Offer existing = existingOpt.get();
+                        boolean updated = false;
+                        if ((existing.getRequirements() == null || existing.getRequirements().isEmpty())
+                                && offer.getRequirements() != null && !offer.getRequirements().isEmpty()) {
+                            existing.setRequirements(offer.getRequirements());
+                            updated = true;
+                        }
+                        if ((existing.getNiceToHave() == null || existing.getNiceToHave().isEmpty())
+                                && offer.getNiceToHave() != null && !offer.getNiceToHave().isEmpty()) {
+                            existing.setNiceToHave(offer.getNiceToHave());
+                            updated = true;
+                        }
+                        if (existing.getSource() == null && offer.getSource() != null) {
+                            existing.setSource(offer.getSource());
+                            updated = true;
+                        }
+                        if (updated) {
+                            Offer saved = offerRepository.save(existing);
+                            requirementCreationHandler.createFromOffer(saved);
+                            niceToHaveCreationHandler.createFromOffer(saved);
+                            logger.info("Backfilled requirements for existing offer: {}", offer.getTitle());
+                        } else {
+                            logger.info("Offer already exists, no new data to backfill: {}", offer.getOfferUrl());
+                        }
                     }
                 } catch (DateTimeParseException e) {
                     logger.error("Invalid date format in field fetchedAt for offer {}: {}", offer.getOfferUrl(), e.getMessage());
