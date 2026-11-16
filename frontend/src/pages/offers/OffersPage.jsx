@@ -1,10 +1,11 @@
 import { useState, useMemo, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { offersApi, adminApi } from '@/api/services'
-import { useApi, useDebounce, useTitle } from '@/hooks'
+import { useApi, useDebounce, useTitle, usePortal } from '@/hooks'
 import { useAuthStore, toast } from '@/store'
 import { Badge, EmptyState, PageHeader, ConfirmModal } from '@/components/ui'
-import { formatDate, normalizeLevel, truncate, sortByDate, formatSalary } from '@/utils'
+import PortalTabs from '@/components/ui/PortalTabs'
+import { formatDate, normalizeLevel, truncate, sortByDate, formatSalary, portalById } from '@/utils'
 
 const SORT_OPTS = [
   { value: 'newest', label: '↓ Najnowsze' },
@@ -21,14 +22,28 @@ function getDate(offer) {
 }
 
 // ─────────────────────────────────────────────────────────────────
+// Strona: przełącznik portali + lista ofert wybranego portalu.
+// key={portal} → przy zmianie portalu lista montuje się od nowa (bez starych danych i filtrów).
 export default function OffersPage() {
+  const [portal, setPortal] = usePortal()
+  return (
+    <OffersBrowser
+      key={portal}
+      source={portal}
+      tabs={<PortalTabs value={portal} onChange={setPortal} />}
+    />
+  )
+}
+
+function OffersBrowser({ source, tabs }) {
   useTitle('Oferty pracy')
   const navigate = useNavigate()
+  const portalLabel = portalById(source).label
   const user    = useAuthStore(s => s.user)
   const isAdmin = user?.role === 'ADMIN'
 
   const { data: raw, loading, error, execute: reload } =
-    useApi(offersApi.getAll, { immediate: true })
+    useApi(() => offersApi.getAll(source), { immediate: true, deps: [source] })
 
   const { data: uselessIdsRaw } = useApi(
     adminApi.getUselessOfferIds,
@@ -48,7 +63,11 @@ export default function OffersPage() {
     () => new Set([...uselessSet, ...duplicateSet]),
     [uselessSet, duplicateSet]
   )
-  const flaggedCount   = flaggedSet.size
+  // licznik tylko dla ofert bieżącego portalu
+  const flaggedCount = useMemo(
+    () => (raw ?? []).filter(o => flaggedSet.has(o.id)).length,
+    [raw, flaggedSet]
+  )
   // offerId (number) → "DUPLICATE" | "USELESS"
   const flagDominantMap = useMemo(() => {
     if (!flagDominantRaw) return {}
@@ -129,7 +148,7 @@ export default function OffersPage() {
         title="Oferty pracy"
         subtitle={
           raw
-            ? `${raw.length} ofert w bazie${isAdmin && flaggedCount > 0 ? ` · ${flaggedCount} nieprzydatnych/duplikatów` : ''}`
+            ? `${raw.length} ofert z ${portalLabel}${isAdmin && flaggedCount > 0 ? ` · ${flaggedCount} nieprzydatnych/duplikatów` : ''}`
             : ''
         }
         actions={
@@ -138,6 +157,8 @@ export default function OffersPage() {
           </button>
         }
       />
+
+      {tabs}
 
       {/* ── Toolbar ── */}
       <div className="of-toolbar">
@@ -254,7 +275,7 @@ export default function OffersPage() {
           title="Brak ofert"
           description={isFiltered
             ? 'Żadna oferta nie pasuje do wybranych kryteriów.'
-            : 'Baza jest pusta — zaimportuj dane przez moduł Import.'}
+            : `Brak ofert z ${portalLabel} — uruchom scraper lub zaimportuj plik w module Import.`}
           action={isFiltered
             ? <button className="btn btn--ghost btn--sm"
                 onClick={() => { setSearch(''); setLevel('Wszystkie'); setStatus('Wszystkie') }}>

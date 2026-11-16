@@ -1,4 +1,5 @@
 package com.example.offerbrowserprototype.infrastructure.web;
+import com.example.offerbrowserprototype.domain.exception.AccountNotActivatedException;
 import com.example.offerbrowserprototype.domain.dto.confirmationtoken.TokenResponse;
 import com.example.offerbrowserprototype.domain.dto.loginandregister.*;
 import com.example.offerbrowserprototype.domain.dto.user.UserDTO;
@@ -48,10 +49,11 @@ public class LoginAndRegisterController {
             @ApiResponse(responseCode = "200", description = "Login successful",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = TokenResponse.class))),
-            @ApiResponse(responseCode = "401", description = "Invalid credentials")
+            @ApiResponse(responseCode = "401", description = "Invalid credentials"),
+            @ApiResponse(responseCode = "403", description = "Registration not confirmed via e-mail")
     })
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginDto) {
         try {
             // ── LoginResult niesie: token, userId, username, email ────────
             UserLoginHandler.LoginResult result = loginAndRegisterFacade.login(loginDto);
@@ -66,6 +68,8 @@ public class LoginAndRegisterController {
 
             return new ResponseEntity<>(response, HttpStatus.OK);
 
+        } catch (AccountNotActivatedException e) {
+            return new ResponseEntity<>(java.util.Map.of("message", e.getMessage()), HttpStatus.FORBIDDEN);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(
                     new TokenResponse("Invalid username or password"),

@@ -1,6 +1,7 @@
 package com.example.offerbrowserprototype.domain.loginaandregister;
 
 import com.example.offerbrowserprototype.domain.dto.loginandregister.LoginDto;
+import com.example.offerbrowserprototype.domain.exception.AccountNotActivatedException;
 import com.example.offerbrowserprototype.domain.user.User;
 import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import com.example.offerbrowserprototype.infrastructure.security.JwtService;
@@ -38,6 +39,7 @@ class UserLoginHandlerTest {
         user.setUsername("jan");
         user.setEmail("jan@test.com");
         user.setPassword("zakodowane");
+        user.setActive(true);
 
         when(userRepository.findByUsername("jan")).thenReturn(Optional.of(user));
         when(passwordEncoder.matches("haslo123", "zakodowane")).thenReturn(true);
@@ -51,6 +53,45 @@ class UserLoginHandlerTest {
         assertThat(result.userId).isEqualTo(1L);
         assertThat(result.username).isEqualTo("jan");
         assertThat(result.email).isEqualTo("jan@test.com");
+    }
+
+    @Test
+    void blokuje_logowanie_na_niepotwierdzone_konto() {
+        // given — poprawne hasło, ale rejestracja niepotwierdzona mailem
+        User user = new User();
+        user.setUsername("nowy");
+        user.setPassword("zakodowane");
+        user.setActive(false);
+        when(userRepository.findByUsername("nowy")).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches("haslo", "zakodowane")).thenReturn(true);
+
+        LoginDto dto = new LoginDto();
+        dto.setUsername("nowy");
+        dto.setPassword("haslo");
+
+        // when / then — brak tokenu
+        assertThatThrownBy(() -> handler.login(dto))
+                .isInstanceOf(AccountNotActivatedException.class)
+                .hasMessageContaining("nie zostało potwierdzone");
+        org.mockito.Mockito.verifyNoInteractions(jwtService);
+    }
+
+    @Test
+    void niepotwierdzone_konto_ze_zlym_haslem_dostaje_zwykly_blad_logowania() {
+        User user = new User();
+        user.setUsername("nowy");
+        user.setPassword("zakodowane");
+        user.setActive(false);
+        when(userRepository.findByUsername("nowy")).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches("zle", "zakodowane")).thenReturn(false);
+
+        LoginDto dto = new LoginDto();
+        dto.setUsername("nowy");
+        dto.setPassword("zle");
+
+        assertThatThrownBy(() -> handler.login(dto))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Invalid username or password");
     }
 
     @Test

@@ -42,12 +42,16 @@ public class OfferFacade {
 
     @CacheEvict(value = "offers", allEntries = true)
     public OfferDTO addOffer(OfferDTO dto) {
-        return additionHandler.addOffer(dto);
+        OfferDTO result = additionHandler.addOffer(dto);
+        clearOfferListCache();
+        return result;
     }
 
     @CacheEvict(value = "offers", allEntries = true)
     public OfferDTO updateOffer(Long id, OfferDTO dto) {
-        return updateHandler.updateOffer(id, dto);
+        OfferDTO result = updateHandler.updateOffer(id, dto);
+        clearOfferListCache();
+        return result;
     }
 
     public OfferDTO getOffer(Long id) {
@@ -57,29 +61,45 @@ public class OfferFacade {
     @CacheEvict(value = "offers", allEntries = true)
     public void deleteOffer(Long id) {
         deletionHandler.deleteOffer(id);
+        clearOfferListCache();
     }
 
     public List<OfferDTO> getAllOffers() {
+        return getAllOffers(null);
+    }
+
+    /** @param source portal to filter by, or {@code null} for all portals; cached per portal */
+    public List<OfferDTO> getAllOffers(OfferSource source) {
         try {
-            List<OfferDTO> cached = offerCacheFacade.getCachedOffers();
+            List<OfferDTO> cached = offerCacheFacade.getCachedOffers(source);
             if (cached != null && !cached.isEmpty()) {
                 return cached;
             }
         } catch (Exception ignored) {}
 
-        List<OfferDTO> offers = retrievalHandler.getAllOffers();
+        List<OfferDTO> offers = source == null
+                ? retrievalHandler.getAllOffers()
+                : retrievalHandler.getAllOffers(source);
 
         if (!offers.isEmpty()) {
             try {
-                offerCacheFacade.cacheOffers(offers);
+                offerCacheFacade.cacheOffers(source, offers);
             } catch (Exception ignored) {}
         }
 
         return offers;
     }
 
+    private void clearOfferListCache() {
+        try {
+            offerCacheFacade.clearCache();
+        } catch (Exception ignored) {}
+    }
+
     public OfferDTO addOfferFromUrl(Long userId, String offerUrl) {
-        return offerFromUrlHandler.addOfferFromUrl(userId, offerUrl);
+        OfferDTO result = offerFromUrlHandler.addOfferFromUrl(userId, offerUrl);
+        clearOfferListCache();
+        return result;
     }
 
     @CacheEvict(value = "offers", allEntries = true)

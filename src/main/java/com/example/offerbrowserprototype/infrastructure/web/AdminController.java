@@ -59,6 +59,7 @@ public class AdminController {
                         .watchlistCount(userOfferStatusRepository.countByUser_IdAndAppliedFalse(user.getId()))
                         .uselessCount(offerFlagRepository.countByUser_IdAndType(user.getId(), FlagType.USELESS))
                         .notesCount(applicationNoteRepository.countByUserId(user.getId()))
+                        .hasCv(user.getCvUrl() != null)
                         .build())
                 .collect(Collectors.toList());
 

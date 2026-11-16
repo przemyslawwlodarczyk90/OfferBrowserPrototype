@@ -45,9 +45,11 @@ export const useAuthStore = create(
       },
 
       updateUser: (updates) =>
-        set((state) => ({
-          user: state.user ? { ...state.user, ...updates } : null,
-        })),
+        set((state) => {
+          const user = state.user ? { ...state.user, ...updates } : null
+          if (user) localStorage.setItem(USER_KEY, JSON.stringify(user))
+          return { user }
+        }),
 
       rehydrate: () => {
         const token   = localStorage.getItem(TOKEN_KEY)

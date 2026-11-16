@@ -71,7 +71,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     }
                 }
 
-                if (userDetails != null && jwtService.validateToken(token, userDetails)) {
+                if (userDetails != null && !userDetails.isEnabled()) {
+                    log.warn("Rejected token of unconfirmed account '{}'", userDetails.getUsername());
+                } else if (userDetails != null && jwtService.validateToken(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(
                                     userDetails, null, userDetails.getAuthorities()

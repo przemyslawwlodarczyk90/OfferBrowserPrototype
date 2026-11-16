@@ -4,6 +4,7 @@ import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.dto.useroffer.UserOfferStatusDTO;
 import com.example.offerbrowserprototype.domain.mapper.OfferMapper;
 import com.example.offerbrowserprototype.domain.mapper.UserOfferStatusMapper;
+import com.example.offerbrowserprototype.domain.offer.OfferSource;
 import com.example.offerbrowserprototype.domain.usseroffer.*;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,5 +77,29 @@ public class UserOfferFacade {
 
     public long countAppliedOffersForUser(Long userId) {
         return countHandler.countAppliedOffersForUser(userId);
+    }
+
+    // ── Per-portal variants (source == null → all portals) ───────────────
+
+    @Transactional(readOnly = true)
+    public List<OfferDTO> getUselessOffersForUser(Long userId, OfferSource source) {
+        return getUselessHandler.getUselessOffersForUser(userId, source).stream().map(offerMapper::toDTO).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<OfferDTO> getNotAppliedOffersForUser(Long userId, OfferSource source) {
+        return queryHandler.getNotAppliedOffersForUser(userId, source).stream().map(offerMapper::toDTO).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<OfferDTO> getAppliedOffersForUser(Long userId, OfferSource source) {
+        return appliedOffersHandler.getAppliedOffersForUser(userId, source).stream().map(offerMapper::toDTO).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public long countAppliedOffersForUser(Long userId, OfferSource source) {
+        return source == null
+                ? countHandler.countAppliedOffersForUser(userId)
+                : appliedOffersHandler.getAppliedOffersForUser(userId, source).size();
     }
 }

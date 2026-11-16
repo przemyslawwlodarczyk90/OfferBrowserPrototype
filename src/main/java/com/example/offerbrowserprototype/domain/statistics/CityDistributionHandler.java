@@ -1,6 +1,7 @@
 package com.example.offerbrowserprototype.domain.statistics;
 
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
+import com.example.offerbrowserprototype.domain.offer.OfferSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -20,11 +21,16 @@ public class CityDistributionHandler {
     }
 
     public Map<String, Long> getCityDistribution() {
-        logger.info("Fetching city distribution...");
+        return getCityDistribution(null);
+    }
+
+    public Map<String, Long> getCityDistribution(OfferSource source) {
+        logger.info("Fetching city distribution (source={})...", source);
 
         try {
-            List<CityDistributionProjection> rawDistribution =
-                    offerRepository.getCityDistributionSimple();
+            List<CityDistributionProjection> rawDistribution = source == null
+                    ? offerRepository.getCityDistributionSimple()
+                    : offerRepository.getCityDistributionBySource(source.value());
 
             logger.debug("Raw city distribution result: {}", rawDistribution);
 

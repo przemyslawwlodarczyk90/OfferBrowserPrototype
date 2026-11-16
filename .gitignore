@@ -17,3 +17,21 @@ target/
 frontend/node_modules/
 frontend/.git/
 
+
+### Python ###
+__pycache__/
+*.pyc
+
+### Scraper schedule state ###
+data/schedule/
+data/backup/
+
+### CV uzytkownikow (cv.storage.dir, domyslnie folder glowny) ###
+/cv_*_*
+.cv_upload_*
+
+### Kopie bazy (backup.dir) - zawieraja dane uzytkownikow ###
+/backups/
+
+### Sekrety (wzor: .env.example) ###
+.env

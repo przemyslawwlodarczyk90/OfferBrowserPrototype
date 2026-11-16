@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { analyticsApi } from '@/api/services'
-import { useTitle } from '@/hooks'
+import PortalTabs from '@/components/ui/PortalTabs'
+import { portalById } from '@/utils'
+import { useTitle, usePortal } from '@/hooks'
 import { PageHeader, EmptyState } from '@/components/ui'
 
 const ALL_TAB = '__all__'
@@ -49,94 +51,71 @@ function SkillListSkeleton() {
 }
 
 // ─────────────────────────────────────────────────────────────────
+// key={portal} → wymagania liczone osobno dla każdego portalu (bez mieszania danych)
 export default function RequirementsPage() {
+  const [portal, setPortal] = usePortal()
+  return (
+    <RequirementsView
+      key={portal}
+      source={portal}
+      tabs={<PortalTabs value={portal} onChange={setPortal} />}
+    />
+  )
+}
+
+function RequirementsView({ source, tabs }) {
   useTitle('Analityka wymagań')
 
-  const [levels,         setLevels]         = useState([])
-  const [sources,        setSources]        = useState([])
-  const [selectedSources,setSelectedSources]= useState([])
-  const [activeTab,      setActiveTab]      = useState(ALL_TAB)
-  const [cache,          setCache]          = useState({})
-  const [loading,        setLoading]        = useState(false)
+  const [levels,    setLevels]    = useState([])
+  const [activeTab, setActiveTab] = useState(ALL_TAB)
+  const [cache,     setCache]     = useState({})
+  const [loading,   setLoading]   = useState(false)
+  const sources = useMemo(() => [source], [source])
 
-  // Pobierz dostępne poziomy i źródła
+  // Poziomy dostępne w danych wybranego portalu
   useEffect(() => {
-    analyticsApi.getAvailableLevels()
+    analyticsApi.getAvailableLevels(sources)
       .then(res => setLevels(Array.isArray(res.data) ? res.data : []))
       .catch(() => {})
-    analyticsApi.getAvailableSources()
-      .then(res => {
-        const list = Array.isArray(res.data) ? res.data : []
-        setSources(list)
-        setSelectedSources(list) // domyślnie wszystkie zaznaczone
-      })
-      .catch(() => {})
-  }, [])
+  }, [sources])
 
-  // Gdy wszystkie źródła zaznaczone → brak filtra (= pokazuj też stare dane z source=null)
-  const effectiveSources = selectedSources.length === sources.length ? [] : selectedSources
-
-  // Klucz cache uwzględnia zakładkę i efektywne źródła
-  const cacheKey = `${activeTab}::${effectiveSources.sort().join(',')}`
+  const cacheKey = activeTab
 
   useEffect(() => {
     if (cache[cacheKey] !== undefined) return
     setLoading(true)
     const req = activeTab === ALL_TAB
-      ? analyticsApi.getTopSkills(effectiveSources)
-      : analyticsApi.getTopSkillsByLevel(activeTab, effectiveSources)
+      ? analyticsApi.getTopSkills(sources)
+      : analyticsApi.getTopSkillsByLevel(activeTab, sources)
     req
       .then(res => setCache(c => ({ ...c, [cacheKey]: res.data ?? [] })))
       .catch(() => setCache(c => ({ ...c, [cacheKey]: [] })))
       .finally(() => setLoading(false))
-  }, [activeTab, cacheKey])
+  }, [activeTab, cacheKey, sources]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const toggleSource = (src) => {
-    setSelectedSources(prev =>
-      prev.includes(src) ? prev.filter(s => s !== src) : [...prev, src]
-    )
-  }
-
-  const tabs = [{ key: ALL_TAB, label: 'Wszystkie' }, ...levels.map(l => ({ key: l, label: l }))]
+  const tabs_ = [{ key: ALL_TAB, label: 'Wszystkie' }, ...levels.map(l => ({ key: l, label: l }))]
   const data = cache[cacheKey]
 
   return (
     <div className="rq-page animate-fade-in">
       <PageHeader
         title="Analityka wymagań"
-        subtitle="Wymagania rynkowe posortowane po liczbie wystąpień"
+        subtitle={`Wymagania rynkowe posortowane po liczbie wystąpień — ${portalById(source).label}`}
       />
 
-      {/* ── Filtry źródeł ── */}
-      {sources.length > 0 && (
-        <div className="rq-sources">
-          <span className="rq-sources-label">Źródło:</span>
-          {sources.map(src => (
-            <label key={src} className="rq-source-check">
-              <input
-                type="checkbox"
-                checked={selectedSources.includes(src)}
-                onChange={() => toggleSource(src)}
-              />
-              <span className="rq-source-name">{src}</span>
-            </label>
-          ))}
-        </div>
-      )}
+      {tabs}
 
       {/* ── Przyciski poziomów ── */}
       <div className="rq-tabs">
-        {tabs.map(({ key, label }) => (
+        {tabs_.map(({ key, label }) => (
           <button
             key={key}
             className={`rq-tab${activeTab === key ? ' rq-tab--active' : ''}`}
             onClick={() => setActiveTab(key)}
           >
             {label}
-            {cache[`${key}::${[...selectedSources].sort().join(',')}`] !== undefined && (
-              <span className="rq-tab-count">
-                {cache[`${key}::${[...selectedSources].sort().join(',')}`].length}
-              </span>
+            {cache[key] !== undefined && (
+              <span className="rq-tab-count">{cache[key].length}</span>
             )}
           </button>
         ))}

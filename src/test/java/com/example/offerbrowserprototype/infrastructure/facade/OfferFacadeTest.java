@@ -1,6 +1,7 @@
 package com.example.offerbrowserprototype.infrastructure.facade;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.domain.offer.OfferSource;
 import com.example.offerbrowserprototype.domain.offer.*;
 import com.example.offerbrowserprototype.infrastructure.cache.OfferCacheFacade;
 import org.junit.jupiter.api.Test;
@@ -73,7 +74,7 @@ class OfferFacadeTest {
     void getAllOffers_zwraca_z_cache_gdy_dostepne() {
         // given — cache zawiera wyniki, handler pobierania nie powinien być wywołany
         List<OfferDTO> cached = List.of(dto("cached"));
-        when(offerCacheFacade.getCachedOffers()).thenReturn(cached);
+        when(offerCacheFacade.getCachedOffers(null)).thenReturn(cached);
 
         // when
         List<OfferDTO> result = facade.getAllOffers();
@@ -86,7 +87,7 @@ class OfferFacadeTest {
     @Test
     void getAllOffers_pobiera_z_bazy_gdy_cache_pusty() {
         // given — brak cache, fallback do bazy
-        when(offerCacheFacade.getCachedOffers()).thenReturn(List.of());
+        when(offerCacheFacade.getCachedOffers(null)).thenReturn(List.of());
         List<OfferDTO> fromDb = List.of(dto("z bazy"));
         when(retrievalHandler.getAllOffers()).thenReturn(fromDb);
 
@@ -96,6 +97,29 @@ class OfferFacadeTest {
         // then
         assertThat(result).isEqualTo(fromDb);
         verify(retrievalHandler).getAllOffers();
+    }
+
+    @Test
+    void getAllOffers_dla_portalu_uzywa_wlasnego_klucza_cache_i_filtra() {
+        // given — cache theprotocol pusty; nie wolno zwrócić danych innego portalu
+        when(offerCacheFacade.getCachedOffers(OfferSource.THEPROTOCOL)).thenReturn(List.of());
+        List<OfferDTO> fromDb = List.of(dto("theprotocol"));
+        when(retrievalHandler.getAllOffers(OfferSource.THEPROTOCOL)).thenReturn(fromDb);
+
+        // when
+        List<OfferDTO> result = facade.getAllOffers(OfferSource.THEPROTOCOL);
+
+        // then
+        assertThat(result).isEqualTo(fromDb);
+        verify(offerCacheFacade).cacheOffers(OfferSource.THEPROTOCOL, fromDb);
+        verify(offerCacheFacade, never()).getCachedOffers(null);
+        verify(offerCacheFacade, never()).getCachedOffers(OfferSource.NOFLUFF);
+    }
+
+    @Test
+    void deleteOffer_czysci_cache_list_ofert() {
+        facade.deleteOffer(5L);
+        verify(offerCacheFacade).clearCache();
     }
 
     private OfferDTO dto(String title) {

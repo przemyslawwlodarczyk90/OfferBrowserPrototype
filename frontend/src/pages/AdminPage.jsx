@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
-import { adminApi, importApi, notificationsApi } from '@/api/services'
+import { Link } from 'react-router-dom'
+import { adminApi, notificationsApi } from '@/api/services'
 import { useTitle } from '@/hooks'
 import { toast } from '@/store'
 import { PageHeader } from '@/components/ui'
+import ScraperUrlsSection from './ScraperUrlsSection'
+import BackupSection from './BackupSection'
 
 
 const ROLE_STYLE = {
@@ -57,8 +60,6 @@ export default function AdminPage() {
   useTitle('Admin')
   const [users,          setUsers]          = useState([])
   const [loading,        setLoading]        = useState(true)
-  const [runningScript,  setRunningScript]  = useState(false)
-  const [scriptNotice,   setScriptNotice]   = useState(null)
   const [sendingEmails,  setSendingEmails]  = useState(false)
 
   useEffect(() => {
@@ -67,20 +68,6 @@ export default function AdminPage() {
       .catch(() => toast.error('Błąd pobierania użytkowników'))
       .finally(() => setLoading(false))
   }, [])
-
-  const handleRunScript = async () => {
-    setRunningScript(true)
-    setScriptNotice(null)
-    try {
-      await importApi.runScript()
-      setScriptNotice('Skrypt działa w tle — może potrwać kilka minut. Nowe oferty pojawią się automatycznie po zakończeniu. Możesz swobodnie korzystać z aplikacji.')
-    } catch {
-      toast.error('Błąd podczas uruchamiania skryptu')
-      setScriptNotice(null)
-    } finally {
-      setRunningScript(false)
-    }
-  }
 
   const handleSendEmails = async () => {
     setSendingEmails(true)
@@ -103,7 +90,7 @@ export default function AdminPage() {
     <>
       <PageHeader
         title="Panel Administratora"
-        subtitle="Przegląd użytkowników i statystyki aplikacji"
+        subtitle="Użytkownicy, adresy wyszukiwania scraperów, kopia zapasowa bazy i akcje administracyjne"
       />
 
       {/* ── Overview cards ── */}
@@ -131,16 +118,6 @@ export default function AdminPage() {
         <h2 className="adm-section-title adm-section-title--standalone">Akcje administracyjne</h2>
         <div className="adm-actions-grid">
           <AdminActionCard
-            icon="⊕"
-            title="Uruchom skrypt importu ofert"
-            description="Odpala skrypt Pythona, który scrapuje nowe ogłoszenia pracy i importuje je do bazy danych. Operacja trwa kilka minut i działa w tle po stronie serwera."
-            buttonLabel="Uruchom skrypt"
-            buttonVariant="accent"
-            loading={runningScript}
-            onClick={handleRunScript}
-            notice={scriptNotice}
-          />
-          <AdminActionCard
             icon="◷"
             title="Wyślij maile z ofertami do użytkowników"
             description="Ręcznie wyzwala wysyłkę powiadomień e-mail do wszystkich aktywnych użytkowników. Każdy użytkownik otrzyma listę ofert ze swojej listy obserwowanych, do których jeszcze nie aplikował. Normalnie działa automatycznie o 17:00."
@@ -150,7 +127,16 @@ export default function AdminPage() {
             onClick={handleSendEmails}
           />
         </div>
+        <p className="adm-actions-hint">
+          Scrapery uruchamiasz w zakładce <Link to="/import">Import</Link> — osobno dla każdego portalu.
+        </p>
       </div>
+
+      {/* ── Adresy wyszukiwania scraperów (osobna lista dla każdego portalu) ── */}
+      <ScraperUrlsSection />
+
+      {/* ── Kopia zapasowa bazy (JSON) ── */}
+      <BackupSection />
 
       {/* ── User table ── */}
       <div className="adm-section">
@@ -175,6 +161,7 @@ export default function AdminPage() {
                   <th className="adm-th-center">Aplikacje</th>
                   <th className="adm-th-center">Odrzucone</th>
                   <th className="adm-th-center">Notatki</th>
+                  <th className="adm-th-center">CV</th>
                 </tr>
               </thead>
               <tbody>
@@ -201,6 +188,11 @@ export default function AdminPage() {
                     </td>
                     <td className="adm-td-center">
                       <span className="adm-num adm-num--notes">{user.notesCount}</span>
+                    </td>
+                    <td className="adm-td-center">
+                      <span className={`adm-cv ${user.hasCv ? 'adm-cv--yes' : ''}`} title={user.hasCv ? 'Wgrał CV' : 'Brak CV'}>
+                        {user.hasCv ? '✓' : '—'}
+                      </span>
                     </td>
                   </tr>
                 ))}
@@ -240,9 +232,13 @@ export default function AdminPage() {
           margin: 0 0 12px; padding: 0;
         }
         .adm-actions-grid {
-          display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+          display: grid; grid-template-columns: 1fr; gap: 16px;
         }
-        @media (max-width: 800px) { .adm-actions-grid { grid-template-columns: 1fr; } }
+        .adm-actions-hint {
+          margin-top: 10px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-2);
+        }
+        .adm-actions-hint a { color: var(--accent); font-weight: 600; }
+        .adm-actions-hint a:hover { text-decoration: underline; }
 
         .adm-action-card {
           background: var(--bg-1); border: 1px solid var(--border-1);
@@ -365,6 +361,8 @@ export default function AdminPage() {
         .adm-num--applied { color: var(--accent); }
         .adm-num--useless { color: var(--red); }
         .adm-num--notes   { color: var(--cyan); }
+        .adm-cv { font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-3); }
+        .adm-cv--yes { color: var(--green); font-weight: 700; }
 
 
       `}</style>

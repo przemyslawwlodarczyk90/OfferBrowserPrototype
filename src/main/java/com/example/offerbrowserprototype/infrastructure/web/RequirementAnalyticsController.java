@@ -33,13 +33,13 @@ public class RequirementAnalyticsController {
     @GetMapping("/top")
     @Operation(summary = "All skills overall",
                description = "Returns all required skills sorted by occurrence count. " +
-                             "Pass ?sources=NoFluff,Pracuj to filter by source; omit for all data.")
+                             "Pass ?sources=NoFluff,TheProtocol to filter by source; omit for all data.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Skill list returned"),
             @ApiResponse(responseCode = "401", description = "Not authenticated")
     })
     public ResponseEntity<List<SkillCountDTO>> getTopSkills(
-            @Parameter(description = "Comma-separated source names to filter by (e.g. NoFluff,Pracuj). Omit to include all sources.")
+            @Parameter(description = "Comma-separated source names to filter by (e.g. NoFluff,TheProtocol). Omit to include all sources.")
             @RequestParam(required = false) String sources
     ) {
         return ResponseEntity.ok(requirementAnalyticsFacade.getTopSkills(parseSources(sources)));
@@ -71,8 +71,11 @@ public class RequirementAnalyticsController {
             @ApiResponse(responseCode = "200", description = "Level list returned"),
             @ApiResponse(responseCode = "401", description = "Not authenticated")
     })
-    public ResponseEntity<List<String>> getAvailableLevels() {
-        return ResponseEntity.ok(requirementAnalyticsFacade.getAvailableLevels());
+    public ResponseEntity<List<String>> getAvailableLevels(
+            @Parameter(description = "Comma-separated source names to filter by. Omit to include all sources.")
+            @RequestParam(required = false) String sources
+    ) {
+        return ResponseEntity.ok(requirementAnalyticsFacade.getAvailableLevels(parseSources(sources)));
     }
 
     @GetMapping("/sources")

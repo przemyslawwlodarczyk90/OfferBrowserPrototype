@@ -1,5 +1,7 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
+import org.springframework.web.bind.annotation.RequestParam;
+import com.example.offerbrowserprototype.domain.offer.OfferSource;
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.domain.dto.useroffer.UserOfferStatusDTO;
 import com.example.offerbrowserprototype.infrastructure.facade.UserOfferFacade;
@@ -57,9 +59,10 @@ public class UserOfferController {
     public ResponseEntity<List<OfferDTO>> notApplied(
             @Parameter(in = ParameterIn.HEADER, name = "userId", required = true,
                        schema = @Schema(type = "integer", format = "int64"))
-            @RequestHeader Long userId
+            @RequestHeader Long userId,
+            @Parameter(description = "Portal: NoFluff, TheProtocol or JustJoin; omit for all portals") @RequestParam(required = false) String source
     ) {
-        return ResponseEntity.ok(userOfferFacade.getNotAppliedOffersForUser(userId));
+        return ResponseEntity.ok(userOfferFacade.getNotAppliedOffersForUser(userId, OfferSource.fromParam(source).orElse(null)));
     }
 
     @GetMapping("/applied")
@@ -72,9 +75,10 @@ public class UserOfferController {
     public ResponseEntity<List<OfferDTO>> applied(
             @Parameter(in = ParameterIn.HEADER, name = "userId", required = true,
                        schema = @Schema(type = "integer", format = "int64"))
-            @RequestHeader Long userId
+            @RequestHeader Long userId,
+            @Parameter(description = "Portal: NoFluff, TheProtocol or JustJoin; omit for all portals") @RequestParam(required = false) String source
     ) {
-        return ResponseEntity.ok(userOfferFacade.getAppliedOffersForUser(userId));
+        return ResponseEntity.ok(userOfferFacade.getAppliedOffersForUser(userId, OfferSource.fromParam(source).orElse(null)));
     }
 
     @GetMapping("/applied/count")
@@ -87,9 +91,10 @@ public class UserOfferController {
     public ResponseEntity<Long> count(
             @Parameter(in = ParameterIn.HEADER, name = "userId", required = true,
                        schema = @Schema(type = "integer", format = "int64"))
-            @RequestHeader Long userId
+            @RequestHeader Long userId,
+            @Parameter(description = "Portal: NoFluff, TheProtocol or JustJoin; omit for all portals") @RequestParam(required = false) String source
     ) {
-        return ResponseEntity.ok(userOfferFacade.countAppliedOffersForUser(userId));
+        return ResponseEntity.ok(userOfferFacade.countAppliedOffersForUser(userId, OfferSource.fromParam(source).orElse(null)));
     }
 
     @PostMapping("/{offerId}/useless")
@@ -206,8 +211,9 @@ public class UserOfferController {
     public ResponseEntity<List<OfferDTO>> useless(
             @Parameter(in = ParameterIn.HEADER, name = "userId", required = true,
                        schema = @Schema(type = "integer", format = "int64"))
-            @RequestHeader Long userId
+            @RequestHeader Long userId,
+            @Parameter(description = "Portal: NoFluff, TheProtocol or JustJoin; omit for all portals") @RequestParam(required = false) String source
     ) {
-        return ResponseEntity.ok(userOfferFacade.getUselessOffersForUser(userId));
+        return ResponseEntity.ok(userOfferFacade.getUselessOffersForUser(userId, OfferSource.fromParam(source).orElse(null)));
     }
 }

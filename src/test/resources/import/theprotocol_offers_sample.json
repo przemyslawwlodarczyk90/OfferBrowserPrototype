@@ -1,0 +1,114 @@
+[
+  {
+    "title": "Programista Java (k/m) (systemy wspomagania dowodzenia)",
+    "description": "O projekcie\nPracujemy nad systemem rozproszonym działającym na wojskowych platformach mobilnych i stacjonarnych, przeznaczonym do wspomagania procesów rozpoznania, planowania działań oraz kierowania walką.\n\nZakres obowiązków\n- tworzenie kodów źródłowych oprogramowania aplikacji desktopowych,\n- testowanie wytworzonego oprogramowania,\n- aktywne proponowanie własnych rozwiązań,\n- udział w testach i badaniach produktów końcowych,\n- prowadzenie i aktualizacja dokumentacji technicznej projektu.\n\nWymagania\n- wykształcenie wyższe techniczne (informatyka lub pokrewne) lub wykształcenie wyższe uzupełnione doświadczeniem w programowaniu,\n- praktyczna znajomość Java 17 lub nowszej,\n- znajomość frameworku Spring\n- umiejętność rozumienia diagramów UML,\n- doświadczenie z pracą z bazami danych SQL\n- znajomość języka angielskiego umożliwiająca pracę z dokumentacją techniczną,\n- otwartość na rozwijanie swoich umiejętności i dzielenie się wiedzą w zespole.\n\nMile widziane\n- doświadczenie w tworzeniu aplikacji desktopowych,\n- znajomość narzędzi: JIRA, Confulence, Git, Jenkins, IntelliJ\n- znajomość Swing, JUnit, gradle,\n- znajomość dobrych praktyk programowania: SOLID, KISS, DRY, TDD\n- TypeScript i React.js.\n\nSposób pracy\n- rozwijasz kilka projektów jednocześnie\n- masz wpływ na wybór narzędzi i technologii\n- masz wpływ na rozwiązania technologiczne\n- masz wpływ na produkt\n\nOferujemy\n- udział w ciekawych i ambitnych projektach, mających realny wpływ na wzmacnianie bezpieczeństwa kraju,\n- stały rozwój kompetencji oraz specjalistycznej wiedzy dzięki działaniu w zespole profesjonalistów oraz rozbudowanemu systemowi szkoleń,\n- zatrudnienie w oparciu o umowę o pracę lub umowę B2B,\n- dofinansowanie kształcenia na studiach wyższych, podyplomowych,\n- możliwość realizacji prac inżynierskich/magisterskich/doktorskich z zakresu tematyki badawczej firmy,\n- pracę w stabilnej firmie będącej częścią Polskiej Grupy Zbrojeniowej.\n\nRozwój\n- branżowe platformy e-learningowe\n- budżet rozwojowy\n- czas na rozwój Twoich pomysłów\n- konferencje w Polsce\n- konferencje zagraniczne\n- mentoring\n- przestrzeń do eksperymentowania\n- szkolenia wewnątrzfirmowe\n- szkolenia zewnętrzne\n- treningi umiejętności miękkich\n- wsparcie merytoryczne od liderów technologicznych\n- wsparcie w przygotowaniu do bycia prelegentem\n- wymiana wiedzy technicznej w firmie\n\nBenefity\n- dofinansowanie zajęć sportowych\n- prywatna opieka medyczna\n- dofinansowanie nauki języków\n- dofinansowanie szkoleń i kursów\n- ubezpieczenie na życie\n- możliwość pracy zdalnej\n- elastyczny czas pracy\n- spotkania integracyjne\n- firmowa drużyna sportowa\n- firmowa biblioteka\n- brak dress code’u\n- dodatkowe świadczenia socjalne\n- dofinansowanie wypoczynku\n- dofinansowanie wakacji dzieci\n- paczki świąteczne\n- pikniki rodzinne\n- dostęp do poradni internetowej",
+    "location": "Warszawa, praca hybrydowa",
+    "salaryRange": "Brak wynagrodzenia",
+    "level": "Mid",
+    "fetchedAt": "2026-10-11T10:00:10.477424Z",
+    "offerUrl": "https://theprotocol.it/szczegoly/praca/programista-java-k-m-systemy-wspomagania-dowodzenia-warszawa-poligonowa-30,oferta,01000000-8d24-1cc1-fac6-08df194c4606",
+    "company": "PIT-RADWAR S.A.",
+    "requirements": [
+      "Java",
+      "Spring Framework",
+      "UML",
+      "SQL"
+    ],
+    "niceToHave": [
+      "Jira",
+      "Git",
+      "Jenkins",
+      "Solid",
+      "KISS",
+      "DRY"
+    ],
+    "source": "TheProtocol"
+  },
+  {
+    "title": "Programista / Programistka Java",
+    "description": "O projekcie\nNasz flagowy produkt, Redge Media, to platforma technologiczna dla telewizji internetowej, wybierana przez globalnych nadawców i operatorów telekomunikacyjnych, takich jak TVN Warner Bros. Discovery, Grupa Play, TVP, Canal+, Go3 czy Wirtualna Polska. Nasze rozwiązania są wdrażane przez czołowych graczy w Europie, na Bliskim Wschodzie oraz w Ameryce Południowej, co daje możliwość zdobycia doświadczenia w międzynarodowym środowisku. Z uwagi na globalny charakter naszych działań, czasem dostosowujemy harmonogram pracy do stref czasowych naszych partnerów, co wymaga elastyczności, ale jednocześnie otwiera drzwi do ciekawych wyzwań i rozwoju zawodowego.\nJeśli cenisz różnorodność, dynamikę i chcesz pracować na globalną skalę, dołącz do nas – porozmawiajmy o możliwościach!\n\nZakres obowiązków\n- Do zadań zatrudnionej osoby należeć będzie bieżący rozwój aplikacji Redge Media. Weźmiesz aktywny udział w procesach takich jak analizy wymagań klienta, implementacji niezbędnych komponentów, dostarczania zmian na produkcję, stałego polepszania wydajności platformy. Dołączając do naszego zespołu będziesz pracował z ludźmi, którzy dbają o jakość wytwarzanego oprogramowania! Przykładamy dużą uwagę do procesu code review oraz automatyzacji wytwarzania oprogramowania.\n\nWymagania\n- Doświadczenie w projektowaniu, wdrażaniu i utrzymaniu oprogramowania w Java 11/17+ / Spring Boot.\n- Bardzo dobra znajomość protokołu HTTP.\n- Bardzo dobra znajomość programowania obiektowego oraz wzorców projektowych.\n- Praktyczna znajomość ORM (np. Hibernate).\n- Znajomość podstawowych narzędzi wytwarzania oprogramowania – Git, Gradle, Jenkins oraz IDE wedle Twojego wyboru.\n- Znajomość baz danych SQL – preferowane PostgreSQL i/lub MySQL.\n- Podstawowa znajomość języka programowania JavaScript.\n- Praktyczna znajomość systemów operacyjnych z rodziny Linux.\n- Znajomość języka angielskiego na poziomie B2 lub wyższym.\n- Chęć nauki i rozwoju osobistego.\n\nMile widziane\n- Doświadczenie z usługami typu cloud (np. AWS).\n- Praktyczna znajomość kontenerów aplikacyjnych – Tomcat, Wildfly.\n- Znajomość Kubernetes.\n- Praktyczne doświadczenie z wyzwaniami wysokiej skalowalności systemu, GC, modelem pamięci Java.\n- Znajomość języka hiszpańskiego.\n\nSposób pracy\n- wewnątrz organizacji\n- masz wpływ na produkt\n- scrum\n\nPraktyki zespołu\n- code review\n- automatyzacja testów\n- testy manualne\n\nOferujemy\n- Indywidualny Budżet Szkoleniowy - Inwestujemy w Twoją wiedzę! 5 000 PLN brutto rocznie masz do wykorzystania na to, co przybliża Cię do celu: kursy, konferencje, certyfikaty, platformy e-learningowe czy dofinansowanie do nauki języków obcych.\n- Wyjazd integracyjny - Budujemy relacje nie tylko przy biurku. Raz w roku wyjeżdżamy całą firmą na 3-dniowy, wyjazd integracyjny, na którym wypoczywamy aktywnie a każdy zespół posiada własny budżet na wspólne wyjścia.\n- Zdrowie i Aktywność - Oferujemy dofinansowanie do prywatnej opieki medycznej (Medicover) w 3 wariantach dopasowanych do Twoich potrzeb oraz kartę MultiSport.\n- System Kafeteryjny MyBenefit - Ty decydujesz, na co przeznaczysz swoje comiesięczne punkty: od kina i teatru, przez zakupy, aż po podróże.\n- Eksperckie Środowisko - Dołączasz do dojrzałego zespołu, w którym 75% specjalistów to Seniorzy i Midzi. To gwarancja pracy nad ambitnymi projektami w otoczeniu najlepszych w branży.\n- Program Poleceń Pracowniczych - Znasz świetnych specjalistów? Otrzymuj dodatkowe premie za polecenie ich do naszego zespołu.\n\nRozwój\n- budżet rozwojowy\n- konferencje w Polsce\n- szkolenia wewnątrzfirmowe\n- szkolenia zewnętrzne\n- wsparcie w przygotowaniu do bycia prelegentem\n- wspieramy wydarzenia dla IT\n- wymiana wiedzy technicznej w firmie\n\nBenefity\n- dofinansowanie zajęć sportowych\n- prywatna opieka medyczna\n- dofinansowanie nauki języków\n- dofinansowanie szkoleń i kursów\n- możliwość pracy zdalnej\n- elastyczny czas pracy\n- spotkania integracyjne",
+    "location": "Warszawa, praca zdalna",
+    "salaryRange": "12 000 – 18 000 PLN brutto/mies. (UoP) | 12 000 – 18 000 PLN netto (+VAT)/mies. (B2B)",
+    "level": "Mid",
+    "fetchedAt": "2026-10-11T10:00:12.172860Z",
+    "offerUrl": "https://theprotocol.it/szczegoly/praca/programista---programistka-java-warszawa-ostrobramska-86,oferta,01000000-9f03-57f4-fc87-08df1e214ec5",
+    "company": "REDGE TECHNOLOGIES SP. Z O.O.",
+    "requirements": [
+      "Java",
+      "Spring Boot",
+      "Git",
+      "SQL",
+      "Hibernate"
+    ],
+    "niceToHave": [
+      "PostgreSQL",
+      "MySQL",
+      "AWS",
+      "Tomcat",
+      "Wildfly",
+      "Kubernetes"
+    ],
+    "source": "TheProtocol"
+  },
+  {
+    "title": "Programista Java (k/m)",
+    "description": "Zakres obowiązków\n- Tworzenie aplikacji w oparciu o jedną z stosowanych w firmie technologii programistycznych na podstawie projektów technicznych i/ lub specyfikacji funkcjonalnych.\n- Testowanie poprawności działania aplikacji z uwzględnieniem założonej wcześniej funkcjonalności.\n- Usuwanie błędów zgłoszonych przez klienta lub podczas testów wewnętrznych.\n- Tworzenie dokumentacji powykonawczej lub przekazywanie informacji do specjalistów/ konsultantów ds. projektowania.\n- Przekazywanie uwag/ spostrzeżeń swoich i klientów, mogących mieć wpływ na zwiększenie jakości oprogramowania i usług lub uniknięcie błędów.\n- Praca z repozytoriami, praca z systemem kontroli wersji.\n- Publikacja aplikacji.\n- Wspieranie tworzenia specyfikacji.\n- Przeprowadzanie Code Review.\n\nWymagania\n- Dobra znajomość Java 17+\n- Dobra znajomość: Spring, Spring BOOT, Hibernate, REST, Swagger.\n- Dobra znajomość zagadnień relacyjnych baz danych.\n- Znajomość wzorców projektowych.\n- Doświadczenie w wytwarzaniu testów automatycznych aplikacji.\n- Doświadczenie w realizacji prac implementacyjnych.\n- Umiejętność w tworzeniu przejrzystej, logicznej i spójnej dokumentacji technicznej.\n- Umiejętność organizacji i planowania pracy.\n- Zdolności analityczne.\n- Pomysłowość i kreatywność.\n- Chęć dalszego rozwoju i poszerzania wiedzy.\n\nMile widziane\n- Doświadczenie z brokerami komunikatów (np. ActiveMQ Artemis, Rabbit).\n- Doświadczenie z architekturą rozproszoną (mikroserwisową).\n- Doświadczenie z konteneryzacją i obrazami (np. Docker, Kubernetes).\n- Znajomość zagadnień związanych z komunikacją sieciową i protokołami komunikacyjnymi (TCP/IP, ISO/OSI, LB).\n- Znajomość zagadnień związanych z monitorowaniem aplikacji.\n\nOferujemy\n- Udział w projektach cyfryzacji dla kluczowych firm z sektora energetycznego, gazowego i infrastrukturalnego oraz modernizacji procesów w energetyce, ciepłownictwie i telekomunikacji.\n- Udział w tworzeniu rozwiązań usprawniających zarządzanie mediami u dużych odbiorców - od przemysłu po administrację samorządową.\n- Stabilne zatrudnienie w organizacji o ugruntowanej pozycji, należącej do Grupy Kapitałowej Apator - średni staż pracowników to ok. 8 lat.\n- Możliwość pracy stacjonarnej / hybrydowej / zdalnej.\n- Elastyczny start dnia pracy - możesz zacząć między 07:00 a 09:00.\n- Szkolenia wprowadzające - zaplanowany onboarding.\n- Możliwość rozwijania swoich umiejętności.\n- Współpracę w zespole, w którym cenimy dzielenie się wiedzą, komunikację, otwartość i partnerskie podejście.\n- Pracę opartą o wartości Grupy Apator: Odpowiedzialność - Współpraca - Rozwój - Zwinność.\n\nBenefity\n- dofinansowanie zajęć sportowych\n- prywatna opieka medyczna\n- dofinansowanie szkoleń i kursów\n- ubezpieczenie na życie\n- możliwość pracy zdalnej\n- spotkania integracyjne\n- kawa / herbata\n- dodatkowe świadczenia socjalne\n- Obchodzimy święta nietypowe.\n- Karty Multisport\n- dni rozmaitości",
+    "location": "Zielona Góra, praca hybrydowa/praca stacjonarna",
+    "salaryRange": "Brak wynagrodzenia",
+    "level": "Mid",
+    "fetchedAt": "2026-10-11T10:00:14.236623Z",
+    "offerUrl": "https://theprotocol.it/szczegoly/praca/programista-java-k-m-zielona-gora-wroclawska-17b,oferta,01000000-04b6-113b-7665-08df1d306e98",
+    "company": "Apator Rector Sp. z o.o.",
+    "requirements": [
+      "Java",
+      "Hibernate",
+      "Spring Boot",
+      "Swagger",
+      "REST"
+    ],
+    "niceToHave": [
+      "Rabbit",
+      "Docker",
+      "Kubernetes"
+    ],
+    "source": "TheProtocol"
+  },
+  {
+    "title": "Senior Java Developer - AI/NLP Solutions",
+    "description": "O projekcie\nCharles River Development (CRD) is the FinTech division of State Street. Together with State Street’s Middle and Back Office services, Charles River’s cloud-based Front Office technology forms the foundation of the State Street Alpha Platform, the first front-to-back solution in the industry.\nOur vision is to be the world’s leading investment platform, shaping the future of the industry and driving new levels of technology-led innovation, resiliency, efficiency, and growth for investors and the people they serve.\nThe CRD Engineering organization is transforming the platform by moving from monolithic software toward modern cloud-based technologies, including Microsoft Azure, Kafka, and Snowflake. We continue to expand the use of artificial intelligence, machine learning, and natural language processing across our engineering solutions.\nAs a digital innovation leader, we invest into our solutions, processes, systems, and talent.\nSummary\nAs a Senior Java Developer, you will design, develop, and maintain scalable enterprise applications within an agile engineering team. You will combine strong Java and backend engineering skills with a practical understanding of machine learning, natural language processing, and Large Language Models to help build reliable, secure, and maintainable AI-enabled solutions.\n\nZakres obowiązków\n- Analyze, design, develop, test, and maintain complex enterprise software using Java and related technologies.\n- Design scalable backend services and contribute to the evolution of core application frameworks.\n- Integrate machine learning models, Large Language Models, and AI services into enterprise applications.\n- Collaborate with Product Managers, Business Analysts, architects, and engineers to translate business requirements into sustainable technical solutions.\n- Contribute to architectural decisions related to AI integration, data flows, validation, security, observability, and operational support.\n- Apply engineering best practices to AI-enabled functionality, including automated testing, output validation, performance monitoring, auditability, and human oversight.\n- Provide informed technical guidance during design discussions and code reviews.\n- Troubleshoot complex technical issues in mission-critical client environments.\n- Mentor junior engineers and contribute to the continuous improvement of engineering practices.\n\nWymagania\n- B.S. or M.S. degree in Computer Science, Software Engineering, Artificial Intelligence, Machine Learning, Data Science, or another relevant technical field.\n- At least five years of experience across the full software development lifecycle for enterprise Java applications.\n- Strong knowledge of core Java, Spring Boot, REST APIs, microservices, relational databases, and distributed systems using technologies such as Kafka.\n- Good understanding of machine learning and NLP fundamentals, including classification, model evaluation, tokenization, embeddings, semantic similarity, and information extraction.\n- Good understanding of LLM and Transformer fundamentals, including prompting, context handling, structured outputs, retrieval-augmented generation, model limitations, and integration of AI capabilities into backend applications.\n- Strong problem-solving and communication skills, with the ability to collaborate effectively across technical and business teams.\n\nMile widziane\n- Experience with Kubernetes and cloud platforms such as Microsoft Azure.\n- Familiarity with vector search, embeddings, retrieval-augmented generation, and document-processing solutions.\n- Familiarity with Python, ML or NLP libraries, and model deployment or monitoring practices.\n- Understanding of responsible AI, data privacy, explainability, and human-in-the-loop workflows.\n- Experience developing software in regulated or data-sensitive environments.\n\nOferujemy\n- Permanent contract from day one​\n- Additional holidays (Birthday Day Off, 3rd and 5th year anniversary Day Off)​\n- Gold Medical Package for employees and their families (partner and children)​\n- Premium life insurance package and private pension plan​\n- Wide range of soft skills training, technical workshops, language classes and development programs​\n- Opportunities to volunteer your time to company-driven initiatives, employee networks or organizations of your choice​\n- Variety of well-being programs​\n- Additional benefits available depending on the seniority of the role\n\nBenefity\n- private medical care\n- sharing the costs of foreign language classes\n- sharing the costs of professional training & courses\n- life insurance\n- flexible working time\n- retirement pension plan\n- extra leave",
+    "location": "Gdańsk, praca hybrydowa",
+    "salaryRange": "Brak wynagrodzenia",
+    "level": "Mid",
+    "fetchedAt": "2026-10-11T10:00:16.220191Z",
+    "offerUrl": "https://theprotocol.it/szczegoly/praca/senior-java-developer---ai-nlp-solutions-gdansk-aleja-grunwaldzka-409,oferta,01000000-8d24-1cc1-4ff6-08df158cff52",
+    "company": "STATE STREET BANK INTERNATIONAL GMBH",
+    "requirements": [
+      "Java",
+      "Spring Boot"
+    ],
+    "niceToHave": [
+      "Microsoft Azure"
+    ],
+    "source": "TheProtocol"
+  },
+  {
+    "title": "Osoba na stanowisko Programista JAVA",
+    "description": "Zakres obowiązków\n- projektowanie aplikacji wielowątkowych, które komunikują się z unikalnymi, realnymi urządzeniami\n- odpowiedzialność za code review oraz pisanie testów jednostkowych\n- implementacja nowych funkcji systemów\n\nWymagania\n- 3-letnie doświadczenie w komercyjnym tworzeniu systemów w oparciu o technologię JAVA\n- znajomość technik współbieżności i synchronizacji\n- doświadczenie w samodzielnym doborze optymalnych rozwiązań\n- doświadczenie w budowaniu aplikacji desktopowych\n\nOferujemy\n- udział w realizacji unikatowych projektów dla sektora zbrojeniowego\n- możliwość rozwoju, pozyskiwania wiedzy od ekspertów\n- szkolenia certyfikujące\n- możliwość rozpoczęcia pracy między godziną 06:00-09:00\n- wsparcie finansowe dla pracowników podnoszących kwalifikacje zawodowe\n- brak dress code’u\n- dofinansowanie do karty MultiSport dla pracownika, osoby towarzyszącej oraz dzieci\n- prywatna opieka medyczna\n- możliwość ubezpieczenia na życie\n- dofinansowanie do wypoczynku pracowników (tzw. „wczasy pod gruszą”) i ich dzieci – kolonie i półkolonie\n- cotygodniowe zajęcia sportowe – mamy m.in. drużynę piłki nożnej\n- bezpłatny parking dla pracowników\n- platforma do nauki języków obcych\n\nBenefity\n- dofinansowanie zajęć sportowych\n- prywatna opieka medyczna\n- dofinansowanie nauki języków\n- dofinansowanie szkoleń i kursów\n- ubezpieczenie na życie\n- możliwość pracy zdalnej\n- elastyczny czas pracy\n- brak dress code’u\n- parking dla pracowników\n- strefa relaksu\n- dofinansowanie wypoczynku\n- dofinansowanie wakacji dzieci",
+    "location": "Gdynia, praca stacjonarna",
+    "salaryRange": "Brak wynagrodzenia",
+    "level": "Mid",
+    "fetchedAt": "2026-10-11T10:00:17.871135Z",
+    "offerUrl": "https://theprotocol.it/szczegoly/praca/osoba-na-stanowisko-programista-java-gdynia-arenda-dickmana-62,oferta,01000000-af85-32bc-5eac-08df254df9b5",
+    "company": "Ośrodek Badawczo - Rozwojowy Centrum Techniki Morskiej S.A. w Gdyni",
+    "requirements": [
+      "Java",
+      "Linux",
+      "Confluence",
+      "Azure DevOps",
+      "Maven",
+      "OSGi"
+    ],
+    "niceToHave": [],
+    "source": "TheProtocol"
+  }
+]

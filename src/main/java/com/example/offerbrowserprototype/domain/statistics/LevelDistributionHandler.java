@@ -1,6 +1,7 @@
 package com.example.offerbrowserprototype.domain.statistics;
 
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
+import com.example.offerbrowserprototype.domain.offer.OfferSource;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +21,15 @@ public class LevelDistributionHandler {
     }
 
     public Map<String, Long> getLevelDistribution() {
-        logger.info("Fetching level distribution...");
+        return getLevelDistribution(null);
+    }
 
-        var rawDistribution = offerRepository.getLevelDistributionSimple();
+    public Map<String, Long> getLevelDistribution(OfferSource source) {
+        logger.info("Fetching level distribution (source={})...", source);
+
+        var rawDistribution = source == null
+                ? offerRepository.getLevelDistributionSimple()
+                : offerRepository.getLevelDistributionBySource(source.value());
 
         return rawDistribution.stream()
                 .collect(Collectors.toMap(

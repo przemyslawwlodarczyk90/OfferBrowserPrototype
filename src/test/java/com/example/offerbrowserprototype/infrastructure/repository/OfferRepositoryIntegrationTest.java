@@ -141,4 +141,18 @@ class OfferRepositoryIntegrationTest {
         // then — dwa poziomy w wynikach
         assertThat(dist).hasSizeGreaterThanOrEqualTo(2);
     }
+
+    @Test
+    void zwraca_tylko_adresy_ofert_portalu_lacznie_ze_starymi_bez_zrodla() {
+        // given
+        zapisz("A", "https://nofluffjobs.com/pl/job/a", "NoFluff", "Junior", LocalDateTime.now());
+        zapisz("B", "https://nofluffjobs.com/pl/job/b", null, "Mid", LocalDateTime.now());
+        zapisz("C", "https://theprotocol.it/szczegoly/praca/c,oferta,1", "TheProtocol", "Mid", LocalDateTime.now());
+
+        // when
+        List<String> urls = repository.findOfferUrlsBySource("NoFluff", "https://nofluffjobs.com/%");
+
+        // then
+        assertThat(urls).containsExactlyInAnyOrder("https://nofluffjobs.com/pl/job/a", "https://nofluffjobs.com/pl/job/b");
+    }
 }

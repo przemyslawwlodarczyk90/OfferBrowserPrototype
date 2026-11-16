@@ -5,9 +5,12 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { importApi } from '@/api/services'
-import { useTitle } from '@/hooks'
+import { useTitle, usePortal } from '@/hooks'
 import { PageHeader } from '@/components/ui'
 import { toast } from '@/store'
+import PortalTabs from '@/components/ui/PortalTabs'
+import ScraperSection from './ScraperSection'
+import { portalById, urlMatchesPortal } from '@/utils'
 
 // ─────────────────────────────────────────────────────────────────
 // Modal instrukcji JSON
@@ -20,8 +23,9 @@ const EXAMPLE_JSON = `[
     "city": "Warsaw",
     "salaryRange": "15000-20000 PLN",
     "level": "Senior",
-    "offerUrl": "https://example.com/job/123",
-    "company": "Acme Corp"
+    "offerUrl": "https://theprotocol.it/szczegoly/praca/java-developer-warszawa,oferta,01000000-…",
+    "company": "Acme Corp",
+    "source": "TheProtocol"
   },
   {
     "title": "Mid Backend Developer",
@@ -29,8 +33,9 @@ const EXAMPLE_JSON = `[
     "location": "Kraków",
     "salaryRange": "10000-14000 PLN",
     "level": "Mid",
-    "offerUrl": "https://example.com/job/456",
-    "company": "SoftHouse Sp. z o.o."
+    "offerUrl": "https://theprotocol.it/szczegoly/praca/mid-backend-krakow,oferta,01000000-…",
+    "company": "SoftHouse Sp. z o.o.",
+    "source": "TheProtocol"
   }
 ]`
 
@@ -59,7 +64,7 @@ function JsonInstructionModal({ onClose }) {
             <div className="modal-fields">
               <div className="modal-field modal-field--req">
                 <code>offerUrl</code>
-                <span>Unikalny URL oferty — używany do wykrywania duplikatów</span>
+                <span>Unikalny URL oferty z domeny wybranego portalu — używany do wykrywania duplikatów</span>
               </div>
               <div className="modal-field modal-field--req">
                 <code>company</code>
@@ -78,6 +83,8 @@ function JsonInstructionModal({ onClose }) {
                 ['city',        'Miasto (jeśli podane, nadpisuje ekstrakcję z location)'],
                 ['salaryRange', 'Widełki, np. "10000-15000 PLN"'],
                 ['level',       'Poziom: Trainee / Junior / Mid / Senior / Expert'],
+                ['source',      'NoFluff, TheProtocol lub JustJoin — musi zgadzać się z wybraną zakładką'],
+                ['requirements','Lista wymaganych technologii (tablica)'],
               ].map(([field, desc]) => (
                 <div key={field} className="modal-field">
                   <code>{field}</code>
@@ -94,7 +101,7 @@ function JsonInstructionModal({ onClose }) {
 
           <div className="modal-note">
             <span>◎</span>
-            <span>Oferty z już istniejącym <code>offerUrl</code> w bazie zostaną pominięte — nie nadpiszesz danych.</span>
+            <span>Oferty z już istniejącym <code>offerUrl</code> w bazie zostaną pominięte — nie nadpiszesz danych. Oferty z innego portalu zostaną odrzucone.</span>
           </div>
         </div>
       </div>
@@ -196,7 +203,9 @@ function StatusLog({ log, error }) {
 
   const rows = [
     log.imported   != null && { label: 'Zaimportowano',  value: log.imported,   color: 'var(--green)' },
+    log.updated    != null && { label: 'Uzupełniono',    value: log.updated,    color: 'var(--cyan)' },
     log.skipped    != null && { label: 'Pominięto',      value: log.skipped,    color: 'var(--yellow)' },
+    log.rejected   != null && { label: 'Odrzucono',      value: log.rejected,   color: 'var(--red)' },
     log.duplicates != null && { label: 'Duplikaty',      value: log.duplicates, color: 'var(--red)' },
     log.total      != null && { label: 'Łącznie',        value: log.total,      color: 'var(--text-0)' },
   ].filter(Boolean)
@@ -218,7 +227,7 @@ function StatusLog({ log, error }) {
           </div>
         )}
         {/* Surowy JSON tylko jeśli są nieznane pola poza message */}
-        {rows.length === 0 && Object.keys(log).some(k => !['message','imported','skipped','duplicates','total'].includes(k)) && (
+        {rows.length === 0 && Object.keys(log).some(k => !['message','imported','skipped','duplicates','total','updated','rejected','source','errors'].includes(k)) && (
           <pre className="imp-log-raw">{JSON.stringify(log, null, 2)}</pre>
         )}
       </div>
@@ -229,7 +238,8 @@ function StatusLog({ log, error }) {
 // ─────────────────────────────────────────────────────────────────
 // Sekcja: Import z pliku JSON
 // ─────────────────────────────────────────────────────────────────
-function JsonSection() {
+function JsonSection({ source }) {
+  const portal = portalById(source)
   const [file,       setFile]       = useState(null)
   const [loading,    setLoading]    = useState(false)
   const [log,        setLog]        = useState(null)
@@ -268,7 +278,15 @@ function JsonSection() {
     try {
       const text = await file.text()
       const json = JSON.parse(text)
-      const res  = await importApi.importFromJson(json)
+      if (!Array.isArray(json) || json.length === 0) {
+        throw { message: 'Plik musi zawierać niepustą tablicę ofert (JSON array)' }
+      }
+      const foreign = json.filter(o =>
+        !o || !urlMatchesPortal(o.offerUrl, source) || (o.source && o.source !== source))
+      if (foreign.length > 0) {
+        throw { message: `${foreign.length} z ${json.length} ofert nie pochodzi z ${portal.label} (offerUrl spoza ${portal.domain} lub inne pole source). Wybierz właściwą zakładkę lub popraw plik.` }
+      }
+      const res  = await importApi.importFromJson(json, source)
       setLog(parseLog(res.data))
       toast.success('Import z JSON zakończony')
     } catch (err) {
@@ -297,9 +315,9 @@ function JsonSection() {
       <div className="imp-section-head">
         <span className="imp-section-icon">◈</span>
         <div>
-          <h2 className="imp-section-title">Import z pliku JSON</h2>
+          <h2 className="imp-section-title">Import z pliku JSON — {portal.label}</h2>
           <p className="imp-section-sub">
-            Wgraj plik .json z listą ofert — zostanie przetworzone przez backend.
+            Wgraj plik .json z ofertami {portal.label} (np. wynik scrapera). Plik jest sprawdzany pod kątem portalu.
           </p>
         </div>
       </div>
@@ -375,7 +393,14 @@ function JsonSection() {
 // ─────────────────────────────────────────────────────────────────
 // Sekcja: Import z URL
 // ─────────────────────────────────────────────────────────────────
-function UrlSection() {
+const URL_PLACEHOLDERS = {
+  NoFluff:     'nofluffjobs.com/pl/job/…',
+  TheProtocol: 'theprotocol.it/szczegoly/praca/…',
+  JustJoin:    'justjoin.it/job-offer/…',
+}
+
+function UrlSection({ source }) {
+  const portal = portalById(source)
   const [url,     setUrl]     = useState('')
   const [loading, setLoading] = useState(false)
   const [log,     setLog]     = useState(null)
@@ -389,6 +414,10 @@ function UrlSection() {
   const handleImport = async () => {
     if (!isValidUrl(url)) {
       toast.warn('Wpisz poprawny adres URL (http:// lub https://)')
+      return
+    }
+    if (!urlMatchesPortal(url.trim(), source)) {
+      toast.warn(`To nie jest adres ogłoszenia z ${portal.label}`)
       return
     }
     setLoading(true)
@@ -415,9 +444,9 @@ function UrlSection() {
       <div className="imp-section-head">
         <span className="imp-section-icon">◎</span>
         <div>
-          <h2 className="imp-section-title">Import z URL</h2>
+          <h2 className="imp-section-title">Import pojedynczej oferty z URL — {portal.label}</h2>
           <p className="imp-section-sub">
-            Podaj adres URL do pliku JSON z ofertami — backend pobierze i przetworzy dane.
+            Wklej adres ogłoszenia z {portal.domain} — backend pobierze je właściwym scraperem i doda do Twojej listy.
           </p>
         </div>
       </div>
@@ -429,7 +458,7 @@ function UrlSection() {
             <input
               className="imp-url-input"
               type="url"
-              placeholder="example.com/offers.json"
+              placeholder={URL_PLACEHOLDERS[source] ?? URL_PLACEHOLDERS.NoFluff}
               value={url}
               onChange={(e) => { setUrl(e.target.value); setLog(null); setError(null) }}
               onKeyDown={handleKey}
@@ -459,6 +488,9 @@ function UrlSection() {
         {url && !isValidUrl(url) && (
           <p className="imp-url-hint">⚠ Wpisz pełny adres zaczynający się od http:// lub https://</p>
         )}
+        {url && isValidUrl(url) && !urlMatchesPortal(url.trim(), source) && (
+          <p className="imp-url-hint">⚠ Adres spoza {portal.domain} — przełącz zakładkę portalu</p>
+        )}
 
         <StatusLog log={log} error={error} />
       </div>
@@ -471,17 +503,22 @@ function UrlSection() {
 // ─────────────────────────────────────────────────────────────────
 export default function ImportPage() {
   useTitle('Import ofert')
+  const [portal, setPortal] = usePortal()
 
   return (
     <div className="import-page animate-fade-in">
       <PageHeader
         title="Import ofert"
-        subtitle="Zarządzaj źródłami danych"
+        subtitle="Zarządzaj źródłami danych — każdy portal osobno"
       />
 
-      <div className="imp-grid">
-        <JsonSection />
-        <UrlSection />
+      <PortalTabs value={portal} onChange={setPortal} />
+
+      {/* key={portal} — stan sekcji (plik, URL, wyniki) nie przechodzi między portalami */}
+      <div className="imp-grid" key={portal}>
+        <ScraperSection source={portal} />
+        <JsonSection source={portal} />
+        <UrlSection source={portal} />
       </div>
 
       <ImportStyles />

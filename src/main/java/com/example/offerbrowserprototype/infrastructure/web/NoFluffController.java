@@ -1,13 +1,14 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.domain.offer.OfferSource;
 import com.example.offerbrowserprototype.domain.user.User;
 import com.example.offerbrowserprototype.infrastructure.facade.OfferFacade;
-import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
 import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
+import com.example.offerbrowserprototype.infrastructure.scraper.ScraperJobService;
 import com.example.offerbrowserprototype.infrastructure.service.OfferImportService;
-import com.example.offerbrowserprototype.infrastructure.service.PythonScriptService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,136 +23,84 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/python-script")
-@Tag(name = "Import & Scripts", description = "Endpoints for importing job offers: run the scraper script, import from JSON body, or import a single offer from a URL.")
+@Tag(name = "Import & Scripts", description = "Endpoints for importing job offers: run the No Fluff Jobs scraper, import from JSON body (per portal), or import a single offer from a URL (No Fluff Jobs or theprotocol.it).")
 @PreAuthorize("isAuthenticated()")
 public class NoFluffController {
 
     private static final Logger logger = LoggerFactory.getLogger(NoFluffController.class);
 
-    private final PythonScriptService scriptService;
-    private final OfferImportService  offerImportService;
-    private final OfferFacade         offerFacade;
-    private final OfferRepository     offerRepository;
-    private final UserRepository      userRepository;
+    private final ScraperJobService scraperJobService;
+    private final OfferImportService offerImportService;
+    private final OfferFacade offerFacade;
+    private final UserRepository userRepository;
 
-    public NoFluffController(PythonScriptService scriptService,
+    public NoFluffController(ScraperJobService scraperJobService,
                              OfferImportService offerImportService,
                              OfferFacade offerFacade,
-                             OfferRepository offerRepository,
                              UserRepository userRepository) {
-        this.scriptService    = scriptService;
+        this.scraperJobService = scraperJobService;
         this.offerImportService = offerImportService;
-        this.offerFacade      = offerFacade;
-        this.offerRepository  = offerRepository;
-        this.userRepository   = userRepository;
+        this.offerFacade = offerFacade;
+        this.userRepository = userRepository;
     }
 
     @Operation(summary = "Run NoFluff scraper script",
-               description = "Starts the Python Selenium scraper in the background. " +
-                             "Returns 202 immediately — offers are imported into the database automatically after the script finishes. " +
-                             "Also backfills requirements/source for existing offers that were imported before those fields were added.")
+               description = "Starts the No Fluff Jobs scraper in the background (admin only). " +
+                             "Returns 202 immediately — offers are imported automatically after the script finishes. " +
+                             "Same as POST /api/scrapers/NoFluff/run; 409 when it is already running.")
     @ApiResponses({
             @ApiResponse(responseCode = "202", description = "Script started in background"),
-            @ApiResponse(responseCode = "401", description = "Not authenticated")
+            @ApiResponse(responseCode = "401", description = "Not authenticated"),
+            @ApiResponse(responseCode = "403", description = "Admin only"),
+            @ApiResponse(responseCode = "409", description = "Scraper already running")
     })
     @GetMapping("/run")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String, String>> runPythonScript() {
-        CompletableFuture.runAsync(() -> {
-            try {
-                logger.info("Python script started in background...");
-                String output = scriptService.runScript();
-                logger.info("Python script completed. Output: {}", output);
-                offerImportService.importOffersFromJson("data/offers/detailed_offers.json");
-                logger.info("Offer import completed successfully.");
-            } catch (Exception e) {
-                logger.error("Error during script execution or import: {}", e.getMessage());
-            }
-        });
-
-        return ResponseEntity.accepted()
-                .body(Map.of("message", "Skrypt uruchomiony w tle. Oferty zostaną zaimportowane automatycznie po jego zakończeniu."));
+        return scraperJobService.start(OfferSource.NOFLUFF, ScraperJobService.Mode.SCRAPE_AND_IMPORT, "manual")
+                .map(run -> ResponseEntity.accepted().body(Map.of(
+                        "message", "Skrypt uruchomiony w tle. Oferty zostaną zaimportowane automatycznie po jego zakończeniu.",
+                        "jobId", run.jobId())))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.CONFLICT)
+                        .body(Map.of("message", "Scraper No Fluff Jobs już pracuje — poczekaj na zakończenie.")));
     }
 
     @Operation(summary = "Import offers from JSON body",
-               description = "Accepts a JSON array of offer objects and imports new ones into the database. " +
-                             "Existing offers (matched by offerUrl) are skipped. " +
-                             "Each object must contain at minimum 'offerUrl' and 'company'. " +
+               description = "Accepts a JSON array of offer objects for one portal and imports new ones into the database. " +
+                             "Every offer must belong to the chosen portal (its 'source' and offerUrl domain); others are rejected. " +
+                             "Existing offers (matched by offerUrl) are skipped. Each object must contain at minimum 'offerUrl' and 'company'. " +
                              "Supported fields: title, description, location, salaryRange, level, offerUrl, company, fetchedAt, requirements, niceToHave, source.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Import summary returned (imported / skipped / errors count)"),
-            @ApiResponse(responseCode = "400", description = "Empty payload or missing required fields"),
+            @ApiResponse(responseCode = "200", description = "Import summary returned (imported / skipped / rejected / errors count)"),
+            @ApiResponse(responseCode = "400", description = "Empty payload or unknown source"),
             @ApiResponse(responseCode = "401", description = "Not authenticated")
     })
     @PostMapping("/import")
-    public ResponseEntity<Map<String, Object>> importOffers(@RequestBody List<Map<String, Object>> payload) {
+    public ResponseEntity<Map<String, Object>> importOffers(
+            @RequestBody List<Map<String, Object>> payload,
+            @Parameter(description = "Portal: NoFluff (default), TheProtocol or JustJoin")
+            @RequestParam(defaultValue = "NoFluff") String source) {
         if (payload == null || payload.isEmpty()) {
             return ResponseEntity.badRequest()
                     .body(Map.of("error", "Pusta lista — prześlij tablicę obiektów JSON."));
         }
-
-        int imported = 0, skipped = 0, errors = 0;
-        for (Map<String, Object> item : payload) {
-            try {
-                if (!item.containsKey("offerUrl") || item.get("offerUrl") == null) {
-                    errors++;
-                    logger.warn("Skipping offer — missing required field 'offerUrl': {}", item);
-                    continue;
-                }
-                if (!item.containsKey("company") || item.get("company") == null) {
-                    errors++;
-                    logger.warn("Skipping offer — missing required field 'company': {}", item.get("offerUrl"));
-                    continue;
-                }
-
-                com.example.offerbrowserprototype.domain.offer.Offer offer =
-                        offerRepository.findByOfferUrl(item.get("offerUrl").toString()).orElse(null);
-
-                if (offer != null) { skipped++; continue; }
-
-                offer = new com.example.offerbrowserprototype.domain.offer.Offer();
-                String rawTitle = str(item, "title");
-                offer.setTitle(rawTitle != null ? rawTitle.replaceAll("(?i)\\s*NOWA\\s*$", "").trim() : null);
-                offer.setDescription(str(item, "description"));
-                offer.setLocation(str(item, "location"));
-                offer.setSalaryRange(str(item, "salaryRange"));
-                offer.setLevel(str(item, "level"));
-                offer.setOfferUrl(item.get("offerUrl").toString());
-                offer.setCompany(item.get("company").toString());
-                offer.setFetchedAt(java.time.LocalDateTime.now());
-
-                offerRepository.save(offer);
-                imported++;
-            } catch (Exception e) {
-                errors++;
-                logger.error("Error processing offer: {}", e.getMessage());
-            }
-        }
-
-        return ResponseEntity.ok(Map.of(
-                "imported",  imported,
-                "skipped",   skipped,
-                "errors",    errors,
-                "total",     payload.size()
-        ));
-    }
-
-    private static String str(Map<String, Object> m, String key) {
-        Object v = m.get(key);
-        return v != null ? v.toString() : null;
+        OfferSource portal = OfferSource.fromParam(source).orElse(OfferSource.NOFLUFF);
+        return ResponseEntity.ok(offerImportService.importFromPayload(payload, portal).toMap());
     }
 
     @Operation(summary = "Import offer from URL",
             description = "Scrapes a job offer from the given URL and saves it to the database. " +
+                    "The scraper is chosen by the URL domain (nofluffjobs.com, theprotocol.it or justjoin.it); other domains are rejected. " +
                     "userId is resolved automatically from the JWT token.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Offer imported successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid URL or scraping error"),
+            @ApiResponse(responseCode = "400", description = "Invalid/unsupported URL or scraping error"),
             @ApiResponse(responseCode = "401", description = "Not authenticated"),
-            @ApiResponse(responseCode = "409", description = "Offer already exists")
+            @ApiResponse(responseCode = "409", description = "Offer already exists"),
+            @ApiResponse(responseCode = "423", description = "Scraping disabled for this portal")
     })
     @PostMapping("/import-from-url")
     public ResponseEntity<String> importOfferFromUrl(
@@ -178,6 +127,8 @@ public class NoFluffController {
         } catch (IllegalStateException e) {
             logger.warn("Duplicate offer detected: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (ScraperJobService.ScraperDisabledException e) {
+            return ResponseEntity.status(HttpStatus.LOCKED).body(e.getMessage());
         } catch (Exception e) {
             logger.error("Error importing offer from URL: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

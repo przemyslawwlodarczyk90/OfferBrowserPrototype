@@ -26,9 +26,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
         String role = user.getRole() != null ? user.getRole().name() : "USER";
+        // enabled = registration confirmed; unconfirmed accounts are rejected by JwtAuthFilter
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
+                user.isActive(), true, true, true,
                 List.of(new SimpleGrantedAuthority("ROLE_" + role))
         );
     }

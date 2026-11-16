@@ -35,7 +35,7 @@ public class OfferMapper {
     }
 
     public Offer toEntity(OfferDTO dto) {
-        return Offer.builder()
+        Offer offer = Offer.builder()
                 .title(dto.getTitle())
                 .description(dto.getDescription())
                 .location(dto.getLocation())
@@ -48,5 +48,7 @@ public class OfferMapper {
                 .niceToHave(dto.getNiceToHave())
                 .source(dto.getSource())
                 .build();
+        offer.setLocation(dto.getLocation()); // derives city (the builder bypasses the setter)
+        return offer;
     }
 }

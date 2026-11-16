@@ -9,8 +9,10 @@ import {
   PieChart, Pie, Cell, Legend,
 } from 'recharts'
 import { statsApi } from '@/api/services'
-import { useApi, useTitle } from '@/hooks'
+import { useApi, useTitle, usePortal } from '@/hooks'
 import { PageHeader, EmptyState } from '@/components/ui'
+import PortalTabs from '@/components/ui/PortalTabs'
+import { portalById, PORTALS, ALL_PORTALS, PORTAL_COLORS } from '@/utils'
 
 // ─────────────────────────────────────────────────────────────────
 // Kolory dla wykresów
@@ -261,20 +263,194 @@ function CityChart({ data, loading, error }) {
 // ─────────────────────────────────────────────────────────────────
 // Strona główna
 // ─────────────────────────────────────────────────────────────────
+// key={portal} → liczniki i wykresy liczone osobno dla każdego portalu;
+// "Wszystkie strony" — dane zsumowane ze wszystkich portali, per poziom doświadczenia
+const EXTRA_TABS = [ALL_PORTALS]
+
 export default function StatsPage() {
+  const [portal, setPortal] = usePortal(EXTRA_TABS)
+  const tabs = <PortalTabs value={portal} onChange={setPortal} extra={EXTRA_TABS} />
+  if (portal === ALL_PORTALS.id) {
+    return <AllPortalsView key={portal} tabs={tabs} />
+  }
+  return <StatsView key={portal} source={portal} tabs={tabs} />
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Wszystkie strony
+// ─────────────────────────────────────────────────────────────────
+function StackedTooltip({ active, payload, label }) {
+  if (!active || !payload?.length) return null
+  const total = payload.reduce((s, p) => s + (p.value ?? 0), 0)
+  return (
+    <div className="st-tooltip">
+      <p className="st-tooltip-label">{label}</p>
+      {[...payload].reverse().map(p => (
+        <p key={p.dataKey} className="st-tooltip-row">
+          <span className="st-legend-dot" style={{ background: p.color }} />
+          {portalById(p.dataKey).label}
+          <span className="st-tooltip-num">{p.value}</span>
+        </p>
+      ))}
+      <p className="st-tooltip-val">Razem: {total} ofert</p>
+    </div>
+  )
+}
+
+function LevelBySourceCard({ rows, loading, error }) {
+  const grand = rows.reduce((s, r) => s + r.total, 0)
+  const portalTotals = Object.fromEntries(PORTALS.map(p => [p.id, rows.reduce((s, r) => s + (r.bySource?.[p.id] ?? 0), 0)]))
+  const data = rows.map(r => ({ name: r.level, ...Object.fromEntries(PORTALS.map(p => [p.id, r.bySource?.[p.id] ?? 0])) }))
+
+  return (
+    <div className="st-chart-card st-chart-card--wide">
+      <div className="st-chart-head">
+        <h2 className="st-chart-title">Poziom doświadczenia — wszystkie strony</h2>
+        <p className="st-chart-sub">Oferty zsumowane ze wszystkich portali, z udziałem każdego portalu (bez duplikatów)</p>
+      </div>
+
+      {loading && <ChartSkeleton height={300} />}
+      {!loading && error && (
+        <EmptyState icon="✕" title="Błąd" description={error.message ?? 'Nie udało się załadować danych.'} />
+      )}
+      {!loading && !error && rows.length === 0 && (
+        <EmptyState icon="▦" title="Brak danych" description="W bazie nie ma jeszcze ofert." />
+      )}
+
+      {!loading && !error && rows.length > 0 && (
+        <>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={data} margin={{ top: 8, right: 16, left: -8, bottom: 4 }}>
+              <XAxis dataKey="name" tick={{ fill: '#70708a', fontFamily: 'JetBrains Mono', fontSize: 11 }}
+                     axisLine={{ stroke: 'rgba(255,255,255,0.06)' }} tickLine={false} />
+              <YAxis tick={{ fill: '#70708a', fontFamily: 'JetBrains Mono', fontSize: 11 }}
+                     axisLine={false} tickLine={false} allowDecimals={false} />
+              <Tooltip content={<StackedTooltip />} cursor={{ fill: 'rgba(99,102,241,0.07)' }} />
+              {PORTALS.map((p, i) => (
+                <Bar key={p.id} dataKey={p.id} stackId="portals" fill={PORTAL_COLORS[p.id]} maxBarSize={64}
+                     radius={i === PORTALS.length - 1 ? [4, 4, 0, 0] : [0, 0, 0, 0]} />
+              ))}
+            </BarChart>
+          </ResponsiveContainer>
+
+          <div className="st-legend">
+            {PORTALS.map(p => (
+              <span key={p.id} className="st-legend-item">
+                <span className="st-legend-dot" style={{ background: PORTAL_COLORS[p.id] }} />
+                {p.label}
+                <span className="st-legend-count">{portalTotals[p.id]}</span>
+              </span>
+            ))}
+          </div>
+
+          <div className="st-table-wrap">
+            <table className="st-table">
+              <thead>
+                <tr>
+                  <th>Poziom</th>
+                  {PORTALS.map(p => <th key={p.id} className="st-num">{p.label}</th>)}
+                  <th className="st-num">Razem</th>
+                  <th className="st-share">Udział</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map(r => {
+                  const pct = grand > 0 ? (r.total / grand) * 100 : 0
+                  return (
+                    <tr key={r.level}>
+                      <td>
+                        <span className="st-level-dot" style={{ background: LEVEL_COLORS[r.level] ?? 'var(--text-3)' }} />
+                        {r.level}
+                      </td>
+                      {PORTALS.map(p => (
+                        <td key={p.id} className={`st-num${r.bySource?.[p.id] ? '' : ' st-zero'}`}>{r.bySource?.[p.id] ?? 0}</td>
+                      ))}
+                      <td className="st-num st-total">{r.total}</td>
+                      <td className="st-share">
+                        <div className="st-share-cell">
+                          <div className="st-city-bar-track"><div className="st-city-bar-fill" style={{ width: `${pct}%`, background: 'var(--accent)' }} /></div>
+                          <span>{pct.toLocaleString('pl-PL', { maximumFractionDigits: 1 })}%</span>
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Razem</td>
+                  {PORTALS.map(p => <td key={p.id} className="st-num">{portalTotals[p.id]}</td>)}
+                  <td className="st-num st-total">{grand}</td>
+                  <td className="st-share">100%</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+function AllPortalsView({ tabs }) {
   useTitle('Statystyki')
 
   const {
-    data: totalRaw, loading: loadingT, error: errorT,
-  } = useApi(useCallback(() => statsApi.getTotalOffers(), []), { immediate: true })
-
-  const {
-    data: levelRaw, loading: loadingL, error: errorL,
-  } = useApi(useCallback(() => statsApi.getLevelDistribution(), []), { immediate: true })
+    data: bySourceRaw, loading: loadingL, error: errorL,
+  } = useApi(useCallback(() => statsApi.getLevelBySource(), []), { immediate: true })
 
   const {
     data: cityRaw, loading: loadingC, error: errorC,
   } = useApi(useCallback(() => statsApi.getCityDistribution(), []), { immediate: true })
+
+  const rows = Array.isArray(bySourceRaw) ? bySourceRaw : []
+  const cityData = normalizeCityData(cityRaw)
+  const grand = rows.reduce((s, r) => s + r.total, 0)
+  const byPortal = PORTALS.map(p => ({ ...p, value: rows.reduce((s, r) => s + (r.bySource?.[p.id] ?? 0), 0) }))
+  const topLevel = rows.filter(r => r.level !== 'Nieokreślony poziom').reduce((a, b) => (!a || b.total > a.total ? b : a), null)
+
+  return (
+    <div className="stats-page animate-fade-in">
+      <PageHeader title="Statystyki" subtitle="Przegląd bazy ofert — wszystkie strony razem" />
+
+      {tabs}
+
+      <div className="st-stat-row">
+        <StatCard icon="◉" label="Ofert ze wszystkich stron" value={loadingL ? null : grand} loading={loadingL}
+                  sub={errorL ? 'błąd ładowania' : null} />
+        {byPortal.map(p => (
+          <StatCard key={p.id} icon={<span className="st-portal-dot" style={{ background: PORTAL_COLORS[p.id] }} />}
+                    label={p.label} value={loadingL ? null : p.value} loading={loadingL}
+                    sub={!loadingL && grand > 0 ? `${Math.round((p.value / grand) * 100)}% wszystkich` : null} />
+        ))}
+        <StatCard icon="⊕" label="Dominujący poziom" value={topLevel?.level ?? null} loading={loadingL}
+                  sub={topLevel ? `${topLevel.total} ofert` : null} />
+      </div>
+
+      <div className="st-charts-grid">
+        <LevelBySourceCard rows={rows} loading={loadingL} error={errorL} />
+        <CityChart data={cityData} loading={loadingC} error={errorC} />
+      </div>
+
+      <StatsStyles />
+    </div>
+  )
+}
+
+function StatsView({ source, tabs }) {
+  useTitle('Statystyki')
+
+  const {
+    data: totalRaw, loading: loadingT, error: errorT,
+  } = useApi(useCallback(() => statsApi.getTotalOffers(source), [source]), { immediate: true })
+
+  const {
+    data: levelRaw, loading: loadingL, error: errorL,
+  } = useApi(useCallback(() => statsApi.getLevelDistribution(source), [source]), { immediate: true })
+
+  const {
+    data: cityRaw, loading: loadingC, error: errorC,
+  } = useApi(useCallback(() => statsApi.getCityDistribution(source), [source]), { immediate: true })
 
   const total     = extractTotal(totalRaw)
   const levelData = normalizeLevelData(levelRaw)
@@ -289,14 +465,16 @@ export default function StatsPage() {
     <div className="stats-page animate-fade-in">
       <PageHeader
         title="Statystyki"
-        subtitle="Przegląd bazy ofert"
+        subtitle={`Przegląd bazy ofert — ${portalById(source).label}`}
       />
+
+      {tabs}
 
       {/* ── Karty liczników ── */}
       <div className="st-stat-row">
         <StatCard
           icon="◉"
-          label="Wszystkich ofert"
+          label={`Ofert z ${portalById(source).label}`}
           value={total}
           loading={loadingT}
           sub={errorT ? 'błąd ładowania' : null}
@@ -399,6 +577,32 @@ function StatsStyles() {
       }
       .st-tooltip-label { font-size: 0.72rem; color: var(--text-2); margin-bottom: 3px; }
       .st-tooltip-val   { font-size: 0.84rem; font-weight: 700; color: var(--accent); }
+      .st-tooltip-row {
+        display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--text-1); margin-bottom: 2px;
+      }
+      .st-tooltip-num { margin-left: auto; padding-left: 14px; font-weight: 700; color: var(--text-0); }
+
+      /* ── Wszystkie strony ── */
+      .st-chart-card--wide { grid-column: 1 / -1; }
+      .st-portal-dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; }
+      .st-table-wrap { overflow-x: auto; border: 1px solid var(--border-1); border-radius: var(--radius-md); }
+      .st-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.76rem; }
+      .st-table th {
+        text-align: left; padding: 9px 12px; background: var(--bg-2); color: var(--text-2);
+        font-size: 0.64rem; text-transform: uppercase; letter-spacing: .07em; white-space: nowrap;
+        border-bottom: 1px solid var(--border-1);
+      }
+      .st-table td { padding: 9px 12px; color: var(--text-1); border-bottom: 1px solid var(--border-2); white-space: nowrap; }
+      .st-table tbody tr:hover td { background: var(--bg-2); }
+      .st-table tfoot td { border-bottom: none; border-top: 1px solid var(--border-1); color: var(--text-0); font-weight: 700; }
+      .st-table .st-num { text-align: right; }
+      .st-table .st-zero { color: var(--text-3); }
+      .st-table .st-total { color: var(--text-0); font-weight: 700; }
+      .st-level-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; }
+      .st-share { width: 180px; }
+      .st-share-cell { display: flex; align-items: center; gap: 8px; }
+      .st-share-cell .st-city-bar-track { flex: 1; min-width: 60px; }
+      .st-share-cell span { min-width: 44px; text-align: right; color: var(--text-2); }
 
       /* ── Legenda poziomów ── */
       .st-legend {

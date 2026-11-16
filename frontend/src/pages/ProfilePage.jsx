@@ -9,6 +9,7 @@ import { authApi } from '@/api/services'
 import { useAuthStore, toast } from '@/store'
 import { useTitle } from '@/hooks'
 import { PageHeader } from '@/components/ui'
+import CvSection from './CvSection'
 
 // ─────────────────────────────────────────────────────────────────
 // Helpers
@@ -439,6 +440,7 @@ export default function ProfilePage() {
         {/* Prawa kolumna — sekcje */}
         <div className="pf-main">
           <ProfileSection  user={user} onUpdated={handleUpdated} />
+          <CvSection />
           <PasswordSection />
           <DangerSection   onLogout={handleLogout} />
         </div>

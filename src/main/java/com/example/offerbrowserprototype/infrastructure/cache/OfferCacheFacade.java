@@ -1,6 +1,7 @@
 package com.example.offerbrowserprototype.infrastructure.cache;
 
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
+import com.example.offerbrowserprototype.domain.offer.OfferSource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +23,13 @@ public class OfferCacheFacade {
         this.deletionService = deletionService;
     }
 
-    public List<OfferDTO> getCachedOffers() {
-        return retrievalService.getCachedOffers();
+    /** @param source portal, or {@code null} for all portals */
+    public List<OfferDTO> getCachedOffers(OfferSource source) {
+        return retrievalService.getCachedOffers(source);
     }
 
-    public void cacheOffers(List<OfferDTO> offers) {
-        storageService.cacheOffers(offers);
+    public void cacheOffers(OfferSource source, List<OfferDTO> offers) {
+        storageService.cacheOffers(source, offers);
     }
 
     public void clearCache() {

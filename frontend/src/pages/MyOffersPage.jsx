@@ -3,13 +3,14 @@
 // ║  AKCJA:    NADPISZ istniejący plik (stub)    ║
 // ╚══════════════════════════════════════════════╝
 
-import { useState, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useCallback, useMemo } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { userOffersApi } from '@/api/services'
-import { useApi, useTitle } from '@/hooks'
+import { useApi, useTitle, usePortal } from '@/hooks'
 import { useAuthStore, toast } from '@/store'
 import { Badge, EmptyState, PageHeader } from '@/components/ui'
-import { formatDate, normalizeLevel, truncate, formatSalary } from '@/utils'
+import PortalTabs from '@/components/ui/PortalTabs'
+import { formatDate, normalizeLevel, truncate, formatSalary, portalById } from '@/utils'
 
 // ─────────────────────────────────────────────────────────────────
 // Stałe
@@ -29,7 +30,47 @@ function getDate(offer) {
 // ─────────────────────────────────────────────────────────────────
 // Komponent główny
 // ─────────────────────────────────────────────────────────────────
+// Poziomy w stałej kolejności; pozostałe (np. Manager) po nich, nieokreślony na końcu
+const ALL_LEVELS = 'Wszystkie'
+const UNKNOWN_LEVEL = 'Nieokreślony'
+const LEVEL_ORDER = ['Trainee', 'Junior', 'Mid', 'Senior', 'Expert']
+
+function levelOf(offer) {
+  const l = normalizeLevel(offer.level)
+  return !l || l === '—' || l.toLowerCase().startsWith('nieokre') ? UNKNOWN_LEVEL : l
+}
+
+function levelRank(l) {
+  if (l === UNKNOWN_LEVEL) return 1000
+  const i = LEVEL_ORDER.indexOf(l)
+  return i >= 0 ? i : LEVEL_ORDER.length
+}
+
+// key={portal} → osobne listy, liczniki i wskaźnik aplikacji dla każdego portalu;
+// wybrany poziom trzymany w ?level=… (zostaje przy zmianie portalu i odświeżeniu)
 export default function MyOffersPage() {
+  const [portal, setPortal] = usePortal()
+  const [params, setParams] = useSearchParams()
+  const level = params.get('level') || ALL_LEVELS
+  const setLevel = useCallback((l) => {
+    setParams(prev => {
+      const next = new URLSearchParams(prev)
+      if (l === ALL_LEVELS) next.delete('level'); else next.set('level', l)
+      return next
+    }, { replace: true })
+  }, [setParams])
+  return (
+    <MyOffersView
+      key={portal}
+      source={portal}
+      level={level}
+      onLevelChange={setLevel}
+      tabs={<PortalTabs value={portal} onChange={setPortal} />}
+    />
+  )
+}
+
+function MyOffersView({ source, tabs, level, onLevelChange }) {
   useTitle('Moje oferty')
   const navigate  = useNavigate()
   const user      = useAuthStore((s) => s.user)
@@ -44,7 +85,7 @@ export default function MyOffersPage() {
     error: errorNA,
     execute: reloadNA,
   } = useApi(
-    useCallback(() => userOffersApi.getNotApplied(userId), [userId]),
+    useCallback(() => userOffersApi.getNotApplied(userId, source), [userId, source]),
     { immediate: !!userId }
   )
 
@@ -54,7 +95,7 @@ export default function MyOffersPage() {
     error: errorA,
     execute: reloadA,
   } = useApi(
-    useCallback(() => userOffersApi.getApplied(userId), [userId]),
+    useCallback(() => userOffersApi.getApplied(userId, source), [userId, source]),
     { immediate: !!userId }
   )
 
@@ -64,11 +105,31 @@ export default function MyOffersPage() {
     reloadA()
   }, [reloadNA, reloadA])
 
-  const appliedCount   = applied?.length   ?? 0
-  const notAppliedCount = notApplied?.length ?? 0
+  // Poziomy występujące w ofertach tego portalu (obie listy) + liczniki dla bieżącej zakładki
+  const isNA = activeTab === 'not-applied'
+  const levels = useMemo(() => {
+    const all = [...(notApplied ?? []), ...(applied ?? [])]
+    const current = isNA ? (notApplied ?? []) : (applied ?? [])
+    const names = new Set(all.map(levelOf))
+    if (level !== ALL_LEVELS) names.add(level)
+    return [...names]
+      .sort((a, b) => levelRank(a) - levelRank(b) || a.localeCompare(b, 'pl'))
+      .map(name => ({ name, count: current.filter(o => levelOf(o) === name).length }))
+  }, [notApplied, applied, isNA, level])
 
-  const isNA    = activeTab === 'not-applied'
-  const list    = isNA ? (notApplied ?? []) : (applied ?? [])
+  const byLevel = useCallback(
+    (items) => level === ALL_LEVELS ? (items ?? []) : (items ?? []).filter(o => levelOf(o) === level),
+    [level]
+  )
+  const notAppliedFiltered = byLevel(notApplied)
+  const appliedFiltered    = byLevel(applied)
+
+  const appliedCount    = appliedFiltered.length
+  const notAppliedCount = notAppliedFiltered.length
+  const totalCurrent    = (isNA ? notApplied : applied)?.length ?? 0
+  const loadingLevels   = loadingNA || loadingA
+
+  const list    = isNA ? notAppliedFiltered : appliedFiltered
   const loading = isNA ? loadingNA : loadingA
   const error   = isNA ? errorNA   : errorA
   const reload  = isNA ? reloadNA  : reloadA
@@ -94,7 +155,7 @@ export default function MyOffersPage() {
       {/* ── Nagłówek ── */}
       <PageHeader
         title="Moje oferty"
-        subtitle="Zarządzaj swoimi aplikacjami"
+        subtitle={`Zarządzaj swoimi aplikacjami — ${portalById(source).label}`}
         actions={
           <button
             className="btn btn--secondary btn--sm"
@@ -105,6 +166,27 @@ export default function MyOffersPage() {
           </button>
         }
       />
+
+      {tabs}
+
+      {/* ── Przełącznik poziomów (dla wybranej strony) ── */}
+      <div className="mo-levels" role="group" aria-label="Poziom doświadczenia">
+        <button
+          className={`mo-pill${level === ALL_LEVELS ? ' mo-pill--on' : ''}`}
+          onClick={() => onLevelChange(ALL_LEVELS)}
+        >
+          Wszystkie {!loadingLevels && <span className="mo-pill-count">{totalCurrent}</span>}
+        </button>
+        {levels.map(l => (
+          <button
+            key={l.name}
+            className={`mo-pill${level === l.name ? ' mo-pill--on' : ''}${!loadingLevels && l.count === 0 ? ' mo-pill--empty' : ''}`}
+            onClick={() => onLevelChange(l.name)}
+          >
+            {l.name} {!loadingLevels && <span className="mo-pill-count">{l.count}</span>}
+          </button>
+        ))}
+      </div>
 
       {/* ── Licznik aplikacji ── */}
       <div className="mo-stats">
@@ -175,14 +257,22 @@ export default function MyOffersPage() {
       {!loading && !error && list.length === 0 && (
         <EmptyState
           icon={isNA ? '◎' : '✓'}
-          title={isNA ? 'Brak ofert do aplikacji' : 'Brak zaaplikowanych ofert'}
+          title={level !== ALL_LEVELS
+            ? `Brak ofert na poziomie ${level}`
+            : isNA ? 'Brak ofert do aplikacji' : 'Brak zaaplikowanych ofert'}
           description={
-            isNA
+            level !== ALL_LEVELS
+              ? `Na tej liście nie ma ofert ${portalById(source).label} na poziomie ${level}. Wybierz inny poziom.`
+              : isNA
               ? 'Wszystkie oferty zostały już przetworzone lub baza jest pusta.'
               : 'Nie zaaplikowałeś jeszcze na żadną ofertę. Przejdź do listy ofert i kliknij "Aplikuj".'
           }
           action={
-            isNA ? null : (
+            level !== ALL_LEVELS ? (
+              <button className="btn btn--secondary btn--sm" onClick={() => onLevelChange(ALL_LEVELS)}>
+                Pokaż wszystkie poziomy
+              </button>
+            ) : isNA ? null : (
               <button
                 className="btn btn--primary btn--sm"
                 onClick={() => navigate('/offers')}
@@ -222,7 +312,7 @@ export default function MyOffersPage() {
 function MyOfferCard({ offer, isApplied, userId, onDetail, onApplied, style }) {
   const [applying, setApplying] = useState(false)
   const level  = normalizeLevel(offer.level)
-  const salary = formatSalary(offer.salary)
+  const salary = formatSalary(offer.salaryRange ?? offer.salary)
   const date   = getDate(offer)
 
   const handleApply = async (e) => {
@@ -263,7 +353,7 @@ function MyOfferCard({ offer, isApplied, userId, onDetail, onApplied, style }) {
       {/* Firma */}
       <p className="mo-card-company">
         <span aria-hidden="true" style={{ color: 'var(--text-3)', fontSize: '.72rem' }}>◉</span>
-        {offer.companyName ?? '—'}
+        {offer.companyName ?? offer.company ?? '—'}
       </p>
 
       {/* Chipy: miasto + wynagrodzenie */}
@@ -313,6 +403,25 @@ function MyOffersStyles() {
   return (
     <style>{`
       .my-offers-page { max-width: 1080px; }
+
+      /* ── Przełącznik poziomów ── */
+      .mo-levels { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+      .mo-pill {
+        display: inline-flex; align-items: center; gap: 7px;
+        padding: 5px 13px; border-radius: 100px;
+        border: 1px solid var(--border-1); background: var(--bg-2);
+        color: var(--text-1); font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
+        cursor: pointer; white-space: nowrap; transition: border-color .15s, color .15s, background .15s;
+      }
+      .mo-pill:hover { border-color: var(--accent); color: var(--accent); }
+      .mo-pill--on { background: var(--accent); color: #fff; border-color: var(--accent); }
+      .mo-pill--on:hover { color: #fff; }
+      .mo-pill--empty:not(.mo-pill--on) { opacity: .55; }
+      .mo-pill-count {
+        font-size: 0.62rem; font-weight: 700; padding: 0 6px; border-radius: 100px;
+        background: var(--bg-4); color: var(--text-1);
+      }
+      .mo-pill--on .mo-pill-count { background: rgba(255,255,255,.22); color: #fff; }
 
       /* ── Statystyki ── */
       .mo-stats {

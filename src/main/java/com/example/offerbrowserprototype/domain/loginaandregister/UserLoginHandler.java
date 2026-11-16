@@ -1,6 +1,7 @@
 package com.example.offerbrowserprototype.domain.loginaandregister;
 
 import com.example.offerbrowserprototype.domain.dto.loginandregister.LoginDto;
+import com.example.offerbrowserprototype.domain.exception.AccountNotActivatedException;
 import com.example.offerbrowserprototype.infrastructure.repository.UserRepository;
 import com.example.offerbrowserprototype.infrastructure.security.JwtService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,6 +46,11 @@ public class UserLoginHandler {
         return userRepository.findByUsername(loginDto.getUsername())
                 .filter(user -> passwordEncoder.matches(loginDto.getPassword(), user.getPassword()))
                 .map(user -> {
+                    // checked only after a correct password, so it doesn't reveal which accounts exist
+                    if (!user.isActive()) {
+                        throw new AccountNotActivatedException(
+                                "Konto nie zostało potwierdzone — kliknij link z maila rejestracyjnego.");
+                    }
                     String roleName = user.getRole() != null ? user.getRole().name() : "USER";
 
                     org.springframework.security.core.userdetails.User principal =

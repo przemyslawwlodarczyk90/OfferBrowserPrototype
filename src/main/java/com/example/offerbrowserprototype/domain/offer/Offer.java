@@ -96,4 +96,13 @@ public class Offer {
         this.location = location;
         this.city = extractCityFromLocation(location);
     }
+
+    /** The Lombok builder bypasses setLocation — derive the city on every save. */
+    @PrePersist
+    @PreUpdate
+    void deriveCity() {
+        if (city == null && location != null) {
+            city = extractCityFromLocation(location);
+        }
+    }
 }

@@ -32,7 +32,16 @@ public class OfferRetrievalHandler {
 
     @Transactional(readOnly = true)
     public List<OfferDTO> getAllOffers() {
-        return offerRepository.findAllByOrderByFetchedAtDesc()
+        return getAllOffers(null);
+    }
+
+    /** @param source portal to filter by, or {@code null} for all portals */
+    @Transactional(readOnly = true)
+    public List<OfferDTO> getAllOffers(OfferSource source) {
+        List<Offer> offers = source == null
+                ? offerRepository.findAllByOrderByFetchedAtDesc()
+                : offerRepository.findBySourceOrderByFetchedAtDesc(source.value());
+        return offers
                 .stream()
                 .map(offerMapper::toDTO)
                 .collect(Collectors.toList());

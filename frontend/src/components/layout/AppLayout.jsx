@@ -4,8 +4,10 @@
 // ║  ZMIANA:   Dodano licznik zaaplikowanych w sidebarze ║
 // ╚══════════════════════════════════════════════════════╝
 
+import { useEffect } from 'react'
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { useAuthStore, useUIStore } from '@/store'
+import { authApi } from '@/api/services'
 import ToastContainer from '@/components/ui/ToastContainer'
 
 // ── Definicja nawigacji ───────────────────────────────────────────
@@ -21,10 +23,22 @@ const NAV_TOP = [
 
 // ─────────────────────────────────────────────────────────────────
 export default function AppLayout() {
-  const { user, logout }               = useAuthStore()
+  const { user, logout, updateUser }   = useAuthStore()
   const { sidebarOpen, toggleSidebar } = useUIStore()
   const navigate = useNavigate()
   const isAdmin  = user?.role === 'ADMIN'
+
+  // Rola zapisana przy logowaniu mogła się zmienić (np. nadanie admina) — odśwież ją z serwera
+  useEffect(() => {
+    authApi.me()
+      .then(res => {
+        const me = res.data
+        if (me && (me.role !== user?.role || me.id !== user?.id)) {
+          updateUser({ id: me.id, role: me.role, email: me.email, username: me.username })
+        }
+      })
+      .catch(() => { /* 401 obsługuje interceptor axios */ })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleLogout = () => { logout(); navigate('/login') }
 

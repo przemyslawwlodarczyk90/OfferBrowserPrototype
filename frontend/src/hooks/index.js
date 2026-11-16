@@ -5,6 +5,8 @@
 // ╚══════════════════════════════════════════════════════════╝
 
 import { useState, useEffect, useCallback, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { PORTALS } from '@/utils'
 
 // ── useApi ────────────────────────────────────────────────────────
 //
@@ -54,6 +56,35 @@ export function useApi(apiFn, { immediate = false, deps = [] } = {}) {
   }, [])
 
   return { data, loading, error, execute, reset }
+}
+
+// ── usePortal ─────────────────────────────────────────────────────
+// Wybrany portal (No Fluff Jobs / theprotocol.it / Just Join IT) trzymany w ?portal=… — przeżywa
+// odświeżenie i jest wspólny dla stron; ostatni wybór pamiętany lokalnie.
+// extra — dodatkowe zakładki tylko tej strony (np. "Wszystkie strony"); nie są zapamiętywane dla innych stron.
+const PORTAL_KEY = 'ob-portal'
+const NO_EXTRA = []
+
+export function usePortal(extra = NO_EXTRA) {
+  const [params, setParams] = useSearchParams()
+  const fromUrl = [...extra, ...PORTALS].find(p => p.slug === params.get('portal'))
+  let stored = null
+  try { stored = PORTALS.find(p => p.id === localStorage.getItem(PORTAL_KEY)) } catch { /* brak dostępu */ }
+  const portal = (fromUrl ?? stored ?? PORTALS[0]).id
+
+  const setPortal = useCallback((id) => {
+    const p = [...extra, ...PORTALS].find(x => x.id === id) ?? PORTALS[0]
+    if (PORTALS.includes(p)) {
+      try { localStorage.setItem(PORTAL_KEY, p.id) } catch { /* brak dostępu */ }
+    }
+    setParams(prev => {
+      const next = new URLSearchParams(prev)
+      next.set('portal', p.slug)
+      return next
+    }, { replace: true })
+  }, [setParams, extra])
+
+  return [portal, setPortal]
 }
 
 // ── useDebounce ───────────────────────────────────────────────────

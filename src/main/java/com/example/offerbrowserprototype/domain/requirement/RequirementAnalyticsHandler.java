@@ -53,6 +53,17 @@ public class RequirementAnalyticsHandler {
         return levels;
     }
 
+    public List<String> getAvailableLevels(List<String> sources) {
+        if (sources == null || sources.isEmpty()) {
+            return getAvailableLevels();
+        }
+        List<String> levels = new ArrayList<>(requirementRepository.findDistinctLevelsBySources(sources));
+        if (requirementRepository.existsNullLevelBySources(sources)) {
+            levels.add(UNKNOWN_LEVEL);
+        }
+        return levels;
+    }
+
     public List<String> getAvailableSources() {
         return offerRepository.findDistinctSources();
     }

@@ -19,4 +19,5 @@ public class AdminUserDTO {
     private long watchlistCount;
     private long uselessCount;
     private long notesCount;
+    private boolean hasCv;
 }

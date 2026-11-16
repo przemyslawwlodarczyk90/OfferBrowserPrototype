@@ -31,4 +31,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role = Role.USER;
+
+    /** Location of the uploaded CV file (directory from {@code cv.storage.dir} + file name); {@code null} = no CV. */
+    @Column(name = "cv_url", length = 1000)
+    private String cvUrl;
 }

@@ -1,5 +1,6 @@
 package com.example.offerbrowserprototype.infrastructure.web;
 
+import com.example.offerbrowserprototype.domain.offer.OfferSource;
 import com.example.offerbrowserprototype.domain.dto.offer.OfferDTO;
 import com.example.offerbrowserprototype.infrastructure.facade.OfferFacade;
 import io.swagger.v3.oas.annotations.Operation;
@@ -78,13 +79,15 @@ public class OfferController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all offers", description = "Returns all job offers including duplicates.")
+    @Operation(summary = "Get all offers", description = "Returns all job offers including duplicates. Pass ?source=NoFluff or ?source=TheProtocol to get one portal only (filtered in the database).")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "List returned"),
             @ApiResponse(responseCode = "401", description = "Not authenticated")
     })
-    public ResponseEntity<List<OfferDTO>> getAllOffers() {
-        return ResponseEntity.ok(offerFacade.getAllOffers());
+    public ResponseEntity<List<OfferDTO>> getAllOffers(
+            @Parameter(description = "Portal: NoFluff, TheProtocol or JustJoin; omit for all portals") @RequestParam(required = false) String source
+    ) {
+        return ResponseEntity.ok(offerFacade.getAllOffers(OfferSource.fromParam(source).orElse(null)));
     }
 
     @PostMapping("/{offerId}/mark-duplicate")

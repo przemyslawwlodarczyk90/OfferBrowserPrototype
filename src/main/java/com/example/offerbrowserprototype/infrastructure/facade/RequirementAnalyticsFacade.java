@@ -27,6 +27,10 @@ public class RequirementAnalyticsFacade {
         return requirementAnalyticsHandler.getAvailableLevels();
     }
 
+    public List<String> getAvailableLevels(List<String> sources) {
+        return requirementAnalyticsHandler.getAvailableLevels(sources);
+    }
+
     public List<String> getAvailableSources() {
         return requirementAnalyticsHandler.getAvailableSources();
     }

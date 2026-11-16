@@ -1,6 +1,7 @@
 package com.example.offerbrowserprototype.domain.statistics;
 
 import com.example.offerbrowserprototype.infrastructure.repository.OfferRepository;
+import com.example.offerbrowserprototype.domain.offer.OfferSource;
 
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,13 @@ public class OfferCountHandler {
     }
 
     public long getTotalOffers() {
-        return offerRepository.countNonDuplicate();
+        return getTotalOffers(null);
+    }
+
+    public long getTotalOffers(OfferSource source) {
+        return source == null
+                ? offerRepository.countNonDuplicate()
+                : offerRepository.countNonDuplicateBySource(source.value());
     }
 
 }

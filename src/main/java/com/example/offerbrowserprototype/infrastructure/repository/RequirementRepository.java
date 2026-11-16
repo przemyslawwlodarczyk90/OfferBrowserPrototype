@@ -4,9 +4,11 @@ import com.example.offerbrowserprototype.domain.requirement.Requirement;
 import com.example.offerbrowserprototype.domain.requirement.SkillCountProjection;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,5 +38,17 @@ public interface RequirementRepository extends JpaRepository<Requirement, Long> 
 
     @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM Requirement r WHERE r.level IS NULL")
     boolean existsNullLevel();
+
+    @Query("SELECT DISTINCT r.level FROM Requirement r WHERE r.level IS NOT NULL AND r.source IN :sources ORDER BY r.level")
+    List<String> findDistinctLevelsBySources(@Param("sources") List<String> sources);
+
+    @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM Requirement r WHERE r.level IS NULL AND r.source IN :sources")
+    boolean existsNullLevelBySources(@Param("sources") List<String> sources);
+
+    /** Requirement facts created before offers carried a source all come from No Fluff Jobs. */
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Transactional
+    @Query("UPDATE Requirement r SET r.source = :source WHERE r.source IS NULL")
+    int backfillSource(@Param("source") String source);
 }
 
