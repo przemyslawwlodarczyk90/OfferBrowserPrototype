@@ -1,142 +1,80 @@
 # Offer Browser Prototype
 
-Fullstack aplikacja do zarządzania procesem rekrutacyjnym IT. Automatycznie importuje oferty pracy, śledzi status aplikacji, wysyła codzienne powiadomienia e-mail i analizuje wymagania rynkowe.
+**Przeglądarka ofert pracy IT z listą obserwowanych ogłoszeń, historią aplikacji i analizą wymaganych umiejętności.**
 
----
+Aplikacja webowa zbiera ogłoszenia z No Fluff Jobs. Pozwala porównać wymagania, wynagrodzenia i poziomy doświadczenia oraz zapisać, na które stanowiska wysłano już CV.
 
-## Stos technologiczny
+**Java 17 · Spring Boot 3.2.5 · React 19 · PostgreSQL · Redis · Python**
 
-| Warstwa | Technologie |
-|---------|------------|
-| Backend | Java 17, Spring Boot 3.2.5, Spring Security, Spring Data JPA |
-| Baza danych | PostgreSQL 15, Redis (cache) |
-| Frontend | React 19, Vite 7, React Router 7, Recharts, Zustand, Axios |
-| Email | Spring Mail + Thymeleaf |
-| Scraper | Python + Selenium (NoFluff Jobs) |
-| Dokumentacja API | SpringDoc OpenAPI 3 / Swagger UI |
+[Możliwości](#możliwości) · [Architektura](#architektura) · [Uruchomienie lokalne](#uruchomienie-lokalne) · [Testy](#testy)
 
----
+## Możliwości
+
+| Obszar | Co można zrobić |
+| --- | --- |
+| **Oferty pracy** | Przeglądać ogłoszenia i sprawdzać firmę, lokalizację, widełki wynagrodzenia, poziom doświadczenia oraz wymagane i dodatkowe umiejętności. |
+| **Moje oferty** | Obserwować interesujące ogłoszenia, odnotować wysłanie aplikacji, ukrywać nieprzydatne oferty i dodawać notatki. |
+| **Analityka** | Sprawdzać najczęściej występujące umiejętności według poziomu doświadczenia oraz rozkład ofert według miast i poziomów. |
+| **Import** | Pobrać oferty skryptem Python z Selenium, zaimportować dane z JSON lub dodać pojedyncze ogłoszenie z linku. |
+| **Powiadomienia** | Otrzymywać zestawienie e-mail i z jego poziomu zapisać status aplikacji lub ukryć ofertę. |
+
+Aplikacja obsługuje rejestrację z potwierdzeniem e-mail i logowanie JWT. Panel administracyjny pokazuje aktywność użytkowników oraz zgłoszone duplikaty i nieprzydatne oferty.
 
 ## Architektura
 
-Wzorzec **fasada + handler**: każda operacja biznesowa trafia do dedykowanego handlera, a fasada kompozytuje handlery i jest jedyną zależnością kontrolerów REST.
-
+```mermaid
+flowchart LR
+    UI["React"] --> API["Spring Boot REST API"]
+    API --> DB[("PostgreSQL")]
+    API --> Cache[("Redis")]
+    Scraper["Python / Selenium"] -->|JSON| API
 ```
-Controller → Facade → Handler(s) → Repository
+
+- **Logika biznesowa.** Kontrolery REST delegują operacje do fasad, które składają handlery odpowiedzialne m.in. za import, statusy aplikacji i statystyki.
+- **Analityka.** Wymagania ofert mają własne encje. Zapytania agregujące zwracają wyniki potrzebne do wykresów bez wczytywania pełnych ogłoszeń.
+- **Dane i interfejs.** PostgreSQL przechowuje oferty, konta i statusy użytkowników. Redis przechowuje w cache dane ofert, a React wyświetla statystyki za pomocą Recharts.
+
+| Kod | Zawartość |
+| --- | --- |
+| [Backend](src/main/java/com/example/offerbrowserprototype) | Domena, REST API, Spring Security, repozytoria i cache |
+| [Frontend](frontend/src) | Widoki React, routing, obsługa stanu w Zustand i klient API |
+| [Skrypty importu](src/main/resources/scripts) | Pobieranie ofert i mapowanie danych do JSON |
+| [Testy backendu](src/test/java) | Testy jednostkowe logiki i integracyjne repozytoriów |
+
+## Uruchomienie lokalne
+
+Wymagania obejmują **JDK 17**, **Node.js 22.12+**, **npm** i **Docker Compose**. Do importu bezpośrednio z portalu potrzebne są również Python, Selenium i Chrome.
+
+**1. Baza danych i cache** — z katalogu głównego projektu.
+
+```sh
+docker compose up -d postgres redis
 ```
 
-Wymagania (skills) przechowywane są w osobnej tabeli faktów `requirements` — oddzielonej od `job_offers` — co umożliwia analytics per skill/level/source bez ładowania pełnych encji ofert.
+**2. Backend** — z katalogu głównego projektu.
 
----
-
-## Funkcjonalności
-
-### Import ofert
-- **Scraper Python/Selenium** — uruchomienie przez API, działa asynchronicznie w tle, po zakończeniu automatycznie importuje wyniki
-- **Import z JSON** — wklejenie tablicy obiektów ofert
-- **Import z URL** — pobranie i zapis pojedynczej oferty po podaniu linku
-- **Backfill** — przy ponownym imporcie uzupełnia brakujące `requirements`, `niceToHave`, `source` dla istniejących ofert
-
-### Przeglądanie ofert
-- Lista wszystkich ofert sortowana po dacie pobrania, serwowana z cache Redis
-- Szczegóły oferty: firma, lokalizacja, wynagrodzenie, poziom, requirements, nice-to-have
-- Oznaczanie oferty jako **duplikatu** — widoczne dla admina na karcie oferty
-
-### Panel użytkownika ("Moje Oferty")
-- **Watchlist** — oferty dodane do śledzenia (nie zaaplikowane)
-- **Zaaplikowane** — oferty, na które wysłano CV
-- **Nieprzydatne** — oferty ukryte z widoku (per-user, nie wpływa na innych użytkowników)
-
-### Codzienne powiadomienia e-mail
-- Automatyczny email o 17:00 (cron konfiguowalny) z listą niezaaplikowanych ofert
-- Szablon HTML — ciemny motyw, lista ofert z przyciskami akcji
-- **One-click akcje bez logowania** — bezpośrednio z treści maila:
-  - `✓ ZAAPLIKUJ` — rejestruje aplikację
-  - `✕ NIEPRZYDATNA` — ukrywa ofertę
-
-### Analityka wymagań
-- Top umiejętności ogółem lub per poziom seniorności (Junior, Mid, Senior, Trainee, Nieokreślony poziom)
-- Filtrowanie po źródle danych (np. NoFluff)
-- Wykresy słupkowe (Recharts)
-
-### Notatki aplikacyjne
-- Dodawanie notatek tekstowych do ofert
-- Przeglądanie notatek per użytkownik, grupowanie według firmy z datami
-
-### Statystyki
-- Rozkład ofert według miast i poziomów doświadczenia
-- Łączna liczba ofert z wyłączeniem duplikatów
-
-### Panel admina
-- Lista użytkowników ze statystykami (zaaplikowane / watchlist / nieprzydatne / notatki)
-- Oferty oznaczone jako DUPLICATE lub USELESS z dominującą flagą per oferta
-- Szczegóły flag: kto oznaczył i kiedy
-
-### Konta użytkowników
-- Rejestracja z potwierdzeniem e-mail (token jednorazowy)
-- Logowanie JWT (token ważny 1h)
-- Zmiana hasła, aktualizacja profilu
-
----
-
-## Endpointy REST
-
-| Metoda | Ścieżka | Opis |
-|--------|---------|------|
-| `POST` | `/api/auth/register` | Rejestracja |
-| `POST` | `/api/auth/login` | Logowanie → JWT |
-| `GET` | `/api/offers` | Lista ofert (z cache) |
-| `GET` | `/api/offers/{id}` | Szczegóły oferty |
-| `POST` | `/api/offers` | Dodaj ofertę |
-| `PUT` | `/api/offers/{id}` | Edytuj ofertę |
-| `DELETE` | `/api/offers/{id}` | Usuń ofertę |
-| `POST` | `/api/user-offers/{id}/apply` | Zaaplikuj |
-| `POST` | `/api/user-offers/{id}/useless` | Oznacz jako nieprzydatna |
-| `GET` | `/api/user-offers/not-applied` | Watchlist |
-| `GET` | `/api/user-offers/applied` | Zaaplikowane |
-| `GET` | `/api/user-offers/{id}/apply-email` | One-click apply z emaila |
-| `GET` | `/api/user-offers/{id}/useless-email` | One-click ukryj z emaila |
-| `GET` | `/api/analytics/requirements/top` | Top skille ogółem |
-| `GET` | `/api/analytics/requirements/top-by-level` | Top skille per poziom |
-| `GET` | `/api/analytics/requirements/levels` | Dostępne poziomy |
-| `GET` | `/api/analytics/requirements/sources` | Dostępne źródła |
-| `GET` | `/api/python-script/run` | Uruchom scraper |
-| `POST` | `/api/python-script/import` | Import z JSON |
-| `POST` | `/api/python-script/import-from-url` | Import z URL |
-| `GET` | `/api/notifications/daily-unapplied-offers` | Wyślij email ręcznie |
-| `GET` | `/api/admin/users` | Lista użytkowników (ADMIN) |
-| `GET` | `/api/stats/summary` | Podsumowanie statystyk |
-
-Pełna dokumentacja interaktywna: `http://localhost:8081/swagger-ui.html`
-
----
-
-## Struktura projektu
-
+```powershell
+.\mvnw.cmd spring-boot:run
 ```
-src/main/java/.../offerbrowserprototype/
-├── domain/
-│   ├── offer/              # encje Offer, OfferFlag, handlery CRUD
-│   ├── requirement/        # encja Requirement, handlery analytics
-│   ├── usseroffer/         # pipeline użytkownika (apply/useless/watchlist)
-│   ├── loginaandregister/  # rejestracja, logowanie JWT, zmiana hasła
-│   ├── statistics/         # handlery statystyk (city/level/count)
-│   └── dto/                # DTO dla wszystkich warstw
-└── infrastructure/
-    ├── web/                # 12 kontrolerów REST
-    ├── facade/             # fasady kompozytujące handlery
-    ├── repository/         # interfejsy Spring Data JPA
-    ├── security/           # JwtService, filtry Spring Security
-    ├── service/            # MailService, OfferImportService, PythonScriptService
-    └── cache/              # OfferCacheFacade (Redis)
 
-frontend/src/pages/
-├── offers/                 # OffersPage, OfferDetailPage, MyOffersPage
-├── analytics/              # RequirementsPage (wykresy skills)
-├── auth/                   # LoginPage, RegisterPage, ConfirmPage
-├── AdminPage.jsx
-├── DashboardPage.jsx
-├── ImportPage.jsx
-├── NotesPage.jsx
-└── StatsPage.jsx
+Na macOS i Linuksie użyj `./mvnw spring-boot:run`. API nasłuchuje pod adresem `http://localhost:8081`, a Swagger UI jest dostępny pod `http://localhost:8081/swagger-ui.html`.
+
+**3. Frontend** — w osobnym terminalu.
+
+```sh
+cd frontend
+npm ci
+npm run dev
 ```
+
+Otwórz `http://localhost:3000`. Rejestracja z potwierdzeniem i powiadomienia korzystają z SMTP. Przykładowe dane do importu są w pliku [detailed_offers.json](data/offers/detailed_offers.json).
+
+## Testy
+
+Backend zawiera testy jednostkowe z JUnit i Mockito oraz testy integracyjne repozytoriów z H2. Uruchom je z katalogu głównego projektu.
+
+```powershell
+.\mvnw.cmd test
+```
+
+Na macOS i Linuksie użyj `./mvnw test`.
